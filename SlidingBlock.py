@@ -2,35 +2,41 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-fs = 22500 # Sample frequency.
+fs = 22500 # Test sample frequency.
 dt = 1/fs # Time interval between samples.
 aCrit = 0.5 # Critical acceleration (G). 
 
 # Time (t) and acceleration (a) arrays.
-t = np.linspace(0, 10, 22500)
-a = np.sin(0.5*t)
+t = np.arange(0,10,dt)
+aInput = np.sin(0.5*t)
 
-aOver = np.empty(len(a)) # Empty array to be filled with acceration data that exceeds critical acceleration.
-for i in range(len(a)):
-    if ( a[i] > aCrit ):
-        aOver[i] = a[i]
-    else:
-        aOver[i] = 0
+# This function performs a trapezoid rule integration of the input array and returns the result as an array
+# of the same size and type as the input. The first interation is skipped to prevent a zero width trapezoid.
+def integrate(input,step):
+    output = np.zeros_like(input)
+    for i in range(len(input)):
+        if i == 0:
+            continue
+        else:
+            output[i] = output[i-1] + 0.5*(input[i]+input[i-1])*step
+    return output
 
-disp = np.empty(len(aOver)) # Empty displacement array to be filled.        
-for i in range(len(aOver)):
-    if (i == 0):
-        disp[i] = 0
-    elif (aOver[i] == 0):
-        disp[i] = disp[i-1]
+# Creates an array of relative acceleration where negative values (those less than aCrit) are normalized to zero.
+aOutput = aInput - aCrit
+for i in range(len(aOutput)):
+    if ( aOutput[i] > 0 ):
+        continue
     else:
-        disp[i] = disp[i-1] + 0.5*(aOver[i]+aOver[i-1])*(t[i]-t[i-1])
-        
+        aOutput[i] = 0
+
+velocity = integrate(aOutput,dt)    
+disp = integrate(velocity,dt)
 
 # Plotting to examine output.
 fig, ax = plt.subplots()
-ax.plot(t, a, label='Acceleration')
-ax.plot(t, aOver, label='Exceedance')
+ax.plot(t, aInput, label='Acceleration')
+ax.plot(t, aOutput, label='Exceedance')
+ax.plot(t, velocity, label='Velocity')
 ax.plot(t, disp, label='Displacement')
 ax.set_xlabel("Time (s)")
 ax.legend()
