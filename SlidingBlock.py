@@ -6,16 +6,29 @@ import matplotlib.pyplot as plt
 import tkinter.filedialog as tkf
 import csv
 
-# timeHistFile = tkf.askopenfile(mode='r',title='Select a Time History') # IN PROGRESS
-# thf = csv.reader(timeHistFile) # IN PROGRESS
+timeHistFile = tkf.askopenfile(mode='r',title='Select a Time History')
+thf = csv.reader(timeHistFile)
 
-fs = 22500 # Test sample frequency (Hz).
-dt = 1/fs # Time interval between samples (s).
-aCrit = 0.5 # Critical acceleration (G). 
+# Time (t) and ground acceleration (gAcc) arrays are created as empty python lists and later are
+# converted to numpy arrays after csv parsing is complete. This allows array creation without 
+# knowing length.
+t = []
+gAcc = []
 
-# Time (t) and ground acceleration (gAcc) arrays.
-t = np.arange(0,20,dt)
-gAcc = 2*np.sin(t)
+# For loop to parse acceleration time history csv file. Ignores header data containing '#' and
+# assumes row format is [time,acceleration].
+for row in thf:
+    if '#' in row[0]:
+        continue
+    t.append(float((row[0])))
+    gAcc.append(float((row[1])))
+
+t = np.array(t)
+gAcc = np.array(gAcc)
+
+dt = t[1]-t[0] # Time interval between samples (s).
+fs = 1/dt # Sample frequency (Hz).
+aCrit = float(input('Enter critical acceleration (g): ')) # User input critical acceleration (g)
 
 # This function performs a trapezoid rule integration of the input array and returns the result as an array
 # of the same size and type as the input. The first interation is skipped to prevent a zero width trapezoid.
@@ -29,8 +42,7 @@ def integrate(input,step):
     return output
 
 # Determine ground velocity (gVel) and displacement (gDisp).
-gVel = integrate(gAcc,dt)    
-# gDisp = integrate(gVel,dt) # Probably don't need this.
+gVel = integrate(gAcc,dt)
 
 # Determine block velocity (bVel) and provide a relative velocity (rVel) array for displacement calculation.
 bVel = np.copy(gVel)
@@ -47,14 +59,13 @@ for i in range(len(gAcc)):
         bVel[i] = tVel
         rVel[i] = gVel[i] - tVel
 
-# Determine block accumulated displacement based on relative velocity array.        
+# Determine block accumulated displacement (bDisp) based on relative velocity array.        
 bDisp = integrate(rVel,dt)
         
 # Plotting to examine output.
 fig, ax = plt.subplots()
 ax.plot(t, gAcc, label='Ground Acceleration')
 ax.plot(t, gVel, label='Ground Velocity')
-# ax.plot(t, gDisp, label='Ground Displacement') # Probably don't need this.
 ax.plot(t, bVel, label='Block Velocity')
 ax.plot(t, bDisp, label='Block Displacement')
 ax.set_xlabel("Time (s)")
