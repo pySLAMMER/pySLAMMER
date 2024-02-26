@@ -55,7 +55,9 @@ def plotOutput(gAcc,gVel,bVel,bDisp,t):
         axs[i].grid(which='both')
     plt.show()
 
-def downslopeAnalysis(gAcc,t,aCrit):
+def downslopeAnalysis(tHist,aCrit):
+    t = tHist[0,:]
+    gAcc = tHist[1,:]
     dt = t[1]-t[0] # Time interval between samples (s).
     gVel = integrate(gAcc,dt) # Determine ground velocity (gVel).
     bVel = blockVelocity(gVel,gAcc,aCrit,dt) # Determine block velocity (bVel)
@@ -63,14 +65,12 @@ def downslopeAnalysis(gAcc,t,aCrit):
     # Determine block accumulated displacement (bDisp) based on relative velocity (rVel).
     rVel = gVel - bVel        
     bDisp = integrate(rVel,dt)
-    print(bDisp[-1])
+    print('Accumulated displacement: ' + str(bDisp[-1]*100) + ' cm.')
+    #print(bDisp[-1])
         
     plotOutput(gAcc,gVel,bVel,bDisp,t)
-
-############# MAIN LOOP #############
     
-mode = int(input('Select mode. \n (1) Normal \n (2) Test \n'))
-if mode == 1:
+def normModeTimeHist():
     timeHistFile = tkf.askopenfile(mode='r',title='Select a Time History')
     thf = csv.reader(timeHistFile)
 
@@ -88,16 +88,52 @@ if mode == 1:
             continue
         t.append(float((row[0])))
         gAcc.append(float((row[1])))
-        
-elif mode == 2:
+    t = np.array(t)
+    gAcc = np.array(gAcc) * g # Convert to m/s^2 for reasons.
+    tHist = np.vstack((t,gAcc))
+    return tHist
+
+def testModeTimeHist():
     timeInt = float(input('Enter dt (s): '))
     t = np.arange(0,30,timeInt)
     freq = float(input('Enter desired frequency (Hz): '))*2*pi
-    gAcc = np.sin(freq*t)
-    
+    gAcc = np.sin(freq*t) * g
+    tHist = np.vstack((t,gAcc))
+    return tHist
 
-t = np.array(t)
-gAcc = np.array(gAcc) * g # Convert to m/s^2 for reasons.
-aCrit = float(input('Enter critical acceleration (g): ')) * g # User input critical acceleration (m/s^2).
+def modeSelect():
+    mode = 0
+    while mode not in (1,2):
+        mode = input('Select mode. \n (1) Normal \n (2) Test \n')
+        try:
+            mode = int(mode)
+        except:
+            continue        
+    if mode == 1:
+        tHist = normModeTimeHist()   
+    elif mode == 2:
+        tHist = testModeTimeHist()
+    return tHist
+
+def askIfDone():
+    end = 0
+    while end not in (1,2):
+        end = input('Exit?  \n (1) No \n (2) Yes \n')
+        try:
+            end = int(end)
+        except:
+            continue
+    if end == 1:
+        return False
+    elif end == 2:
+        return True
+
+############# MAIN LOOP #############
+
+end = False
+while end == False:
+    tHist = modeSelect()    
+    aCrit = float(input('Enter critical acceleration (g): ')) * g # User input critical acceleration (m/s^2).    
+    downslopeAnalysis(tHist,aCrit)
+    end = askIfDone()
     
-downslopeAnalysis(gAcc,t,aCrit)
