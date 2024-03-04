@@ -51,9 +51,11 @@ def plotOutput(gAcc,gVel,bVel,bDisp,t):
     axs[2].set_ylabel('Displacement (cm)')
     for i in range(len(axs)):
         axs[i].set_xlabel("Time (s)")
-        axs[i].legend()
+        # axs[i].legend()
         axs[i].grid(which='both')
-    plt.show()
+    # plt.show()
+    fig.canvas.toolbar_position = 'top'
+    return fig, axs
 
 def downslopeAnalysis(tHist,aCrit):
     t = tHist[0,:]
@@ -67,30 +69,31 @@ def downslopeAnalysis(tHist,aCrit):
     bDisp = integrate(rVel,dt)
     print('Accumulated displacement: ' + str(bDisp[-1]*100) + ' cm.')
     #print(bDisp[-1])
-        
-    plotOutput(gAcc,gVel,bVel,bDisp,t)
+    return gAcc, gVel, bVel, bDisp, t    
+    # plotOutput(gAcc,gVel,bVel,bDisp,t)
     
-def normModeTimeHist():
-    timeHistFile = tkf.askopenfile(mode='r',title='Select a Time History')
-    thf = csv.reader(timeHistFile)
+def normModeTimeHist(timeHistFile):
+    # timeHistFile = tkf.askopenfile(mode='r',title='Select a Time History')
+    with open(timeHistFile) as input_file:
+        thf = csv.reader(input_file)
 
-    # Time (t) and ground acceleration (gAcc) arrays are created as empty python lists and later are
-    # converted to numpy arrays after csv parsing is complete. This allows array creation without 
-    # knowing length.
-    t = []
-    gAcc = []
+        # Time (t) and ground acceleration (gAcc) arrays are created as empty python lists and later are
+        # converted to numpy arrays after csv parsing is complete. This allows array creation without 
+        # knowing length.
+        t = []
+        gAcc = []
 
-    # For loop to parse acceleration time history csv file. Ignores header data containing '#' and
-    # assumes row format is [time,acceleration]. Reads row and appends values of time and acceleration
-    # respective array.
-    for row in thf:
-        if '#' in row[0]:
-            continue
-        t.append(float((row[0])))
-        gAcc.append(float((row[1])))
-    t = np.array(t)
-    gAcc = np.array(gAcc) * g # Convert to m/s^2 for reasons.
-    tHist = np.vstack((t,gAcc))
+        # For loop to parse acceleration time history csv file. Ignores header data containing '#' and
+        # assumes row format is [time,acceleration]. Reads row and appends values of time and acceleration
+        # respective array.
+        for row in thf:
+            if '#' in row[0]:
+                continue
+            t.append(float((row[0])))
+            gAcc.append(float((row[1])))
+        t = np.array(t)
+        gAcc = np.array(gAcc) * g # Convert to m/s^2 for reasons.
+        tHist = np.vstack((t,gAcc))
     return tHist
 
 def testModeTimeHist():
@@ -129,11 +132,11 @@ def askIfDone():
         return True
 
 ############# MAIN LOOP #############
-
-end = False
-while end == False:
-    tHist = modeSelect()    
-    aCrit = float(input('Enter critical acceleration (g): ')) * g # User input critical acceleration (m/s^2).    
-    downslopeAnalysis(tHist,aCrit)
-    end = askIfDone()
+if __name__ == '__main__':
+    end = False
+    while end == False:
+        tHist = modeSelect()    
+        aCrit = float(input('Enter critical acceleration (g): ')) * g # User input critical acceleration (m/s^2).    
+        downslopeAnalysis(tHist,aCrit)
+        end = askIfDone()
     
