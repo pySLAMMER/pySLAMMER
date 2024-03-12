@@ -31,7 +31,7 @@ def blockVelocity(gVel,gAcc,aCrit,dt):
         tVel = bVel[i-1] + aCrit*dt # Temporary velocity value assuming the block is sliding with acceleration aCrit.
         if gAcc[i] > aCrit:
             blockSliding = True
-        elif tVel >= gVel[i]: # Ends block sliding if block velocity matches ground velocity.
+        elif tVel > gVel[i]: # Ends block sliding if block velocity matches ground velocity.
             blockSliding = False
         if blockSliding == True:
             bVel[i] = tVel
@@ -66,8 +66,6 @@ def downslopeAnalysis(tHist,aCrit):
     rVel = gVel - bVel        
     bDisp = integrate(rVel,dt)
     print('Accumulated displacement: ' + str(bDisp[-1]*100) + ' cm.')
-    #print(bDisp[-1])
-        
     plotOutput(gAcc,gVel,bVel,bDisp,t)
     
 def normModeTimeHist():
@@ -99,6 +97,7 @@ def testModeTimeHist():
     freq = float(input('Enter desired frequency (Hz): '))*2*pi
     gAcc = np.sin(freq*t) * g
     tHist = np.vstack((t,gAcc))
+    # writeCSV(tHist)
     return tHist
 
 def modeSelect():
@@ -128,6 +127,13 @@ def askIfDone():
     elif end == 2:
         return True
 
+def writeCSV(thf):
+    file = tkf.asksaveasfile(mode='w',title='Save Output',)
+    writer = csv.writer(file,delimiter=',')
+    for row in range(thf.shape[1]):
+        writer.writerow([thf[1,row]/g])
+    print('File save complete!')
+    
 ############# MAIN LOOP #############
 
 end = False
