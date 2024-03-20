@@ -67,7 +67,8 @@ def downslopeAnalysis(tHist,aCrit):
     # Determine block accumulated displacement (bDisp) based on relative velocity (rVel).
     rVel = gVel - bVel        
     bDisp = integrate(rVel,dt)
-    print('Accumulated displacement: ' + str(bDisp[-1]*100) + ' cm.')
+    total_disp = bDisp[-1]*100
+    print(f'{total_disp = :.3f} cm')
     #print(bDisp[-1])
     return gAcc, gVel, bVel, bDisp, t    
     # plotOutput(gAcc,gVel,bVel,bDisp,t)
