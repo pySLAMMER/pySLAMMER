@@ -9,7 +9,7 @@ import tkinter.filedialog as tkf
 import csv
 
 G_EARTH = 9.80665
-G_TO_CMPS = 980.665
+M_TO_CM = 100
 
 
 def read_csv():
@@ -23,8 +23,16 @@ def read_csv():
         time.append(float((row[0])))
         accel.append(float((row[1])))
     time = np.array(time)
-    accel = np.array(accel)
-    time_history = np.vstack((time,accel))
+    accel = np.array(accel) * G_EARTH
+    time_history = np.vstack((time, accel))
+    return time_history
+
+def test_time_hist():
+    time_interval = float(input('Enter dt (s): '))
+    freq = float(input('Enter desired frequency (Hz): '))*2*pi
+    time = np.arange(0, 30, time_interval) 
+    accel = np.sin(freq*time) * G_EARTH
+    time_history = np.vstack((time, accel))
     return time_history
 
 
@@ -33,7 +41,7 @@ def downslope_analysis(time_history):
     accel = time_history[1][:]
     block_disp = []
     tol = 0.00001
-    a_crit = float(input('Enter critical acceleration (g): ')) # T
+    a_crit = float(input('Enter critical acceleration (g): ')) * G_EARTH # T
     dt = time[1]-time[0] # D
     pos_curr = 0 # U
     vel_curr = 0 # V
@@ -61,7 +69,8 @@ def downslope_analysis(time_history):
         vel_prev = vel_curr
         s = y
         block_disp.append(pos_curr)
-    print('Displacement: '+'{:.4f}'.format(block_disp[-1]*G_TO_CMPS)+' cm')
+    print('Displacement: '+'{:.4f}'.format(block_disp[-1]*M_TO_CM)+' cm')
 
 
 downslope_analysis(read_csv())
+# downslope_analysis(test_time_hist())
