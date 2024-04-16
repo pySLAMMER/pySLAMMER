@@ -3,8 +3,9 @@
 
 from math import pi
 import numpy as np
-# import matplotlib as mpl
-# import matplotlib.pyplot as plt
+import scipy.integrate as spint
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 import tkinter.filedialog as tkf
 import csv
 
@@ -55,17 +56,7 @@ def test_time_hist():
     return time_history
 
 
-def time_integrate(output_dot, dt):
-    output = np.zeros_like(output_dot)
-    for i in range(len(output_dot)):
-        if i == 0:
-            continue
-        else:
-            output[i] = output[i-1] + 0.5*(output_dot[i] + output_dot[i-1])*dt
-    return output
-
-
-def downslope_analysis_jibson(time_history):
+def downslope_analysis_jibson(time_history, acc_crit):
     if time_history is None:
         return
     else:
@@ -76,13 +67,6 @@ def downslope_analysis_jibson(time_history):
     block_vel = []
     block_acc = []
     tol = 0.00001
-    while True:
-        acc_crit = input('Enter critical acceleration (g): ') # T
-        try:
-            acc_crit = float(acc_crit) * G_EARTH
-            break
-        except ValueError:
-            print('Enter a valid number.')
     dt = time[1]-time[0] # D
     pos_curr = 0 # U
     vel_curr = 0 # V
@@ -117,7 +101,7 @@ def downslope_analysis_jibson(time_history):
     return block_data
 
 
-def downslope_analysis_dgr(time_history):
+def downslope_analysis_dgr(time_history, acc_crit):
         if time_history is None:
             return
         else:
@@ -125,14 +109,7 @@ def downslope_analysis_dgr(time_history):
         time = time_history[0][:]
         dt = time[1]-time[0]
         gnd_acc = time_history[1][:]
-        while True:
-            acc_crit = input('Enter critical acceleration (g): ') # T
-            try:
-                acc_crit = float(acc_crit) * G_EARTH
-                break
-            except ValueError:
-                print('Enter a valid number.')
-        gnd_vel = time_integrate(gnd_acc, dt)
+        gnd_vel = spint.cumulative_trapezoid(gnd_acc, time, initial=0)
         block_vel = np.copy(gnd_vel)
         block_acc = []
         block_sliding = False
@@ -151,12 +128,33 @@ def downslope_analysis_dgr(time_history):
             else:
                 continue
         relative_vel = gnd_vel - block_vel
-        block_disp = time_integrate(relative_vel, dt)
+        block_disp = spint.cumulative_trapezoid(relative_vel, time, initial=0)
         print('Displacement: '+'{:.4f}'.format(block_disp[-1]*M_TO_CM)+' cm')
         block_data = np.vstack((time, block_disp, block_vel))
         return block_data
 
+
+def compare_methods(block_data_1, block_data_2):
+    fig, axs = plt.subplots(2, 1, sharex=True)
+    axs[0].plot(block_data_1[0][:], block_data_1[1][:]*M_TO_CM, label='Jibson')
+    axs[0].plot(block_data_2[0][:], block_data_2[1][:]*M_TO_CM, label='Garcia-Rivas')
+    axs[0].set_ylabel('Displacement (cm)')
+    axs[1].plot(block_data_1[0][:], abs(block_data_1[1][:]-block_data_2[1][:]))
+    # axs[1].plot(block_data_2[0][:], block_data_2[1][:]*M_TO_CM, label='Garcia-Rivas')
+    axs[1].set_ylabel('Differential Displacement (cm)')
+    plt.show()
+
+
 while True:
-    downslope_analysis_jibson(read_csv())
+    time_hist = read_csv()
+    while True:
+        acc_crit = input('Enter critical acceleration (g): ') # T
+        try:
+            acc_crit = float(acc_crit) * G_EARTH
+            break
+        except ValueError:
+            print('Enter a valid number.')
+    downslope_analysis_jibson(time_hist, acc_crit)
+    downslope_analysis_dgr(time_hist, acc_crit)
     if input('Continue? (y/n): ') == 'n':
         break
