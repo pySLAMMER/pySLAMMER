@@ -22,6 +22,15 @@ def integrate(input,step):
             output[i] = output[i-1] + 0.5*(input[i]+input[i-1])*step
     return output
 
+def vel_verlet(acc,dt):
+    vel = np.zeros_like(acc)
+    pos = np.zeros_like(acc)
+    for i in range(len(acc)-1):
+        vel_half_step = vel[i]+0.5*acc[i]*dt
+        pos[i+1] = pos[i]+vel_half_step*dt
+        vel[i+1] = vel_half_step+0.5*acc[i+1]*dt
+    return(vel)
+
 # This function determines absolute block velocity based on ground velocity and whether or not ground
 # acceleration is greater than critical acceleration.
 def blockVelocity(gVel,gAcc,aCrit,dt):
@@ -31,12 +40,14 @@ def blockVelocity(gVel,gAcc,aCrit,dt):
         tVel = bVel[i-1] + aCrit*dt # Temporary velocity value assuming the block is sliding with acceleration aCrit.
         if gAcc[i] > aCrit:
             blockSliding = True
-        elif tVel > gVel[i]: # Ends block sliding if block velocity matches ground velocity.
+        elif tVel >= gVel[i]: # Ends block sliding if block velocity matches ground velocity.
             blockSliding = False
+        else:
+           pass
         if blockSliding == True:
             bVel[i] = tVel
         else:
-            continue
+            pass
     return bVel
 
 # Plotting to examine output.
@@ -51,45 +62,49 @@ def plotOutput(gAcc,gVel,bVel,bDisp,t):
     axs[2].set_ylabel('Displacement (cm)')
     for i in range(len(axs)):
         axs[i].set_xlabel("Time (s)")
-        axs[i].legend()
+        # axs[i].legend()
         axs[i].grid(which='both')
-    plt.show()
+    fig.canvas.toolbar_position = 'top'
+    return fig, axs
 
 def downslopeAnalysis(tHist,aCrit):
     t = tHist[0,:]
     gAcc = tHist[1,:]
     dt = t[1]-t[0] # Time interval between samples (s).
-    gVel = integrate(gAcc,dt) # Determine ground velocity (gVel).
+    # gVel = integrate(gAcc,dt) # Determine ground velocity (gVel).
+    gVel = vel_verlet(gAcc,dt)
     bVel = blockVelocity(gVel,gAcc,aCrit,dt) # Determine block velocity (bVel)
 
     # Determine block accumulated displacement (bDisp) based on relative velocity (rVel).
     rVel = gVel - bVel        
     bDisp = integrate(rVel,dt)
-    print('Accumulated displacement: ' + str(bDisp[-1]*100) + ' cm.')
-    plotOutput(gAcc,gVel,bVel,bDisp,t)
-    
-def normModeTimeHist():
-    timeHistFile = tkf.askopenfile(mode='r',title='Select a Time History')
-    thf = csv.reader(timeHistFile)
+    total_disp = bDisp[-1]*100
+    print(f'{total_disp = :.3f} cm')
+    return gAcc, gVel, bVel, bDisp, t 
 
-    # Time (t) and ground acceleration (gAcc) arrays are created as empty python lists and later are
-    # converted to numpy arrays after csv parsing is complete. This allows array creation without 
-    # knowing length.
-    t = []
-    gAcc = []
+def normModeTimeHist(timeHistFile):
+    # timeHistFile = tkf.askopenfile(mode='r',title='Select a Time History')
+    with open(timeHistFile) as input_file:
+        thf = csv.reader(input_file)
 
-    # For loop to parse acceleration time history csv file. Ignores header data containing '#' and
-    # assumes row format is [time,acceleration]. Reads row and appends values of time and acceleration
-    # respective array.
-    for row in thf:
-        if '#' in row[0]:
-            continue
-        t.append(float((row[0])))
-        gAcc.append(float((row[1])))
-    t = np.array(t)
-    gAcc = np.array(gAcc) * g # Convert to m/s^2 for reasons.
-    tHist = np.vstack((t,gAcc))
-    return tHist
+        # Time (t) and ground acceleration (gAcc) arrays are created as empty python lists and later are
+        # converted to numpy arrays after csv parsing is complete. This allows array creation without 
+        # knowing length.
+        t = []
+        gAcc = []      
+
+        # For loop to parse acceleration time history csv file. Ignores header data containing '#' and
+        # assumes row format is [time,acceleration]. Reads row and appends values of time and acceleration
+        # respective array.
+        for row in thf:
+            if '#' in row[0]:
+                continue
+            t.append(float((row[0])))
+            gAcc.append(float((row[1])))
+        t = np.array(t)
+        gAcc = np.array(gAcc) * g # Convert to m/s^2 for reasons.
+        tHist = np.vstack((t,gAcc)) 
+        return tHist
 
 def testModeTimeHist():
     timeInt = float(input('Enter dt (s): '))
@@ -135,11 +150,11 @@ def writeCSV(thf):
     print('File save complete!')
     
 ############# MAIN LOOP #############
-
-end = False
-while end == False:
-    tHist = modeSelect()    
-    aCrit = float(input('Enter critical acceleration (g): ')) * g # User input critical acceleration (m/s^2).    
-    downslopeAnalysis(tHist,aCrit)
-    end = askIfDone()
+if __name__ == '__main__':
+    end = False
+    while end == False:
+        tHist = modeSelect()    
+        aCrit = float(input('Enter critical acceleration (g): ')) * g # User input critical acceleration (m/s^2).    
+        downslopeAnalysis(tHist,aCrit)
+        end = askIfDone()
     
