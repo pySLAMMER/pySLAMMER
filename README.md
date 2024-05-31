@@ -1,4 +1,5 @@
 # pySLAMMER
+
 Python code for calculating sliding block displacements.
 As the name indicates, this program is based on the USGS software SLAMMER[^1].
 
@@ -34,7 +35,6 @@ Although there are currently no plans for a standalone graphical user interface 
 [^1]: Jibson, R.W., Rathje, E.M., Jibson, M.W., and Lee, Y.W., 2013, SLAMMER—Seismic LAndslide Movement Modeled using Earthquake Records (ver.1.1, November 2014): U.S. Geological Survey Techniques and Methods, book 12, chap. B1, unpaged. https://pubs.usgs.gov/tm/12b1/
 
 [^2]: Newmark, N. M. (1965). Effects of Earthquakes on Dams and Embankments. Geotechnique, 15(2), 139–160.
-
 
 [^3]: Jibson, R. W. (1993). Predicting Earthquake-Induced Landslide Displacements Using Newmark’s Sliding Block Analysis. Transportation Research Record, 1411. https://trid.trb.org/view/384547
 
