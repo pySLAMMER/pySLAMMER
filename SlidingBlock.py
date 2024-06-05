@@ -51,9 +51,10 @@ def blockVelocity(gVel,gAcc,aCrit,dt):
     return bVel
 
 # Plotting to examine output.
-def plotOutput(gAcc,gVel,bVel,bDisp,t):
+def plotOutput(gAcc,gVel,bVel,bDisp,t,ky):
     fig, axs = plt.subplots(3,1,sharex=True)
     axs[0].plot(t, gAcc/g, label='Ground Acceleration')
+    axs[0].plot(t, ky*np.ones(len(t)), label='Yield Acceleration', linestyle='--', color='black', linewidth=0.5)
     axs[0].set_ylabel('Acceleration (g)')
     axs[1].plot(t, gVel*100, label='Ground Velocity')
     axs[1].plot(t, bVel*100, label='Block Velocity')
