@@ -4,6 +4,7 @@ import numpy as np
 import scipy.integrate as spint
 
 M_TO_CM = 100
+G_EARTH = 9.80665
 
 
 def downslope_analysis_jibson(time_history, acc_crit):
@@ -12,7 +13,7 @@ def downslope_analysis_jibson(time_history, acc_crit):
 
     Parameters:
     - time_history (numpy.ndarray): Array containing time and acceleration data.
-    - acc_crit (float): Critical acceleration value.
+    - acc_crit (float): Critical acceleration value in multiples of g.
 
     Returns:
     - block_data (numpy.ndarray): Array containing time, displacement, and velocity data.
@@ -21,6 +22,7 @@ def downslope_analysis_jibson(time_history, acc_crit):
         return
     else:
         pass
+    acc_crit = acc_crit * G_EARTH
     time = time_history[0][:]
     gnd_acc = time_history[1][:]
     block_disp = []
@@ -67,7 +69,7 @@ def downslope_analysis_dgr(time_history, acc_crit):
 
     Parameters:
     - time_history (numpy.ndarray): Array containing time and acceleration data.
-    - acc_crit (float): Critical acceleration value.
+    - acc_crit (float): Critical acceleration value in multiples of g.
 
     Returns:
     - block_data (numpy.ndarray): Array containing time, displacement, and velocity data.
@@ -76,6 +78,7 @@ def downslope_analysis_dgr(time_history, acc_crit):
         return
     else:
         pass
+    acc_crit = acc_crit * G_EARTH
     time = time_history[0][:]
     dt = time[1]-time[0]
     gnd_acc = time_history[1][:]
