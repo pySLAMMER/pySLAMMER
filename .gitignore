@@ -114,3 +114,5 @@ dmypy.json
 # jupyterlite
 *.doit.db
 _output
+.jupyter/.DS_Store
+.DS_Store

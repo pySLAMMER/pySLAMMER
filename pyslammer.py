@@ -4,7 +4,6 @@ from math import pi
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import tkinter.filedialog as tkf
 import csv
 
 g = 9.80665 # Acceleration due to gravity (m/s^2).
@@ -51,9 +50,10 @@ def blockVelocity(gVel,gAcc,aCrit,dt):
     return bVel
 
 # Plotting to examine output.
-def plotOutput(gAcc,gVel,bVel,bDisp,t):
+def plotOutput(gAcc,gVel,bVel,bDisp,t,ky):
     fig, axs = plt.subplots(3,1,sharex=True)
     axs[0].plot(t, gAcc/g, label='Ground Acceleration')
+    axs[0].plot(t, ky*np.ones(len(t)), label='Yield Acceleration', linestyle='--', color='black', linewidth=0.5)
     axs[0].set_ylabel('Acceleration (g)')
     axs[1].plot(t, gVel*100, label='Ground Velocity')
     axs[1].plot(t, bVel*100, label='Block Velocity')
@@ -79,7 +79,7 @@ def downslopeAnalysis(tHist,aCrit):
     rVel = gVel - bVel        
     bDisp = integrate(rVel,dt)
     total_disp = bDisp[-1]*100
-    print(f'{total_disp = :.3f} cm')
+    # print(f'{total_disp = :.3f} cm')
     return gAcc, gVel, bVel, bDisp, t 
 
 def normModeTimeHist(timeHistFile):
@@ -106,55 +106,17 @@ def normModeTimeHist(timeHistFile):
         tHist = np.vstack((t,gAcc)) 
         return tHist
 
-def testModeTimeHist():
-    timeInt = float(input('Enter dt (s): '))
-    t = np.arange(0,30,timeInt)
-    freq = float(input('Enter desired frequency (Hz): '))*2*pi
-    gAcc = np.sin(freq*t) * g
-    tHist = np.vstack((t,gAcc))
-    # writeCSV(tHist)
-    return tHist
 
-def modeSelect():
-    mode = 0
-    while mode not in (1,2):
-        mode = input('Select mode. \n (1) Normal \n (2) Test \n')
-        try:
-            mode = int(mode)
-        except:
-            continue        
-    if mode == 1:
-        tHist = normModeTimeHist()   
-    elif mode == 2:
-        tHist = testModeTimeHist()
-    return tHist
 
-def askIfDone():
-    end = 0
-    while end not in (1,2):
-        end = input('Exit?  \n (1) No \n (2) Yes \n')
-        try:
-            end = int(end)
-        except:
-            continue
-    if end == 1:
-        return False
-    elif end == 2:
-        return True
-
-def writeCSV(thf):
-    file = tkf.asksaveasfile(mode='w',title='Save Output',)
-    writer = csv.writer(file,delimiter=',')
-    for row in range(thf.shape[1]):
-        writer.writerow([thf[1,row]/g])
-    print('File save complete!')
+# def writeCSV(thf):
+#     file = tkf.asksaveasfile(mode='w',title='Save Output',)
+#     writer = csv.writer(file,delimiter=',')
+#     for row in range(thf.shape[1]):
+#         writer.writerow([thf[1,row]/g])
+#     print('File save complete!')
     
 ############# MAIN LOOP #############
 if __name__ == '__main__':
-    end = False
-    while end == False:
-        tHist = modeSelect()    
-        aCrit = float(input('Enter critical acceleration (g): ')) * g # User input critical acceleration (m/s^2).    
-        downslopeAnalysis(tHist,aCrit)
-        end = askIfDone()
+    pass
+
     
