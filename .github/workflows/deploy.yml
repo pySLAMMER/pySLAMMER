@@ -24,7 +24,7 @@ jobs:
       - name: Build the JupyterLite site
         run: |
           cp README.md demos
-          cp LICENSE demos
+          cp LICENSE.txt demos
           jupyter lite build --contents demos --output-dir dist
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
