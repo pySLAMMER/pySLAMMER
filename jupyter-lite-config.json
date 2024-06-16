@@ -1,0 +1,7 @@
+{
+    "PipliteAddon": {
+        "piplite_urls": [
+            "pyslammer/dist/pyslammer-0.0.1-py3-none-any.whl"
+        ]
+    }
+}
