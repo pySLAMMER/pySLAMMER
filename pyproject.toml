@@ -1,0 +1,9 @@
+[project]
+name = "pyslammer"
+authors = [
+    {name = "Lorne Arnold", email = "arnoldl@uw.edu"},
+]
+version = "0.0.1"
+description = "Coming soon"
+[tool.setuptools]
+packages = ["pyslammer"]

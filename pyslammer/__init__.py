@@ -1,0 +1,3 @@
+import pyslammer.pyslammer
+import pyslammer.analytical_sliding_block
+import pyslammer.demo_widgets
