@@ -1,7 +1,7 @@
-{
-    "PipliteAddon": {
-        "piplite-wheels": [
-            "pyslammer/dist/pyslammer-0.0.1-py3-none-any.whl"
-        ]
-    }
-}
+// {
+//     "PipliteAddon": {
+//         "piplite-wheels": [
+//             "pyslammer/pypi/pyslammer-0.0.1-py3-none-any.whl"
+//         ]
+//     }
+// }
