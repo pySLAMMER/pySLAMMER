@@ -4,10 +4,10 @@ import numpy as np
 import scipy.integrate as spint
 
 M_TO_CM = 100
-G_EARTH = 9.80665
+G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
 
-def downslope_analysis_jibson(time_history, acc_crit):
+def downslope_analysis_jibson(time_history: np.ndarray, acc_crit: float):
     """
     Perform downslope analysis using Jibson's 1993 method.
 
@@ -63,7 +63,7 @@ def downslope_analysis_jibson(time_history, acc_crit):
     return block_data
 
 
-def downslope_analysis_dgr(time_history, acc_crit):
+def downslope_analysis_dgr(time_history: np.ndarray, acc_crit: float):
     """
     Perform downslope analysis using Garcia-Rivas' method.
 
@@ -74,6 +74,15 @@ def downslope_analysis_dgr(time_history, acc_crit):
     Returns:
     - block_data (numpy.ndarray): Array containing time, displacement, and velocity data.
     """
+
+    # Perform rigid block downslope analysis via integration of relative velocity
+    # between the block and the ground. Trapezoid integration is used to caluclate
+    # ground velocity. Block velocity matches ground velocity until ground acceleration
+    # exceeds the critical acceleration, at which point the block begins to slide 
+    # accelerating at the critical acceleration. The block stops sliding when its velocity
+    # exceeds ground velocity. Block displacement is then calculated by integrating
+    # the relative velocity between the block and the ground.
+
     if time_history is None:
         return
     else:
