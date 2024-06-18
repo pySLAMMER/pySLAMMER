@@ -1,10 +1,9 @@
-from math import pi
 from pathlib import Path
 import tkinter.filedialog as tkf
 import tkinter.simpledialog as dlg
 import numpy as np
+import datetime as dtm
 import csv
-import datetime
 
 G_EARTH = 9.80665
 
@@ -57,14 +56,13 @@ def csv_time_hist(filename: str):
     return time_history
 
 
-def test_time_hist(freq_hz: float, time_interval: float, write=False, output_dir=''):
+def test_time_hist(freq_hz: float, write=False, output_dir=''):
     """
-    Generate a 30 second time history of acceleration for a given frequency and time interval. 
+    Generate a 30 second time history of acceleration for a given frequency. 
     Optionally write the time history to a CSV file.
 
     Parameters:
     freq_hz (float): The frequency in hertz.
-    time_interval (float): The time interval.
     write (bool, optional): Flag to indicate whether to write the time history to a file. Defaults to False.
     output_dir (str, optional): The output directory path. Defaults to ''.
 
@@ -72,15 +70,15 @@ def test_time_hist(freq_hz: float, time_interval: float, write=False, output_dir
     numpy.ndarray: The time history array.
 
     """     
-    time = np.arange(0, 30, time_interval)
-    accel = np.sin(freq_hz*2*pi*time) * G_EARTH
+    time = np.arange(0, 30, 0.001)
+    accel = np.sin(freq_hz*2*np.pi*time) * G_EARTH
     time_history = np.vstack((time, accel))
     if write == True:
         if output_dir == '':
             output_dir = tkf.askdirectory(title='Select an Output Directory')
         else:
             pass
-        output_name = '/' + str(freq_hz) + '_Hz_' + str(time_interval) +'_s dt.csv'
+        output_name = '/' + str(freq_hz) + '_Hz_harmonic_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.csv'
         output = output_dir + output_name
         with open(output, 'w', newline='') as file:
             writer = csv.writer(file)
@@ -112,9 +110,9 @@ def write_output(block_data: np.ndarray, output_name='', output_dir='', input_fi
         else:
             pass
         if output_name == '':
-            output_name = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_output.csv'
+            output_name = 'pySLAMMER_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_output.csv'
         else:
-            pass
+            output_name = output_name + '_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.csv'
     output = output_dir / output_name
     with open(output, 'w', newline='') as file:
         writer = csv.writer(file)
