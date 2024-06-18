@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main
+      - merge_test
   pull_request:
     branches:
       - '*'
