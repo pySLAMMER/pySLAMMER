@@ -1,9 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "pyslammer"
 authors = [
     {name = "Lorne Arnold", email = "arnoldl@uw.edu"},
+    {name = "Donald Garcia-Rivas", email = "rivas203@uw.edu"}
 ]
-version = "0.0.1"
-description = "Coming soon"
-[tool.setuptools]
-packages = ["pyslammer"]
+version = "0.0.2"
+description = "Python code for calculating sliding block displacements (based on the USGS software SLAMMER)."
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+
+[project.urls]
+Homepage = "https://github.com/lornearnold/pyslammer"
