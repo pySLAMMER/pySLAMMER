@@ -1,6 +1,6 @@
 from pathlib import Path
-import tkinter.filedialog as tkf
-import tkinter.simpledialog as dlg
+# import tkinter.filedialog as tkf
+# import tkinter.simpledialog as dlg
 import numpy as np
 import datetime as dtm
 import csv
@@ -8,15 +8,15 @@ import csv
 G_EARTH = 9.80665
 
 
-def select_csv():
-    """
-    Open a file dialog to select a time history CSV file.
+# def select_csv():
+#     """
+#     Open a file dialog to select a time history CSV file.
 
-    Returns:
-    file: The selected file.
-    """
-    file = tkf.askopenfilenames(title='Select a Time History CSV File')
-    return file
+#     Returns:
+#     file: The selected file.
+#     """
+#     file = tkf.askopenfilenames(title='Select a Time History CSV File')
+#     return file
 
 
 def csv_time_hist(filename: str):
@@ -56,64 +56,64 @@ def csv_time_hist(filename: str):
     return time_history
 
 
-def test_time_hist(freq_hz: float, write=False, output_dir=''):
-    """
-    Generate a 30 second time history of acceleration for a given frequency. 
-    Optionally write the time history to a CSV file.
+# def test_time_hist(freq_hz: float, write=False, output_dir=''):
+#     """
+#     Generate a 30 second time history of acceleration for a given frequency. 
+#     Optionally write the time history to a CSV file.
 
-    Parameters:
-    freq_hz (float): The frequency in hertz.
-    write (bool, optional): Flag to indicate whether to write the time history to a file. Defaults to False.
-    output_dir (str, optional): The output directory path. Defaults to ''.
+#     Parameters:
+#     freq_hz (float): The frequency in hertz.
+#     write (bool, optional): Flag to indicate whether to write the time history to a file. Defaults to False.
+#     output_dir (str, optional): The output directory path. Defaults to ''.
 
-    Returns:
-    numpy.ndarray: The time history array.
+#     Returns:
+#     numpy.ndarray: The time history array.
 
-    """     
-    time = np.arange(0, 30, 0.001)
-    accel = np.sin(freq_hz*2*np.pi*time) * G_EARTH
-    time_history = np.vstack((time, accel))
-    if write == True:
-        if output_dir == '':
-            output_dir = tkf.askdirectory(title='Select an Output Directory')
-        else:
-            pass
-        output_name = '/' + str(freq_hz) + '_Hz_harmonic_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.csv'
-        output = output_dir + output_name
-        with open(output, 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerows(time_history.T)
-    return time_history
+#     """     
+#     time = np.arange(0, 30, 0.001)
+#     accel = np.sin(freq_hz*2*np.pi*time) * G_EARTH
+#     time_history = np.vstack((time, accel))
+#     if write == True:
+#         if output_dir == '':
+#             output_dir = tkf.askdirectory(title='Select an Output Directory')
+#         else:
+#             pass
+#         output_name = '/' + str(freq_hz) + '_Hz_harmonic_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.csv'
+#         output = output_dir + output_name
+#         with open(output, 'w', newline='') as file:
+#             writer = csv.writer(file)
+#             writer.writerows(time_history.T)
+#     return time_history
 
 
-def write_output(block_data: np.ndarray, output_name='', output_dir='', input_file=''):
-    """
-    Write the block data to a CSV file.
+# def write_output(block_data: np.ndarray, output_name='', output_dir='', input_file=''):
+#     """
+#     Write the block data to a CSV file.
 
-    Args:
-        block_data (numpy.ndarray): The block data to be written.
-        output_name (str, optional): The name of the output file. If not provided, a timestamp will be used.
-        output_dir (str, optional): The directory where the output file will be saved. If not provided, a directory will be selected using a file dialog.
-        input_file (str, optional): The input file path. If provided, the output directory and name will be derived from the input file.
+#     Args:
+#         block_data (numpy.ndarray): The block data to be written.
+#         output_name (str, optional): The name of the output file. If not provided, a timestamp will be used.
+#         output_dir (str, optional): The directory where the output file will be saved. If not provided, a directory will be selected using a file dialog.
+#         input_file (str, optional): The input file path. If provided, the output directory and name will be derived from the input file.
 
-    Returns:
-        None
-    """
-    if input_file != '':
-        output_dir = Path(input_file).parent
-        output_name = Path(input_file).stem + '_output.csv'
-    else:
-        if output_dir == '':
-            output_dir = tkf.askdirectory(title='Select an Output Directory')
-            if output_dir == '':
-                return
-        else:
-            pass
-        if output_name == '':
-            output_name = 'pySLAMMER_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_output.csv'
-        else:
-            output_name = output_name + '_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.csv'
-    output = output_dir / output_name
-    with open(output, 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerows(block_data.T)
+#     Returns:
+#         None
+#     """
+#     if input_file != '':
+#         output_dir = Path(input_file).parent
+#         output_name = Path(input_file).stem + '_output.csv'
+#     else:
+#         if output_dir == '':
+#             output_dir = tkf.askdirectory(title='Select an Output Directory')
+#             if output_dir == '':
+#                 return
+#         else:
+#             pass
+#         if output_name == '':
+#             output_name = 'pySLAMMER_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_output.csv'
+#         else:
+#             output_name = output_name + '_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.csv'
+#     output = output_dir / output_name
+#     with open(output, 'w', newline='') as file:
+#         writer = csv.writer(file)
+#         writer.writerows(block_data.T)
