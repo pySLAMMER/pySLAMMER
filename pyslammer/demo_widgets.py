@@ -1,4 +1,5 @@
 import ipywidgets as widgets
+import pyslammer.utilities as util
 
 def setup_widgets():
     """
@@ -21,7 +22,7 @@ def setup_widgets():
     )
     # Selecting the ground motion
     gm_widget = widgets.Dropdown(
-        options=[('Northridge', 'Northridge_VSP-360.csv'), ('Loma Prieta (not implemented)', 102), ('Nisqually (not implemented)', 103)],
+        options=util.sample_ground_motions(),
         value='Northridge_VSP-360.csv',
         description='Select ground motion:',
     )
