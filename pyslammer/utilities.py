@@ -22,17 +22,15 @@ __all__ = ['csv_time_hist', 'sample_ground_motions']
 #     return file
 
 def sample_ground_motions():
-    sgms = []
+    sgms = {}
 
     # Get the path to the sample_ground_motions folder
-    folder_path = os.path.join(os.path.dirname(__file__), "sample_ground_motions")
+    folder_path = Path(__file__).resolve().parent / "sample_ground_motions"
 
     # Iterate over all files in the folder
-    for file_name in os.listdir(folder_path):
-        # Check if the file is a CSV file
-        if file_name.endswith(".csv"):
-            # Add the file name to the list
-            sgms.append(file_name)
+    for file_path in folder_path.glob("*.csv"):
+        # Add the file name to the list
+        sgms[file_path.name[:-4]] = csv_time_hist(file_path)
 
     return sgms
 
