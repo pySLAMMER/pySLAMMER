@@ -58,7 +58,7 @@ def downslope_analysis_jibson(time_history: np.ndarray, acc_crit: float):
         block_disp.append(pos_curr)
         block_vel.append(vel_curr)
         block_acc.append(acc_curr)
-    print('Displacement: ' + '{:.4f}'.format(block_disp[-1] * M_TO_CM) + ' cm')
+    # print('Displacement: ' + '{:.4f}'.format(block_disp[-1] * M_TO_CM) + ' cm')
     block_data = np.vstack((time, block_disp, block_vel))
     return block_data
 
@@ -111,6 +111,6 @@ def downslope_analysis_dgr(time_history: np.ndarray, acc_crit: float):
             continue
     relative_vel = gnd_vel - block_vel
     block_disp = spint.cumulative_trapezoid(relative_vel, time, initial=0)
-    print('Displacement: '+'{:.4f}'.format(block_disp[-1]*M_TO_CM)+' cm')
+    # print('Displacement: '+'{:.4f}'.format(block_disp[-1]*M_TO_CM)+' cm')
     block_data = np.vstack((time, block_disp, block_vel))
     return block_data

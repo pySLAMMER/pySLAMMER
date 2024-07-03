@@ -1,4 +1,6 @@
 import ipywidgets as widgets
+import pyslammer.utilities as util
+import numpy as np
 
 def setup_widgets():
     """
@@ -20,10 +22,12 @@ def setup_widgets():
         disabled=False
     )
     # Selecting the ground motion
+    selections = [(name, time_history) for name, time_history in util.sample_ground_motions().items()]
     gm_widget = widgets.Dropdown(
-        options=[('Northridge', 'Northridge_VSP-360.csv'), ('Loma Prieta (not implemented)', 102), ('Nisqually (not implemented)', 103)],
-        value='Northridge_VSP-360.csv',
-        description='Select ground motion:',
+        options = selections,
+        value=selections[0][1],
+        equals=np.array_equal,
+        description='Select ground motion:'
     )
 
     # Setting the input PGA
@@ -42,7 +46,8 @@ def setup_widgets():
         disabled=False,
         button_style='warning', # 'success', 'info', 'warning', 'danger' or ''
         tooltip='Run Analysis',
-        icon='brave' # (FontAwesome names without the `fa-` prefix)
+        icon='refresh', # (FontAwesome names without the `fa-` prefix)
+        value = None
     )
 
     return gm_widget, ky_widget, analysis_widget, start_widget

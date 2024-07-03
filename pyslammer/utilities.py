@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 # import tkinter.filedialog as tkf
 # import tkinter.simpledialog as dlg
 import numpy as np
@@ -6,6 +7,8 @@ import datetime as dtm
 import csv
 
 G_EARTH = 9.80665
+
+__all__ = ['csv_time_hist', 'sample_ground_motions']
 
 
 # def select_csv():
@@ -17,6 +20,19 @@ G_EARTH = 9.80665
 #     """
 #     file = tkf.askopenfilenames(title='Select a Time History CSV File')
 #     return file
+
+def sample_ground_motions():
+    sgms = {}
+
+    # Get the path to the sample_ground_motions folder
+    folder_path = Path(__file__).resolve().parent / "sample_ground_motions"
+
+    # Iterate over all files in the folder
+    for file_path in folder_path.glob("*.csv"):
+        # Add the file name to the list
+        sgms[file_path.name[:-4]] = csv_time_hist(file_path)
+
+    return sgms
 
 
 def csv_time_hist(filename: str):

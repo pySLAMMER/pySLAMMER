@@ -59,8 +59,8 @@ class SlidingBlockAnalysis:
         self.ky = ky
         self.time = time_hist[0]
         self.ground_acc = time_hist[1]
-        self.ground_vel = spint.cumtrapz(self.ground_acc, self.time, initial=0)
-        self.ground_disp = spint.cumtrapz(self.ground_vel, self.time, initial=0)
+        self.ground_vel = spint.cumulative_trapezoid(self.ground_acc, self.time, initial=0)
+        self.ground_disp = spint.cumulative_trapezoid(self.ground_vel, self.time, initial=0)
         
         if self.method == "jibson":
             result = downslope_analysis_jibson(time_hist, ky)
@@ -79,7 +79,7 @@ class SlidingBlockAnalysis:
             print(f"{self.method} is an invalid method. Please use 'jibson' or 'dgr'.")
         if result is not None:
             self.block_acc = np.where(abs(self.block_vel - self.ground_vel)>1e-10, G_EARTH*self.ky, self.ground_acc)
-            self.block_disp = spint.cumtrapz(self.block_vel, self.time, initial=0)
+            self.block_disp = spint.cumulative_trapezoid(self.block_vel, self.time, initial=0)
             self.max_sliding_disp = np.max(self.sliding_disp)
             
         return None
@@ -106,6 +106,7 @@ def sliding_block_plot(sliding_block_result, sliding_vel_mode = True, fig = None
     axs[0].plot(sbr.time, sbr.ground_acc, label='Ground Acceleration', color=gclr)
     axs[0].plot(sbr.time, sbr.block_acc, label='Block Acceleration', color=bclr)
     axs[0].set_ylabel('Acceleration (m/s^2)')
+    axs[0].set_xlim([sbr.time[0], sbr.time[-1]])
 
     if sliding_vel_mode:
         axs[1].plot(sbr.time, sbr.sliding_vel, label='Sliding Velocity', color=bclr)
