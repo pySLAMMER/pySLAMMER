@@ -43,7 +43,8 @@ def setup_widgets():
         disabled=False,
         button_style='warning', # 'success', 'info', 'warning', 'danger' or ''
         tooltip='Run Analysis',
-        icon='brave' # (FontAwesome names without the `fa-` prefix)
+        icon='refresh', # (FontAwesome names without the `fa-` prefix)
+        value = None
     )
 
     return gm_widget, ky_widget, analysis_widget, start_widget

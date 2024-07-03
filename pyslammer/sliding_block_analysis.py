@@ -106,6 +106,7 @@ def sliding_block_plot(sliding_block_result, sliding_vel_mode = True, fig = None
     axs[0].plot(sbr.time, sbr.ground_acc, label='Ground Acceleration', color=gclr)
     axs[0].plot(sbr.time, sbr.block_acc, label='Block Acceleration', color=bclr)
     axs[0].set_ylabel('Acceleration (m/s^2)')
+    axs[0].set_xlim([sbr.time[0], sbr.time[-1]])
 
     if sliding_vel_mode:
         axs[1].plot(sbr.time, sbr.sliding_vel, label='Sliding Velocity', color=bclr)
