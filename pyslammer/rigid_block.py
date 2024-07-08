@@ -98,7 +98,7 @@ def downslope_analysis_dgr(time_history: np.ndarray, acc_crit: float):
             block_vel[i] = tmp_block_vel
         else:
             continue
-    relative_vel = gnd_vel - block_vel
+    relative_vel = abs(gnd_vel - block_vel)
     block_disp = spint.cumulative_trapezoid(relative_vel, time, initial=0)
     block_data = np.vstack((time, block_disp, relative_vel))
     return block_data
