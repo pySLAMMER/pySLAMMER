@@ -3,7 +3,6 @@
 import numpy as np
 import scipy.integrate as spint
 
-M_TO_CM = 100
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
 
@@ -12,11 +11,11 @@ def downslope_analysis_jibson(time_history: np.ndarray, acc_crit: float):
     Perform downslope analysis using Jibson's 1993 method.
 
     Parameters:
-    - time_history (numpy.ndarray): Array containing time and acceleration data.
+    - time_history (numpy.ndarray): Array containing time (s) and acceleration (g's) data.
     - acc_crit (float): Critical acceleration value in multiples of g.
 
     Returns:
-    - block_data (numpy.ndarray): Array containing time, displacement, and velocity data.
+    - block_data (numpy.ndarray): Array containing time (s), displacement (m), and velocity (m/s) data.
     """
     if time_history is None:
         return
@@ -58,7 +57,6 @@ def downslope_analysis_jibson(time_history: np.ndarray, acc_crit: float):
         block_disp.append(pos_curr)
         block_vel.append(vel_curr)
         block_acc.append(acc_curr)
-    # print('Displacement: ' + '{:.4f}'.format(block_disp[-1] * M_TO_CM) + ' cm')
     block_data = np.vstack((time, block_disp, block_vel))
     return block_data
 
@@ -68,20 +66,12 @@ def downslope_analysis_dgr(time_history: np.ndarray, acc_crit: float):
     Perform downslope analysis using Garcia-Rivas' method.
 
     Parameters:
-    - time_history (numpy.ndarray): Array containing time and acceleration data.
+    - time_history (numpy.ndarray): Array containing time and acceleration (g's) data.
     - acc_crit (float): Critical acceleration value in multiples of g.
 
     Returns:
-    - block_data (numpy.ndarray): Array containing time, displacement, and velocity data.
+    - block_data (numpy.ndarray): Array containing time (s), displacement (m), and velocity (m/s) data.
     """
-
-    # Perform rigid block downslope analysis via integration of relative velocity
-    # between the block and the ground. Trapezoid integration is used to caluclate
-    # ground velocity. Block velocity matches ground velocity until ground acceleration
-    # exceeds the critical acceleration, at which point the block begins to slide 
-    # accelerating at the critical acceleration. The block stops sliding when its velocity
-    # exceeds ground velocity. Block displacement is then calculated by integrating
-    # the relative velocity between the block and the ground.
 
     if time_history is None:
         return
@@ -93,7 +83,6 @@ def downslope_analysis_dgr(time_history: np.ndarray, acc_crit: float):
     gnd_acc = time_history[1][:]
     gnd_vel = spint.cumulative_trapezoid(gnd_acc, time, initial=0)
     block_vel = np.copy(gnd_vel)
-    block_acc = []
     block_sliding = False
     for i in range(len(gnd_acc)):
         if i == 0:
@@ -111,6 +100,5 @@ def downslope_analysis_dgr(time_history: np.ndarray, acc_crit: float):
             continue
     relative_vel = gnd_vel - block_vel
     block_disp = spint.cumulative_trapezoid(relative_vel, time, initial=0)
-    # print('Displacement: '+'{:.4f}'.format(block_disp[-1]*M_TO_CM)+' cm')
-    block_data = np.vstack((time, block_disp, block_vel))
+    block_data = np.vstack((time, block_disp, relative_vel))
     return block_data
