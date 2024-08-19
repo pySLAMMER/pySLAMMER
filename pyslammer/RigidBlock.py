@@ -1,40 +1,43 @@
 import numpy as np
-from WaveForm import WaveForm
-import rigid_block
+from Record import Record
 
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
-class RigidBlock(WaveForm):
-    def __init__(self, gnd_motion: np.ndarray=[], name: str='', k_y: float=0.0):
+class RigidBlock(Record):
+    def __init__(self, gnd_motion: np.ndarray=[], name: str=''):
         super().__init__(gnd_motion, name)
-        self.k_y = k_y * G_EARTH
+        self.k_y = 0.0
         self.block_acc = []
         self.block_vel = []
         self.block_disp = []
         self.total_disp = 0.0
 
     def __str__(self):
-        info = (
-                'Rigid Block Analysis\n'+
-                'Record  : {}\n'.format(self.name)+
-                'PGA     : {:.3f} g\n'.format(self.pga)+
-                'dt      : {:.3f} s\n'.format(self.dt)+
-                'k_y     : {:.3f} g\n'.format(self.k_y)+
-                'Disp    : {:.3f} m'.format(self.total_disp)
-               )
+        if self.dt == -1.0:
+            info = ('Record: {}\n'.format(self.name))
+        else:
+            info = (
+                    'Rigid Block Analysis\n'+
+                    'Record  : {}\n'.format(self.name)+
+                    'PGA     : {:.3f} g\n'.format(self.pga)+
+                    'dt      : {:.3f} s\n'.format(self.dt)+
+                    'k_y     : {:.3f} m/s^2\n'.format(self.k_y)+
+                    'Disp    : {:.3f} m'.format(self.total_disp)
+                )
         return info
     
-    def downslope_jibson(self):
+    def downslope_jibson(self, k_y: float=None):
         """
         Perform downslope analysis using Jibson's 1993 method.
 
-        Returns:
-        - block_data (numpy.ndarray): Array containing time (s), displacement (m), and velocity (m/s) data.
+        Parameters:
+        - k_y (float): Critical acceleration (g).
         """
         if self.dt == -1.0:
             return
         else:
             tol = 0.00001
+            self.k_y = k_y * G_EARTH
 
         # [previous, current]
         acc = [0, 0]
@@ -62,4 +65,5 @@ class RigidBlock(WaveForm):
             acc[0] = acc[1]
             self.block_disp.append(pos[1])
             self.block_vel.append(vel[1])
-            self.block_acc.append(acc[1])  
+            self.block_acc.append(acc[1])
+            self.total_disp = self.block_disp[-1]
