@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
-# import tkinter.filedialog as tkf
-# import tkinter.simpledialog as dlg
+import tkinter.filedialog as tkf
+import tkinter.simpledialog as dlg
 import numpy as np
 import datetime as dtm
 import csv
@@ -11,15 +11,15 @@ G_EARTH = 9.80665
 __all__ = ['csv_time_hist', 'sample_ground_motions']
 
 
-# def select_csv():
-#     """
-#     Open a file dialog to select a time history CSV file.
+def select_csv():
+    """
+    Open a file dialog to select a time history CSV file.
 
-#     Returns:
-#     file: The selected file.
-#     """
-#     file = tkf.askopenfilenames(title='Select a Time History CSV File')
-#     return file
+    Returns:
+    file: The selected file.
+    """
+    file = tkf.askopenfilenames(title='Select a Time History CSV File')
+    return file[0]
 
 def sample_ground_motions():
     sgms = {}
@@ -41,7 +41,7 @@ def csv_time_hist(filename: str):
 
     Returns:
         numpy.ndarray: A 2D numpy array containing time history data.
-            The first row represents time values, and the second row represents acceleration values.
+            The first row represents time values (seconds), and the second row represents acceleration values (multiples of g).
     """
     file = open(filename, 'r')
     if file is None:
@@ -67,7 +67,7 @@ def csv_time_hist(filename: str):
     else:
         pass
     time = np.array(time)
-    accel = np.array(accel) * G_EARTH
+    accel = np.array(accel)
     time_history = np.vstack((time, accel))
     return time_history
 

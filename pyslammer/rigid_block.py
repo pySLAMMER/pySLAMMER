@@ -23,7 +23,7 @@ def downslope_analysis_jibson(time_history: np.ndarray, acc_crit: float):
         pass
     acc_crit = acc_crit * G_EARTH
     time = time_history[0][:]
-    gnd_acc = time_history[1][:]
+    gnd_acc = time_history[1][:] * G_EARTH
     block_disp = []
     block_vel = []
     block_acc = []
