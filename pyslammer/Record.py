@@ -3,7 +3,7 @@ import scipy.integrate as spint
 
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
-class WaveForm():
+class Record():
 
     def __init__(self, gnd_motion: np.ndarray=[], name: str='None'):
         if len(gnd_motion) == 0:
