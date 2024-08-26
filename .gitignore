@@ -116,3 +116,6 @@ dmypy.json
 _output
 .jupyter/.DS_Store
 .DS_Store
+
+sandbox.py
+arduino.json
