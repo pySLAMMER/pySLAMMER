@@ -1,9 +1,12 @@
 import numpy as np
+import scipy.integrate as spint
 from Record import Record
 
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
+
 class RigidBlock(Record):
+
     def __init__(self, gnd_motion: np.ndarray=[], name: str=''):
         super().__init__(gnd_motion, name)
         self.k_y = 0.0
@@ -17,25 +20,34 @@ class RigidBlock(Record):
             info = ('Record: {}\n'.format(self.name))
         else:
             info = (
-                    'Rigid Block Analysis\n'+
-                    'Record  : {}\n'.format(self.name)+
-                    'PGA     : {:.3f} g\n'.format(self.pga)+
-                    'dt      : {:.3f} s\n'.format(self.dt)+
-                    'k_y     : {:.3f} m/s^2\n'.format(self.k_y)+
-                    'Disp    : {:.3f} m'.format(self.total_disp)
+                    'Rigid Block Analysis\n'
+                    +'Record  : {}\n'.format(self.name)
+                    +'PGA     : {:.3f} g\n'.format(self.pga)
+                    +'dt      : {:.3f} s\n'.format(self.dt)
+                    +'k_y     : {:.3f} m/s^2\n'.format(self.k_y)
+                    +'Disp    : {:.3f} m'.format(self.total_disp)
                 )
         return info
     
-    def downslope_jibson(self, k_y: float=None):
-        """
-        Perform downslope analysis using Jibson's 1993 method.
+    def _clear_block_params(self):
+        self.k_y = 0.0
+        self.block_acc = []
+        self.block_vel = []
+        self.block_disp = []
+        self.total_disp = 0.0
 
-        Parameters:
-        - k_y (float): Critical acceleration (g).
+    def downslope_jibson(self, k_y: float=0.0):
+        """
+        Calculate the displacement, velocity, and acceleration of a rigid block sliding downslope using the Jibson method.
+        Args:
+            k_y (float, optional): Critical acceleration in multiples of g.
+        Returns:
+            None
         """
         if self.dt == -1.0:
             return
         else:
+            self._clear_block_params()
             tol = 0.00001
             self.k_y = k_y * G_EARTH
 
@@ -67,3 +79,39 @@ class RigidBlock(Record):
             self.block_vel.append(vel[1])
             self.block_acc.append(acc[1])
             self.total_disp = self.block_disp[-1]
+
+    def downslope_dgr(self, k_y: float=0.0):
+        """
+        Calculate the displacement, velocity, and acceleration of a rigid block sliding downslope using the Garcia-Rivas method.
+        Args:
+            k_y (float, optional): Critical acceleration in multiples of g.
+        Returns:
+            None
+        """
+        if self.dt == -1.0:
+            return
+        else:
+            self._clear_block_params()
+            self.k_y = k_y * G_EARTH
+        block_sliding = False
+        for i in range(len(self.gnd_acc)):
+            if i == 0:
+                self.block_acc.append(self.gnd_acc[i])
+                self.block_vel.append(self.gnd_vel[i])
+                continue
+            tmp_block_vel = self.block_vel[i-1] + self.k_y*self.dt
+            if self.gnd_acc[i] > self.k_y:
+                block_sliding = True
+            elif tmp_block_vel > self.gnd_vel[i]:
+                block_sliding = False
+            else:
+                pass
+            if block_sliding == True:
+                self.block_vel.append(tmp_block_vel)
+                self.block_acc.append(self.k_y)
+            else:
+                self.block_acc.append(self.gnd_acc[i])
+                self.block_vel.append(self.gnd_vel[i])
+        self.block_vel = abs(self.gnd_vel - self.block_vel)
+        self.block_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
+        self.total_disp = self.block_disp[-1]
