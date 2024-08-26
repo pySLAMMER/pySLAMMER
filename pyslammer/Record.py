@@ -14,7 +14,7 @@ class Record():
             self.pga = 0.0
         else:
             self.name = name
-            self._gnd_motion = gnd_motion
+            self._gnd_motion = np.array(gnd_motion)
             self.time = gnd_motion[0][:]
             self.dt = self.time[1] - self.time[0]
             self._calc_gnd_params()
@@ -36,7 +36,7 @@ class Record():
         self.gnd_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
         self.pga = max(abs(self.gnd_acc)) / G_EARTH
     
-    def scale(self, pga: float=False):
+    def scale(self, pga: float=False, scale_factor: float=False):
         """
         Scale the ground motion using desired method.
         Args:
@@ -44,7 +44,8 @@ class Record():
         Returns: 
             None
         """
-        if sum([pga]) == 0:
+        check_list = [pga, scale_factor]
+        if sum(check_list) != 1:
             return
         else:
             if self._is_scaled:
@@ -57,6 +58,11 @@ class Record():
             self.gnd_vel *= scale_factor
             self.gnd_disp *= scale_factor
             self.pga = pga
+        elif scale_factor:
+            self.gnd_acc *= scale_factor
+            self.gnd_vel *= scale_factor
+            self.gnd_disp *= scale_factor
+            self.pga *= scale_factor
         else:
             return        
         self._is_scaled = True
@@ -107,7 +113,7 @@ class Record():
         else:
             return
     
-    def plot(self, acc=True, vel=True, disp=True):
+    def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, enable: bool=True):
         """
         Plots desired ground motion parameters.
         Args:
@@ -129,6 +135,11 @@ class Record():
         else:
             fig, ax = plt.subplots(num_plots, 1, num=self.name)
             ax[-1].set_xlabel('Time (s)')
+        fig.suptitle('Ground Motion\n{}'.format(self.name))
+        if enable:
+            pass
+        else:
+            return fig, ax
         if acc:
             if num_plots == 1:
                 acc = ax
@@ -162,5 +173,4 @@ class Record():
             disp.set_ylabel('Displacement (m)')
             disp.set_title('Ground Displacement')
             disp.legend()
-        fig.suptitle(self.name)
-        plt.show()
+        return fig, ax

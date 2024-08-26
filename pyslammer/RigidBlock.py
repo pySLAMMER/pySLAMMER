@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.integrate as spint
+import matplotlib.pyplot as plt
 from Record import Record
 
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
@@ -115,3 +116,51 @@ class RigidBlock(Record):
         self.block_vel = abs(self.gnd_vel - self.block_vel)
         self.block_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
         self.total_disp = self.block_disp[-1]
+
+    def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, gnd_motion: bool=False):
+        """
+        Plot the ground motion and the block response.
+        Args:
+            None
+        Returns:
+            None
+        """
+        if self.dt == -1.0:
+            return
+        num_plots = sum([acc, vel, disp])
+        if num_plots == 0:
+            return
+        else:
+            pass
+        fig, ax = super().plot(acc, vel, disp, gnd_motion)
+        fig.suptitle('Rigid Block Analysis\n{}'.format(self.name))
+        remain_plots = num_plots
+        if acc:
+            if num_plots == 1:
+                acc = ax
+            else:
+                i = num_plots - remain_plots
+                remain_plots -= 1
+                acc = ax[i]
+            acc.plot(self.time, self.block_acc, label='Block Acceleration')
+            acc.plot(self.time, [self.k_y for i in range(len(self.time))], label='Critical Acceleration')
+            acc.legend()
+        if vel:
+            if num_plots == 1:
+                vel = ax
+            else:
+                j = num_plots - remain_plots
+                remain_plots -= 1
+                vel = ax[j]
+            vel.plot(self.time, self.block_vel, label='Block Velocity')
+            vel.legend()
+        if disp:
+            if num_plots == 1:
+                disp = ax
+            else:
+                k = num_plots - remain_plots
+                remain_plots -= 1
+                disp = ax[k]
+            disp.plot(self.time, self.block_disp, label='Block Displacement')
+            disp.legend()
+        plt.show()
