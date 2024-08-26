@@ -14,10 +14,12 @@ class Record():
             self.pga = 0.0
         else:
             self.name = name
-            self.gnd_motion = gnd_motion
+            self._gnd_motion = gnd_motion
             self.time = gnd_motion[0][:]
             self.dt = self.time[1] - self.time[0]
             self._calc_gnd_params()
+            self._is_scaled = False
+            self._is_inverted = False
 
     def __str__(self):
         if self.dt == -1.0:
@@ -28,15 +30,105 @@ class Record():
                     +'dt    : {:.3f} s'.format(self.dt))
         return info
     
+    def _calc_gnd_params(self):
+        self.gnd_acc = self._gnd_motion[1][:] * G_EARTH
+        self.gnd_vel = spint.cumulative_trapezoid(self.gnd_acc, self.time, initial=0)
+        self.gnd_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
+        self.pga = max(abs(self.gnd_acc)) / G_EARTH
+    
+    def scale(self, pga: float=False):
+        """
+        Scale the ground motion using desired method.
+        Args:
+            pga (float, optional): Desired peak ground acceleration in g.
+        Returns: 
+            None
+        """
+        if sum([pga]) == 0:
+            return
+        else:
+            if self._is_scaled:
+                self.unscale()
+            else:
+                pass
+        if pga:
+            scale_factor = pga / self.pga
+            self.gnd_acc *= scale_factor
+            self.gnd_vel *= scale_factor
+            self.gnd_disp *= scale_factor
+            self.pga = pga
+        else:
+            return        
+        self._is_scaled = True
+        self.name = self.name + '_SCALED'
+
+    def unscale(self):
+        """
+        Unscale the ground motion.
+        Args:
+            None
+        Returns:
+            None
+        """
+        self._calc_gnd_params()
+        self.name = self.name.replace('_SCALED', '')
+
+    def invert(self):
+        """
+        Invert the ground motion.
+        Args:
+            None
+        Returns:
+            None
+        """
+        if self._is_inverted:
+            return
+        else:
+            self.gnd_acc *= -1
+            self.gnd_vel *= -1
+            self.gnd_disp *= -1
+        self._is_inverted = True
+        self.name = self.name + '_INVERTED'
+
+    def uninvert(self):
+        """
+        Uninvert the ground motion.
+        Args:
+            None
+        Returns:
+            None
+        """
+        if self._is_inverted:
+            self.gnd_acc *= -1
+            self.gnd_vel *= -1
+            self.gnd_disp *= -1
+            self._is_inverted = False
+            self.name = self.name.replace('_INVERTED', '')
+        else:
+            return
+    
     def plot(self, acc=True, vel=True, disp=True):
+        """
+        Plots desired ground motion parameters.
+        Args:
+            acc (bool, optional): Plot acceleration.
+            vel (bool, optional): Plot velocity.
+            disp (bool, optional): Plot displacement.
+        Returns:
+            None
+        """
         if self.dt == -1.0:
             return
         num_plots = sum([acc, vel, disp])
         remain_plots = num_plots
-        if num_plots == 1:
-            fig, ax = plt.subplots(figsize=(10, 10))
+        if num_plots == 0:
+            return
+        elif num_plots == 1:
+            fig, ax = plt.subplots(num=self.name)
+            ax.set_xlabel('Time (s)')
         else:
-            fig, ax = plt.subplots(num_plots, 1, figsize=(10, 10))
+            fig, ax = plt.subplots(num_plots, 1, num=self.name)
+            ax[-1].set_xlabel('Time (s)')
         if acc:
             if num_plots == 1:
                 acc = ax
@@ -67,48 +159,8 @@ class Record():
                 remain_plots -= 1
                 disp = ax[k]
             disp.plot(self.time, self.gnd_disp, label='Ground Displacement')
-            disp.set_xlabel('Time (s)')
             disp.set_ylabel('Displacement (m)')
             disp.set_title('Ground Displacement')
             disp.legend()
+        fig.suptitle(self.name)
         plt.show()
-    
-    def _calc_gnd_params(self):
-        self.gnd_acc = self.gnd_motion[1][:] * G_EARTH
-        self.gnd_vel = spint.cumulative_trapezoid(self.gnd_acc, self.time, initial=0)
-        self.gnd_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
-        self.inv_gnd_acc = -1 * self.gnd_acc
-        self.inv_gnd_vel = spint.cumulative_trapezoid(self.inv_gnd_acc, self.time, initial=0)
-        self.inv_gnd_disp = spint.cumulative_trapezoid(self.inv_gnd_vel, self.time, initial=0)
-        self.pga = max(abs(self.gnd_acc)) / G_EARTH
-        self.is_scaled = False
-    
-    def scale(self, pga: float=None):
-        """
-        Scale the ground motion using desired method.
-        Args:
-            pga (float, optional): Desired peak ground acceleration in g.
-        Returns: 
-            None
-        """
-        if pga is not None:
-            scale_factor = pga / self.pga
-            self.gnd_acc *= scale_factor
-            self.gnd_vel *= scale_factor
-            self.gnd_disp *= scale_factor
-            self.inv_gnd_acc *= scale_factor
-            self.inv_gnd_vel *= scale_factor
-            self.inv_gnd_disp *= scale_factor
-            self.pga = pga
-        self.is_scaled = True
-        self.name = self.name + '_SCALED'
-
-    def unscale(self):
-        """
-        Unscale the ground motion.
-        Args:
-            None
-        Returns:
-            None
-        """
-        self._calc_gnd_params()
