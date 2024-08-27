@@ -34,17 +34,17 @@ class SlidingBlockAnalysis:
         self.sliding_disp = None
         self.max_sliding_disp = None
 
-        self.time = 0
-        self.dint = 0
-        self.last = 0
-        self.skipped = False
-        self.timeStor = 0
-        # self.graphData = None
-        self._kmax = 0
-        self._damp = 0
-        self._vs = 0
-        self._dampf = 0
-        self._omega = 0
+        # self.time = 0
+        # self.dint = 0
+        # self.last = 0
+        # self.skipped = False
+        # self.timeStor = 0
+        # # self.graphData = None
+        # self._kmax = 0
+        # self._damp = 0
+        # self._vs = 0
+        # self._dampf = 0
+        # self._omega = 0
 
     # def set_value_size(self, Dint):
     #     if self.testing:

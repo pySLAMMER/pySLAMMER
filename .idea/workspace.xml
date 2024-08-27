@@ -5,19 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd79cd44-62af-48bf-93dc-64c179cab568" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyslammer/analysis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyslammer/constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyslammer/coupled_analysis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyslammer/decoupled_analysis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyslammer/decoupled_testing.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyslammer/dynamic_response.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyslammer/rigid_from_java.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demos/batch_demo.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/demos/batch_demo.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demos/interactive_demo.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/demos/interactive_demo.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyslammer/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyslammer/sliding_block_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/sliding_block_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/decoupled_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/decoupled_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/decoupled_testing.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/decoupled_testing.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/dynamic_response.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/dynamic_response.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/sample_ground_motions/Loalinga_1983_PVB-045.csv" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/sample_ground_motions/Coalinga_1983_PVB-045.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,11 +59,11 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Python.decoupled_analysis.executor&quot;: &quot;Run&quot;,
+    &quot;Python.decoupled_analysis.executor&quot;: &quot;Debug&quot;,
     &quot;Python.sliding_block_analysis.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;decoupled&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/lornearnold/GitHub/pyslammer&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -101,7 +96,9 @@
       <workItem from="1724379013823" duration="117000" />
       <workItem from="1724379135577" duration="4824000" />
       <workItem from="1724430004338" duration="11387000" />
-      <workItem from="1724691334691" duration="521000" />
+      <workItem from="1724691334691" duration="13801000" />
+      <workItem from="1724709555893" duration="1347000" />
+      <workItem from="1724712178121" duration="13300000" />
     </task>
     <servers />
   </component>
@@ -124,13 +121,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyslammer/decoupled_analysis.py</url>
-          <line>159</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -142,6 +132,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pyslammer$sliding_block_analysis.coverage" NAME="sliding_block_analysis Coverage Results" MODIFIED="1724379151212" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
-    <SUITE FILE_PATH="coverage/pyslammer$decoupled_analysis.coverage" NAME="decoupled_analysis Coverage Results" MODIFIED="1724433779091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
+    <SUITE FILE_PATH="coverage/pyslammer$decoupled_analysis.coverage" NAME="decoupled_analysis Coverage Results" MODIFIED="1724716965232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
   </component>
 </project>
