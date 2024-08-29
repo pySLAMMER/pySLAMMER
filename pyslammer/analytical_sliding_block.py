@@ -84,9 +84,9 @@ def show_solution_approach():
         None
     """
     display("The input acceleration (in units of g) is defined by:")
-    display(sym.Eq(sym.symbols('\ddot{u}_{in}(t)/g'), a_in))
-    display("The input velocity (in m/s) is defined by:")
-    display(sym.Eq(sym.symbols('\dot{u}_{in}(t)'), v_in))
+    display(sym.Eq(sym.symbols('\ddot{x_resp}_{in}(t)/g'), a_in))
+    display("The input velocity (in m/block_disp) is defined by:")
+    display(sym.Eq(sym.symbols('\dot{x_resp}_{in}(t)'), v_in))
     display("The input displacement (in m) is defined by:")
     display(sym.Eq(sym.symbols('u_{in}(t)'), x_in))
     return None
@@ -107,7 +107,7 @@ def create_harmonic_input_files(freq, resolution, cycles=10):
     t = np.linspace(0, duration, int(duration*resolution*cycles))
     a = np.sin(np.pi*2*freq*t)
     data = np.column_stack((t, a))
-    np.savetxt(f'sample_ground_motions/sine_{freq}_Hz_{resolution*freq}_sps.csv', data, delimiter=',', header=f'# Time Series: {freq} Hz sine wave \n # Time (s),Acceleration (g)')
+    np.savetxt(f'sample_ground_motions/sine_{freq}_Hz_{resolution*freq}_sps.csv', data, delimiter=',', header=f'# Time Series: {freq} Hz sine wave \n # Time (block_disp),Acceleration (g)')
     return None
 
 
@@ -175,8 +175,8 @@ def find_displacement(v_in, vb, t1, t2, vals):
     Parameters:
     v_in (symbolic expression): Velocity of the block before time t1.
     vb (symbolic expression): Velocity of the block during time t1 to t2.
-    t1 (float): Start time of the block's sliding motion.
-    t2 (float): End time of the block's sliding motion.
+    t1 (float): Start time of the block'block_disp sliding motion.
+    t2 (float): End time of the block'block_disp sliding motion.
     vals (dict): Dictionary of values to substitute into the expressions.
 
     Returns:
@@ -265,14 +265,14 @@ def harmonic_solution_plot(a_in, v_in, vb, displacement, time, t1_def_val, t2_va
     axs[1].plot(time_vals[t1_index:t2_index], vbplot(time_vals)[t1_index:t2_index])
     axs[1].fill_between(time_vals[t1_index:t2_index], vbplot(time_vals)[t1_index:t2_index], vplot(time_vals)[t1_index:t2_index], color='gray', alpha=0.5)
     axs[1].set_title('Velocity')
-    axs[1].set_ylabel('Velocity, m/s')
+    axs[1].set_ylabel('Velocity, m/block_disp')
 
     tmax = max(time_vals)
     dmax = displacementplot(tmax)
     axs[2].plot(time_vals, displacementplot(time_vals),'tab:orange')
     axs[2].text(0.95, 0.5, f'Total Displacement: {round(float(dmax),3)} m', horizontalalignment='right', verticalalignment='center', transform=axs[2].transAxes)
     axs[2].set_title('Displacement')
-    axs[2].set_xlabel('Time, s')
+    axs[2].set_xlabel('Time, block_disp')
     axs[2].set_ylabel('Displacement, m')
 
     if save:

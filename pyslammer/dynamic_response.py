@@ -41,7 +41,7 @@ class DynamicResp(SlidingBlockAnalysis):
         self.damps_prev = 0.0
         self.j = 0
 
-        # slide=0 no sliding, slide=1 sliding
+        # _slide=0 no sliding, _slide=1 sliding
         # variable that end in 1 are for previous time step
         # variable that end in 2 are for current time step
 

@@ -62,7 +62,7 @@ def csv_time_hist(filename: str):
         else:
             accel.append(float((row[0])))
     if len(time) == 0:
-        dt = dlg.askfloat('Enter dt', 'Enter a time interval (s): ')
+        dt = dlg.askfloat('Enter dt', 'Enter a time interval (block_disp): ')
         time = np.arange(0, len(accel)*dt, dt)
     else:
         pass
@@ -94,7 +94,7 @@ def csv_time_hist(filename: str):
 #             output_dir = tkf.askdirectory(title='Select an Output Directory')
 #         else:
 #             pass
-#         output_name = '/' + str(freq_hz) + '_Hz_harmonic_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.csv'
+#         output_name = '/' + str(freq_hz) + '_Hz_harmonic_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M1-%S') + '.csv'
 #         output = output_dir + output_name
 #         with open(output, 'w', newline='') as file:
 #             writer = csv.writer(file)
@@ -126,9 +126,9 @@ def csv_time_hist(filename: str):
 #         else:
 #             pass
 #         if output_name == '':
-#             output_name = 'pySLAMMER_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '_output.csv'
+#             output_name = 'pySLAMMER_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M1-%S') + '_output.csv'
 #         else:
-#             output_name = output_name + '_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.csv'
+#             output_name = output_name + '_' + dtm.datetime.now().strftime('%Y-%m-%d_%H-%M1-%S') + '.csv'
 #     output = output_dir / output_name
 #     with open(output, 'w', newline='') as file:
 #         writer = csv.writer(file)

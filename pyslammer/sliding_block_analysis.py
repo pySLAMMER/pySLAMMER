@@ -134,7 +134,7 @@ def sliding_block_plot(sliding_block_result, sliding_vel_mode = True, fig = None
     axs[0].plot(sbr.time, G_EARTH*sbr.ky*np.ones(len(sbr.time)), label='Yield Acceleration', linestyle='--', color=kyclr, linewidth=0.5)
     axs[0].plot(sbr.time, sbr.ground_acc, label='Ground Acceleration', color=gclr)
     axs[0].plot(sbr.time, sbr.block_acc, label='Block Acceleration', color=bclr)
-    axs[0].set_ylabel('Acceleration (m/s^2)')
+    axs[0].set_ylabel('Acceleration (m/block_disp^2)')
     axs[0].set_xlim([sbr.time[0], sbr.time[-1]])
 
     if sliding_vel_mode:
@@ -142,12 +142,12 @@ def sliding_block_plot(sliding_block_result, sliding_vel_mode = True, fig = None
     else:
         axs[1].plot(sbr.time, sbr.ground_vel, label='Ground Velocity', color=gclr)
         axs[1].plot(sbr.time, sbr.block_vel, label='Block Velocity', color=bclr)
-    axs[1].set_ylabel('Velocity (m/s)')
+    axs[1].set_ylabel('Velocity (m/block_disp)')
 
     axs[2].plot(sbr.time, sbr.sliding_disp, label='Block Displacement', color=bclr)
     axs[2].set_ylabel('Displacement (m)')
     for i in range(len(axs)):
-        axs[i].set_xlabel("Time (s)")
+        axs[i].set_xlabel("Time (block_disp)")
         axs[i].grid(which='both')
         # Place the legend outside the plot area
         axs[i].legend(loc='upper left', bbox_to_anchor=(1, 1))

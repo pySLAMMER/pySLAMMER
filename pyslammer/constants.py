@@ -14,7 +14,7 @@ MtoCM = 100
 M3toCM3 = MtoCM * MtoCM * MtoCM
 
 # Gravitational constant
-G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
+G_EARTH = 9.80665 # Acceleration due to gravity (m/block_disp^2).
 Gcmss = G_EARTH * MtoCM  # 980.665
 Gftss = Gcmss * CMtoFT  # 32.1740486
 Ginss = Gcmss * CMtoIN  # 386.088583

@@ -97,7 +97,7 @@ class Coupled(DeCoupledCommon):
         for self.j in range(1, self.npts + 1):
             self.coupled_setupstate(self.j)
 
-            # solve for u, udot, udotdot at next time step
+            # solve for x_resp, v_resp, a_resp at next time step
             self.solvu(self.j)
             self.udotdot[self.j - 1] = self.udotdot2
 
@@ -136,7 +136,7 @@ class Coupled(DeCoupledCommon):
 
         delt = self.dt
 
-        # Time of end of sliding is taken as where sdot=0 from previous analysis
+        # Time of end of sliding is taken as where block_vel=0 from previous analysis
         dd = -self.sdot1 / (self.sdot2 - self.sdot1)
         ddt = dd * delt
         acc11 = self.gSIN - self.mu[self.qq - 1] * (self.gCOS + self.ain[self.j - 1] * self.scal * self.gSIN)
@@ -245,10 +245,10 @@ class Coupled(DeCoupledCommon):
         if self.slide:
             self.sdotdot2 = -self.ain[self.j - 1] * self.gCOS * self.scal - self.mu[self.qq - 1] * self.normalf2 / self.Mtot - self.L * self.udotdot2 / self.Mtot + self.gSIN
 
-        # calc. base force based on udotdot calc
+        # calc. base force based on a_resp calc
         self.basef = -self.Mtot * self.ain[self.j - 1] * self.gCOS * self.scal - self.L * self.udotdot2 + self.Mtot * self.gSIN
 
-        # If sliding is occurring, integrate sdotdot, using trapezoid rule, to get sdot and s.
+        # If sliding is occurring, integrate sdotdot, using trapezoid rule, to get block_vel and block_disp.
         if self.slide:
             self.sdot2 = self.sdot1 + 0.5 * self.dt * (self.sdotdot2 + self.sdotdot1)
             self.s2 = self.s1 + 0.5 * self.dt * (self.sdot2 + self.sdot1)
