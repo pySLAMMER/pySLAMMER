@@ -1,6 +1,7 @@
 # Decoupled Block Analysis
 
 import numpy as np
+
 import pyslammer as slam
 import matplotlib.pyplot as plt
 import scipy.integrate as spint
@@ -10,16 +11,31 @@ from pyslammer.dynamic_response import DynamicResp
 from pyslammer.constants import *
 import math
 
+def mod_damp_testing(effective_strain, ref_strain):
+    g_over_gmax = strain_mod_update(effective_strain, ref_strain)
+    new_damp = strain_damp_update(g_over_gmax, effective_strain, ref_strain)
+    return g_over_gmax, new_damp
+
 def strain_mod_update(effective_strain, ref_strain):
     return 1 / (1 + (effective_strain / ref_strain) ** 1) #TODO: move constants outside of function
 
 
-def strain_damp_update(g_over_gmax, shear_strain, ref_strain):
-    masing_damping = (4.0 * (shear_strain - ref_strain
-                            * math.log((ref_strain + shear_strain) / ref_strain))
-                      / (shear_strain**2
-                         / (shear_strain + ref_strain)) - 2.0)
-    new_damp = 0.0062 * g_over_gmax**0.1 * masing_damping + 0.01 #TODO: move constants outside of function
+def strain_damp_update(g_over_gmax, shear_strain, ref_strain): #FIXME: suspected bug in this function
+    m1 = 1/math.pi
+    m2 = shear_strain
+    m3 = ref_strain
+    m4 = shear_strain + ref_strain
+    m5 = m4/m3
+    m6 = m2**2 / m4
+    masing_damping = m1*(4*(m2-m3*math.log(m5))/(m6) - 2)
+
+
+    new_damp = 0.62 * g_over_gmax**0.1 * masing_damping + 0.01 #TODO: move constants outside of function
+
+    if equivalent_linear_testing:
+        print(f"g_over_gmax: {g_over_gmax}")
+        print(f"masing_damping: {masing_damping}")
+        print(f"new_damp: {new_damp}")
 
     return new_damp
 
@@ -161,7 +177,7 @@ class Decoupled(SlidingBlockAnalysis):
         b = (1.0 / (2.0 * beta)
              + 2.0 * self.dt * self._damp_tot * self._omega * (gamma / (2.0 * beta) - 1.0))
 
-        delta_a_in = self.a_in[i - 2] - self.a_in[i - 1]
+        delta_a_in = self.a_in[i - 1] - self.a_in[i - 2]
 
         if not self._slide:#FIXME: needed?
             self.block_disp[i - 1] = self.block_disp[i - 2]
@@ -187,14 +203,13 @@ class Decoupled(SlidingBlockAnalysis):
 
     def equivalent_linear(self):
         tol = 0.05 #TODO: move constants outside of function
-        max_iterations = 10 #TODO: move constants outside of function
+        max_iterations = 100 #TODO: move constants outside of function
         rel_delta_mod = 1
         rel_delta_damp = 1
         shear_mod = self.max_shear_mod
         damp_ratio = self.damp_ratio
         count = 0
         while rel_delta_damp > tol or rel_delta_mod > tol:
-
             for i in range(1, self.npts + 1):
                 self.dynamic_response(i)
             peak_disp = max(abs(self.x_resp))
@@ -203,7 +218,14 @@ class Decoupled(SlidingBlockAnalysis):
             new_mod = g_over_gmax * self.max_shear_mod
             new_damp = strain_damp_update(g_over_gmax, effective_strain, self.ref_strain)
 
-            self._vs_slope = math.sqrt(new_mod / self.rho)
+            if equivalent_linear_testing:
+                print(f"iteration: {count}")
+                print(f"effective_strain: {effective_strain}")
+                print(f"_vs_slope: {self._vs_slope}")
+                print(f"_damp_tot: {self._damp_tot}")
+
+
+            self._vs_slope = math.sqrt(new_mod / self.rho) #TODO: check wether this is the same as: vs2 = vs1 / Math.sqrt(1.0 + (gameff2 / gamref));
             self._damp_imp = impedance_damping(self.vs_base, self._vs_slope)
             self._damp_tot = new_damp + self._damp_imp
 
@@ -216,29 +238,44 @@ class Decoupled(SlidingBlockAnalysis):
             count += 1
             if count > max_iterations:
                 print("Warning: Maximum iterations reached. Equivalent linear procedure did not converge.")
-                break
 
 
+mrd_testing = False
+equivalent_linear_testing = False
 if __name__ == "__main__":
-    histories = slam.sample_ground_motions()
-    ky = 0.15
-    motion = histories["Chi-Chi_1999_TCU068-090"]
-    dt = motion[0][1] - motion[0][0]
-    input_acc = motion[1] / 9.80665
+    if mrd_testing:
+        strains = np.linspace(0.0001, 0.1, 1000)
+        mod_reduction = []
+        damping = []
+        for strain in strains:
+            mod_reduction.append(strain_mod_update(strain, 0.0005))
+            damping.append(strain_damp_update(strain_mod_update(strain, 0.0005), strain, 0.0005))
+        darendelli = [mod_damp_testing(strain, 0.0005) for strain in strains]
+        plt.close("all")
+        # plt.plot(mod_reduction, damping)
+        plt.semilogx(strains, mod_reduction)
+        plt.semilogx(strains, damping)
+        plt.show()
+    else:
+        histories = slam.sample_ground_motions()
+        ky = 0.15
+        motion = histories["Chi-Chi_1999_TCU068-090"]
+        dt = motion[0][1] - motion[0][0]
+        input_acc = motion[1] / 9.80665
 
-    da = slam.Decoupled(k_y=ky,
-                        a_in=input_acc,
-                        dt=dt,
-                        height=50.0,
-                        vs_slope=600.0,
-                        vs_base=600.0,
-                        damp_ratio=0.05,
-                        ref_strain=0.0005,
-                        scale_factor=1.0,
-                        soil_model="linear_elastic",
-                        si_units=True,
-                        lite=False)
+        da = slam.Decoupled(k_y=ky,
+                            a_in=input_acc,
+                            dt=dt,
+                            height=50.0,
+                            vs_slope=600.0,
+                            vs_base=600.0,
+                            damp_ratio=0.05,
+                            ref_strain=0.0005,
+                            scale_factor=1.0,
+                            soil_model="equivalent_linear",
+                            si_units=True,
+                            lite=False)
 
-    da.run_sliding_analysis()
+        da.run_sliding_analysis()
 
-    print(da.block_disp[-1]*100)
+        print(da.block_disp[-1]*100)
