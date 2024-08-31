@@ -64,6 +64,19 @@ def interpolated_k_y(k_y):
     return _ky_func
 
 
+def assign_k_y(k_y):
+    if isinstance(k_y, float):
+        return constant_k_y(k_y)
+    elif isinstance(k_y, tuple) and len(k_y) == 2:
+        return interpolated_k_y(k_y)
+    elif callable(k_y):
+        return k_y
+    else:
+        val_error_msg = ("Invalid type for k_y. Must be float, tuple, or callable."
+                         "If tuple, must contain two equal-length lists or numpy arrays.")
+        raise ValueError(val_error_msg)
+
+
 class Decoupled(SlidingBlockAnalysis):
     # include allowed values for inputs, like soil_model
     def __init__(self,
@@ -80,7 +93,7 @@ class Decoupled(SlidingBlockAnalysis):
                  si_units: bool = True,
                  lite: bool = False):
         super().__init__()
-        self.k_y = self._assign_k_y(k_y)
+        self.k_y = assign_k_y(k_y)
         self.a_in = a_in #FIXME: inconsistent use of a_in with/without scale_factor
         self.dt = dt
         self.height = height
@@ -103,35 +116,22 @@ class Decoupled(SlidingBlockAnalysis):
         self.M1 = self.mass / 2.0
         self.max_shear_mod = self.rho * vs_slope**2
 
-        self.HEA = np.zeros(self.npts)  #
-        self.block_disp = np.zeros(self.npts)  #
-        self.block_vel = np.zeros(self.npts)  #
-        self.x_resp = np.zeros(self.npts)  #
-        self.v_resp = np.zeros(self.npts)  #
-        self.a_resp = np.zeros(self.npts)  #
+        self.HEA = np.zeros(self.npts)
+        self.block_disp = np.zeros(self.npts)
+        self.block_vel = np.zeros(self.npts)
+        self.x_resp = np.zeros(self.npts)
+        self.v_resp = np.zeros(self.npts)
+        self.a_resp = np.zeros(self.npts)
+        self.max_sliding_disp = 0.0
 
         # special variables that change during the analysis
-        self._slide = True
+        self._slide = False
         self._vs_slope = vs_slope
         self._omega = math.pi * vs_slope / (2.0 * height)
         self._damp_imp = impedance_damping(vs_base, vs_slope)
         self._damp_tot = damp_ratio + self._damp_imp
 
-
-    def _assign_k_y(self, k_y):
-        if isinstance(k_y, float):
-            return constant_k_y(k_y)
-        elif isinstance(k_y, tuple) and len(k_y) == 2:
-            return interpolated_k_y(k_y)
-        elif callable(k_y):
-            return k_y
-        else:
-            val_error_msg = ("Invalid type for k_y. Must be float, tuple, or callable."
-                             "If tuple, must contain two equal-length lists or numpy arrays.")
-            raise ValueError(val_error_msg)
-
-
-    def run_sliding_analysis(self,ca=None): #TODO: add ca to inputs
+    def run_sliding_analysis(self): #TODO: add ca to inputs
 
         if self.soil_model == "equivalent_linear":
             self.equivalent_linear()
@@ -139,13 +139,12 @@ class Decoupled(SlidingBlockAnalysis):
         for i in range(1, self.npts + 1):
             self.dynamic_response(i)
 
-        self._slide = False
-
         # calculate decoupled displacements
         for i in range(1, self.npts + 1):
             self.sliding(i)
 
-        return abs(self.block_disp[self.npts - 1])
+        self.max_sliding_disp =  self.block_disp[-1]
+        return self.max_sliding_disp
 
     def sliding(self, i): #TODO: refactor
         # variables for the previous and current time steps

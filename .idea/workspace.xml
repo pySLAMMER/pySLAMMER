@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="dd79cd44-62af-48bf-93dc-64c179cab568" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/coupled_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/coupled_analysis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyslammer/decoupled_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/decoupled_analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyslammer/decoupled_testing.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/decoupled_testing.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +124,7 @@
       <workItem from="1724691334691" duration="13801000" />
       <workItem from="1724709555893" duration="1347000" />
       <workItem from="1724712178121" duration="65811000" />
-      <workItem from="1725071184421" duration="11794000" />
+      <workItem from="1725071184421" duration="14597000" />
     </task>
     <servers />
   </component>
@@ -158,6 +158,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pyslammer$sliding_block_analysis.coverage" NAME="sliding_block_analysis Coverage Results" MODIFIED="1724379151212" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
-    <SUITE FILE_PATH="coverage/pyslammer$decoupled_analysis.coverage" NAME="decoupled_analysis Coverage Results" MODIFIED="1725123041911" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
+    <SUITE FILE_PATH="coverage/pyslammer$decoupled_analysis.coverage" NAME="decoupled_analysis Coverage Results" MODIFIED="1725124838524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
   </component>
 </project>
