@@ -1,13 +1,13 @@
 # Decoupled Block Analysis
-
+#TODO: add docstrings
+#TODO: add inherited variable values
+#TODO: add "testing" features?
 import numpy as np
 
 import pyslammer as slam
 import matplotlib.pyplot as plt
-import scipy.integrate as spint
 
 from pyslammer.analysis import SlidingBlockAnalysis
-from pyslammer.dynamic_response import DynamicResp
 from pyslammer.constants import *
 import math
 
@@ -20,14 +20,14 @@ def strain_mod_update(effective_strain, ref_strain):
     return 1 / (1 + (effective_strain / ref_strain) ** 1) #TODO: move constants outside of function
 
 
-def strain_damp_update(g_over_gmax, shear_strain, ref_strain): #FIXME: suspected bug in this function
+def strain_damp_update(g_over_gmax, shear_strain, ref_strain):
     m1 = 1/math.pi
     m2 = shear_strain
     m3 = ref_strain
     m4 = shear_strain + ref_strain
     m5 = m4/m3
     m6 = m2**2 / m4
-    masing_damping = m1*(4*(m2-m3*math.log(m5))/(m6) - 2)
+    masing_damping = m1*(4 * (m2-m3*math.log(m5)) / m6 - 2)
 
 
     new_damp = 0.62 * g_over_gmax**0.1 * masing_damping + 0.01 #TODO: move constants outside of function
@@ -103,7 +103,7 @@ class Decoupled(SlidingBlockAnalysis):
 
 
 
-    def run_sliding_analysis(self,ca=None):
+    def run_sliding_analysis(self,ca=None): #TODO: add ca to inputs
 
         if self.soil_model == "equivalent_linear":
             self.equivalent_linear()
@@ -120,7 +120,7 @@ class Decoupled(SlidingBlockAnalysis):
 
         return abs(self.block_disp[self.npts - 1])
 
-    def d_sliding(self, j):
+    def d_sliding(self, j): #TODO: refactor
         # calculate decoupled displacements
 
         if j == 1:
@@ -209,7 +209,7 @@ class Decoupled(SlidingBlockAnalysis):
         shear_mod = self.max_shear_mod
         damp_ratio = self.damp_ratio
         count = 0
-        while rel_delta_damp > tol or rel_delta_mod > tol:
+        while rel_delta_damp > tol or rel_delta_mod > tol: #TODO: confirm whether number of iterations and order of operations matches SLAMMER
             for i in range(1, self.npts + 1):
                 self.dynamic_response(i)
             peak_disp = max(abs(self.x_resp))
@@ -225,7 +225,7 @@ class Decoupled(SlidingBlockAnalysis):
                 print(f"_damp_tot: {self._damp_tot}")
 
 
-            self._vs_slope = math.sqrt(new_mod / self.rho) #TODO: check wether this is the same as: vs2 = vs1 / Math.sqrt(1.0 + (gameff2 / gamref));
+            self._vs_slope = math.sqrt(new_mod / self.rho)
             self._damp_imp = impedance_damping(self.vs_base, self._vs_slope)
             self._damp_tot = new_damp + self._damp_imp
 
@@ -260,12 +260,12 @@ if __name__ == "__main__":
         histories = slam.sample_ground_motions()
         ky = 0.15
         motion = histories["Chi-Chi_1999_TCU068-090"]
-        dt = motion[0][1] - motion[0][0]
+        t_step = motion[0][1] - motion[0][0]
         input_acc = motion[1] / 9.80665
 
         da = slam.Decoupled(k_y=ky,
                             a_in=input_acc,
-                            dt=dt,
+                            dt=t_step,
                             height=50.0,
                             vs_slope=600.0,
                             vs_base=600.0,

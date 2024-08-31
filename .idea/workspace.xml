@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd79cd44-62af-48bf-93dc-64c179cab568" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pyslammer/sample_ground_motions/Coyote_Lake_1979_G02-050.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyslammer/decoupled_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/decoupled_analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyslammer/decoupled_testing.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/decoupled_testing.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyslammer/sample_ground_motions/Cape_Mendocino_1992_PET-090.csv" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/sample_ground_motions/Cape_Mendocino_1992_PET-090.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +121,7 @@
       <workItem from="1724430004338" duration="11387000" />
       <workItem from="1724691334691" duration="13801000" />
       <workItem from="1724709555893" duration="1347000" />
-      <workItem from="1724712178121" duration="65103000" />
+      <workItem from="1724712178121" duration="65811000" />
     </task>
     <servers />
   </component>
