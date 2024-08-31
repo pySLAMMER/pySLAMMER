@@ -48,10 +48,26 @@ def impedance_damping(vs_base, vs_slope):
     return damp_imp
 
 
+def constant_k_y(k_y):
+    def _ky_func(disp):
+        return k_y
+    return _ky_func
+
+
+def interpolated_k_y(k_y):
+    def _ky_func(disp):
+        disp_values, ky_values = k_y
+        return np.interp(disp, disp_values, ky_values)
+    if k_y_testing:
+        for disp in [0, 10, 20, 30, 40, 50]:
+            print(f"disp: {disp}, ky: {_ky_func(disp)}")
+    return _ky_func
+
+
 class Decoupled(SlidingBlockAnalysis):
     # include allowed values for inputs, like soil_model
     def __init__(self,
-                 k_y: float,  # TODO: or tuple[list[float], list[float]] or tuple[np.ndarray,np.ndarray] or callable(float),
+                 k_y: float or tuple[list[float], list[float]] or tuple[np.ndarray,np.ndarray] or callable,
                  a_in: list[float] or np.ndarray,
                  dt: float,
                  height: int or float,
@@ -64,8 +80,8 @@ class Decoupled(SlidingBlockAnalysis):
                  si_units: bool = True,
                  lite: bool = False):
         super().__init__()
-        self.k_y = k_y
-        self.a_in = a_in
+        self.k_y = self._assign_k_y(k_y)
+        self.a_in = a_in #FIXME: inconsistent use of a_in with/without scale_factor
         self.dt = dt
         self.height = height
         self.vs_slope = vs_slope
@@ -102,6 +118,18 @@ class Decoupled(SlidingBlockAnalysis):
         self._damp_tot = damp_ratio + self._damp_imp
 
 
+    def _assign_k_y(self, k_y):
+        if isinstance(k_y, float):
+            return constant_k_y(k_y)
+        elif isinstance(k_y, tuple) and len(k_y) == 2:
+            return interpolated_k_y(k_y)
+        elif callable(k_y):
+            return k_y
+        else:
+            val_error_msg = ("Invalid type for k_y. Must be float, tuple, or callable."
+                             "If tuple, must contain two equal-length lists or numpy arrays.")
+            raise ValueError(val_error_msg)
+
 
     def run_sliding_analysis(self,ca=None): #TODO: add ca to inputs
 
@@ -115,54 +143,43 @@ class Decoupled(SlidingBlockAnalysis):
 
         # calculate decoupled displacements
         for i in range(1, self.npts + 1):
-            self.d_sliding(i)
-            self.residual_mu()
+            self.sliding(i)
 
         return abs(self.block_disp[self.npts - 1])
 
-    def d_sliding(self, j): #TODO: refactor
-        # calculate decoupled displacements
+    def sliding(self, i): #TODO: refactor
+        # variables for the previous and current time steps
+        # prev and curr are equal for the first time step
+        #TODO: consider just starting at i=2 and eliminating the logical statement in prev
+        # alternatively, removing logical and letting it use the last value of the array...
+        prev = i - 2 + (i == 1)
+        curr = i - 1
 
-        if j == 1:
-            deltacc = self.HEA[j - 1]
-        else:
-            deltacc = self.HEA[j - 1] - self.HEA[j - 2]
+        yield_acc = self.k_y(self.block_disp[prev]) * self.g
+        excess_acc = yield_acc - self.HEA[prev]
+        delta_hea = self.HEA[curr] - self.HEA[prev]
 
-        if j == 1:
-            self.block_vel[j - 1] = 0
-            self.block_disp[j - 1] = 0
-        elif not self._slide:
-            self.block_vel[j - 1] = 0
-            self.block_disp[j - 1] = self.block_disp[j - 2]
-        else:
-            self.block_vel[j - 1] = self.block_vel[j - 2] + (self.k_y * self.g - self.HEA[j - 2]) * self.dt - 0.5 * deltacc * self.dt
-            self.block_disp[j - 1] = self.block_disp[j - 2] - self.block_vel[j - 2] * self.dt - 0.5 * (self.k_y * self.g - self.HEA[j - 2]) * self.dt**2 + deltacc * self.dt**2 / 6.0
+        if k_y_testing:
+            if i%500 == 0:
+                print(f"disp: {self.block_disp[prev]}, ky: {self.k_y(self.block_disp[prev])}")
 
         if not self._slide:
-            if self.HEA[j - 1] > self.k_y * self.g:
+            self.block_vel[curr] = 0
+            self.block_disp[curr] = self.block_disp[prev]
+            if self.HEA[curr] > yield_acc:
                 self._slide = True
         else:
-            if self.block_vel[j - 1] >= 0.0:
+            self.block_vel[curr] = (self.block_vel[prev]
+                                    + (excess_acc - 0.5 * delta_hea) * self.dt)
+            self.block_disp[curr] = (self.block_disp[prev]
+                                     - self.block_vel[prev] * self.dt
+                                     - 0.5 * (excess_acc + delta_hea / 6.0) * self.dt**2)
+            if self.block_vel[curr] >= 0.0:
                 self._slide = False
 
-                if j == 1:
-                    self.block_disp[j - 1] = 0
-                else:
-                    self.block_disp[j - 1] = self.block_disp[j - 2]
-
-                self.block_vel[j - 1] = 0.0
-
-
-    def residual_mu(self):
-        #FIXME: update to use k_y as a function of displacement. not currently working
-        # if self.nmu > 1:
-        #     if not self._slide and (abs(self.block_disp[self.j - 1]) >= self.disp[self.qq - 1]):
-        #         if self.qq <= (self.nmu - 1):
-        #             self.qq += 1
-        pass
-
-
     def dynamic_response(self,i):
+        prev = i - 2 + (i == 1)
+        curr = i - 1
         # Newmark Beta Method constants
         beta = 0.25 #TODO: move outside of function (up to delta_a_in)
         gamma = 0.5 #TODO: move constants outside of function
@@ -177,27 +194,23 @@ class Decoupled(SlidingBlockAnalysis):
         b = (1.0 / (2.0 * beta)
              + 2.0 * self.dt * self._damp_tot * self._omega * (gamma / (2.0 * beta) - 1.0))
 
-        delta_a_in = self.a_in[i - 1] - self.a_in[i - 2]
-
-        if not self._slide:#FIXME: needed?
-            self.block_disp[i - 1] = self.block_disp[i - 2]
-
+        delta_a_in = self.a_in[curr] - self.a_in[prev]
         delta_force = (- self.L1 / self.M1 * delta_a_in * self.g * self.scale_factor
-                       + a * self.v_resp[i - 2]
-                       + b * self.a_resp[i - 2])
+                       + a * self.v_resp[prev]
+                       + b * self.a_resp[prev])
         delta_x_resp = delta_force / k_eff
         delta_v_resp = (gamma / (beta * self.dt) * delta_x_resp
-                    - gamma / beta * self.v_resp[i - 2]
-                    + self.dt * (1.0 - gamma / (2.0 * beta)) * self.a_resp[i - 2])
+                    - gamma / beta * self.v_resp[prev]
+                    + self.dt * (1.0 - gamma / (2.0 * beta)) * self.a_resp[prev])
         delta_a_resp = (1.0 / (beta * (self.dt * self.dt)) * delta_x_resp
-                       - 1.0 / (beta * self.dt) * self.v_resp[i - 2]
-                       - 0.5 / beta * self.a_resp[i - 2])
+                       - 1.0 / (beta * self.dt) * self.v_resp[prev]
+                       - 0.5 / beta * self.a_resp[prev])
 
-        self.x_resp[i - 1] = self.x_resp[i - 2] + delta_x_resp
-        self.v_resp[i - 1] = self.v_resp[i - 2] + delta_v_resp
-        self.a_resp[i - 1] = self.a_resp[i - 2] + delta_a_resp
+        self.x_resp[curr] = self.x_resp[prev] + delta_x_resp
+        self.v_resp[curr] = self.v_resp[prev] + delta_v_resp
+        self.a_resp[curr] = self.a_resp[prev] + delta_a_resp
 
-        self.HEA[i - 1] = self.a_in[i - 1]*self.g + self.L1 / self.mass * self.a_resp[i - 1]
+        self.HEA[curr] = self.a_in[curr]*self.g + self.L1 / self.mass * self.a_resp[curr]
 
 
 
@@ -240,8 +253,19 @@ class Decoupled(SlidingBlockAnalysis):
                 print("Warning: Maximum iterations reached. Equivalent linear procedure did not converge.")
 
 
+
 mrd_testing = False
 equivalent_linear_testing = False
+k_y_testing = False
+
+def some_ky_func(disp):
+    initial = 0.15
+    minimum = 0.15
+    factor = 0.005
+    exponent = -1.5
+    value = max(factor*(disp+minimum)**exponent + 0.4*disp, minimum)
+    return min(initial,value)
+
 if __name__ == "__main__":
     if mrd_testing:
         strains = np.linspace(0.0001, 0.1, 1000)
@@ -258,12 +282,14 @@ if __name__ == "__main__":
         plt.show()
     else:
         histories = slam.sample_ground_motions()
-        ky = 0.15
+        ky_const = 0.15
+        ky_interp = ([0.2, 0.3, 0.4, 0.5], [0.15, 0.14, 0.13, 0.12])
+        ky_func = some_ky_func
         motion = histories["Chi-Chi_1999_TCU068-090"]
         t_step = motion[0][1] - motion[0][0]
         input_acc = motion[1] / 9.80665
 
-        da = slam.Decoupled(k_y=ky,
+        da = slam.Decoupled(k_y=ky_const,
                             a_in=input_acc,
                             dt=t_step,
                             height=50.0,
