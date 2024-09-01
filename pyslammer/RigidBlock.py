@@ -7,14 +7,17 @@ G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
 
 class RigidBlock(Record):
+    """Rigid Block Analysis."""
 
     def __init__(self, gnd_motion: np.ndarray=[], name: str=''):
+        """
+        Creates a rigid block analysis object.
+        Args:
+            gnd_motion (np.ndarray): Ground motion record.
+            name (str): Name of the record.
+        """
         super().__init__(gnd_motion, name)
-        self.k_y = 0.0
-        self.block_acc = []
-        self.block_vel = []
-        self.block_disp = []
-        self.total_disp = 0.0
+        self._clear_block_params()
 
     def __str__(self):
         if self.dt == -1.0:
@@ -31,6 +34,7 @@ class RigidBlock(Record):
         return info
     
     def _clear_block_params(self):
+        # Initializes/resets block parameters.
         self.k_y = 0.0
         self.block_acc = []
         self.block_vel = []
@@ -39,7 +43,7 @@ class RigidBlock(Record):
 
     def downslope_jibson(self, k_y: float=0.0):
         """
-        Calculate the displacement, velocity, and acceleration of a rigid block sliding downslope using the Jibson method.
+        Calculate the downslope rigid block displacement, velocity, and acceleration using the Jibson method.
         Args:
             k_y (float, optional): Critical acceleration in multiples of g.
         Returns:
@@ -83,7 +87,7 @@ class RigidBlock(Record):
 
     def downslope_dgr(self, k_y: float=0.0):
         """
-        Calculate the displacement, velocity, and acceleration of a rigid block sliding downslope using the Garcia-Rivas method.
+        Calculate the downslope rigid block displacement, velocity, and acceleration using the Jibson method.
         Args:
             k_y (float, optional): Critical acceleration in multiples of g.
         Returns:
@@ -121,14 +125,19 @@ class RigidBlock(Record):
         """
         Plot the ground motion and the block response.
         Args:
-            None
+            acc (bool, optional): Plot block acceleration.
+            vel (bool, optional): Plot block velocity.
+            disp (bool, optional): Plot block displacement.
+            gnd_motion (bool, optional): Plot ground motion.
         Returns:
             None
         """
-        if self.dt == -1.0:
-            return
         num_plots = sum([acc, vel, disp])
-        if num_plots == 0:
+        if self.dt == 1.0:
+            return
+        elif num_plots == 0:
+            return
+        elif self.block_acc or self.block_vel or self.block_disp == []:
             return
         else:
             pass

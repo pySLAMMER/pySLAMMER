@@ -6,20 +6,27 @@ G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
 
 class Record():
+    """Ground Motion Record."""
 
     def __init__(self, gnd_motion: np.ndarray=[], name: str='None'):
+        """
+        Creates a ground motion record object.
+        Args:
+            gnd_motion (np.ndarray): Ground motion record.
+            name (str): Name of the record.
+        """
         if len(gnd_motion) == 0:
             self.name = 'Empty Record'
             self.dt = -1.0
             self.pga = 0.0
         else:
-            self.name = name
             self._gnd_motion = np.array(gnd_motion)
-            self.time = gnd_motion[0][:]
-            self.dt = self.time[1] - self.time[0]
-            self._calc_gnd_params()
             self._is_scaled = False
             self._is_inverted = False
+            self.name = name            
+            self.time = gnd_motion[0][:]
+            self.dt = self.time[1] - self.time[0]
+            self._calc_gnd_params()            
 
     def __str__(self):
         if self.dt == -1.0:
@@ -31,6 +38,7 @@ class Record():
         return info
     
     def _calc_gnd_params(self):
+        # Assigns and calculates ground motion parameters.
         self.gnd_acc = self._gnd_motion[1][:] * G_EARTH
         self.gnd_vel = spint.cumulative_trapezoid(self.gnd_acc, self.time, initial=0)
         self.gnd_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
@@ -38,9 +46,10 @@ class Record():
     
     def scale(self, pga: float=False, scale_factor: float=False):
         """
-        Scale the ground motion using desired method.
+        Scale the ground motion using desired method. Does nothing if more than one method is selected.
         Args:
             pga (float, optional): Desired peak ground acceleration in g.
+            scale_factor (float, optional): Desired scale factor.
         Returns: 
             None
         """
@@ -70,7 +79,7 @@ class Record():
 
     def unscale(self):
         """
-        Unscale the ground motion.
+        Unscales the ground motion.
         Args:
             None
         Returns:
@@ -98,7 +107,7 @@ class Record():
 
     def uninvert(self):
         """
-        Uninvert the ground motion.
+        Uninverts the ground motion.
         Args:
             None
         Returns:
@@ -120,8 +129,9 @@ class Record():
             acc (bool, optional): Plot acceleration.
             vel (bool, optional): Plot velocity.
             disp (bool, optional): Plot displacement.
+            enable (bool, optional): Enable plotting of ground parameters. Used if called from a RigidBlock object.
         Returns:
-            None
+            fig, ax (plt.figure, plt.axis): Figure and axis objects.
         """
         if self.dt == -1.0:
             return
@@ -173,4 +183,5 @@ class Record():
             disp.set_ylabel('Displacement (m)')
             disp.set_title('Ground Displacement')
             disp.legend()
+        plt.show()
         return fig, ax
