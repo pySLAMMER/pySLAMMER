@@ -14,6 +14,13 @@ class Record():
         Args:
             gnd_motion (np.ndarray): Ground motion record.
             name (str): Name of the record.
+        Creates:
+            _gnd_motion (np.ndarray): Copy of original ground motion record.
+            _is_scaled (bool): True if the record is scaled.
+            _is_inverted (bool): True if the record is inverted.
+            name (str): Name of the record.
+            time (np.ndarray): Time vector of the record (s).
+            dt (float): Time step of the record (s).
         """
         if len(gnd_motion) == 0:
             self.name = 'Empty Record'
@@ -38,7 +45,16 @@ class Record():
         return info
     
     def _calc_gnd_params(self):
-        # Assigns and calculates ground motion parameters.
+        """
+        Semi-private method to initialize and recalculate ground motion parameters.
+        Args:
+            None
+        Creates:
+            gnd_acc (np.ndarray): Ground acceleration (m/s^2).
+            gnd_vel (np.ndarray): Ground velocity (m/s).
+            gnd_disp (np.ndarray): Ground displacement (m).
+            pga (float): Peak ground acceleration in multiples of g.
+        """
         self.gnd_acc = self._gnd_motion[1][:] * G_EARTH
         self.gnd_vel = spint.cumulative_trapezoid(self.gnd_acc, self.time, initial=0)
         self.gnd_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
@@ -122,7 +138,7 @@ class Record():
         else:
             return
     
-    def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, enable: bool=True):
+    def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, enable: bool=True, called: bool=False):
         """
         Plots desired ground motion parameters.
         Args:
@@ -130,8 +146,9 @@ class Record():
             vel (bool, optional): Plot velocity.
             disp (bool, optional): Plot displacement.
             enable (bool, optional): Enable plotting of ground parameters. Used if called from a RigidBlock object.
+            called (bool, optional): True if called from a RigidBlock object.
         Returns:
-            fig, ax (plt.figure, plt.axis): Figure and axis objects.
+            fig, ax (plt.figure, plt.axis): Figure and axis objects if called from a RigidBlock object.
         """
         if self.dt == -1.0:
             return
@@ -183,5 +200,7 @@ class Record():
             disp.set_ylabel('Displacement (m)')
             disp.set_title('Ground Displacement')
             disp.legend()
-        plt.show()
-        return fig, ax
+        if called:
+            return fig, ax
+        else:
+            plt.show()

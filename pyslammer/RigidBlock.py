@@ -13,7 +13,7 @@ class RigidBlock(Record):
         """
         Creates a rigid block analysis object.
         Args:
-            gnd_motion (np.ndarray): Ground motion record.
+            gnd_motion (np.ndarray): Ground motion record in time (row 0), acceleration (row 1) format.
             name (str): Name of the record.
         """
         super().__init__(gnd_motion, name)
@@ -34,7 +34,17 @@ class RigidBlock(Record):
         return info
     
     def _clear_block_params(self):
-        # Initializes/resets block parameters.
+        """
+        Semi-private method to initialize and clear block parameters.
+        Args:
+            None
+        Creates:
+            k_y (float): Critical acceleration (m/s^2).
+            block_acc (list): Block acceleration (m/s^2).
+            block_vel (list): Block velocity (m/s).
+            block_disp (list): Block displacement (m).
+            total_disp (float): Total block displacement (m).
+        """
         self.k_y = 0.0
         self.block_acc = []
         self.block_vel = []
@@ -137,11 +147,9 @@ class RigidBlock(Record):
             return
         elif num_plots == 0:
             return
-        elif self.block_acc or self.block_vel or self.block_disp == []:
-            return
         else:
             pass
-        fig, ax = super().plot(acc, vel, disp, gnd_motion)
+        fig, ax = super().plot(acc, vel, disp, gnd_motion, called=True)
         fig.suptitle('Rigid Block Analysis\n{}'.format(self.name))
         remain_plots = num_plots
         if acc:
