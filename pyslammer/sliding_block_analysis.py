@@ -1,5 +1,6 @@
 from pyslammer.rigid_block import *
 from pyslammer.decoupled_analysis import *
+from pyslammer.coupled_analysis import *
 from pyslammer.utilities import csv_time_hist
 
 import matplotlib.pyplot as plt

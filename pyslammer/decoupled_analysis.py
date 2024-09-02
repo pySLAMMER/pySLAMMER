@@ -259,7 +259,7 @@ k_y_testing = False
 
 def some_ky_func(disp):
     initial = 0.15
-    minimum = 0.15
+    minimum = 0.05
     factor = 0.005
     exponent = -1.5
     value = max(factor*(disp+minimum)**exponent + 0.4*disp, minimum)
