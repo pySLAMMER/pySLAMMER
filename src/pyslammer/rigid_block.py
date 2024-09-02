@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.integrate as spint
 import matplotlib.pyplot as plt
-from Record import Record
+from record import Record
 
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
