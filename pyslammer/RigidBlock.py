@@ -41,7 +41,7 @@ class RigidBlock(Record):
         Creates:
             k_y (float): Critical acceleration (m/s^2).
             block_acc (list): Block acceleration (m/s^2).
-            block_vel (list): Block velocity (m/s).
+            block_vel (list): Block differential velocity (m/s).
             block_disp (list): Block displacement (m).
             total_disp (float): Total block displacement (m).
         """
@@ -53,7 +53,7 @@ class RigidBlock(Record):
 
     def downslope_jibson(self, k_y: float=0.0):
         """
-        Calculate the downslope rigid block displacement, velocity, and acceleration using the Jibson method.
+        Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.
         Args:
             k_y (float, optional): Critical acceleration in multiples of g.
         Returns:
@@ -97,7 +97,7 @@ class RigidBlock(Record):
 
     def downslope_dgr(self, k_y: float=0.0):
         """
-        Calculate the downslope rigid block displacement, velocity, and acceleration using the Jibson method.
+        Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.
         Args:
             k_y (float, optional): Critical acceleration in multiples of g.
         Returns:
@@ -136,7 +136,7 @@ class RigidBlock(Record):
         Plot the ground motion and the block response.
         Args:
             acc (bool, optional): Plot block acceleration.
-            vel (bool, optional): Plot block velocity.
+            vel (bool, optional): Plot block differential velocity.
             disp (bool, optional): Plot block displacement.
             gnd_motion (bool, optional): Plot ground motion.
         Returns:
@@ -147,6 +147,11 @@ class RigidBlock(Record):
             return
         elif num_plots == 0:
             return
+        elif len(self.block_acc) == 0:
+            if gnd_motion:
+                super().plot(acc, vel, disp, gnd_motion, called=False)
+            else:
+                return
         else:
             pass
         fig, ax = super().plot(acc, vel, disp, gnd_motion, called=True)
@@ -169,7 +174,7 @@ class RigidBlock(Record):
                 j = num_plots - remain_plots
                 remain_plots -= 1
                 vel = ax[j]
-            vel.plot(self.time, self.block_vel, label='Block Velocity')
+            vel.plot(self.time, self.block_vel, label='Block Differential Velocity')
             vel.legend()
         if disp:
             if num_plots == 1:

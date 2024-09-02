@@ -8,7 +8,7 @@ G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 class Record():
     """Ground Motion Record."""
 
-    def __init__(self, gnd_motion: np.ndarray=[], name: str='None'):
+    def __init__(self, gnd_motion: np.ndarray=[], name: str=''):
         """
         Creates a ground motion record object.
         Args:
@@ -24,8 +24,6 @@ class Record():
         """
         if len(gnd_motion) == 0:
             self.name = 'Empty Record'
-            self.dt = -1.0
-            self.pga = 0.0
         else:
             self._gnd_motion = np.array(gnd_motion)
             self._is_scaled = False
@@ -69,6 +67,10 @@ class Record():
         Returns: 
             None
         """
+        if self.dt == -1.0:
+            return
+        else:
+            pass
         check_list = [pga, scale_factor]
         if sum(check_list) != 1:
             return
@@ -101,6 +103,10 @@ class Record():
         Returns:
             None
         """
+        if self.dt == -1.0:
+            return
+        else:
+            pass
         self._calc_gnd_params()
         self.name = self.name.replace('_SCALED', '')
 
@@ -112,6 +118,10 @@ class Record():
         Returns:
             None
         """
+        if self.dt == -1.0:
+            return
+        else:
+            pass
         if self._is_inverted:
             return
         else:
@@ -129,6 +139,10 @@ class Record():
         Returns:
             None
         """
+        if self.dt == -1.0:
+            return  
+        else:
+            pass
         if self._is_inverted:
             self.gnd_acc *= -1
             self.gnd_vel *= -1
@@ -152,6 +166,8 @@ class Record():
         """
         if self.dt == -1.0:
             return
+        else:
+            pass
         num_plots = sum([acc, vel, disp])
         remain_plots = num_plots
         if num_plots == 0:
