@@ -8,7 +8,7 @@ G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 class Record():
     """Ground Motion Record."""
 
-    def __init__(self, gnd_motion: np.ndarray=[], name: str=''):
+    def __init__(self, gnd_motion: np.ndarray=[], name: str='None'):
         """
         Creates a ground motion record object.
         Args:
