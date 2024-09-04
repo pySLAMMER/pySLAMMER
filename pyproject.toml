@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools >= 61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
@@ -7,14 +7,24 @@ packages = ["pyslammer"]
 
 [project]
 name = "pyslammer"
+dynamic = ["version"]
+description = "Python code for calculating sliding block displacements (based on the USGS software SLAMMER)."
+keywords = ["earthquake", "geotech", "slope stability", "sliding block", "seismic"]
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+dependencies = ["numpy", "matplotlib", "scipy"]
 authors = [
     {name = "Lorne Arnold", email = "arnoldl@uw.edu"},
     {name = "Donald Garcia-Rivas", email = "rivas203@uw.edu"}
 ]
-version = "0.0.2"
-description = "Python code for calculating sliding block displacements (based on the USGS software SLAMMER)."
-readme = "README.md"
-license = {file = "LICENSE.txt"}
+maintainers = [
+    {name = "Lorne Arnold", email = "arnoldl@uw.edu"}
+]
+
+[project.optional-dependencies]
+demo = ["ipywidgets", "sympy"]
 
 [project.urls]
-Homepage = "https://github.com/lornearnold/pyslammer"
+Documentation = "https://pyslammer.readthedocs.io"
+Repository = "https://github.com/lornearnold/pyslammer"
+Examples =  "https://lornearnold.github.io/pyslammer/"
