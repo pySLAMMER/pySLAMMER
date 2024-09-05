@@ -1,6 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import scipy.integrate as spint
+import matplotlib.pyplot as plt
 
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
