@@ -71,8 +71,7 @@ class Record():
             return
         else:
             pass
-        check_list = [pga, scale_factor]
-        if sum(check_list) != 1:
+        if (pga and scale_factor):
             return
         else:
             if self._is_scaled:
@@ -123,6 +122,7 @@ class Record():
         else:
             pass
         if self._is_inverted:
+            self.uninvert()
             return
         else:
             self.gnd_acc *= -1

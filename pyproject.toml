@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["src.pyslammer"]
+packages = ["pyslammer"]
 
 [project]
 name = "pyslammer"

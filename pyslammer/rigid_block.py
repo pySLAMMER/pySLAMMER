@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.integrate as spint
 import matplotlib.pyplot as plt
-from record import Record
+from .record import Record
 
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
@@ -150,6 +150,7 @@ class RigidBlock(Record):
         elif len(self.block_acc) == 0:
             if gnd_motion:
                 super().plot(acc, vel, disp, gnd_motion, called=False)
+                return
             else:
                 return
         else:
