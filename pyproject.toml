@@ -7,7 +7,7 @@ packages = ["pyslammer"]
 
 [project]
 name = "pyslammer"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
     {name = "Lorne Arnold", email = "arnoldl@uw.edu"},
     {name = "Donald Garcia-Rivas", email = "rivas203@uw.edu"}
