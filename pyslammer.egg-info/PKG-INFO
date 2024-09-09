@@ -1,0 +1,90 @@
+Metadata-Version: 2.1
+Name: pyslammer
+Version: 0.0.3
+Summary: Python package for calculating sliding block displacements (based on the USGS software SLAMMER).
+Author-email: Lorne Arnold <arnoldl@uw.edu>, Donald Garcia-Rivas <rivas203@uw.edu>
+License: Private Repository License
+        
+        1. Definitions
+        
+        This License Agreement ("Agreement") is made between the Repository Owner ("Licensor") and the User ("Licensee").
+        
+        "Software" refers to the contents of this repository, including code, documentation, and any other related materials.
+        
+        "Contribution" refers to any code, documentation, or other materials added to the Software by the Licensee.
+        
+        2. Terms
+        
+        The Licensor grants the Licensee a non-exclusive, non-transferable, limited license to use the Software.
+        
+        The Licensee agrees not to share, copy, distribute, sell, sublicense, or in any way reveal the contents of this repository to any third party without the explicit written permission of the Licensor.
+        
+        The Licensee may contribute to the Software, with the understanding that these contributions become part of the Software and are subject to this Agreement.
+        
+        3. Termination
+        
+        This Agreement is effective until terminated by the Licensor. The Licensor may terminate this Agreement at any time, for any reason.
+        
+        4. Liability
+        
+        The Software is provided "as is". The Licensor makes no warranties, either express or implied, with respect to the Software.
+        
+        5. Governing Law
+        
+        This Agreement shall be governed by the laws of the jurisdiction of the Licensor.
+        
+        6. Future Licensing
+        
+        The Licensor retains the right to re-license the Software under a different license agreement in the future.
+        
+        By accessing this repository, the Licensee agrees to the terms of this Agreement.
+        
+Project-URL: Homepage, https://github.com/lornearnold/pyslammer
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+# pySLAMMER
+
+Python code for calculating sliding block displacements.
+As the name indicates, this program is based on the USGS software SLAMMER[^1].
+
+Currently, pySLAMMER is in development.
+
+When finished, this code should be able to replicate the rigorous analysis provided by [SLAMMER](https://pubs.usgs.gov/tm/12b1/) and provide more robust output (e.g., arrays of relative displacement time history instead of raster images).
+More importantly, pySLAMMER will be a python module that users can install and access using familiar syntax (i.e.,`pip install pySLAMMER` and `import pySLAMMER as slam`).
+
+At a minimum, pySLAMMER includes or will include the following sliding block models:
+
+* [x] Rigid (i.e., traditional Newmark analysis[^2] as implemented by Jibson (1993)[^3])
+* [ ] Decoupled (per Makdisi and Seed 1978[^4])
+* [ ] Coupled (described by Chopra and Zhang (1991)[^5] and modified by Rathje and Bray (1999)[^6])
+
+## Verification
+
+The pySLAMMER models will be verified by comparison with SLAMMER results using equivalent input parameters.
+
+## Examples
+
+Example use cases will be demonstrated using Jupyter workbooks. 
+
+## Use cases
+
+PySLAMMER is being developed with large- and small-scale use cases in mind, with potential applications in research, teaching, and practice.
+The ability to run sliding block simulations in batches will lend itself to large-scale simulations in research and practice, both spatially (e.g., for regional hazard analysis) and parametrically (e.g., for probabilistic analsysis).
+Small-scale analyses (i.e., running a single scenario or a small set of senarios with limited variablity) will, of course, also be possible.
+These use cases may be appropriate for teaching and learning, or exploratory work in reasearch and practice.
+Particularly when it comes to teaching and learning, the ability to visualize and inspect analysis output is important.
+And coding proficiency may be a barrier to use.
+Although there are currently no plans for a standalone graphical user interface (GUI) for pySLAMMER, the example Jupyter notebooks will be designed to be accessible to those with little-to-no coding experience.
+
+[^1]: Jibson, R.W., Rathje, E.M., Jibson, M.W., and Lee, Y.W., 2013, SLAMMER—Seismic LAndslide Movement Modeled using Earthquake Records (ver.1.1, November 2014): U.S. Geological Survey Techniques and Methods, book 12, chap. B1, unpaged. https://pubs.usgs.gov/tm/12b1/
+
+[^2]: Newmark, N. M. (1965). Effects of Earthquakes on Dams and Embankments. Geotechnique, 15(2), 139–160.
+
+[^3]: Jibson, R. W. (1993). Predicting Earthquake-Induced Landslide Displacements Using Newmark’s Sliding Block Analysis. Transportation Research Record, 1411. https://trid.trb.org/view/384547
+
+[^4]: Makdisi, F. I., & Seed, H. B. (1978). Simplified Procedure for Estimating Dam and Embankment Earthquake-Induced Deformations. Journal of the Geotechnical Engineering Division, 104(7), 849–867. https://doi.org/10.1061/AJGEB6.0000668
+
+[^5]:Chopra, A. K., & Zhang, L. (1991). Earthquake‐Induced Base Sliding of Concrete Gravity Dams. Journal of Structural Engineering, 117(12), 3698–3719. https://doi.org/10.1061/(ASCE)0733-9445(1991)117:12(3698)
+
+[^6]:Rathje, E. M., & Bray, J. D. (1999). An examination of simplified earthquake-induced displacement procedures for earth structures. Canadian Geotechnical Journal, 36(1), 72–87. https://doi.org/10.1139/cgj-36-1-72
