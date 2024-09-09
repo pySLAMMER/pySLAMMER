@@ -128,7 +128,7 @@ class RigidBlock(Record):
                 self.block_acc.append(self.gnd_acc[i])
                 self.block_vel.append(self.gnd_vel[i])
         self.block_vel = abs(self.gnd_vel - self.block_vel)
-        self.block_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
+        self.block_disp = spint.cumulative_trapezoid(self.block_vel, self.time, initial=0)
         self.total_disp = self.block_disp[-1]
 
     def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, gnd_motion: bool=False):
