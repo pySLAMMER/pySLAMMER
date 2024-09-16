@@ -1,8 +1,7 @@
 import numpy as np
+import pyslammer.constants as constants
 import scipy.integrate as spint
 import matplotlib.pyplot as plt
-
-G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
 
 class Record():
@@ -28,6 +27,7 @@ class Record():
             self._gnd_motion = np.array(gnd_motion)
             self._is_scaled = False
             self._is_inverted = False
+            self._npts = len(gnd_motion[0])
             self.name = name            
             self.time = gnd_motion[0][:]
             self.dt = self.time[1] - self.time[0]
@@ -53,10 +53,10 @@ class Record():
             gnd_disp (np.ndarray): Ground displacement (m).
             pga (float): Peak ground acceleration in multiples of g.
         """
-        self.gnd_acc = self._gnd_motion[1][:] * G_EARTH
+        self.gnd_acc = self._gnd_motion[1][:] * constants.G_EARTH
         self.gnd_vel = spint.cumulative_trapezoid(self.gnd_acc, self.time, initial=0)
         self.gnd_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
-        self.pga = max(abs(self.gnd_acc)) / G_EARTH
+        self.pga = max(abs(self.gnd_acc)) / constants.G_EARTH
     
     def scale(self, pga: float=False, scale_factor: float=False):
         """

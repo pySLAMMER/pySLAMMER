@@ -1,7 +1,8 @@
 import numpy as np
+import pyslammer.constants as constants
 import scipy.integrate as spint
 import matplotlib.pyplot as plt
-from .record import Record
+from pyslammer.record import Record
 
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
