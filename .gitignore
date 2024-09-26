@@ -2,3 +2,4 @@ sandbox.py
 pyslammer/__pycache__/
 .vscode/
 .venv/
+.dist/

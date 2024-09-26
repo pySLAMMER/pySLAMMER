@@ -1,4 +1,3 @@
-
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
 FT_TO_IN = 12.0
@@ -11,3 +10,6 @@ M_TO_FT = 3.28084
 M3_TO_CM3 = M_TO_CM**3
 LBFT3_TO_KNM3 = 6.3659
 KNM3_TO_LBFT3 = 1 / LBFT3_TO_KNM3
+
+BETA = 0.25
+GAMMA = 0.5
