@@ -183,7 +183,7 @@ class Decoupled(SlidingBlockAnalysis):
         beta = 0.25 #TODO: move outside of function (up to delta_a_in)
         gamma = 0.5 #TODO: move constants outside of function
 
-        self._omega = math.pi * self._vs_slope / (2.0 * self.height)
+        self._omega = math.pi * self._vs_slope / (2.0 * self.height) #TODO: move outside of function
 
         k_eff = (self._omega ** 2
                  + 2.0 * self._damp_tot * self._omega * gamma / (beta * self.dt)

@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd79cd44-62af-48bf-93dc-64c179cab568" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/publish_test-pypi.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/deploy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/deploy_jupyterlite.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pyslammer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pyslammer.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/coupled_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/coupled_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyslammer/decoupled_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyslammer/decoupled_analysis.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +43,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -62,7 +65,7 @@
     &quot;Python.sliding_block_analysis.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;decoupled&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dynamic__analysis&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/lornearnold/GitHub/pyslammer&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -130,8 +133,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-PY-242.20224.428" />
-        <option value="bundled-python-sdk-80e8e15d2b92-39cff9de6eef-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.20224.428" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
+        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
       </set>
     </attachedChunks>
   </component>
@@ -154,6 +157,8 @@
       <workItem from="1724712178121" duration="65811000" />
       <workItem from="1725071184421" duration="20071000" />
       <workItem from="1725394702990" duration="6331000" />
+      <workItem from="1727719151636" duration="736000" />
+      <workItem from="1727719892399" duration="6382000" />
     </task>
     <servers />
   </component>
@@ -187,7 +192,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pyslammer$sliding_block_analysis.coverage" NAME="sliding_block_analysis Coverage Results" MODIFIED="1724379151212" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
-    <SUITE FILE_PATH="coverage/pyslammer$coupled_analysis.coverage" NAME="coupled_analysis Coverage Results" MODIFIED="1725311995547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
+    <SUITE FILE_PATH="coverage/pyslammer$coupled_analysis.coverage" NAME="coupled_analysis Coverage Results" MODIFIED="1727724377608" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
     <SUITE FILE_PATH="coverage/pyslammer$decoupled_analysis.coverage" NAME="decoupled_analysis Coverage Results" MODIFIED="1725309364488" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyslammer" />
   </component>
 </project>
