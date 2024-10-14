@@ -8,9 +8,8 @@ M_TO_CM = 100
 G_EARTH = 9.80665 # Acceleration due to gravity (m/block_disp^2).
 
 
-def downslope_analysis_jibson(time_history: np.ndarray, acc_crit: float):
-    """
-    Perform downslope analysis using Jibson'block_disp 1993 method.
+class RigidBlock(Record):
+    """Rigid Block Analysis."""
 
     def __init__(self, gnd_motion: np.ndarray=[], name: str=''):
         """

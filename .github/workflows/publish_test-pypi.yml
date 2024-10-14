@@ -47,7 +47,7 @@ jobs:
 
     environment:
       name: test_releases
-      url: https://test.pypi.org/p/pyslammer
+      url: https://test.pypi.org/p/pyslammertest
 
     steps:
     - name: Download all the dists
