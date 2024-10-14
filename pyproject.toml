@@ -12,17 +12,17 @@ description = "Python code for calculating sliding block displacements (based on
 keywords = ["earthquake", "geotech", "slope stability", "sliding block", "seismic"]
 readme = "README.md"
 license = {file = "LICENSE.txt"}
-dependencies = ["numpy", "matplotlib", "scipy"]
+dependencies = ["numpy", "scipy"]
 authors = [
-    {name = "Lorne Arnold", email = "arnoldl@uw.edu"},
-    {name = "Donald Garcia-Rivas", email = "rivas203@uw.edu"}
+    {name = "Lorne Arnold"},
+    {name = "Donald Garcia-Rivas"}
 ]
 maintainers = [
     {name = "Lorne Arnold", email = "arnoldl@uw.edu"}
 ]
 
 [project.optional-dependencies]
-demo = ["ipywidgets", "sympy"]
+demo = ["ipywidgets", "sympy", "matplotlib", "pandas"]
 
 [project.urls]
 Documentation = "https://pyslammer.readthedocs.io"
