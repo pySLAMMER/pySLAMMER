@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 packages = ["pyslammer"]
 
 [project]
-name = "py-SLAMMER"
+name = "pySLAMMERtest"
 dynamic = ["version"]
 description = "Python code for calculating sliding block displacements (based on the USGS software SLAMMER)."
 keywords = ["earthquake", "geotech", "slope stability", "sliding block", "seismic"]
