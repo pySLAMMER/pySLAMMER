@@ -7,7 +7,7 @@ packages = ["pyslammer"]
 
 [project]
 name = "pySLAMMERtest"
-dynamic = ["version"]
+version = "0.1.5-alpha"
 description = "Python code for calculating sliding block displacements (based on the USGS software SLAMMER)."
 keywords = ["earthquake", "geotech", "slope stability", "sliding block", "seismic"]
 readme = "README.md"
