@@ -69,7 +69,7 @@ coverage.xml
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+#docs/_build/
 
 # PyBuilder
 target/
@@ -117,4 +117,6 @@ _output
 .jupyter/.DS_Store
 .DS_Store
 /.idea
->>>>>>> dynamic_analysis
+
+/.idea
+.idea/workspace.xml
