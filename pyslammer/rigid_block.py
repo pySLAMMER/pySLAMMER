@@ -4,11 +4,13 @@ import scipy.integrate as spint
 import matplotlib.pyplot as plt
 from pyslammer.record import Record
 
-G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
+M_TO_CM = 100
+G_EARTH = 9.80665 # Acceleration due to gravity (m/block_disp^2).
 
 
-class RigidBlock(Record):
-    """Rigid Block Analysis."""
+def downslope_analysis_jibson(time_history: np.ndarray, acc_crit: float):
+    """
+    Perform downslope analysis using Jibson'block_disp 1993 method.
 
     def __init__(self, gnd_motion: np.ndarray=[], name: str=''):
         """
@@ -154,6 +156,34 @@ class RigidBlock(Record):
                 return
             else:
                 return
+    # Perform rigid block downslope analysis via integration of relative velocity
+    # between the block and the ground. Trapezoid integration is used to caluclate
+    # ground velocity. Block velocity matches ground velocity until ground acceleration
+    # exceeds the critical acceleration, at which point the block begins to _slide
+    # accelerating at the critical acceleration. The block stops sliding when its velocity
+    # exceeds ground velocity. Block displacement is then calculated by integrating
+    # the relative velocity between the block and the ground.
+
+    if time_history is None:
+        return
+    else:
+        pass
+    acc_crit = acc_crit * G_EARTH
+    time = time_history[0][:]
+    dt = time[1]-time[0]
+    gnd_acc = time_history[1][:]
+    gnd_vel = spint.cumulative_trapezoid(gnd_acc, time, initial=0)
+    block_vel = np.copy(gnd_vel)
+    block_acc = []
+    block_sliding = False
+    for i in range(len(gnd_acc)):
+        if i == 0:
+            continue
+        tmp_block_vel = block_vel[i-1] + acc_crit*dt
+        if gnd_acc[i] > acc_crit:
+            block_sliding = True
+        elif tmp_block_vel > gnd_vel[i]:
+            block_sliding = False
         else:
             pass
         fig, ax = super().plot(acc, vel, disp, gnd_motion, called=True)
