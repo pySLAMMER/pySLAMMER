@@ -18,7 +18,7 @@ def setup_widgets():
         min=0,
         max=5.0,
         step=0.01,
-        description='k_y (g):',
+        description='ky (g):',
         disabled=False
     )
     # Selecting the ground motion

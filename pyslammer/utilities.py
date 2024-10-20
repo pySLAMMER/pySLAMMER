@@ -1,10 +1,7 @@
 from pathlib import Path
-import os
-# import tkinter.filedialog as tkf
-# import tkinter.simpledialog as dlg
 import numpy as np
-import datetime as dtm
 import csv
+from pyslammer.record import GroundMotion
 
 G_EARTH = 9.80665
 
@@ -20,18 +17,18 @@ def sample_ground_motions():
     # Iterate over all files in the folder
     for file_path in folder_path.glob("*.csv"):
         # Add the file name to the list
-        sgms[file_path.name[:-4]] = csv_time_hist(file_path)
+        sgms[file_path.name[:-4]] = GroundMotion(*csv_time_hist(file_path))
 
     return sgms
 
 
 def csv_time_hist(filename: str):
     """
-    Read a CSV file containing time history data and return it as a numpy array.
+    Read a CSV file containing time history acceleration data and return a 1D numpy array and a timestep
 
     Returns:
-        numpy.ndarray: A 2D numpy array containing time history data.
-            The first row represents time values, and the second row represents acceleration values.
+        accel: A 1D numpy array containing time history data.
+        dt: The timestep of the data.
     """
     file = open(filename, 'r')
     if file is None:
@@ -51,12 +48,6 @@ def csv_time_hist(filename: str):
             accel.append(float((row[1])))
         else:
             accel.append(float((row[0])))
-    if len(time) == 0:
-        dt = dlg.askfloat('Enter dt', 'Enter a time interval (block_disp): ')
-        time = np.arange(0, len(accel)*dt, dt)
-    else:
-        pass
-    time = np.array(time)
-    accel = np.array(accel) * G_EARTH
-    time_history = np.vstack((time, accel))
-    return time_history
+    dt = time[1] - time[0]
+    accel = np.array(accel)
+    return accel, dt

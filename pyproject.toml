@@ -25,6 +25,6 @@ maintainers = [
 demo = ["ipywidgets", "sympy", "matplotlib", "pandas"]
 
 [project.urls]
-Documentation = "https://pyslammer.readthedocs.io"
+Documentation = "Coming soon"
 Repository = "https://github.com/lornearnold/pyslammer"
 Examples =  "https://lornearnold.github.io/pyslammer/"

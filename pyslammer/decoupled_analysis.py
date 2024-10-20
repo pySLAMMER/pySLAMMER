@@ -7,7 +7,7 @@ import numpy as np
 import pyslammer as slam
 import matplotlib.pyplot as plt
 
-from pyslammer.analysis import SlidingBlockAnalysis
+from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
 from pyslammer.constants import *
 import math
 
@@ -72,7 +72,7 @@ def assign_k_y(k_y):
     elif callable(k_y):
         return k_y
     else:
-        val_error_msg = ("Invalid type for k_y. Must be float, tuple, or callable."
+        val_error_msg = ("Invalid type for ky. Must be float, tuple, or callable."
                          "If tuple, must contain two equal-length lists or numpy arrays.")
         raise ValueError(val_error_msg)
 
@@ -93,9 +93,10 @@ class Decoupled(SlidingBlockAnalysis):
                  si_units: bool = True,
                  lite: bool = False):
         super().__init__()
-        self.k_y = assign_k_y(k_y)
+        self.ky = assign_k_y(k_y)
         self.a_in = a_in #FIXME: inconsistent use of a_in with/without scale_factor
         self.dt = dt
+        self.time = np.arange(0, len(self.a_in) * self.dt, self.dt)
         self.height = height
         self.vs_slope = vs_slope
         self.vs_base = vs_base
@@ -108,8 +109,8 @@ class Decoupled(SlidingBlockAnalysis):
         self.scale_factor = scale_factor
 
         self.npts = len(a_in)
-        self.g = G_EARTH*(si_units + (not si_units)*MtoFT)
-        self.unit_weight = 20.0*(si_units + (not si_units)*KNM3toPCF) #TODO: move constants outside of function
+        self.g = G_EARTH*(si_units + (not si_units)*M_TO_FT)
+        self.unit_weight = 20.0*(si_units + (not si_units)*KNM3_TO_LBFT3) #TODO: move constants outside of function
         self.rho = self.unit_weight / self.g  # DENSITY
         self.mass = self.unit_weight * height / self.g
         self.L1 = -2.0 * self.mass / math.pi * math.cos(math.pi)

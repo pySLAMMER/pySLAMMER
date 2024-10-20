@@ -61,8 +61,8 @@ def set_globals():
     global time, freq, g, ky, a_in, v_inmax, v_in, x_in
     # Define symbols for analytical solution
     # Define parameters
-    time, freq, g, ky = sym.symbols('t, f, g, k_y', real=True, positive=True)
-    # time, freq, g, ky, t1, t2 = sym.symbols('t, f, g, k_y, t_1, t_2', real=True, positive=True)
+    time, freq, g, ky = sym.symbols('t, f, g, ky', real=True, positive=True)
+    # time, freq, g, ky, t1, t2 = sym.symbols('t, f, g, ky, t_1, t_2', real=True, positive=True)
     # display(time, freq, g, ky, t1, t2)
 
     # Define the function expressions
@@ -257,7 +257,7 @@ def harmonic_solution_plot(a_in, v_in, vb, displacement, time, t1_def_val, t2_va
     axs[0].plot(time_vals, ky.subs(vals)*np.ones(len(time_vals)), 'k--', linewidth=0.5)
     axs[0].plot(time_vals, aplot(time_vals))
     axs[0].plot(time_vals, abplot(time_vals))
-    axs[0].legend(['$k_y$', 'Input', 'Block'])
+    axs[0].legend(['$ky$', 'Input', 'Block'])
     axs[0].set_title('Acceleration')
     axs[0].set_ylabel('Acceleration, g')
 

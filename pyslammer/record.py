@@ -3,15 +3,16 @@ import pyslammer.constants as constants
 import scipy.integrate as spint
 import matplotlib.pyplot as plt
 
+#TODO: bring this into utilities.py
 
-class Record():
+class GroundMotion():
     """Ground Motion Record."""
-
-    def __init__(self, gnd_motion: np.ndarray=[], name: str='None'):
+    def __init__(self, accel: np.ndarray or list, dt: float, name: str='None'):
         """
         Creates a ground motion record object.
         Args:
-            gnd_motion (np.ndarray): Ground motion record.
+            acceleration (np.ndarray or list): Ground motion acceleration record in g
+            dt (float): Time step of the record (s).
             name (str): Name of the record.
         Creates:
             _gnd_motion (np.ndarray): Copy of original ground motion record.
@@ -21,26 +22,16 @@ class Record():
             time (np.ndarray): Time vector of the record (s).
             dt (float): Time step of the record (s).
         """
-        if len(gnd_motion) == 0:
-            self.name = 'Empty Record'
-        else:
-            self._gnd_motion = np.array(gnd_motion)
-            self._is_scaled = False
-            self._is_inverted = False
-            self._npts = len(gnd_motion[0])
-            self.name = name            
-            self.time = gnd_motion[0][:]
-            self.dt = self.time[1] - self.time[0]
-            self._calc_gnd_params()            
+        self.accel = np.array(accel)
+        self.dt = dt
+        self.name = name
+        self._is_inverted = False
+        self._is_scaled = False
+        self._npts = len(accel)
+        self.pga = max(abs(accel))
 
     def __str__(self):
-        if self.dt == -1.0:
-            info = ('Record: {}\n'.format(self.name))
-        else:
-            info = ('Record: {}\n'.format(self.name)
-                    +'PGA   : {:.3f} g\n'.format(self.pga)
-                    +'dt    : {:.3f} s'.format(self.dt))
-        return info
+        return f"Ground Motion: {self.name}, PGA: {self.pga:.3f} g, dt: {self.dt:.3f} s, npts: {self._npts}"
     
     def _calc_gnd_params(self):
         """
