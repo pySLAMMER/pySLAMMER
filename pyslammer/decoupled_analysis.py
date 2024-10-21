@@ -80,7 +80,7 @@ def assign_k_y(k_y):
 class Decoupled(SlidingBlockAnalysis):
     # include allowed values for inputs, like soil_model
     def __init__(self,
-                 k_y: float or tuple[list[float], list[float]] or tuple[np.ndarray,np.ndarray] or callable,
+                 ky: float or tuple[list[float], list[float]] or tuple[np.ndarray,np.ndarray] or callable,
                  a_in: list[float] or np.ndarray,
                  dt: float,
                  height: int or float,
@@ -93,10 +93,10 @@ class Decoupled(SlidingBlockAnalysis):
                  si_units: bool = True,
                  lite: bool = False):
         super().__init__()
-        self.ky = assign_k_y(k_y)
+        self._npts = len(a_in)
+        self.k_y = assign_k_y(ky)
         self.a_in = a_in #FIXME: inconsistent use of a_in with/without scale_factor
         self.dt = dt
-        self.time = np.arange(0, len(self.a_in) * self.dt, self.dt)
         self.height = height
         self.vs_slope = vs_slope
         self.vs_base = vs_base
@@ -120,6 +120,7 @@ class Decoupled(SlidingBlockAnalysis):
         self.HEA = np.zeros(self.npts)
         self.block_disp = np.zeros(self.npts)
         self.block_vel = np.zeros(self.npts)
+        self.block_acc = np.zeros(self.npts)
         self.x_resp = np.zeros(self.npts)
         self.v_resp = np.zeros(self.npts)
         self.a_resp = np.zeros(self.npts)
@@ -131,6 +132,10 @@ class Decoupled(SlidingBlockAnalysis):
         self._omega = math.pi * vs_slope / (2.0 * height)
         self._damp_imp = impedance_damping(vs_base, vs_slope)
         self._damp_tot = damp_ratio + self._damp_imp
+
+        if type(self) is Decoupled:
+            self.run_sliding_analysis()
+        self.ground_acc = a_in*self.g
 
     def run_sliding_analysis(self): #TODO: add ca to inputs
 
@@ -164,11 +169,13 @@ class Decoupled(SlidingBlockAnalysis):
                 print(f"disp: {self.block_disp[prev]}, ky: {self.k_y(self.block_disp[prev])}")
 
         if not self._slide:
+            self.block_acc[curr] = self.HEA[curr]
             self.block_vel[curr] = 0
             self.block_disp[curr] = self.block_disp[prev]
             if self.HEA[curr] > yield_acc:
                 self._slide = True
         else:
+            self.block_acc[curr] = yield_acc
             self.block_vel[curr] = (self.block_vel[prev]
                                     + (excess_acc - 0.5 * delta_hea) * self.dt)
             self.block_disp[curr] = (self.block_disp[prev]
@@ -289,7 +296,7 @@ if __name__ == "__main__":
         t_step = motion[0][1] - motion[0][0]
         input_acc = motion[1] / 9.80665
 
-        da = slam.Decoupled(k_y=ky_const,
+        da = slam.Decoupled(ky=ky_const,
                             a_in=input_acc,
                             dt=t_step,
                             height=50.0,

@@ -11,11 +11,11 @@ G_EARTH = 9.80665 # Acceleration due to gravity (m/block_disp^2).
 class RigidAnalysis(SlidingBlockAnalysis):
     """Rigid Block Analysis."""
 
-    def __init__(self, accel, dt, ky, method='jibson'):
+    def __init__(self, a_in, dt, ky, method='jibson'):
         """
         Initialize rigid block analysis.
         Args:
-            accel (list): Ground acceleration (g).
+            a_in (list): Ground acceleration (g).
             dt (float): Time step (s).
             ky (float): Critical acceleration (g).
             method (str, optional): Analysis method. Default is 'jibson'.
@@ -27,10 +27,9 @@ class RigidAnalysis(SlidingBlockAnalysis):
             "dgr": self.downslope_dgr,
             "gra": self.garcia_rivas_arnold,
         }
-
-        self.ground_acc = np.array(accel)*G_EARTH
+        self._npts = len(a_in)
+        self.ground_acc = np.array(a_in) * G_EARTH
         self.dt = dt
-        self.time = np.arange(0, len(self.ground_acc) * self.dt, self.dt)
         self.ky = ky*G_EARTH
         self.method = method
 
@@ -112,6 +111,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
         else:
             self._clear_block_params()
             self.ky = k_y * G_EARTH
+        time = np.arange(0, len(self.ground_acc) * self.dt, self.dt)
         block_sliding = False
         for i in range(len(self.gnd_acc)):
             if i == 0:
@@ -132,7 +132,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
                 self.block_acc.append(self.gnd_acc[i])
                 self.block_vel.append(self.gnd_vel[i])
         self.block_vel = abs(self.gnd_vel - self.block_vel)
-        self.block_disp = spint.cumulative_trapezoid(self.block_vel, self.time, initial=0)
+        self.block_disp = spint.cumulative_trapezoid(self.block_vel, time, initial=0)
         self.total_disp = self.block_disp[-1]
 
     def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, gnd_motion: bool=False):

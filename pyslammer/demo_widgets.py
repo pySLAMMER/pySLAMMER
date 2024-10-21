@@ -12,7 +12,7 @@ def setup_widgets():
     analysis_widget (ipywidgets.ToggleButtons): The toggle buttons widget for selecting the analysis type.
     start_widget (ipywidgets.Button): The button widget for starting the analysis.
     """
-    # Setting the input PGA
+    # Setting the yield acceleration
     ky_widget = widgets.BoundedFloatText(
         value=0.35,
         min=0,
@@ -30,7 +30,6 @@ def setup_widgets():
         description='Select ground motion:'
     )
 
-    # Setting the input PGA
     analysis_widget = widgets.ToggleButtons(
         options=['Rigid', 'Decoupled', 'Coupled'],
         description='Analysis type:',

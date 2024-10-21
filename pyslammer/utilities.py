@@ -27,7 +27,7 @@ def csv_time_hist(filename: str):
     Read a CSV file containing time history acceleration data and return a 1D numpy array and a timestep
 
     Returns:
-        accel: A 1D numpy array containing time history data.
+        a_in: A 1D numpy array containing time history data.
         dt: The timestep of the data.
     """
     file = open(filename, 'r')

@@ -10,7 +10,7 @@ import math
 
 class Coupled(Decoupled):
     def __init__(self,
-                 k_y: float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable,
+                 ky: float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable,
                  a_in: list[float] or np.ndarray,
                  dt: float,
                  height: int or float,
@@ -22,7 +22,7 @@ class Coupled(Decoupled):
                  soil_model: str = "linear_elastic",
                  si_units: bool = True,
                  lite: bool = False):
-        super().__init__(k_y, a_in, dt, height, vs_slope, vs_base, damp_ratio, ref_strain, scale_factor, soil_model,
+        super().__init__(ky, a_in, dt, height, vs_slope, vs_base, damp_ratio, ref_strain, scale_factor, soil_model,
                          si_units, lite)
 
         self.s1 = self.sdot1 = self.sdotdot1 = 0.0
@@ -46,6 +46,13 @@ class Coupled(Decoupled):
 
         self.beta = 0.25  # TODO: move to global constants
         self.gamma = 0.5  # TODO: move to global constants
+
+        self.block_acc = np.zeros(self.npts)
+
+        if type(self) is Coupled:
+            self.run_sliding_analysis()
+        self.ground_acc = a_in * self.g
+
 
     def run_sliding_analysis(self):  # TODO: add ca to inputs
         if self.soil_model == "equivalent_linear":
@@ -73,6 +80,7 @@ class Coupled(Decoupled):
 
         # check if sliding has started
         self.c_slidingcheck(i)
+        self.block_acc[i-1] = self.acc22 - self.sdotdot2
 
         self.s[i - 1] = self.s2
 
@@ -89,7 +97,7 @@ class Coupled(Decoupled):
             self.sdotdot1 = self.sdotdot2
             self.normalf1 = self.normalf2
 
-        # Set up acceleration loading. Normal force corrected for vertical component of accel.
+        # Set up acceleration loading. Normal force corrected for vertical component of a_in.
         self.normalf2 = self.mass * self.gCOS + self.mass * self.a_in[i - 1] * self.scale_factor * self.gSIN
 
         if i == 1:
@@ -229,12 +237,12 @@ if __name__ == "__main__":
     ky_interp = ([0.2, 0.3, 0.4, 0.5], [0.15, 0.14, 0.13, 0.12])
     ky_func = some_ky_func
     motion = histories["Chi-Chi_1999_TCU068-090"]
-    t_step = motion[0][1] - motion[0][0]
-    input_acc = motion[1] / 9.80665
+    # t_step = motion[0][1] - motion[0][0]
+    # input_acc = motion[1] / 9.80665
 
-    ca = slam.Coupled(k_y=ky_func,
-                      a_in=input_acc,
-                      dt=t_step,
+    ca = slam.Coupled(ky=ky_func,
+                      a_in=motion.accel,
+                      dt=motion.dt,
                       height=50.0,
                       vs_slope=600.0,
                       vs_base=600.0,
