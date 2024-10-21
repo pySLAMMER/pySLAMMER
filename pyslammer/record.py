@@ -1,6 +1,7 @@
 import numpy as np
 import pyslammer.constants as constants
 import scipy.integrate as spint
+from scipy.fft import rfft, rfftfreq
 import matplotlib.pyplot as plt
 
 #TODO: bring this into utilities.py
@@ -29,6 +30,15 @@ class GroundMotion():
         self._is_scaled = False
         self._npts = len(accel)
         self.pga = max(abs(accel))
+
+        # FFT
+        x = rfft(accel)[1::]
+        freqs = rfftfreq(self._npts, dt)[1::]
+        x_real = np.real(x)
+        x_imag = np.imag(x)
+        c = np.sqrt(x_real ** 2 + x_imag ** 2)
+
+        self.mean_period = sum(c ** 2 / freqs) / sum(c ** 2)
 
     def __str__(self):
         return f"Ground Motion: {self.name}, PGA: {self.pga:.3f} g, dt: {self.dt:.3f} s, npts: {self._npts}"

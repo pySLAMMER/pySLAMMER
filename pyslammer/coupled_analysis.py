@@ -52,6 +52,7 @@ class Coupled(Decoupled):
         if type(self) is Coupled:
             self.run_sliding_analysis()
         self.ground_acc = a_in * self.g
+        self.max_sliding_disp = self.block_disp[-1]
 
 
     def run_sliding_analysis(self):  # TODO: add ca to inputs
