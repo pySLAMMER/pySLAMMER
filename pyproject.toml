@@ -7,7 +7,7 @@ packages = ["pyslammer"]
 
 [project]
 name = "pyslammer"
-version = "0.1.10"
+version = "0.1.11"
 description = "Python code for calculating sliding block displacements (based on the USGS software SLAMMER)."
 keywords = ["earthquake", "geotech", "slope stability", "sliding block", "seismic"]
 readme = "README.md"
@@ -25,6 +25,5 @@ maintainers = [
 demo = ["ipywidgets", "sympy", "matplotlib", "pandas"]
 
 [project.urls]
-Documentation = "Coming soon"
 Repository = "https://github.com/lornearnold/pyslammer"
 Examples =  "https://lornearnold.github.io/pyslammer/"
