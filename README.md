@@ -8,11 +8,11 @@ Currently, pySLAMMER is in development.
 When finished, this code should be able to replicate the rigorous analysis provided by [SLAMMER](https://pubs.usgs.gov/tm/12b1/) and provide more robust output (e.g., arrays of relative displacement time history instead of raster images).
 More importantly, pySLAMMER will be a python module that users can install and access using familiar syntax (i.e.,`pip install pySLAMMER` and `import pySLAMMER as slam`).
 
-At a minimum, pySLAMMER includes or will include the following sliding block models:
+pySLAMMER includes the following sliding block models:
 
-* [x] Rigid (i.e., traditional Newmark analysis[^2] as implemented by Jibson (1993)[^3])
-* [ ] Decoupled (per Makdisi and Seed 1978[^4])
-* [ ] Coupled (described by Chopra and Zhang (1991)[^5] and modified by Rathje and Bray (1999)[^6])
+* Rigid (i.e., traditional Newmark analysis[^2] as implemented by Jibson (1993)[^3])
+* Decoupled (per Makdisi and Seed 1978[^4])
+* Coupled (described by Chopra and Zhang (1991)[^5] and modified by Rathje and Bray (1999)[^6])
 
 ## Verification
 
