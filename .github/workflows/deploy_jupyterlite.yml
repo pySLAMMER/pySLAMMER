@@ -25,7 +25,7 @@ jobs:
         run: |
           cp README.md demos
           cp LICENSE.txt demos
-          jupyter lite build --lite-dir jupyterlite_dir --contents demos --output-dir jupyterlite_dir/dist
+          jupyter lite build --lite-dir jupyterlite_dir --contents demos --output-dir dist
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
