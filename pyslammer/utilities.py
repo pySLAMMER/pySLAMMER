@@ -1,3 +1,4 @@
+import importlib.resources as pkg_resources
 from pathlib import Path
 import numpy as np
 import csv
@@ -12,7 +13,7 @@ def sample_ground_motions():
     sgms = {}
 
     # Get the path to the sample_ground_motions folder
-    folder_path = Path(__file__).resolve().parent / "sample_ground_motions"
+    folder_path = pkg_resources.files('pyslammer') / "sample_ground_motions"
 
     # Iterate over all files in the folder
     for file_path in folder_path.glob("*.csv"):
