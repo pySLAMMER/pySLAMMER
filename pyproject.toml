@@ -1,28 +1,24 @@
 [build-system]
-requires = ["setuptools >= 61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling>=1.24.2", "hatch-vcs>=0.3.0"]
+build-backend = "hatchling.build"
 
-[tool.setuptools]
-packages = ["pyslammer"]
+[tool.hatch.version]
+path = "pyslammer/__init__.py"
 
 [project]
 name = "pyslammer"
-version = "0.1.15"
 description = "Python code for calculating sliding block displacements (based on the USGS software SLAMMER)."
 keywords = ["earthquake", "geotech", "slope stability", "sliding block", "seismic"]
 readme = "README.md"
 license = {file = "LICENSE.txt"}
 dependencies = ["numpy", "scipy"]
-authors = [
-    {name = "Lorne Arnold"},
-    {name = "Donald Garcia-Rivas"}
-]
-maintainers = [
-    {name = "Lorne Arnold", email = "arnoldl@uw.edu"}
-]
+authors = [{name = "Lorne Arnold"}, {name = "Donald Garcia-Rivas"}]
+maintainers = [{name = "Lorne Arnold", email = "arnoldl@uw.edu"}]
 
 [project.optional-dependencies]
 demo = ["ipywidgets", "sympy", "matplotlib", "pandas"]
 
 [project.urls]
 Repository = "https://github.com/lornearnold/pyslammer"
+#Documentation = "https://pyslammer.readthedocs.io"
+#Examples = "https://lornearnold.github.io/pyslammer/"
