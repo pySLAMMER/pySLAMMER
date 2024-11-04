@@ -81,10 +81,6 @@ jobs:
       - name: Install Hatch
         uses: pypa/hatch@install
 
-      - name: Set project version with hatch
-        run: |
-          hatch version ${{ needs.details.outputs.new_version }}
-
       - name: Build source and wheel distribution
         run: |
           hatch build
