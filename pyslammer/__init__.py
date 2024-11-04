@@ -7,7 +7,7 @@ from pyslammer.utilities import *
 # import pyslammer.analytical_sliding_block as asb
 import pyslammer.demo_widgets as dw
 
-__version__ = "0.1.16"
+__version__ = "0.1.17"
 
 import os
 
