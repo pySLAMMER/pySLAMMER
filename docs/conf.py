@@ -12,7 +12,6 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'jupyter_sphinx',
 ]
 
 templates_path = ['_templates']

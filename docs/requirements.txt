@@ -1,2 +1,4 @@
 sphinx
 xeus-python
+livereload
+myst-parser
