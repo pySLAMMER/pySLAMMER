@@ -3,13 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pyslammer's documentation!
+.. image:: pySLAMMER_logo.svg
+   :alt: pySLAMMER Logo
+   :width: 100px
+   :align: right
+
+Welcome to pyslammer's documentation
 =====================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   modules
-   installation
-   examples
+   Getting Started <Getting_Started>
+   Installation
+

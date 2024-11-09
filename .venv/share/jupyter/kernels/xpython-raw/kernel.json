@@ -1,0 +1,13 @@
+{
+  "display_name": "Python 3.12 (XPython Raw)",
+  "argv": [
+      "python3.12",
+      "-m",
+      "xpython_launcher",
+      "-f",
+      "{connection_file}",
+      "--raw"
+  ],
+  "language": "python",
+  "metadata": { "debugger": false }
+}

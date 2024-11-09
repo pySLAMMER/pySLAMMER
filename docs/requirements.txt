@@ -1,4 +1,10 @@
 sphinx
 xeus-python
 livereload
-myst-parser
+pyslammer
+matplotlib
+pandas
+ipywidgets
+ipympl
+nbsphinx
+nbconvert
