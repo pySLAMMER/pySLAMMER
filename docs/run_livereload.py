@@ -10,6 +10,7 @@ if __name__ == "__main__":
     preprocess()
     
     # Build the initial HTML files
+    # os.system('cd docs')
     os.system('make html')
     
     # Check if the build directory and index.html exist

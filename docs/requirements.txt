@@ -1,4 +1,6 @@
 sphinx
+sphinx_design
+sphinx-autodoc2
 xeus-python
 livereload
 pyslammer
@@ -8,3 +10,5 @@ ipywidgets
 ipympl
 nbsphinx
 nbconvert
+myst-parser
+myst-nb
