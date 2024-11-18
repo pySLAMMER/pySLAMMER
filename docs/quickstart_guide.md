@@ -28,7 +28,7 @@ We can do this with the following steps:
 
 1. **Import a sample ground motion**
 
-We will use the sample ground motion record `Imperial_Valley_1979_BCR-230` for this example. Refer to [insert some internal link...]
+We will use the sample ground motion record `Imperial_Valley_1979_BCR-230` for this example. Refer to [TODO: add internal link] for details on the included sample ground motions.
 ```python
 histories = slam.sample_ground_motions() # Load all sample ground motions
 gm = histories["Imperial_Valley_1979_BCR-230"] # Select a specific ground motion
@@ -45,5 +45,3 @@ result = slam.RigidAnalysis(gm.accel, gm.dt, ky) # Perform the rigid sliding blo
 
 The key object type within pyslammer is the SlidingBlockAnalysis object.
 Additionaly, the package includes a small number of sample ground motion records.
-
-I'm a markdown file

@@ -1,12 +1,10 @@
 # pySLAMMER
 
-Python code for calculating sliding block displacements.
-As the name indicates, this program is based on the USGS software SLAMMER[^1].
 
-Currently, pySLAMMER is in development.
-
-When finished, this code should be able to replicate the rigorous analysis provided by [SLAMMER](https://pubs.usgs.gov/tm/12b1/) and provide more robust output (e.g., arrays of relative displacement time history instead of raster images).
-More importantly, pySLAMMER will be a python module that users can install and access using familiar syntax (i.e.,`pip install pySLAMMER` and `import pySLAMMER as slam`).
+pySLAMMER: **Py**thon package for **S**eismic **L**andslide **M**ovement **M**odeled using **E**arthquake **R**ecords
+is tool for estimating the co-seismic displacements of landslides with rigid and flexible sliding-block analyses.
+The package name and code are based on the USGS tool [SLAMMER](https://pubs.usgs.gov/tm/12b1/)[^jibson_2013].
+pySLAMMER replicates the behavior of the rigorous analysis methods in SLAMMER and can provide more robust output (e.g., arrays of relative displacement time history).
 
 pySLAMMER includes the following sliding block models:
 
@@ -14,13 +12,7 @@ pySLAMMER includes the following sliding block models:
 * Decoupled (per Makdisi and Seed 1978[^4])
 * Coupled (described by Chopra and Zhang (1991)[^5] and modified by Rathje and Bray (1999)[^6])
 
-## Verification
-
-The pySLAMMER models will be verified by comparison with SLAMMER results using equivalent input parameters.
-
-## Examples
-
-Example use cases will be demonstrated using Jupyter workbooks. 
+See the documentation for more details, including installation, user guide, example uses, and verification.
 
 ## Use cases
 

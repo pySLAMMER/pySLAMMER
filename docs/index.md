@@ -6,9 +6,10 @@ sd_hide_title: true
 
 # Welcome to pySLAMMER's documentation
 
-pySLAMMER: **Py**thon package for **S**eismic **L**andslide **M**ovement **M**odeled using **E**arthquake **R**ecords
+pySLAMMER
+(**Py**thon package for **S**eismic **L**andslide **M**ovement **M**odeled using **E**arthquake **R**ecords)
 is tool for estimating the co-seismic displacements of landslides with rigid and flexible sliding-block analyses.
-The package name and code are based on the USGS tool SLAMMER[^jibson_2013].
+The package name and code are based on the USGS tool [SLAMMER](https://pubs.usgs.gov/tm/12b1/) by Jibson et al. (2013)[^jibson_2013].
 
 pySLAMMER includes the following sliding block models:
 
@@ -20,13 +21,12 @@ pySLAMMER includes the following sliding block models:
 ```{toctree}
 :maxdepth: 2
 Quickstart Guide <quickstart_guide>
-Batch demo <demos/batch_demo.ipynb>
-Rigid and Flexible Analysis <demos/multi_method.ipynb>
-apidocs/index
+Examples <examples.md>
+Verification <verification.md>
+API Reference <apidocs/index>
 ```
 
 ## References
-
 
 [^jibson_2013]: Jibson, R.W., Rathje, E.M., Jibson, M.W., and Lee, Y.W., 2013, SLAMMER—Seismic LAndslide Movement Modeled using Earthquake Records (ver.1.1, November 2014): U.S. Geological Survey Techniques and Methods, book 12, chap. B1, unpaged. https://pubs.usgs.gov/tm/12b1/
 
