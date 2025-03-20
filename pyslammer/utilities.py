@@ -18,7 +18,8 @@ def sample_ground_motions():
     # Iterate over all files in the folder
     for file_path in folder_path.glob("*.csv"):
         # Add the file name to the list
-        sgms[file_path.name[:-4]] = GroundMotion(*csv_time_hist(file_path))
+        motion_name = file_path.name[:-4]
+        sgms[motion_name] = GroundMotion(*csv_time_hist(file_path), motion_name)
 
     return sgms
 

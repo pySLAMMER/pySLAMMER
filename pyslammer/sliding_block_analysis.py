@@ -72,7 +72,7 @@ class SlidingBlockAnalysis:
             axs[i].legend(loc='upper left', bbox_to_anchor=(1, 1))
         fig.tight_layout()
         fig.canvas.toolbar_position = 'top'
-        return fig, axs
+        return fig
 
 
 

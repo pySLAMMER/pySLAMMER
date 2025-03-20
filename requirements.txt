@@ -1,0 +1,15 @@
+sphinx
+sphinx_design
+sphinx-autodoc2
+sphinx_book_theme
+livereload
+matplotlib
+pandas
+ipywidgets
+ipympl
+nbsphinx
+nbconvert
+myst-parser
+myst-nb
+sympy
+jupytext
