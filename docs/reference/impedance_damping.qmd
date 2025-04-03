@@ -1,0 +1,6 @@
+# impedance_damping { #pyslammer.impedance_damping }
+
+```python
+impedance_damping(vs_base, vs_slope)
+```
+

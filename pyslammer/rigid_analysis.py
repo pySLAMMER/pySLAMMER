@@ -9,7 +9,7 @@ G_EARTH = 9.80665 # Acceleration due to gravity (m/block_disp^2).
 
 
 class RigidAnalysis(SlidingBlockAnalysis):
-    """Rigid Block Analysis."""
+    """Rigid Block Analysis"""
 
     def __init__(self, a_in, dt, ky, method='jibson'):
         """
@@ -24,8 +24,8 @@ class RigidAnalysis(SlidingBlockAnalysis):
 
         self.analysis_methods = {
             "jibson": self.jibson,
-            "dgr": self.downslope_dgr,
-            "gra": self.garcia_rivas_arnold,
+            "dgr": self._downslope_dgr,
+            "gra": self._garcia_rivas_arnold,
         }
         self._npts = len(a_in)
         self.ground_acc = np.array(a_in) * G_EARTH
@@ -94,11 +94,11 @@ class RigidAnalysis(SlidingBlockAnalysis):
             self.block_acc[i] = gnd_acc_curr - acc[1]
         self.max_sliding_disp = self.sliding_disp[-1]
 
-    def garcia_rivas_arnold(self):
+    def _garcia_rivas_arnold(self):
         # for future implementation with velocity verlet
         pass
 
-    def downslope_dgr(self):
+    def _downslope_dgr(self):
         """
         Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.
         Args:
@@ -134,88 +134,3 @@ class RigidAnalysis(SlidingBlockAnalysis):
         self.block_vel = abs(self.gnd_vel - self.block_vel)
         self.block_disp = spint.cumulative_trapezoid(self.block_vel, time, initial=0)
         self.total_disp = self.block_disp[-1]
-
-    def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, gnd_motion: bool=False):
-        """
-        Plot the ground motion and the block response.
-        Args:
-            acc (bool, optional): Plot block acceleration.
-            vel (bool, optional): Plot block differential velocity.
-            disp (bool, optional): Plot block displacement.
-            gnd_motion (bool, optional): Plot ground motion.
-        Returns:
-            None
-        """
-        num_plots = sum([acc, vel, disp])
-        if self.dt == 1.0:
-            return
-        elif num_plots == 0:
-            return
-        elif len(self.block_acc) == 0:
-            if gnd_motion:
-                super().plot(acc, vel, disp, gnd_motion, called=False)
-                return
-            else:
-                return
-    # Perform rigid block downslope analysis via integration of relative velocity
-    # between the block and the ground. Trapezoid integration is used to caluclate
-    # ground velocity. Block velocity matches ground velocity until ground acceleration
-    # exceeds the critical acceleration, at which point the block begins to _slide
-    # accelerating at the critical acceleration. The block stops sliding when its velocity
-    # exceeds ground velocity. Block displacement is then calculated by integrating
-    # the relative velocity between the block and the ground.
-
-        if time_history is None:
-            return
-        else:
-            pass
-        acc_crit = acc_crit * G_EARTH
-        time = time_history[0][:]
-        dt = time[1]-time[0]
-        gnd_acc = time_history[1][:]
-        gnd_vel = spint.cumulative_trapezoid(gnd_acc, time, initial=0)
-        block_vel = np.copy(gnd_vel)
-        block_acc = []
-        block_sliding = False
-        for i in range(len(gnd_acc)):
-            if i == 0:
-                continue
-            tmp_block_vel = block_vel[i-1] + acc_crit*dt
-            if gnd_acc[i] > acc_crit:
-                block_sliding = True
-            elif tmp_block_vel > gnd_vel[i]:
-                block_sliding = False
-            else:
-                pass
-            fig, ax = super().plot(acc, vel, disp, gnd_motion, called=True)
-            fig.suptitle('Rigid Block Analysis\n{}'.format(self.name))
-            remain_plots = num_plots
-            if acc:
-                if num_plots == 1:
-                    acc = ax
-                else:
-                    i = num_plots - remain_plots
-                    remain_plots -= 1
-                    acc = ax[i]
-                acc.plot(self.time, self.block_acc, label='Block Acceleration')
-                acc.plot(self.time, [self.ky for i in range(len(self.time))], label='Critical Acceleration')
-                acc.legend()
-            if vel:
-                if num_plots == 1:
-                    vel = ax
-                else:
-                    j = num_plots - remain_plots
-                    remain_plots -= 1
-                    vel = ax[j]
-                vel.plot(self.time, self.block_vel, label='Block Differential Velocity')
-                vel.legend()
-            if disp:
-                if num_plots == 1:
-                    disp = ax
-                else:
-                    k = num_plots - remain_plots
-                    remain_plots -= 1
-                    disp = ax[k]
-                disp.plot(self.time, self.block_disp, label='Block Displacement')
-                disp.legend()
-            plt.show()

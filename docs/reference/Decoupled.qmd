@@ -1,0 +1,20 @@
+# Decoupled { #pyslammer.Decoupled }
+
+```python
+Decoupled(
+    self,
+    ky,
+    a_in,
+    dt,
+    height,
+    vs_slope,
+    vs_base,
+    damp_ratio,
+    ref_strain,
+    scale_factor=1,
+    soil_model='linear_elastic',
+    si_units=True,
+    lite=False,
+)
+```
+

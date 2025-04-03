@@ -1,0 +1,50 @@
+# RigidAnalysis { #pyslammer.RigidAnalysis }
+
+```python
+RigidAnalysis(self, a_in, dt, ky, method='jibson')
+```
+
+Rigid Block Analysis.
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [downslope_dgr](#pyslammer.RigidAnalysis.downslope_dgr) | Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method. |
+| [jibson](#pyslammer.RigidAnalysis.jibson) | Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method. |
+| [plot](#pyslammer.RigidAnalysis.plot) | Plot the ground motion and the block response. |
+
+### downslope_dgr { #pyslammer.RigidAnalysis.downslope_dgr }
+
+```python
+RigidAnalysis.downslope_dgr()
+```
+
+Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.
+Args:
+    ky (float, optional): Critical acceleration in multiples of g.
+Returns:
+    None
+
+### jibson { #pyslammer.RigidAnalysis.jibson }
+
+```python
+RigidAnalysis.jibson()
+```
+
+Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.
+
+### plot { #pyslammer.RigidAnalysis.plot }
+
+```python
+RigidAnalysis.plot(acc=True, vel=True, disp=True, gnd_motion=False)
+```
+
+Plot the ground motion and the block response.
+Args:
+    acc (bool, optional): Plot block acceleration.
+    vel (bool, optional): Plot block differential velocity.
+    disp (bool, optional): Plot block displacement.
+    gnd_motion (bool, optional): Plot ground motion.
+Returns:
+    None

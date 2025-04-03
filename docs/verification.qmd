@@ -1,0 +1,6 @@
+# Verification
+The verifications should include:
+
+1. A comparison of SLAMMER and pySLAMMER's results (rigid, decoupled, and coupled)
+2. A comparison of (1) with an analytical solution (rigid only)
+3. Possibly some trends from publications? I think that's probably better suited for the [Examples](examples.qmd) section.

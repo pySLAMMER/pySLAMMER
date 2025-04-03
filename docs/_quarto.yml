@@ -1,0 +1,66 @@
+project:
+  type: website
+  output-dir: docs
+
+# toc-depth: 3
+
+quartodoc:
+  # the name used to import the package you want to create reference docs for
+  package: pyslammer
+
+  # write sidebar data to this file
+  sidebar: _sidebar.yml
+
+website:
+  title: "pySLAMMER"
+  favicon: _static/pySLAMMER_logo_square.svg
+  search: 
+    location: sidebar
+    type: textbox
+
+  navbar: 
+    title: "pySLAMMER"
+    search: false
+    tools:
+      - icon: github
+        href: "https://github.com/lornearnold/pyslammer"
+
+
+    sections:
+      - title: Some functions
+        desc: Functions to inspect docstrings.
+        contents:
+          # the functions being documented in the package.
+          # you can refer to anything: class methods, modules, etc..
+          - get_object
+          - preview
+
+  sidebar:
+    style: "docked"
+    search: true
+    logo: _static/pySLAMMER_logo_square.svg
+    contents: 
+      - text: "Overview"
+        href: index.qmd
+      - quickstart.qmd
+      - text: "Quickstart guide"
+        href: quickstart.qmd
+      - section: "Examples"
+        href: examples.qmd
+        contents:
+          - rigid_flex.qmd
+          - batch_simulations.qmd
+      - text: "API reference"
+        href: reference/index.qmd
+      - section: "Verifications"
+        href: verification.qmd
+
+
+format:
+  html:
+    theme:
+      - cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    default-image-extension: svg

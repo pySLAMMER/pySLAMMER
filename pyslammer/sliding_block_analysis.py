@@ -2,10 +2,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.integrate as spint
 
+
 from pyslammer.constants import G_EARTH
 
 
 class SlidingBlockAnalysis:
+    """
+    Base class for all time-domain sliding block analyses.
+    """
 
     def __init__(self):
         self.method = None
@@ -26,7 +30,7 @@ class SlidingBlockAnalysis:
         self._npts = None
         pass
 
-    def tbd(self):
+    def _compile_attributes(self):
         time = np.arange(0, self._npts * self.dt, self.dt)
         if self.ground_vel is None:
             self.ground_vel = spint.cumulative_trapezoid(self.ground_acc, time, initial=0)
@@ -38,13 +42,17 @@ class SlidingBlockAnalysis:
         pass
 
     def sliding_block_plot(self, sliding_vel_mode=True, fig=None):
-        self.tbd()
+        """
+        Plot the analysis result as a 3-by-1 array of time series figures. 
+        From top to bottom, the figures contain: acceleration, velocity, and displacement signals. By default, the acceleration figure shows the input acceleration and the block acceleration. The velocity figure shows the *sliding* (i.e., relative to the input motion) velocity of the block. If desired, `sliding_vel_mode` can be set to `False` to display the absolute velocity of the input motion and the block. The displacement figure shows the relative displacement of the block to the base.
+        """
+        self._compile_attributes()
         bclr = "k"
         gclr = "tab:blue"
         kyclr = "k"
         if fig is None:  # gAcc,gVel,bVel,bDisp,t,ky):
             fig, axs = plt.subplots(3, 1, sharex=True)
-            fig.set_size_inches(10, 6)
+
         else:
             axs = fig.get_axes()
         time = np.arange(0, self._npts * self.dt, self.dt)

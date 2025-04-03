@@ -1,0 +1,11 @@
+# csv_time_hist { #pyslammer.csv_time_hist }
+
+```python
+csv_time_hist(filename)
+```
+
+Read a CSV file containing time history acceleration data and return a 1D numpy array and a timestep
+
+Returns:
+    a_in: A 1D numpy array containing time history data.
+    dt: The timestep of the data.

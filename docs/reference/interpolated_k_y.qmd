@@ -1,0 +1,6 @@
+# interpolated_k_y { #pyslammer.interpolated_k_y }
+
+```python
+interpolated_k_y(k_y)
+```
+

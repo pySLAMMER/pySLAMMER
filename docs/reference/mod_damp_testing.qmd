@@ -1,0 +1,6 @@
+# mod_damp_testing { #pyslammer.mod_damp_testing }
+
+```python
+mod_damp_testing(effective_strain, ref_strain)
+```
+
