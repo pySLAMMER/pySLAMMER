@@ -216,9 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
   <ul class="collapse">
-  <li><a href="#pyslammer.RigidAnalysis.downslope_dgr" id="toc-pyslammer.RigidAnalysis.downslope_dgr" class="nav-link" data-scroll-target="#pyslammer.RigidAnalysis.downslope_dgr">downslope_dgr</a></li>
   <li><a href="#pyslammer.RigidAnalysis.jibson" id="toc-pyslammer.RigidAnalysis.jibson" class="nav-link" data-scroll-target="#pyslammer.RigidAnalysis.jibson">jibson</a></li>
-  <li><a href="#pyslammer.RigidAnalysis.plot" id="toc-pyslammer.RigidAnalysis.plot" class="nav-link" data-scroll-target="#pyslammer.RigidAnalysis.plot">plot</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -233,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="pyslammer.RigidAnalysis" class="level1">
 <h1>RigidAnalysis</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>RigidAnalysis(<span class="va">self</span>, a_in, dt, ky, method<span class="op">=</span><span class="st">'jibson'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Rigid Block Analysis.</p>
+<p>Rigid Block Analysis</p>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <table class="caption-top table">
@@ -245,33 +243,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="#pyslammer.RigidAnalysis.downslope_dgr">downslope_dgr</a></td>
-<td>Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.</td>
-</tr>
-<tr class="even">
 <td><a href="#pyslammer.RigidAnalysis.jibson">jibson</a></td>
 <td>Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.</td>
 </tr>
-<tr class="odd">
-<td><a href="#pyslammer.RigidAnalysis.plot">plot</a></td>
-<td>Plot the ground motion and the block response.</td>
-</tr>
 </tbody>
 </table>
-<section id="pyslammer.RigidAnalysis.downslope_dgr" class="level3">
-<h3 class="anchored" data-anchor-id="pyslammer.RigidAnalysis.downslope_dgr">downslope_dgr</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>RigidAnalysis.downslope_dgr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method. Args: ky (float, optional): Critical acceleration in multiples of g. Returns: None</p>
-</section>
 <section id="pyslammer.RigidAnalysis.jibson" class="level3">
 <h3 class="anchored" data-anchor-id="pyslammer.RigidAnalysis.jibson">jibson</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>RigidAnalysis.jibson()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>RigidAnalysis.jibson()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.</p>
-</section>
-<section id="pyslammer.RigidAnalysis.plot" class="level3">
-<h3 class="anchored" data-anchor-id="pyslammer.RigidAnalysis.plot">plot</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>RigidAnalysis.plot(acc<span class="op">=</span><span class="va">True</span>, vel<span class="op">=</span><span class="va">True</span>, disp<span class="op">=</span><span class="va">True</span>, gnd_motion<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Plot the ground motion and the block response. Args: acc (bool, optional): Plot block acceleration. vel (bool, optional): Plot block differential velocity. disp (bool, optional): Plot block displacement. gnd_motion (bool, optional): Plot ground motion. Returns: None</p>
 
 
 </section>

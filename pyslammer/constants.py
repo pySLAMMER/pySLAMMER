@@ -1,3 +1,11 @@
+"""
+Constants used in the pyslammer package.
+
+Attributes
+----------
+G_EARTH : float
+    Acceleration due to gravity (m/s^2).
+"""
 G_EARTH = 9.80665 # Acceleration due to gravity (m/s^2).
 
 FT_TO_IN = 12.0

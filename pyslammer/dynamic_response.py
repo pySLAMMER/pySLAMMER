@@ -5,6 +5,25 @@ from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
 import math
 
 class DynamicResp(SlidingBlockAnalysis):
+    """
+    Dynamic response analysis for sliding blocks.
+
+    Parameters
+    ----------
+    ground_motion : GroundMotion
+        Ground motion object.
+    block_properties : dict
+        Properties of the sliding block.
+
+    Attributes
+    ----------
+    ground_motion : GroundMotion
+        Ground motion object.
+    block_properties : dict
+        Properties of the sliding block.
+    response : dict
+        Dynamic response results.
+    """
     def __init__(self):
         super().__init__()
         # main function parameters

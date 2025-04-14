@@ -126,7 +126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examples.html">Examples</a></li><li class="breadcrumb-item"><a href="./rigid_flex.html">Rigid and Flexible Anlysis</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rigid_flex.html">Examples</a></li><li class="breadcrumb-item"><a href="./rigid_flex.html">Rigid and Flexible Anlysis</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -163,15 +163,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Quickstart guide</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./quickstart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Quickstart guide</span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./examples.html" class="sidebar-item-text sidebar-link">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Examples</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -192,12 +186,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">API reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">API reference</span></a>
+ <span class="menu-text">Function reference</span></a>
   </div>
 </li>
+      </ul>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
  <span class="menu-text">Verifications</span></span>
@@ -221,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examples.html">Examples</a></li><li class="breadcrumb-item"><a href="./rigid_flex.html">Rigid and Flexible Anlysis</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rigid_flex.html">Examples</a></li><li class="breadcrumb-item"><a href="./rigid_flex.html">Rigid and Flexible Anlysis</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Rigid and Flexible Anlysis</h1>
 </div>
@@ -244,13 +249,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><em>The next steps assume you’ve already installed pySLAMMER from PYPI:</em></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">pip</span> install pyslammer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>First, import pySLAMMER and a couple other helpful packages</p>
-<div id="35b4965f" class="cell" data-execution_count="1">
+<div id="ef75f5d9" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyslammer <span class="im">as</span> slam</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next define the ground motion to use in the analysis. For this example, we will use one of pySLAMMER’s built in ground motions from the 1995 Kobe earthquake. This creates a ground motion object with <code>accel</code> and <code>dt</code> attributes with the acceleration array and timestep, respectively.</p>
-<div id="1b4903ab" class="cell" data-execution_count="2">
+<div id="03e21a71" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>record_name <span class="op">=</span> <span class="st">"Kobe_1995_TAK-090"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>gm <span class="op">=</span> slam.sample_ground_motions()[record_name]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -258,14 +263,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="rigid-block-analysis">Rigid block analysis</h2>
 <p>A rigid block analysis requires at least three input parameters:</p>
 <ul>
-<li><code>a_in</code> - the input acceleration time history (in units of g)<br>
-</li>
-<li><code>dt</code> - the timestep separating the acceleration data points<br>
-</li>
+<li><code>a_in</code> - the input acceleration time history (in units of g)</li>
+<li><code>dt</code> - the timestep separating the acceleration data points</li>
 <li><code>ky</code> - the slope’s yield acceleration (in units of g)</li>
 </ul>
 <p>These parameters are stored in a dictionary (<code>rigid_inputs</code>) and used as kwarg input to the <code>RigidAnalysis</code> method.</p>
-<div id="3391ca8f" class="cell" data-execution_count="3">
+<div id="9fe5ddfc" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rigid_inputs <span class="op">=</span> {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a_in"</span>: gm.accel,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"dt"</span>: gm.dt,</span>
@@ -274,12 +277,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>rigid_result <span class="op">=</span> slam.RigidAnalysis(<span class="op">**</span>rigid_inputs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Passing the input variables to <code>slam.RigidAnalysis</code> as a dictionary isn’t necessary, it’s just a convenient way to package groups of input variables. The following line would have produced the same result as the previous cell:</p>
+<p><code>rigid_result = slam.RigidAnalysis(gm.accel, gm.dt, 0.2)</code></p>
+</div>
+</div>
 </section>
 <section id="flexible-sliding-block-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="flexible-sliding-block-analysis">Flexible sliding block analysis</h2>
-<p>The flexible block analyses (decoupled and coupled) require additional input parameters to define the stiffness of the model: * <code>height</code> - the slope height (in meters, by default) * <code>vs_slope</code> - the slope shear wave velocity (in meters per second, by default) * <code>vs_base</code> - the base shear wave velocity (in meters per second, by default) * <code>damp_ratio</code> - the slope damping ratio * <code>ref_strain</code> - the slope reference strain * <code>soil_model</code> - the dynamic analysis method used (either <code>linear_elastic</code> or <code>equivalent_linear</code>)</p>
+<p>The flexible block analyses (decoupled and coupled) require additional input parameters to define the stiffness of the model:</p>
+<ul>
+<li><code>height</code> - the slope height (in meters, by default)</li>
+<li><code>vs_slope</code> - the slope shear wave velocity (in meters per second, by default)</li>
+<li><code>vs_base</code> - the base shear wave velocity (in meters per second, by default)</li>
+<li><code>damp_ratio</code> - the slope damping ratio</li>
+<li><code>ref_strain</code> - the slope reference strain</li>
+<li><code>soil_model</code> - the dynamic analysis method used (either <code>linear_elastic</code> or <code>equivalent_linear</code>)</li>
+</ul>
 <p>These parameters are stored in a dictionary (<code>flexible_inputs</code>) and used as kwargs along with those used in the rigid analysis. The decoupled and coupled analyses are run with the <code>Decoupled</code> and <code>Coupled</code> methods, respectively.</p>
-<div id="dda31825" class="cell" data-execution_count="4">
+<div id="e53d64bd" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flexible_inputs <span class="op">=</span> {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"height"</span>: <span class="fl">50.0</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"vs_slope"</span>: <span class="fl">600.0</span>,</span>
@@ -298,7 +323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="comparison-of-analysis-methods" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-analysis-methods">Comparison of analysis methods</h2>
 <p>A simple plot comparing the block displecements with time can be generated by accessing the <code>.sliding_disp</code> attribute of each analysis result.</p>
-<div id="5b73b1f8" class="cell" data-execution_count="5">
+<div id="b326acde" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="bu">len</span>(gm.accel) <span class="op">*</span> gm.dt, gm.dt)</span>

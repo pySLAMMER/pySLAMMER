@@ -7,22 +7,38 @@ import matplotlib.pyplot as plt
 #TODO: bring this into utilities.py
 
 class GroundMotion():
-    """Ground Motion Record."""
+    """
+    Ground Motion Record.
+
+    Parameters
+    ----------
+    accel : np.ndarray or list
+        Ground motion acceleration record in g.
+    dt : float
+        Time step of the record (s).
+    name : str, optional
+        Name of the record (default is 'None').
+
+    Attributes
+    ----------
+    accel : np.ndarray
+        Ground motion acceleration record in g.
+    dt : float
+        Time step of the record (s).
+    name : str
+        Name of the record.
+    _is_inverted : bool
+        True if the record is inverted.
+    _is_scaled : bool
+        True if the record is scaled.
+    _npts : int
+        Number of points in the acceleration record.
+    pga : float
+        Peak ground acceleration in g.
+    mean_period : float
+        Mean period of the ground motion.
+    """
     def __init__(self, accel: np.ndarray or list, dt: float, name: str='None'):
-        """
-        Creates a ground motion record object.
-        Args:
-            acceleration (np.ndarray or list): Ground motion acceleration record in g
-            dt (float): Time step of the record (s).
-            name (str): Name of the record.
-        Creates:
-            _gnd_motion (np.ndarray): Copy of original ground motion record.
-            _is_scaled (bool): True if the record is scaled.
-            _is_inverted (bool): True if the record is inverted.
-            name (str): Name of the record.
-            time (np.ndarray): Time vector of the record (s).
-            dt (float): Time step of the record (s).
-        """
         self.accel = np.array(accel)
         self.dt = dt
         self.name = name
@@ -41,18 +57,30 @@ class GroundMotion():
         self.mean_period = sum(c ** 2 / freqs) / sum(c ** 2)
 
     def __str__(self):
+        """
+        String representation of the GroundMotion object.
+
+        Returns
+        -------
+        str
+            A string describing the ground motion record.
+        """
         return f"Ground Motion: {self.name}, PGA: {self.pga:.3f} g, dt: {self.dt:.3f} s, npts: {self._npts}"
     
     def _calc_gnd_params(self):
         """
         Semi-private method to initialize and recalculate ground motion parameters.
-        Args:
-            None
-        Creates:
-            gnd_acc (np.ndarray): Ground acceleration (m/s^2).
-            gnd_vel (np.ndarray): Ground velocity (m/s).
-            gnd_disp (np.ndarray): Ground displacement (m).
-            pga (float): Peak ground acceleration in multiples of g.
+
+        Creates
+        -------
+        gnd_acc : np.ndarray
+            Ground acceleration (m/s^2).
+        gnd_vel : np.ndarray
+            Ground velocity (m/s).
+        gnd_disp : np.ndarray
+            Ground displacement (m).
+        pga : float
+            Peak ground acceleration in multiples of g.
         """
         self.gnd_acc = self._gnd_motion[1][:] * constants.G_EARTH
         self.gnd_vel = spint.cumulative_trapezoid(self.gnd_acc, self.time, initial=0)
@@ -62,11 +90,17 @@ class GroundMotion():
     def scale(self, pga: float=False, scale_factor: float=False):
         """
         Scale the ground motion using desired method. Does nothing if more than one method is selected.
-        Args:
-            pga (float, optional): Desired peak ground acceleration in g.
-            scale_factor (float, optional): Desired scale factor.
-        Returns: 
-            None
+
+        Parameters
+        ----------
+        pga : float, optional
+            Desired peak ground acceleration in g.
+        scale_factor : float, optional
+            Desired scale factor.
+
+        Returns
+        -------
+        None
         """
         if self.dt == -1.0:
             return
@@ -98,10 +132,10 @@ class GroundMotion():
     def unscale(self):
         """
         Unscales the ground motion.
-        Args:
-            None
-        Returns:
-            None
+
+        Returns
+        -------
+        None
         """
         if self.dt == -1.0:
             return
@@ -113,10 +147,10 @@ class GroundMotion():
     def invert(self):
         """
         Invert the ground motion.
-        Args:
-            None
-        Returns:
-            None
+
+        Returns
+        -------
+        None
         """
         if self.dt == -1.0:
             return
@@ -135,10 +169,10 @@ class GroundMotion():
     def uninvert(self):
         """
         Uninverts the ground motion.
-        Args:
-            None
-        Returns:
-            None
+
+        Returns
+        -------
+        None
         """
         if self.dt == -1.0:
             return  
@@ -156,14 +190,26 @@ class GroundMotion():
     def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, enable: bool=True, called: bool=False):
         """
         Plots desired ground motion parameters.
-        Args:
-            acc (bool, optional): Plot acceleration.
-            vel (bool, optional): Plot velocity.
-            disp (bool, optional): Plot displacement.
-            enable (bool, optional): Enable plotting of ground parameters. Used if called from a RigidBlock object.
-            called (bool, optional): True if called from a RigidBlock object.
-        Returns:
-            fig, ax (plt.figure, plt.axis): Figure and axis objects if called from a RigidBlock object.
+
+        Parameters
+        ----------
+        acc : bool, optional
+            Plot acceleration.
+        vel : bool, optional
+            Plot velocity.
+        disp : bool, optional
+            Plot displacement.
+        enable : bool, optional
+            Enable plotting of ground parameters. Used if called from a RigidBlock object.
+        called : bool, optional
+            True if called from a RigidBlock object.
+
+        Returns
+        -------
+        fig : plt.figure
+            Figure object if called from a RigidBlock object.
+        ax : plt.axis
+            Axis object if called from a RigidBlock object.
         """
         if self.dt == -1.0:
             return

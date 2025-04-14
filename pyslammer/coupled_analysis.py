@@ -9,6 +9,113 @@ import math
 
 
 class Coupled(Decoupled):
+    """
+    Coupled analysis for sliding block and ground motion interaction.
+
+    Parameters
+    ----------
+    ky : float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable
+        Yield acceleration or function defining yield acceleration.
+    a_in : list[float] or np.ndarray
+        Input acceleration time history.
+    dt : float
+        Time step of the input acceleration.
+    height : int or float
+        Height of the sliding block.
+    vs_slope : int or float
+        Shear wave velocity slope.
+    vs_base : int or float
+        Base shear wave velocity.
+    damp_ratio : float
+        Damping ratio.
+    ref_strain : float
+        Reference strain.
+    scale_factor : float, optional
+        Scale factor for input acceleration, by default 1.
+    soil_model : str, optional
+        Soil model type, by default "linear_elastic".
+    si_units : bool, optional
+        Use SI units, by default True.
+    lite : bool, optional
+        Lite mode, by default False.
+
+    Attributes
+    ----------
+    s1 : float
+        Sliding displacement at time step 1.
+    sdot1 : float
+        Sliding velocity at time step 1.
+    sdotdot1 : float
+        Sliding acceleration at time step 1.
+    s2 : float
+        Sliding displacement at time step 2.
+    sdot2 : float
+        Sliding velocity at time step 2.
+    sdotdot2 : float
+        Sliding acceleration at time step 2.
+    u1 : float
+        Block displacement at time step 1.
+    udot1 : float
+        Block velocity at time step 1.
+    udotdot1 : float
+        Block acceleration at time step 1.
+    u2 : float
+        Block displacement at time step 2.
+    udot2 : float
+        Block velocity at time step 2.
+    udotdot2 : float
+        Block acceleration at time step 2.
+    baseacc : float
+        Base acceleration.
+    basef : float
+        Base force.
+    acc11 : float
+        Acceleration at time step 1.
+    acc22 : float
+        Acceleration at time step 2.
+    normalf1 : float
+        Normal force at time step 1.
+    normalf2 : float
+        Normal force at time step 2.
+    gameff1 : float
+        Effective acceleration at time step 1.
+    mx : float
+        Maximum sliding displacement.
+    mx1 : float
+        Maximum sliding displacement at time step 1.
+    mmax : float
+        Maximum sliding displacement overall.
+    s : np.ndarray
+        Sliding displacement time history.
+    u : np.ndarray
+        Block displacement time history.
+    udotdot : np.ndarray
+        Block acceleration time history.
+    avgacc : np.ndarray
+        Average acceleration time history.
+    udot : np.ndarray
+        Block velocity time history.
+    angle : float
+        Angle of inclination.
+    COS : float
+        Cosine of the angle.
+    SIN : float
+        Sine of the angle.
+    gCOS : float
+        Gravitational acceleration component along cosine.
+    gSIN : float
+        Gravitational acceleration component along sine.
+    beta : float
+        Integration parameter beta.
+    gamma : float
+        Integration parameter gamma.
+    block_acc : np.ndarray
+        Block acceleration time history.
+    ground_acc : np.ndarray
+        Ground acceleration time history.
+    max_sliding_disp : float
+        Maximum sliding displacement.
+    """
     def __init__(self,
                  ky: float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable,
                  a_in: list[float] or np.ndarray,

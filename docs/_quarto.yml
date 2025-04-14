@@ -7,9 +7,13 @@ project:
 quartodoc:
   # the name used to import the package you want to create reference docs for
   package: pyslammer
-
-  # write sidebar data to this file
   sidebar: _sidebar.yml
+  sections:
+    - title: "API Reference"
+      desc: "API reference for pySLAMMER"
+      contents:
+        - record
+        - RigidAnalysis
 
 website:
   title: "pySLAMMER"
@@ -26,14 +30,14 @@ website:
         href: "https://github.com/lornearnold/pyslammer"
 
 
-    sections:
-      - title: Some functions
-        desc: Functions to inspect docstrings.
-        contents:
-          # the functions being documented in the package.
-          # you can refer to anything: class methods, modules, etc..
-          - get_object
-          - preview
+    # sections:
+    #   - title: Some functions
+    #     desc: Functions to inspect docstrings.
+    #     contents:
+    #       # the functions being documented in the package.
+    #       # you can refer to anything: class methods, modules, etc..
+    #       - get_object
+    #       - preview
 
   sidebar:
     style: "docked"
@@ -42,16 +46,15 @@ website:
     contents: 
       - text: "Overview"
         href: index.qmd
-      - quickstart.qmd
       - text: "Quickstart guide"
         href: quickstart.qmd
       - section: "Examples"
-        href: examples.qmd
         contents:
           - rigid_flex.qmd
           - batch_simulations.qmd
-      - text: "API reference"
-        href: reference/index.qmd
+      - section: "API reference"
+        contents:
+          - reference/index.qmd
       - section: "Verifications"
         href: verification.qmd
 

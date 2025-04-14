@@ -112,92 +112,143 @@
     "text": "strains\nstrains"
   },
   {
-    "objectID": "reference/FT_TO_M.html",
-    "href": "reference/FT_TO_M.html",
-    "title": "FT_TO_M",
+    "objectID": "reference/some_ky_func.html",
+    "href": "reference/some_ky_func.html",
+    "title": "some_ky_func",
     "section": "",
-    "text": "FT_TO_M\nFT_TO_M"
+    "text": "some_ky_func\nsome_ky_func(disp)"
   },
   {
-    "objectID": "reference/input_acc.html",
-    "href": "reference/input_acc.html",
-    "title": "input_acc",
+    "objectID": "reference/LBFT3_TO_KNM3.html",
+    "href": "reference/LBFT3_TO_KNM3.html",
+    "title": "LBFT3_TO_KNM3",
     "section": "",
-    "text": "input_acc\ninput_acc"
+    "text": "LBFT3_TO_KNM3\nLBFT3_TO_KNM3"
   },
   {
-    "objectID": "reference/SlidingBlockAnalysis.html",
-    "href": "reference/SlidingBlockAnalysis.html",
-    "title": "SlidingBlockAnalysis",
+    "objectID": "reference/impedance_damping.html",
+    "href": "reference/impedance_damping.html",
+    "title": "impedance_damping",
     "section": "",
-    "text": "SlidingBlockAnalysis\nSlidingBlockAnalysis(self)"
+    "text": "impedance_damping\nimpedance_damping(vs_base, vs_slope)"
   },
   {
-    "objectID": "reference/Coupled.html",
-    "href": "reference/Coupled.html",
-    "title": "Coupled",
+    "objectID": "reference/ky_interp.html",
+    "href": "reference/ky_interp.html",
+    "title": "ky_interp",
     "section": "",
-    "text": "Coupled\nCoupled(\n    self,\n    ky,\n    a_in,\n    dt,\n    height,\n    vs_slope,\n    vs_base,\n    damp_ratio,\n    ref_strain,\n    scale_factor=1,\n    soil_model='linear_elastic',\n    si_units=True,\n    lite=False,\n)"
+    "text": "ky_interp\nky_interp"
   },
   {
-    "objectID": "reference/G_EARTH.html",
-    "href": "reference/G_EARTH.html",
-    "title": "G_EARTH",
+    "objectID": "reference/csv_time_hist.html",
+    "href": "reference/csv_time_hist.html",
+    "title": "csv_time_hist",
     "section": "",
-    "text": "G_EARTH\nG_EARTH"
+    "text": "csv_time_hist\ncsv_time_hist(filename)\nRead a CSV file containing time history acceleration data and return a 1D numpy array and a timestep\nReturns: a_in: A 1D numpy array containing time history data. dt: The timestep of the data."
   },
   {
-    "objectID": "reference/RigidAnalysis.html",
-    "href": "reference/RigidAnalysis.html",
-    "title": "RigidAnalysis",
+    "objectID": "reference/interpolated_k_y.html",
+    "href": "reference/interpolated_k_y.html",
+    "title": "interpolated_k_y",
     "section": "",
-    "text": "RigidAnalysis(self, a_in, dt, ky, method='jibson')\nRigid Block Analysis.\n\n\n\n\n\nName\nDescription\n\n\n\n\ndownslope_dgr\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\njibson\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\nplot\nPlot the ground motion and the block response.\n\n\n\n\n\nRigidAnalysis.downslope_dgr()\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method. Args: ky (float, optional): Critical acceleration in multiples of g. Returns: None\n\n\n\nRigidAnalysis.jibson()\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\n\nRigidAnalysis.plot(acc=True, vel=True, disp=True, gnd_motion=False)\nPlot the ground motion and the block response. Args: acc (bool, optional): Plot block acceleration. vel (bool, optional): Plot block differential velocity. disp (bool, optional): Plot block displacement. gnd_motion (bool, optional): Plot ground motion. Returns: None"
+    "text": "interpolated_k_y\ninterpolated_k_y(k_y)"
   },
   {
-    "objectID": "reference/RigidAnalysis.html#methods",
-    "href": "reference/RigidAnalysis.html#methods",
-    "title": "RigidAnalysis",
+    "objectID": "reference/darendelli.html",
+    "href": "reference/darendelli.html",
+    "title": "darendelli",
     "section": "",
-    "text": "Name\nDescription\n\n\n\n\ndownslope_dgr\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\njibson\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\nplot\nPlot the ground motion and the block response.\n\n\n\n\n\nRigidAnalysis.downslope_dgr()\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method. Args: ky (float, optional): Critical acceleration in multiples of g. Returns: None\n\n\n\nRigidAnalysis.jibson()\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\n\nRigidAnalysis.plot(acc=True, vel=True, disp=True, gnd_motion=False)\nPlot the ground motion and the block response. Args: acc (bool, optional): Plot block acceleration. vel (bool, optional): Plot block differential velocity. disp (bool, optional): Plot block displacement. gnd_motion (bool, optional): Plot ground motion. Returns: None"
+    "text": "darendelli\ndarendelli"
   },
   {
-    "objectID": "quickstart.html",
-    "href": "quickstart.html",
-    "title": "Quickstart guide",
+    "objectID": "rigid_flex.html",
+    "href": "rigid_flex.html",
+    "title": "Rigid and Flexible Anlysis",
     "section": "",
-    "text": "The pyslammer package is built on Python 3.12. Earlier versions of Python 3 may work, but have not been tested.",
+    "text": "This notebook shows an example use case of pyslammer for running rigid, decoupled, and coupled sliding block analyses.\nThe next steps assume you’ve already installed pySLAMMER from PYPI:\nFirst, import pySLAMMER and a couple other helpful packages\nimport pyslammer as slam\nimport numpy as np\nimport matplotlib.pyplot as plt\nNext define the ground motion to use in the analysis. For this example, we will use one of pySLAMMER’s built in ground motions from the 1995 Kobe earthquake. This creates a ground motion object with accel and dt attributes with the acceleration array and timestep, respectively.\nrecord_name = \"Kobe_1995_TAK-090\"\ngm = slam.sample_ground_motions()[record_name]",
     "crumbs": [
-      "Quickstart guide"
+      "Examples",
+      "Rigid and Flexible Anlysis"
     ]
   },
   {
-    "objectID": "quickstart.html#requirements",
-    "href": "quickstart.html#requirements",
-    "title": "Quickstart guide",
+    "objectID": "rigid_flex.html#rigid-block-analysis",
+    "href": "rigid_flex.html#rigid-block-analysis",
+    "title": "Rigid and Flexible Anlysis",
+    "section": "Rigid block analysis",
+    "text": "Rigid block analysis\nA rigid block analysis requires at least three input parameters:\n\na_in - the input acceleration time history (in units of g)\ndt - the timestep separating the acceleration data points\nky - the slope’s yield acceleration (in units of g)\n\nThese parameters are stored in a dictionary (rigid_inputs) and used as kwarg input to the RigidAnalysis method.\n\nrigid_inputs = {\n    \"a_in\": gm.accel,\n    \"dt\": gm.dt,\n    \"ky\": 0.2\n}\n\nrigid_result = slam.RigidAnalysis(**rigid_inputs)\n\n\n\n\n\n\n\nNote\n\n\n\nPassing the input variables to slam.RigidAnalysis as a dictionary isn’t necessary, it’s just a convenient way to package groups of input variables. The following line would have produced the same result as the previous cell:\nrigid_result = slam.RigidAnalysis(gm.accel, gm.dt, 0.2)",
+    "crumbs": [
+      "Examples",
+      "Rigid and Flexible Anlysis"
+    ]
+  },
+  {
+    "objectID": "rigid_flex.html#flexible-sliding-block-analysis",
+    "href": "rigid_flex.html#flexible-sliding-block-analysis",
+    "title": "Rigid and Flexible Anlysis",
+    "section": "Flexible sliding block analysis",
+    "text": "Flexible sliding block analysis\nThe flexible block analyses (decoupled and coupled) require additional input parameters to define the stiffness of the model:\n\nheight - the slope height (in meters, by default)\nvs_slope - the slope shear wave velocity (in meters per second, by default)\nvs_base - the base shear wave velocity (in meters per second, by default)\ndamp_ratio - the slope damping ratio\nref_strain - the slope reference strain\nsoil_model - the dynamic analysis method used (either linear_elastic or equivalent_linear)\n\nThese parameters are stored in a dictionary (flexible_inputs) and used as kwargs along with those used in the rigid analysis. The decoupled and coupled analyses are run with the Decoupled and Coupled methods, respectively.\n\nflexible_inputs = {\n    \"height\": 50.0,\n    \"vs_slope\": 600.0,\n    \"vs_base\": 600.0,\n    \"damp_ratio\": 0.05,\n    \"ref_strain\": 0.0005,\n    \"soil_model\": \"equivalent_linear\"\n}\n\ndecoupled_result = slam.Decoupled(**rigid_inputs,**flexible_inputs)\ndecoupled_result._compile_attributes()\ncoupled_result = slam.Coupled(**rigid_inputs,**flexible_inputs)\ncoupled_result._compile_attributes()",
+    "crumbs": [
+      "Examples",
+      "Rigid and Flexible Anlysis"
+    ]
+  },
+  {
+    "objectID": "rigid_flex.html#comparison-of-analysis-methods",
+    "href": "rigid_flex.html#comparison-of-analysis-methods",
+    "title": "Rigid and Flexible Anlysis",
+    "section": "Comparison of analysis methods",
+    "text": "Comparison of analysis methods\nA simple plot comparing the block displecements with time can be generated by accessing the .sliding_disp attribute of each analysis result.\n\nplt.figure(figsize=(10, 6))\n\ntime = np.arange(0, len(gm.accel) * gm.dt, gm.dt)\n\n# Plot block displacement vs time for each analysis method\nplt.plot(time, rigid_result.sliding_disp, label='Rigid Analysis')\nplt.plot(time, decoupled_result.sliding_disp, label='Decoupled Analysis')\nplt.plot(time, coupled_result.sliding_disp, label='Coupled Analysis')\n\n# Add labels and legend\nplt.xlabel('Time (s)')\nplt.ylabel('Block Displacement (m)')\nplt.title(f'Block Displacement with Different Analysis Methods\\n for {record_name}')\nplt.legend()\nplt.grid(True)\n\n# Show the plot\nplt.show()",
+    "crumbs": [
+      "Examples",
+      "Rigid and Flexible Anlysis"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "pySLAMMER",
     "section": "",
-    "text": "The pyslammer package is built on Python 3.12. Earlier versions of Python 3 may work, but have not been tested.",
+    "text": "pySLAMMER (Python package for Seismic Landslide Movement Modeled using Earthquake Records) is tool for estimating the co-seismic displacements of landslides with rigid and flexible sliding-block analyses. The package name and code are based on the USGS tool SLAMMER by R. Jibson et al. (2013).\npySLAMMER includes the following sliding block models:\n\nRigid (i.e., traditional Newmark analysis (Newmark 1965) as implemented by R. W. Jibson and Keefer (1993)).\nDecoupled (per Makdisi and Seed (1978))\nCoupled (described by Chopra and Zhang (1991) and modified by Rathje and Bray (1999))",
     "crumbs": [
-      "Quickstart guide"
+      "Overview"
     ]
   },
   {
-    "objectID": "quickstart.html#installation-using-pip",
-    "href": "quickstart.html#installation-using-pip",
-    "title": "Quickstart guide",
-    "section": "Installation using pip",
-    "text": "Installation using pip\n \nInstall pyslammer using pip from the Python Package Index (PyPI):\npip install pyslammer",
+    "objectID": "index.html#welcome-to-pyslammers-documentation",
+    "href": "index.html#welcome-to-pyslammers-documentation",
+    "title": "pySLAMMER",
+    "section": "",
+    "text": "pySLAMMER (Python package for Seismic Landslide Movement Modeled using Earthquake Records) is tool for estimating the co-seismic displacements of landslides with rigid and flexible sliding-block analyses. The package name and code are based on the USGS tool SLAMMER by R. Jibson et al. (2013).\npySLAMMER includes the following sliding block models:\n\nRigid (i.e., traditional Newmark analysis (Newmark 1965) as implemented by R. W. Jibson and Keefer (1993)).\nDecoupled (per Makdisi and Seed (1978))\nCoupled (described by Chopra and Zhang (1991) and modified by Rathje and Bray (1999))",
     "crumbs": [
-      "Quickstart guide"
+      "Overview"
     ]
   },
   {
-    "objectID": "quickstart.html#basic-usage",
-    "href": "quickstart.html#basic-usage",
-    "title": "Quickstart guide",
-    "section": "Basic Usage",
-    "text": "Basic Usage\nWith pyslammer installed, basic usage involves the following steps: 1. Import the pyslammer module 2. Import a ground motion 3. Perform a rigid sliding block analysis 4. View results\n\nImport the pyslammer module\nThe recommended ailas for pyslammer is slam:\n\nimport pyslammer as slam \n\nThis allows use of pyslammer features within your code with the short prefix slam.\nThe primary object type within pyslammer is the SlidingBlockAnalysis object. At a minimum any SlidingBlockAnalysis requires a yield acceleration for the slope (\\(k_y\\)) and an input ground motion. As basic example, consider a rigid sliding block analysis on a slope with a yield acceleration of \\(0.2\\) g.\n\n\nImport a ground motion\nA small number of sample ground motion records are included with pyslammer. We will use one of the sample ground motion records, but we expect most users will import their ground motions from external sources. To use any signal for a ground motion, pyslammer needs a 1-D array of acceleration in units of \\(g\\) and the signal timestep (in seconds). See The available sample ground motions can be viewed with:\n\nmotions = slam.sample_ground_motions() # Load all sample ground motions\nfor motion in motions:\n    print(motion)\n\nMorgan_Hill_1984_CYC-285\nNisqually_2001_UNR-058\nImperial_Valley_1979_BCR-230\nChi-Chi_1999_TCU068-090\nCape_Mendocino_1992_PET-090\nLoalinga_1983_PVB-045\nCoalinga_1983_PVB-045\nMammoth_Lakes-2_1980_CVK-090\nNorthridge_VSP-360\nKocaeli_1999_ATS-090\nNahanni_1985_NS1-280\nMammoth_Lakes-1_1980_CVK-090\nDuzce_1999_375-090\nLoma_Prieta_1989_HSP-000\nLanders_1992_LCN-345\nN_Palm_Springs_1986_WWT-180\nKobe_1995_TAK-090\nCoyote_Lake_1979_G02-050\n\n\nFor this example, we will use theImperial_Valley_1979_BCR-230 motion.\n\ngm = motions[\"Imperial_Valley_1979_BCR-230\"]\n\nThe timestep and acceleration signal for the imported ground motion are gm.dt and gm.accel, respectively.\n\n\nPerform a rigid sliding block analysis\nWith the imported ground motion, gm, and the assumed value of \\(k_y\\), we can perform a rigid sliding block analysis with pySLAMMER’s RigidAnalysis object. This simultaneously creates an instance of RigidAnalysis and performs the analysis, which is stored as result. The inputs for RigidAnalysis are the input acceleration signal, time step, and the yield acceleration.\nA note admonition! Not for anyting in particular, though...\n\nky = 0.2 # yield acceleration in g\nresult = slam.RigidAnalysis(gm.accel, gm.dt, ky)\n\n\n\nView results\nThe primary output of the sliding block analysis is the final displacement (SlidingBlockAnalysis.max_sliding_disp). By default, all lengths in pySLAMMER are in meters. The cell below shows the displacement induced by the sample ground motion in the example:\n\nprint(f\"Slope yield acc: {ky:.2f} g \\nGround motion: {gm.name}; PGA: {gm.pga:.2f} g \\nSliding displacement: {result.max_sliding_disp:.3f} m\")\n\nSlope yield acc: 0.20 g \nGround motion: Imperial_Valley_1979_BCR-230; PGA: 0.77 g \nSliding displacement: 0.213 m\n\n\nA built-in plotting function presents an at-a-glance picture of the analysis result in terms of the input motion and block accelerations, sliding velocity, and sliding displacement:\n\nfig = result.sliding_block_plot()\n\n\n\n\nRigid sliding block analysis results\n\n\n\n\nIn addition to the final displacement, the displacement, velocity, and acceleration time histories of the block are returned as numpy arrays. See the documentation for the SlidingBlockAnalysis class for a detailed description of all the results.",
+    "objectID": "index.html#contents",
+    "href": "index.html#contents",
+    "title": "pySLAMMER",
+    "section": "Contents",
+    "text": "Contents\nQuickstart guide\nExamples\nAPI Reference\nVerification",
     "crumbs": [
-      "Quickstart guide"
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "examples.html",
+    "href": "examples.html",
+    "title": "Examples",
+    "section": "",
+    "text": "Examples\nI want to try to include a toctree here, but I’m not sure if it will work. That seems like something quarto should be able to do: reference index files for different sections and have their table of contents show up within the sidebar without needing to update it in two places."
+  },
+  {
+    "objectID": "verification.html",
+    "href": "verification.html",
+    "title": "Verification",
+    "section": "",
+    "text": "Verification\nThe verifications should include:\n\nA comparison of SLAMMER and pySLAMMER’s results (rigid, decoupled, and coupled)\nA comparison of (1) with an analytical solution (rigid only)\nPossibly some trends from publications? I think that’s probably better suited for the Examples section.",
+    "crumbs": [
+      "Verifications"
     ]
   },
   {
@@ -245,147 +296,107 @@
     ]
   },
   {
-    "objectID": "verification.html",
-    "href": "verification.html",
-    "title": "Verification",
+    "objectID": "quickstart.html",
+    "href": "quickstart.html",
+    "title": "Quickstart guide",
     "section": "",
-    "text": "Verification\nThe verifications should include:\n\nA comparison of SLAMMER and pySLAMMER’s results (rigid, decoupled, and coupled)\nA comparison of (1) with an analytical solution (rigid only)\nPossibly some trends from publications? I think that’s probably better suited for the Examples section.",
+    "text": "The pyslammer package is built on Python 3.12. Earlier versions of Python 3 may work, but have not been tested.",
     "crumbs": [
-      "Verifications"
+      "Quickstart guide"
     ]
   },
   {
-    "objectID": "examples.html",
-    "href": "examples.html",
-    "title": "Examples",
+    "objectID": "quickstart.html#requirements",
+    "href": "quickstart.html#requirements",
+    "title": "Quickstart guide",
     "section": "",
-    "text": "Examples\nI want to try to include a toctree here, but I’m not sure if it will work. That seems like something quarto should be able to do: reference index files for different sections and have their table of contents show up within the sidebar without needing to update it in two places.",
+    "text": "The pyslammer package is built on Python 3.12. Earlier versions of Python 3 may work, but have not been tested.",
     "crumbs": [
-      "Examples"
+      "Quickstart guide"
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "pySLAMMER",
-    "section": "",
-    "text": "pySLAMMER (Python package for Seismic Landslide Movement Modeled using Earthquake Records) is tool for estimating the co-seismic displacements of landslides with rigid and flexible sliding-block analyses. The package name and code are based on the USGS tool SLAMMER by R. Jibson et al. (2013).\npySLAMMER includes the following sliding block models:\n\nRigid (i.e., traditional Newmark analysis (Newmark 1965) as implemented by R. W. Jibson and Keefer (1993)).\nDecoupled (per Makdisi and Seed (1978))\nCoupled (described by Chopra and Zhang (1991) and modified by Rathje and Bray (1999))",
+    "objectID": "quickstart.html#installation-using-pip",
+    "href": "quickstart.html#installation-using-pip",
+    "title": "Quickstart guide",
+    "section": "Installation using pip",
+    "text": "Installation using pip\n \nInstall pyslammer using pip from the Python Package Index (PyPI):\npip install pyslammer",
     "crumbs": [
-      "Overview"
+      "Quickstart guide"
     ]
   },
   {
-    "objectID": "index.html#welcome-to-pyslammers-documentation",
-    "href": "index.html#welcome-to-pyslammers-documentation",
-    "title": "pySLAMMER",
-    "section": "",
-    "text": "pySLAMMER (Python package for Seismic Landslide Movement Modeled using Earthquake Records) is tool for estimating the co-seismic displacements of landslides with rigid and flexible sliding-block analyses. The package name and code are based on the USGS tool SLAMMER by R. Jibson et al. (2013).\npySLAMMER includes the following sliding block models:\n\nRigid (i.e., traditional Newmark analysis (Newmark 1965) as implemented by R. W. Jibson and Keefer (1993)).\nDecoupled (per Makdisi and Seed (1978))\nCoupled (described by Chopra and Zhang (1991) and modified by Rathje and Bray (1999))",
+    "objectID": "quickstart.html#basic-usage",
+    "href": "quickstart.html#basic-usage",
+    "title": "Quickstart guide",
+    "section": "Basic Usage",
+    "text": "Basic Usage\nWith pyslammer installed, basic usage involves the following steps: 1. Import the pyslammer module 2. Import a ground motion 3. Perform a rigid sliding block analysis 4. View results\n\nImport the pyslammer module\nThe recommended ailas for pyslammer is slam:\n\nimport pyslammer as slam \n\nThis allows use of pyslammer features within your code with the short prefix slam.\nThe primary object type within pyslammer is the SlidingBlockAnalysis object. At a minimum any SlidingBlockAnalysis requires a yield acceleration for the slope (\\(k_y\\)) and an input ground motion. As basic example, consider a rigid sliding block analysis on a slope with a yield acceleration of \\(0.2\\) g.\n\n\nImport a ground motion\nA small number of sample ground motion records are included with pyslammer. We will use one of the sample ground motion records, but we expect most users will import their ground motions from external sources. To use any signal for a ground motion, pyslammer needs a 1-D array of acceleration in units of \\(g\\) and the signal timestep (in seconds). See The available sample ground motions can be viewed with:\n\nmotions = slam.sample_ground_motions() # Load all sample ground motions\nfor motion in motions:\n    print(motion)\n\nMorgan_Hill_1984_CYC-285\nNisqually_2001_UNR-058\nImperial_Valley_1979_BCR-230\nChi-Chi_1999_TCU068-090\nCape_Mendocino_1992_PET-090\nLoalinga_1983_PVB-045\nCoalinga_1983_PVB-045\nMammoth_Lakes-2_1980_CVK-090\nNorthridge_VSP-360\nKocaeli_1999_ATS-090\nNahanni_1985_NS1-280\nMammoth_Lakes-1_1980_CVK-090\nDuzce_1999_375-090\nLoma_Prieta_1989_HSP-000\nLanders_1992_LCN-345\nN_Palm_Springs_1986_WWT-180\nKobe_1995_TAK-090\nCoyote_Lake_1979_G02-050\n\n\nFor this example, we will use theImperial_Valley_1979_BCR-230 motion.\n\ngm = motions[\"Imperial_Valley_1979_BCR-230\"]\n\nThe timestep and acceleration signal for the imported ground motion are gm.dt and gm.accel, respectively.\n\n\nPerform a rigid sliding block analysis\nWith the imported ground motion, gm, and the assumed value of \\(k_y\\), we can perform a rigid sliding block analysis with pySLAMMER’s RigidAnalysis object. This simultaneously creates an instance of RigidAnalysis and performs the analysis, which is stored as result. The inputs for RigidAnalysis are the input acceleration signal, time step, and the yield acceleration.\nA note admonition! Not for anyting in particular, though...\n\nky = 0.2 # yield acceleration in g\nresult = slam.RigidAnalysis(gm.accel, gm.dt, ky)\n\n\n\nView results\nThe primary output of the sliding block analysis is the final displacement (SlidingBlockAnalysis.max_sliding_disp). By default, all lengths in pySLAMMER are in meters. The cell below shows the displacement induced by the sample ground motion in the example:\n\nprint(f\"Slope yield acc: {ky:.2f} g \\nGround motion: {gm.name}; PGA: {gm.pga:.2f} g \\nSliding displacement: {result.max_sliding_disp:.3f} m\")\n\nSlope yield acc: 0.20 g \nGround motion: Imperial_Valley_1979_BCR-230; PGA: 0.77 g \nSliding displacement: 0.213 m\n\n\nA built-in plotting function presents an at-a-glance picture of the analysis result in terms of the input motion and block accelerations, sliding velocity, and sliding displacement:\n\nfig = result.sliding_block_plot()\n\n\n\n\nRigid sliding block analysis results\n\n\n\n\nIn addition to the final displacement, the displacement, velocity, and acceleration time histories of the block are returned as numpy arrays. See the documentation for the SlidingBlockAnalysis class for a detailed description of all the results.",
     "crumbs": [
-      "Overview"
+      "Quickstart guide"
     ]
   },
   {
-    "objectID": "index.html#contents",
-    "href": "index.html#contents",
-    "title": "pySLAMMER",
-    "section": "Contents",
-    "text": "Contents\nQuickstart guide\nExamples\nAPI Reference\nVerification",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "rigid_flex.html",
-    "href": "rigid_flex.html",
-    "title": "Rigid and Flexible Anlysis",
+    "objectID": "reference/RigidAnalysis.html",
+    "href": "reference/RigidAnalysis.html",
+    "title": "RigidAnalysis",
     "section": "",
-    "text": "This notebook shows an example use case of pyslammer for running rigid, decoupled, and coupled sliding block analyses.\nThe next steps assume you’ve already installed pySLAMMER from PYPI:\nFirst, import pySLAMMER and a couple other helpful packages\nimport pyslammer as slam\nimport numpy as np\nimport matplotlib.pyplot as plt\nNext define the ground motion to use in the analysis. For this example, we will use one of pySLAMMER’s built in ground motions from the 1995 Kobe earthquake. This creates a ground motion object with accel and dt attributes with the acceleration array and timestep, respectively.\nrecord_name = \"Kobe_1995_TAK-090\"\ngm = slam.sample_ground_motions()[record_name]",
-    "crumbs": [
-      "Examples",
-      "Rigid and Flexible Anlysis"
-    ]
+    "text": "RigidAnalysis(self, a_in, dt, ky, method='jibson')\nRigid Block Analysis\n\n\n\n\n\nName\nDescription\n\n\n\n\njibson\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\n\n\n\nRigidAnalysis.jibson()\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method."
   },
   {
-    "objectID": "rigid_flex.html#rigid-block-analysis",
-    "href": "rigid_flex.html#rigid-block-analysis",
-    "title": "Rigid and Flexible Anlysis",
-    "section": "Rigid block analysis",
-    "text": "Rigid block analysis\nA rigid block analysis requires at least three input parameters:\n\na_in - the input acceleration time history (in units of g)\n\ndt - the timestep separating the acceleration data points\n\nky - the slope’s yield acceleration (in units of g)\n\nThese parameters are stored in a dictionary (rigid_inputs) and used as kwarg input to the RigidAnalysis method.\n\nrigid_inputs = {\n    \"a_in\": gm.accel,\n    \"dt\": gm.dt,\n    \"ky\": 0.2\n}\n\nrigid_result = slam.RigidAnalysis(**rigid_inputs)",
-    "crumbs": [
-      "Examples",
-      "Rigid and Flexible Anlysis"
-    ]
-  },
-  {
-    "objectID": "rigid_flex.html#flexible-sliding-block-analysis",
-    "href": "rigid_flex.html#flexible-sliding-block-analysis",
-    "title": "Rigid and Flexible Anlysis",
-    "section": "Flexible sliding block analysis",
-    "text": "Flexible sliding block analysis\nThe flexible block analyses (decoupled and coupled) require additional input parameters to define the stiffness of the model: * height - the slope height (in meters, by default) * vs_slope - the slope shear wave velocity (in meters per second, by default) * vs_base - the base shear wave velocity (in meters per second, by default) * damp_ratio - the slope damping ratio * ref_strain - the slope reference strain * soil_model - the dynamic analysis method used (either linear_elastic or equivalent_linear)\nThese parameters are stored in a dictionary (flexible_inputs) and used as kwargs along with those used in the rigid analysis. The decoupled and coupled analyses are run with the Decoupled and Coupled methods, respectively.\n\nflexible_inputs = {\n    \"height\": 50.0,\n    \"vs_slope\": 600.0,\n    \"vs_base\": 600.0,\n    \"damp_ratio\": 0.05,\n    \"ref_strain\": 0.0005,\n    \"soil_model\": \"equivalent_linear\"\n}\n\ndecoupled_result = slam.Decoupled(**rigid_inputs,**flexible_inputs)\ndecoupled_result._compile_attributes()\ncoupled_result = slam.Coupled(**rigid_inputs,**flexible_inputs)\ncoupled_result._compile_attributes()",
-    "crumbs": [
-      "Examples",
-      "Rigid and Flexible Anlysis"
-    ]
-  },
-  {
-    "objectID": "rigid_flex.html#comparison-of-analysis-methods",
-    "href": "rigid_flex.html#comparison-of-analysis-methods",
-    "title": "Rigid and Flexible Anlysis",
-    "section": "Comparison of analysis methods",
-    "text": "Comparison of analysis methods\nA simple plot comparing the block displecements with time can be generated by accessing the .sliding_disp attribute of each analysis result.\n\nplt.figure(figsize=(10, 6))\n\ntime = np.arange(0, len(gm.accel) * gm.dt, gm.dt)\n\n# Plot block displacement vs time for each analysis method\nplt.plot(time, rigid_result.sliding_disp, label='Rigid Analysis')\nplt.plot(time, decoupled_result.sliding_disp, label='Decoupled Analysis')\nplt.plot(time, coupled_result.sliding_disp, label='Coupled Analysis')\n\n# Add labels and legend\nplt.xlabel('Time (s)')\nplt.ylabel('Block Displacement (m)')\nplt.title(f'Block Displacement with Different Analysis Methods\\n for {record_name}')\nplt.legend()\nplt.grid(True)\n\n# Show the plot\nplt.show()",
-    "crumbs": [
-      "Examples",
-      "Rigid and Flexible Anlysis"
-    ]
-  },
-  {
-    "objectID": "reference/darendelli.html",
-    "href": "reference/darendelli.html",
-    "title": "darendelli",
+    "objectID": "reference/RigidAnalysis.html#methods",
+    "href": "reference/RigidAnalysis.html#methods",
+    "title": "RigidAnalysis",
     "section": "",
-    "text": "darendelli\ndarendelli"
+    "text": "Name\nDescription\n\n\n\n\njibson\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\n\n\n\nRigidAnalysis.jibson()\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method."
   },
   {
-    "objectID": "reference/interpolated_k_y.html",
-    "href": "reference/interpolated_k_y.html",
-    "title": "interpolated_k_y",
+    "objectID": "reference/G_EARTH.html",
+    "href": "reference/G_EARTH.html",
+    "title": "G_EARTH",
     "section": "",
-    "text": "interpolated_k_y\ninterpolated_k_y(k_y)"
+    "text": "G_EARTH\nG_EARTH"
   },
   {
-    "objectID": "reference/csv_time_hist.html",
-    "href": "reference/csv_time_hist.html",
-    "title": "csv_time_hist",
+    "objectID": "reference/Coupled.html",
+    "href": "reference/Coupled.html",
+    "title": "Coupled",
     "section": "",
-    "text": "csv_time_hist\ncsv_time_hist(filename)\nRead a CSV file containing time history acceleration data and return a 1D numpy array and a timestep\nReturns: a_in: A 1D numpy array containing time history data. dt: The timestep of the data."
+    "text": "Coupled\nCoupled(\n    self,\n    ky,\n    a_in,\n    dt,\n    height,\n    vs_slope,\n    vs_base,\n    damp_ratio,\n    ref_strain,\n    scale_factor=1,\n    soil_model='linear_elastic',\n    si_units=True,\n    lite=False,\n)"
   },
   {
-    "objectID": "reference/ky_interp.html",
-    "href": "reference/ky_interp.html",
-    "title": "ky_interp",
+    "objectID": "reference/SlidingBlockAnalysis.html",
+    "href": "reference/SlidingBlockAnalysis.html",
+    "title": "SlidingBlockAnalysis",
     "section": "",
-    "text": "ky_interp\nky_interp"
+    "text": "SlidingBlockAnalysis\nSlidingBlockAnalysis(self)"
   },
   {
-    "objectID": "reference/impedance_damping.html",
-    "href": "reference/impedance_damping.html",
-    "title": "impedance_damping",
+    "objectID": "reference/input_acc.html",
+    "href": "reference/input_acc.html",
+    "title": "input_acc",
     "section": "",
-    "text": "impedance_damping\nimpedance_damping(vs_base, vs_slope)"
+    "text": "input_acc\ninput_acc"
   },
   {
-    "objectID": "reference/LBFT3_TO_KNM3.html",
-    "href": "reference/LBFT3_TO_KNM3.html",
-    "title": "LBFT3_TO_KNM3",
+    "objectID": "reference/FT_TO_M.html",
+    "href": "reference/FT_TO_M.html",
+    "title": "FT_TO_M",
     "section": "",
-    "text": "LBFT3_TO_KNM3\nLBFT3_TO_KNM3"
+    "text": "FT_TO_M\nFT_TO_M"
   },
   {
-    "objectID": "reference/some_ky_func.html",
-    "href": "reference/some_ky_func.html",
-    "title": "some_ky_func",
+    "objectID": "reference/record.html",
+    "href": "reference/record.html",
+    "title": "record",
     "section": "",
-    "text": "some_ky_func\nsome_ky_func(disp)"
+    "text": "record\n\n\n\n\n\nName\nDescription\n\n\n\n\nGroundMotion\nGround Motion Record.\n\n\n\n\n\nrecord.GroundMotion(self, accel, dt, name='None')\nGround Motion Record.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\naccel\nnp.ndarray or list\nGround motion acceleration record in g.\nrequired\n\n\ndt\nfloat\nTime step of the record (s).\nrequired\n\n\nname\nstr\nName of the record (default is ‘None’).\n'None'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\naccel\nnp.ndarray\nGround motion acceleration record in g.\n\n\ndt\nfloat\nTime step of the record (s).\n\n\nname\nstr\nName of the record.\n\n\n_is_inverted\nbool\nTrue if the record is inverted.\n\n\n_is_scaled\nbool\nTrue if the record is scaled.\n\n\n_npts\nint\nNumber of points in the acceleration record.\n\n\npga\nfloat\nPeak ground acceleration in g.\n\n\nmean_period\nfloat\nMean period of the ground motion.\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\ninvert\nInvert the ground motion.\n\n\nplot\nPlots desired ground motion parameters.\n\n\nscale\nScale the ground motion using desired method. Does nothing if more than one method is selected.\n\n\nuninvert\nUninverts the ground motion.\n\n\nunscale\nUnscales the ground motion.\n\n\n\n\n\nrecord.GroundMotion.invert()\nInvert the ground motion.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone\n\n\n\n\n\n\n\n\nrecord.GroundMotion.plot(\n    acc=True,\n    vel=True,\n    disp=True,\n    enable=True,\n    called=False,\n)\nPlots desired ground motion parameters.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nacc\nbool\nPlot acceleration.\nTrue\n\n\nvel\nbool\nPlot velocity.\nTrue\n\n\ndisp\nbool\nPlot displacement.\nTrue\n\n\nenable\nbool\nEnable plotting of ground parameters. Used if called from a RigidBlock object.\nTrue\n\n\ncalled\nbool\nTrue if called from a RigidBlock object.\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nfig\nplt.figure\nFigure object if called from a RigidBlock object.\n\n\nax\nplt.axis\nAxis object if called from a RigidBlock object.\n\n\n\n\n\n\n\nrecord.GroundMotion.scale(pga=False, scale_factor=False)\nScale the ground motion using desired method. Does nothing if more than one method is selected.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npga\nfloat\nDesired peak ground acceleration in g.\nFalse\n\n\nscale_factor\nfloat\nDesired scale factor.\nFalse\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone\n\n\n\n\n\n\n\n\nrecord.GroundMotion.uninvert()\nUninverts the ground motion.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone\n\n\n\n\n\n\n\n\nrecord.GroundMotion.unscale()\nUnscales the ground motion.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone"
+  },
+  {
+    "objectID": "reference/record.html#classes",
+    "href": "reference/record.html#classes",
+    "title": "record",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\nGroundMotion\nGround Motion Record.\n\n\n\n\n\nrecord.GroundMotion(self, accel, dt, name='None')\nGround Motion Record.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\naccel\nnp.ndarray or list\nGround motion acceleration record in g.\nrequired\n\n\ndt\nfloat\nTime step of the record (s).\nrequired\n\n\nname\nstr\nName of the record (default is ‘None’).\n'None'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\naccel\nnp.ndarray\nGround motion acceleration record in g.\n\n\ndt\nfloat\nTime step of the record (s).\n\n\nname\nstr\nName of the record.\n\n\n_is_inverted\nbool\nTrue if the record is inverted.\n\n\n_is_scaled\nbool\nTrue if the record is scaled.\n\n\n_npts\nint\nNumber of points in the acceleration record.\n\n\npga\nfloat\nPeak ground acceleration in g.\n\n\nmean_period\nfloat\nMean period of the ground motion.\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\ninvert\nInvert the ground motion.\n\n\nplot\nPlots desired ground motion parameters.\n\n\nscale\nScale the ground motion using desired method. Does nothing if more than one method is selected.\n\n\nuninvert\nUninverts the ground motion.\n\n\nunscale\nUnscales the ground motion.\n\n\n\n\n\nrecord.GroundMotion.invert()\nInvert the ground motion.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone\n\n\n\n\n\n\n\n\nrecord.GroundMotion.plot(\n    acc=True,\n    vel=True,\n    disp=True,\n    enable=True,\n    called=False,\n)\nPlots desired ground motion parameters.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nacc\nbool\nPlot acceleration.\nTrue\n\n\nvel\nbool\nPlot velocity.\nTrue\n\n\ndisp\nbool\nPlot displacement.\nTrue\n\n\nenable\nbool\nEnable plotting of ground parameters. Used if called from a RigidBlock object.\nTrue\n\n\ncalled\nbool\nTrue if called from a RigidBlock object.\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nfig\nplt.figure\nFigure object if called from a RigidBlock object.\n\n\nax\nplt.axis\nAxis object if called from a RigidBlock object.\n\n\n\n\n\n\n\nrecord.GroundMotion.scale(pga=False, scale_factor=False)\nScale the ground motion using desired method. Does nothing if more than one method is selected.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npga\nfloat\nDesired peak ground acceleration in g.\nFalse\n\n\nscale_factor\nfloat\nDesired scale factor.\nFalse\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone\n\n\n\n\n\n\n\n\nrecord.GroundMotion.uninvert()\nUninverts the ground motion.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone\n\n\n\n\n\n\n\n\nrecord.GroundMotion.unscale()\nUnscales the ground motion.\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone"
   },
   {
     "objectID": "reference/ky_const.html",
@@ -399,19 +410,21 @@
     "href": "reference/index.html",
     "title": "Function reference",
     "section": "",
-    "text": "G_EARTH\n\n\n\nSlidingBlockAnalysis\n\n\n\nM_TO_CM\n\n\n\nRigidAnalysis\nRigid Block Analysis.\n\n\nmod_damp_testing\n\n\n\nstrain_mod_update\n\n\n\nstrain_damp_update\n\n\n\nimpedance_damping\n\n\n\nconstant_k_y\n\n\n\ninterpolated_k_y\n\n\n\nassign_k_y\n\n\n\nDecoupled\n\n\n\nmrd_testing\n\n\n\nequivalent_linear_testing\n\n\n\nk_y_testing\n\n\n\nsome_ky_func\n\n\n\nstrains\n\n\n\nmod_reduction\n\n\n\ndamping\n\n\n\ndarendelli\n\n\n\nhistories\n\n\n\nky_const\n\n\n\nky_interp\n\n\n\nky_func\n\n\n\nmotion\n\n\n\nt_step\n\n\n\ninput_acc\n\n\n\nda\n\n\n\nFT_TO_IN\n\n\n\nFT_TO_M\n\n\n\nFT3_TO_IN3\n\n\n\nCM_TO_FT\n\n\n\nCM_TO_IN\n\n\n\nM_TO_FT\n\n\n\nM3_TO_CM3\n\n\n\nLBFT3_TO_KNM3\n\n\n\nKNM3_TO_LBFT3\n\n\n\nBETA\n\n\n\nGAMMA\n\n\n\nCoupled\n\n\n\nca\n\n\n\nsample_ground_motions\n\n\n\ncsv_time_hist\nRead a CSV file containing time history acceleration data and return a 1D numpy array and a timestep",
+    "text": "API reference for pySLAMMER\n\n\n\nrecord\n\n\n\nRigidAnalysis\nRigid Block Analysis",
     "crumbs": [
-      "API reference"
+      "API reference",
+      "Function reference"
     ]
   },
   {
-    "objectID": "reference/index.html#pyslammer",
-    "href": "reference/index.html#pyslammer",
+    "objectID": "reference/index.html#api-reference",
+    "href": "reference/index.html#api-reference",
     "title": "Function reference",
     "section": "",
-    "text": "G_EARTH\n\n\n\nSlidingBlockAnalysis\n\n\n\nM_TO_CM\n\n\n\nRigidAnalysis\nRigid Block Analysis.\n\n\nmod_damp_testing\n\n\n\nstrain_mod_update\n\n\n\nstrain_damp_update\n\n\n\nimpedance_damping\n\n\n\nconstant_k_y\n\n\n\ninterpolated_k_y\n\n\n\nassign_k_y\n\n\n\nDecoupled\n\n\n\nmrd_testing\n\n\n\nequivalent_linear_testing\n\n\n\nk_y_testing\n\n\n\nsome_ky_func\n\n\n\nstrains\n\n\n\nmod_reduction\n\n\n\ndamping\n\n\n\ndarendelli\n\n\n\nhistories\n\n\n\nky_const\n\n\n\nky_interp\n\n\n\nky_func\n\n\n\nmotion\n\n\n\nt_step\n\n\n\ninput_acc\n\n\n\nda\n\n\n\nFT_TO_IN\n\n\n\nFT_TO_M\n\n\n\nFT3_TO_IN3\n\n\n\nCM_TO_FT\n\n\n\nCM_TO_IN\n\n\n\nM_TO_FT\n\n\n\nM3_TO_CM3\n\n\n\nLBFT3_TO_KNM3\n\n\n\nKNM3_TO_LBFT3\n\n\n\nBETA\n\n\n\nGAMMA\n\n\n\nCoupled\n\n\n\nca\n\n\n\nsample_ground_motions\n\n\n\ncsv_time_hist\nRead a CSV file containing time history acceleration data and return a 1D numpy array and a timestep",
+    "text": "API reference for pySLAMMER\n\n\n\nrecord\n\n\n\nRigidAnalysis\nRigid Block Analysis",
     "crumbs": [
-      "API reference"
+      "API reference",
+      "Function reference"
     ]
   },
   {

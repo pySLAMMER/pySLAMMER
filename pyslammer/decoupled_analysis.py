@@ -78,7 +78,103 @@ def assign_k_y(k_y):
 
 
 class Decoupled(SlidingBlockAnalysis):
-    # include allowed values for inputs, like soil_model
+    """
+    Decoupled analysis for sliding block and ground motion interaction.
+
+    Parameters
+    ----------
+    ky : float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable
+        Yield acceleration function or constant.
+    a_in : list[float] or np.ndarray
+        Input acceleration time history.
+    dt : float
+        Time step of the input acceleration.
+    height : int or float
+        Height of the sliding block.
+    vs_slope : int or float
+        Shear wave velocity of the slope.
+    vs_base : int or float
+        Shear wave velocity of the base.
+    damp_ratio : float
+        Damping ratio of the sliding block.
+    ref_strain : float
+        Reference strain for modulus reduction.
+    scale_factor : float, optional
+        Scale factor for the input acceleration. Default is 1.
+    soil_model : str, optional
+        Soil model type. Default is "linear_elastic".
+    si_units : bool, optional
+        Whether to use SI units. Default is True.
+    lite : bool, optional
+        Whether to use lite mode. Default is False.
+
+    Attributes
+    ----------
+    k_y : callable
+        Yield acceleration function.
+    a_in : list[float] or np.ndarray
+        Input acceleration time history.
+    dt : float
+        Time step of the input acceleration.
+    height : int or float
+        Height of the sliding block.
+    vs_slope : int or float
+        Shear wave velocity of the slope.
+    vs_base : int or float
+        Shear wave velocity of the base.
+    damp_ratio : float
+        Damping ratio of the sliding block.
+    ref_strain : float
+        Reference strain for modulus reduction.
+    scale_factor : float
+        Scale factor for the input acceleration.
+    soil_model : str
+        Soil model type.
+    si_units : bool
+        Whether to use SI units.
+    lite : bool
+        Whether to use lite mode.
+    npts : int
+        Number of points in the input acceleration time history.
+    g : float
+        Gravitational acceleration.
+    unit_weight : float
+        Unit weight of the sliding block.
+    rho : float
+        Density of the sliding block.
+    mass : float
+        Mass of the sliding block.
+    max_shear_mod : float
+        Maximum shear modulus of the sliding block.
+    HEA : np.ndarray
+        Horizontal earthquake acceleration.
+    block_disp : np.ndarray
+        Displacement of the sliding block.
+    block_vel : np.ndarray
+        Velocity of the sliding block.
+    block_acc : np.ndarray
+        Acceleration of the sliding block.
+    x_resp : np.ndarray
+        Response displacement.
+    v_resp : np.ndarray
+        Response velocity.
+    a_resp : np.ndarray
+        Response acceleration.
+    max_sliding_disp : float
+        Maximum sliding displacement.
+    _slide : bool
+        Whether the block is sliding.
+    _vs_slope : float
+        Shear wave velocity of the slope during analysis.
+    _omega : float
+        Angular frequency.
+    _damp_imp : float
+        Impedance damping.
+    _damp_tot : float
+        Total damping.
+    ground_acc : np.ndarray
+        Ground acceleration.
+    """
     def __init__(self,
                  ky: float or tuple[list[float], list[float]] or tuple[np.ndarray,np.ndarray] or callable,
                  a_in: list[float] or np.ndarray,
