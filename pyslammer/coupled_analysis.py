@@ -1,11 +1,10 @@
+import math
+
 import numpy as np
 
 import pyslammer as slam
-import matplotlib.pyplot as plt
-
-from pyslammer.decoupled_analysis import Decoupled
 from pyslammer.constants import *
-import math
+from pyslammer.decoupled_analysis import Decoupled
 
 
 class Coupled(Decoupled):
@@ -91,8 +90,8 @@ class Coupled(Decoupled):
         Block displacement time history.
     udotdot : np.ndarray
         Block acceleration time history.
-    avgacc : np.ndarray
-        Average acceleration time history.
+    HEA : np.ndarray
+        Horizontal equivalent acceleration time history from dynamic response.
     udot : np.ndarray
         Block velocity time history.
     angle : float
@@ -116,21 +115,41 @@ class Coupled(Decoupled):
     max_sliding_disp : float
         Maximum sliding displacement.
     """
-    def __init__(self,
-                 ky: float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable,
-                 a_in: list[float] or np.ndarray,
-                 dt: float,
-                 height: int or float,
-                 vs_slope: int or float,
-                 vs_base: int or float,
-                 damp_ratio: float,
-                 ref_strain: float,
-                 scale_factor: float = 1,
-                 soil_model: str = "linear_elastic",
-                 si_units: bool = True,
-                 lite: bool = False):
-        super().__init__(ky, a_in, dt, height, vs_slope, vs_base, damp_ratio, ref_strain, scale_factor, soil_model,
-                         si_units, lite)
+
+    def __init__(
+        self,
+        ky: float
+        or tuple[list[float], list[float]]
+        or tuple[np.ndarray, np.ndarray]
+        or callable,
+        a_in: list[float] or np.ndarray,
+        dt: float,
+        height: int or float,
+        vs_slope: int or float,
+        vs_base: int or float,
+        damp_ratio: float,
+        ref_strain: float,
+        scale_factor: float = 1,
+        target_pga: float = None,
+        soil_model: str = "linear_elastic",
+        si_units: bool = True,
+        lite: bool = False,
+    ):
+        super().__init__(
+            ky,
+            a_in,
+            dt,
+            height,
+            vs_slope,
+            vs_base,
+            damp_ratio,
+            ref_strain,
+            scale_factor,
+            target_pga,
+            soil_model,
+            si_units,
+            lite,
+        )
 
         self.s1 = self.sdot1 = self.sdotdot1 = 0.0
         self.s2 = self.sdot2 = self.sdotdot2 = 0.0
@@ -142,7 +161,8 @@ class Coupled(Decoupled):
         self.s = np.zeros(self.npts)
         self.u = np.zeros(self.npts)
         self.udotdot = np.zeros(self.npts)
-        self.avgacc = np.zeros(self.npts)
+        self.HEA = np.zeros(self.npts)
+        self.sliding_vel = np.zeros(self.npts)
         self.udot = np.zeros(self.npts)
         self.angle = 0
         self.COS = math.cos(self.angle * math.pi / 180.0)
@@ -155,12 +175,13 @@ class Coupled(Decoupled):
         self.gamma = 0.5  # TODO: move to global constants
 
         self.block_acc = np.zeros(self.npts)
-
+        # Sign reversal below to match decoupled sliding direction
+        self.a_in *= -1
         if type(self) is Coupled:
             self.run_sliding_analysis()
-        self.ground_acc = a_in * self.g
-        self.max_sliding_disp = self.block_disp[-1]
 
+        # Sign reversal corrected for plotting
+        self.ground_acc = -self.a_in * self.g
 
     def run_sliding_analysis(self):  # TODO: add ca to inputs
         if self.soil_model == "equivalent_linear":
@@ -169,13 +190,13 @@ class Coupled(Decoupled):
         for i in range(1, self.npts + 1):
             self.dynamic_response(i)
 
-        # calculate decoupled displacements
+        # calculate coupled displacements
         for i in range(1, self.npts + 1):
             self.coupled_sliding(i)
 
-        self.max_sliding_disp = self.block_disp[-1]
         # return self.max_sliding_disp
         self.block_disp = self.s
+        self.max_sliding_disp = self.block_disp[-1]
 
     def coupled_sliding(self, i):
         self.coupled_setupstate(i)
@@ -188,14 +209,17 @@ class Coupled(Decoupled):
 
         # check if sliding has started
         self.c_slidingcheck(i)
-        self.block_acc[i-1] = self.acc22 - self.sdotdot2
+        self.HEA[i - 1] = self.basef / self.mass  # Horizontal equivalent acceleration
+        self.block_acc[i - 1] = self.HEA[i - 1] - self.sdotdot1
 
         self.s[i - 1] = self.s2
 
     def coupled_setupstate(self, i):
         # set up state from previous time step
         if i == 1:
-            self.u1 = self.udot1 = self.udotdot1 = self.s1 = self.sdot1 = self.sdotdot1 = self.normalf1 = 0.0
+            self.u1 = self.udot1 = self.udotdot1 = self.s1 = self.sdot1 = (
+                self.sdotdot1
+            ) = self.normalf1 = 0.0
         else:
             self.u1 = self.u2
             self.udot1 = self.udot2
@@ -206,7 +230,10 @@ class Coupled(Decoupled):
             self.normalf1 = self.normalf2
 
         # Set up acceleration loading. Normal force corrected for vertical component of a_in.
-        self.normalf2 = self.mass * self.gCOS + self.mass * self.a_in[i - 1] * self.scale_factor * self.gSIN
+        self.normalf2 = (
+            self.mass * self.gCOS
+            + self.mass * self.a_in[i - 1] * self.scale_factor * self.gSIN
+        )
 
         if i == 1:
             self.acc11 = 0.0
@@ -224,14 +251,22 @@ class Coupled(Decoupled):
         delt = self.dt
 
         if self._slide:
-            d1 = 1.0 - (self.L1 ** 2) / (self.M1 * self.mass)
+            d1 = 1.0 - (self.L1**2) / (self.M1 * self.mass)
         else:
             d1 = 1.0
 
-        khat = (self._omega ** 2) + 2.0 * self._damp_tot * self._omega * self.gamma / (self.beta * delt) + d1 / (
-                    self.beta * (delt ** 2))
-        a = d1 / (self.beta * delt) + 2.0 * self._damp_tot * self._omega * self.gamma / self.beta
-        b = d1 / (2.0 * self.beta) + delt * 2.0 * self._damp_tot * self._omega * (self.gamma / (2.0 * self.beta) - 1.0)
+        khat = (
+            (self._omega**2)
+            + 2.0 * self._damp_tot * self._omega * self.gamma / (self.beta * delt)
+            + d1 / (self.beta * (delt**2))
+        )
+        a = (
+            d1 / (self.beta * delt)
+            + 2.0 * self._damp_tot * self._omega * self.gamma / self.beta
+        )
+        b = d1 / (2.0 * self.beta) + delt * 2.0 * self._damp_tot * self._omega * (
+            self.gamma / (2.0 * self.beta) - 1.0
+        )
 
         if i == 1:
             deltp = -self.L1 / self.M1 * (self.acc22 - self.acc11)
@@ -239,29 +274,49 @@ class Coupled(Decoupled):
             deltudot = self.gamma / (self.beta * delt) * deltu
             self.u2 = deltu
             self.udot2 = deltudot
-            self.udotdot2 = (-(self.L1 / self.M1) * self.acc22 - 2.0 * self._damp_tot * self._omega * self.udot2 - (
-                        self._omega ** 2) * self.u2) / d1
+            self.udotdot2 = (
+                -(self.L1 / self.M1) * self.acc22
+                - 2.0 * self._damp_tot * self._omega * self.udot2
+                - (self._omega**2) * self.u2
+            ) / d1
         else:
-            deltp = -self.L1 / self.M1 * (self.acc22 - self.acc11) + a * self.udot1 + b * self.udotdot1
+            deltp = (
+                -self.L1 / self.M1 * (self.acc22 - self.acc11)
+                + a * self.udot1
+                + b * self.udotdot1
+            )
             deltu = deltp / khat
-            deltudot = self.gamma / (self.beta * delt) * deltu - self.gamma / self.beta * self.udot1 + delt * (
-                        1.0 - self.gamma / (2.0 * self.beta)) * self.udotdot1
+            deltudot = (
+                self.gamma / (self.beta * delt) * deltu
+                - self.gamma / self.beta * self.udot1
+                + delt * (1.0 - self.gamma / (2.0 * self.beta)) * self.udotdot1
+            )
             self.u2 = self.u1 + deltu
             self.udot2 = self.udot1 + deltudot
-            self.udotdot2 = (-(self.L1 / self.M1) * self.acc22 - 2.0 * self._damp_tot * self._omega * self.udot2 - (
-                        self._omega ** 2) * self.u2) / d1
+            self.udotdot2 = (
+                -(self.L1 / self.M1) * self.acc22
+                - 2.0 * self._damp_tot * self._omega * self.udot2
+                - (self._omega**2) * self.u2
+            ) / d1
 
         self.u[i - 1] = self.u2
 
     def c_slideacc(self, i):
         # update sliding acceleration based on calc'd response
         if self._slide:
-            self.sdotdot2 = -self.a_in[i - 1] * self.gCOS * self.scale_factor - self.k_y(
-                self.s[i - 2]) * self.normalf2 / self.mass - self.L1 * self.udotdot2 / self.mass + self.gSIN
+            self.sdotdot2 = (
+                -self.a_in[i - 1] * self.gCOS * self.scale_factor
+                - self.k_y(self.s[i - 2]) * self.normalf2 / self.mass
+                - self.L1 * self.udotdot2 / self.mass
+                + self.gSIN
+            )
 
         # calc. base force based on a_resp calc
-        self.basef = -self.mass * self.a_in[
-            i - 1] * self.gCOS * self.scale_factor - self.L1 * self.udotdot2 + self.mass * self.gSIN
+        self.basef = (
+            -self.mass * self.a_in[i - 1] * self.gCOS * self.scale_factor
+            - self.L1 * self.udotdot2
+            + self.mass * self.gSIN
+        )
 
         # If sliding is occurring, integrate sdotdot, using trapezoid rule, to get block_vel and block_disp.
         if self._slide:
@@ -279,6 +334,7 @@ class Coupled(Decoupled):
                 self._slide = False
                 self.sdot2 = 0.0
                 self.sdotdot2 = 0.0
+        self.sliding_vel[i - 1] = self.sdot2
 
     def slidestop(self, i):
         ddt = acc11 = acc22 = acc1b = delt = dd = 0.0
@@ -289,9 +345,13 @@ class Coupled(Decoupled):
         # Time of end of sliding is taken as where block_vel=0 from previous analysis
         dd = -self.sdot1 / (self.sdot2 - self.sdot1)
         ddt = dd * delt
-        acc11 = self.gSIN - self.k_y(self.s[i - 2]) * (self.gCOS + self.a_in[i - 1] * self.scale_factor * self.gSIN)
-        acc1b = self.a_in[i - 2] * self.g * self.scale_factor + dd * (
-                    self.a_in[i - 1] - self.a_in[i - 2]) * self.g * self.scale_factor
+        acc11 = self.gSIN - self.k_y(self.s[i - 2]) * (
+            self.gCOS + self.a_in[i - 1] * self.scale_factor * self.gSIN
+        )
+        acc1b = (
+            self.a_in[i - 2] * self.g * self.scale_factor
+            + dd * (self.a_in[i - 1] - self.a_in[i - 2]) * self.g * self.scale_factor
+        )
         acc22 = self.gSIN - self.k_y(self.s[i - 2]) * (self.gCOS + acc1b * self.SIN)
 
         # if dd=0, sliding has already stopped and skip this solution
@@ -303,8 +363,12 @@ class Coupled(Decoupled):
         self.udot1 = self.udot2
         self.udotdot1 = self.udotdot2
         self.normalf2 = self.mass * self.gCOS + self.mass * acc1b * self.SIN
-        self.sdotdot2 = -acc1b * self.COS - self.k_y(
-            self.s[i - 2]) * self.normalf2 / self.mass - self.L1 * self.udotdot2 / self.mass + self.gSIN
+        self.sdotdot2 = (
+            -acc1b * self.COS
+            - self.k_y(self.s[i - 2]) * self.normalf2 / self.mass
+            - self.L1 * self.udotdot2 / self.mass
+            + self.gSIN
+        )
         self.sdot2 = self.sdot1 + 0.5 * ddt * (self.sdotdot2 + self.sdotdot1)
         self.s2 = self.s1 + 0.5 * ddt * (self.sdot1 + self.sdot2)
 
@@ -314,16 +378,35 @@ class Coupled(Decoupled):
         acc11 = acc22
         acc22 = self.a_in[i - 1] * self.gCOS * self.scale_factor
 
-        khat = 1.0 + 2.0 * self._damp_tot * self._omega * self.gamma * ddt + (self._omega ** 2) * self.beta * (ddt ** 2)
-        a = (1.0 - (self.L1 ** 2) / (self.mass * self.M1)) + 2.0 * self._damp_tot * self._omega * ddt * (
-                    self.gamma - 1.0) + (self._omega ** 2) * (ddt ** 2) * (self.beta - 0.5)
-        b = (self._omega ** 2) * ddt
-        deltp = - self.L1 / self.M1 * (acc22 - acc11) + a * (self.udotdot1) - b * (self.udot1)
+        khat = (
+            1.0
+            + 2.0 * self._damp_tot * self._omega * self.gamma * ddt
+            + (self._omega**2) * self.beta * (ddt**2)
+        )
+        a = (
+            (1.0 - (self.L1**2) / (self.mass * self.M1))
+            + 2.0 * self._damp_tot * self._omega * ddt * (self.gamma - 1.0)
+            + (self._omega**2) * (ddt**2) * (self.beta - 0.5)
+        )
+        b = (self._omega**2) * ddt
+        deltp = (
+            -self.L1 / self.M1 * (acc22 - acc11)
+            + a * (self.udotdot1)
+            - b * (self.udot1)
+        )
         self.udotdot2 = deltp / khat
 
-        self.udot2 = self.udot1 + (1.0 - self.gamma) * ddt * (self.udotdot1) + self.gamma * ddt * (self.udotdot2)
-        self.u2 = self.u1 + self.udot1 * ddt + (0.5 - self.beta) * (ddt ** 2) * (self.udotdot1) + self.beta * (
-                    ddt ** 2) * (self.udotdot2)
+        self.udot2 = (
+            self.udot1
+            + (1.0 - self.gamma) * ddt * (self.udotdot1)
+            + self.gamma * ddt * (self.udotdot2)
+        )
+        self.u2 = (
+            self.u1
+            + self.udot1 * ddt
+            + (0.5 - self.beta) * (ddt**2) * (self.udotdot1)
+            + self.beta * (ddt**2) * (self.udotdot2)
+        )
 
 
 equivalent_linear_testing = False
@@ -348,18 +431,20 @@ if __name__ == "__main__":
     # t_step = motion[0][1] - motion[0][0]
     # input_acc = motion[1] / 9.80665
 
-    ca = slam.Coupled(ky=ky_func,
-                      a_in=motion.accel,
-                      dt=motion.dt,
-                      height=50.0,
-                      vs_slope=600.0,
-                      vs_base=600.0,
-                      damp_ratio=0.05,
-                      ref_strain=0.0005,
-                      scale_factor=1.0,
-                      soil_model="equivalent_linear",
-                      si_units=True,
-                      lite=False)
+    ca = slam.Coupled(
+        ky=ky_func,
+        a_in=motion.accel,
+        dt=motion.dt,
+        height=50.0,
+        vs_slope=600.0,
+        vs_base=600.0,
+        damp_ratio=0.05,
+        ref_strain=0.0005,
+        scale_factor=1.0,
+        soil_model="equivalent_linear",
+        si_units=True,
+        lite=False,
+    )
 
     ca.run_sliding_analysis()
     print(ca.s[-1] * 100)

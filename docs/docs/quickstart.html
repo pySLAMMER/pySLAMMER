@@ -218,12 +218,37 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">API reference</span></a>
+ <span class="menu-text">API Reference</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Verifications</span></span>
+      <div class="sidebar-item-container"> 
+            <a href="./verification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Verifications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./results_comp_SLAMMER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with SLAMMER (results)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_comp_SLAMMER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with SLAMMER (speed)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./results_comp_analytical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with analytical solution</span></a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -286,7 +311,7 @@ window.Quarto = {
 <section id="import-the-pyslammer-module" class="level3">
 <h3 class="anchored" data-anchor-id="import-the-pyslammer-module">Import the pyslammer module</h3>
 <p>The recommended ailas for pyslammer is <code>slam</code>:</p>
-<div id="356beebf" class="cell" data-execution_count="1">
+<div id="bd1244e3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyslammer <span class="im">as</span> slam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This allows use of pyslammer features within your code with the short prefix <code>slam</code>.</p>
@@ -295,7 +320,7 @@ window.Quarto = {
 <section id="import-a-ground-motion" class="level3">
 <h3 class="anchored" data-anchor-id="import-a-ground-motion">Import a ground motion</h3>
 <p>A small number of sample ground motion records are included with <code>pyslammer</code>. We will use one of the sample ground motion records, but we expect most users will import their ground motions from external sources. To use any signal for a ground motion, <code>pyslammer</code> needs a 1-D array of acceleration in units of <span class="math inline">\(g\)</span> and the signal timestep (in seconds). See The available sample ground motions can be viewed with:</p>
-<div id="790cef35" class="cell" data-execution_count="2">
+<div id="e5d387d7" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>motions <span class="op">=</span> slam.sample_ground_motions() <span class="co"># Load all sample ground motions</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> motion <span class="kw">in</span> motions:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(motion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -321,7 +346,7 @@ Coyote_Lake_1979_G02-050</code></pre>
 </div>
 </div>
 <p>For this example, we will use the<code>Imperial_Valley_1979_BCR-230</code> motion.</p>
-<div id="86eb6f2f" class="cell" data-execution_count="3">
+<div id="435e9d40" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gm <span class="op">=</span> motions[<span class="st">"Imperial_Valley_1979_BCR-230"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The timestep and acceleration signal for the imported ground motion are <code>gm.dt</code> and <code>gm.accel</code>, respectively.</p>
@@ -330,15 +355,15 @@ Coyote_Lake_1979_G02-050</code></pre>
 <h3 class="anchored" data-anchor-id="perform-a-rigid-sliding-block-analysis">Perform a rigid sliding block analysis</h3>
 <p>With the imported ground motion, <code>gm</code>, and the assumed value of <span class="math inline">\(k_y\)</span>, we can perform a rigid sliding block analysis with pySLAMMER’s <code>RigidAnalysis</code> object. This simultaneously creates an instance of <code>RigidAnalysis</code> and performs the analysis, which is stored as <code>result</code>. The inputs for <code>RigidAnalysis</code> are the input acceleration signal, time step, and the yield acceleration.</p>
 <pre class="{note}"><code>A note admonition! Not for anyting in particular, though...</code></pre>
-<div id="b40f77d5" class="cell" data-execution_count="4">
+<div id="5d6254a4" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ky <span class="op">=</span> <span class="fl">0.2</span> <span class="co"># yield acceleration in g</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> slam.RigidAnalysis(gm.accel, gm.dt, ky)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> slam.RigidAnalysis(ky, gm.accel, gm.dt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="view-results" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="view-results">View results</h3>
 <p>The primary output of the sliding block analysis is the final displacement (<code>SlidingBlockAnalysis.max_sliding_disp</code>). By default, all lengths in pySLAMMER are in meters. The cell below shows the displacement induced by the sample ground motion in the example:</p>
-<div id="248d3761" class="cell" data-execution_count="5">
+<div id="f760536a" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Slope yield acc: </span><span class="sc">{</span>ky<span class="sc">:.2f}</span><span class="ss"> g </span><span class="ch">\n</span><span class="ss">Ground motion: </span><span class="sc">{</span>gm<span class="sc">.</span>name<span class="sc">}</span><span class="ss">; PGA: </span><span class="sc">{</span>gm<span class="sc">.</span>pga<span class="sc">:.2f}</span><span class="ss"> g </span><span class="ch">\n</span><span class="ss">Sliding displacement: </span><span class="sc">{</span>result<span class="sc">.</span>max_sliding_disp<span class="sc">:.3f}</span><span class="ss"> m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Slope yield acc: 0.20 g 

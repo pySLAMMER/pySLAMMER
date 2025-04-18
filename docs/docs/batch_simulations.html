@@ -158,7 +158,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examples.html">Examples</a></li><li class="breadcrumb-item"><a href="./batch_simulations.html">Batch Simulations</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rigid_flex.html">Examples</a></li><li class="breadcrumb-item"><a href="./batch_simulations.html">Batch Simulations</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -195,15 +195,9 @@ window.Quarto = {
  <span class="menu-text">Quickstart guide</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./quickstart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Quickstart guide</span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./examples.html" class="sidebar-item-text sidebar-link">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Examples</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -227,12 +221,37 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">API reference</span></a>
+ <span class="menu-text">API Reference</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Verifications</span></span>
+      <div class="sidebar-item-container"> 
+            <a href="./verification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Verifications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./results_comp_SLAMMER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with SLAMMER (results)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_comp_SLAMMER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with SLAMMER (speed)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./results_comp_analytical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with analytical solution</span></a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -256,7 +275,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./examples.html">Examples</a></li><li class="breadcrumb-item"><a href="./batch_simulations.html">Batch Simulations</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rigid_flex.html">Examples</a></li><li class="breadcrumb-item"><a href="./batch_simulations.html">Batch Simulations</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Batch Simulations</h1>
 </div>
@@ -281,17 +300,17 @@ window.Quarto = {
 <p>Assumes pyslammer is installed in the current python environment. <em>Documentation on installation pending</em>, but for now, you can install it using pip:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyslammer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Import pyslammer using:</p>
-<div id="ab7fe025" class="cell" data-execution_count="1">
+<div id="d7feac2f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyslammer <span class="im">as</span> slam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Additional Python libraries, such as <code>matplotlib</code> may also be useful.</p>
-<div id="49253bd3" class="cell" data-execution_count="2">
+<div id="6ef90cd5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="99cba536" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>kys <span class="op">=</span> np.linspace(<span class="fl">0.1</span>,<span class="fl">0.7</span>,<span class="dv">100</span>)</span>
+<div id="bfd0e6d1" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>kys <span class="op">=</span> np.linspace(<span class="fl">0.01</span>,<span class="fl">0.3</span>,<span class="dv">20</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>histories <span class="op">=</span> slam.sample_ground_motions()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> {}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -299,16 +318,16 @@ window.Quarto = {
 <section id="batch-simulations" class="level1">
 <h1>Batch Simulations</h1>
 <p>The code below evaluates all combinations of <span class="math inline">\(k_y\)</span> contained in <code>kys</code> and every motion in <code>histories</code>. Some key features (motion, ky, max displacement, and displacement time histories) are stored in a dictionary, which is then converted to a pandas dataframe.</p>
-<div id="529d0522" class="cell" data-execution_count="4">
+<div id="64862649" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>run <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ky <span class="kw">in</span> kys:</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> motion, hist <span class="kw">in</span> histories.items():</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> slam.RigidAnalysis(histories[motion].accel, histories[motion].dt, ky)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        output[run] <span class="op">=</span> {<span class="st">"motion"</span>:motion, <span class="st">"ky"</span>:ky, <span class="st">"k_max"</span>:np.<span class="bu">max</span>(histories[motion].accel), <span class="st">"d_max"</span>: result.max_sliding_disp, <span class="st">"dt"</span>:result.dt, <span class="st">"disp"</span>: result</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> slam.RigidAnalysis(ky,histories[motion].accel, histories[motion].dt,target_pga<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        output[run] <span class="op">=</span> {<span class="st">"motion"</span>:motion, <span class="st">"ky"</span>:ky, <span class="st">"k_max"</span>:np.<span class="bu">max</span>(result.a_in), <span class="st">"d_max"</span>: result.max_sliding_disp, <span class="st">"dt"</span>:result.dt, <span class="st">"disp"</span>: result</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        .sliding_disp}</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        run <span class="op">+=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c46a2afa" class="cell" data-execution_count="5">
+<div id="62872930" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert the output to a pandas dataframe</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame.from_dict(output,orient<span class="op">=</span><span class="st">'index'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -332,47 +351,47 @@ window.Quarto = {
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
 <td>Morgan_Hill_1984_CYC-285</td>
-<td>0.1</td>
-<td>0.485078</td>
-<td>3.586510e-01</td>
+<td>0.01</td>
+<td>0.112099</td>
+<td>1.539165e-01</td>
 <td>0.005</td>
 <td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>Nisqually_2001_UNR-058</td>
-<td>0.1</td>
-<td>0.274017</td>
-<td>4.090052e-02</td>
+<td>0.01</td>
+<td>0.300000</td>
+<td>2.076698e+00</td>
 <td>0.010</td>
-<td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+<td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0842021724855...</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>Imperial_Valley_1979_BCR-230</td>
-<td>0.1</td>
-<td>0.774767</td>
-<td>5.531286e-01</td>
+<td>0.01</td>
+<td>0.300000</td>
+<td>7.304110e-01</td>
 <td>0.005</td>
 <td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>Chi-Chi_1999_TCU068-090</td>
-<td>0.1</td>
-<td>0.565968</td>
-<td>1.913807e+00</td>
+<td>0.01</td>
+<td>0.300000</td>
+<td>7.088829e+00</td>
 <td>0.005</td>
-<td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+<td>[0.0, 0.0, 0.0, 0.0, 0.0, 1.6940658945086008e-...</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>Cape_Mendocino_1992_PET-090</td>
-<td>0.1</td>
-<td>0.662443</td>
-<td>4.112337e-01</td>
+<td>0.01</td>
+<td>0.300000</td>
+<td>9.672480e-01</td>
 <td>0.020</td>
-<td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+<td>[0.0, 0.0, 0.0, 8.673617379884036e-23, 3.46944...</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
@@ -384,54 +403,54 @@ window.Quarto = {
 <td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1795</td>
+<td data-quarto-table-cell-role="th">355</td>
 <td>Loma_Prieta_1989_HSP-000</td>
-<td>0.7</td>
-<td>0.370540</td>
-<td>4.394658e-16</td>
+<td>0.30</td>
+<td>0.300000</td>
+<td>1.568375e-16</td>
 <td>0.005</td>
-<td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+<td>[0.0, 0.0, 0.0, 0.0, 0.0, 3.3881317890172015e-...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1796</td>
+<td data-quarto-table-cell-role="th">356</td>
 <td>Landers_1992_LCN-345</td>
-<td>0.7</td>
-<td>0.630374</td>
-<td>2.669527e-16</td>
+<td>0.30</td>
+<td>0.239638</td>
+<td>7.871830e-17</td>
 <td>0.005</td>
-<td>[1.3552527156068806e-24, 5.421010862427522e-24...</td>
+<td>[0.0, 0.0, 0.0, 3.3881317890172015e-25, 1.3552...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1797</td>
+<td data-quarto-table-cell-role="th">357</td>
 <td>N_Palm_Springs_1986_WWT-180</td>
-<td>0.7</td>
-<td>0.492195</td>
-<td>1.171560e-16</td>
+<td>0.30</td>
+<td>0.300000</td>
+<td>5.754483e-17</td>
 <td>0.005</td>
 <td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1798</td>
+<td data-quarto-table-cell-role="th">358</td>
 <td>Kobe_1995_TAK-090</td>
-<td>0.7</td>
-<td>0.615515</td>
-<td>9.322589e-16</td>
+<td>0.30</td>
+<td>0.300000</td>
+<td>4.918324e-16</td>
 <td>0.010</td>
-<td>[0.0, 0.0, 0.0, 6.776263578034403e-25, 2.71050...</td>
+<td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.7105054312137...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1799</td>
+<td data-quarto-table-cell-role="th">359</td>
 <td>Coyote_Lake_1979_G02-050</td>
-<td>0.7</td>
-<td>0.163025</td>
-<td>2.290104e-17</td>
+<td>0.30</td>
+<td>0.231868</td>
+<td>2.496658e-16</td>
 <td>0.005</td>
-<td>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+<td>[2.7105054312137612e-24, 1.0842021724855043e-2...</td>
 </tr>
 </tbody>
 </table>
 
-<p>1800 rows × 6 columns</p>
+<p>360 rows × 6 columns</p>
 </div>
 </div>
 </div>

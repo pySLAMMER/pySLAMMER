@@ -1,6 +1,4 @@
-# Function reference {.doc .doc-index}
-
-## API Reference
+# API Reference {.doc .doc-index}
 
 API reference for pySLAMMER
 

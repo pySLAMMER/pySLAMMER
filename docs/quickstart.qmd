@@ -65,7 +65,7 @@ A note admonition! Not for anyting in particular, though...
 
 ```{python}
 ky = 0.2 # yield acceleration in g
-result = slam.RigidAnalysis(gm.accel, gm.dt, ky)
+result = slam.RigidAnalysis(ky, gm.accel, gm.dt)
 ```
 
 ### View results

@@ -1,6 +1,12 @@
-# Verification
-The verifications should include:
+---
+bibliography: references.bib
+page-navigation: true
+---
 
-1. A comparison of SLAMMER and pySLAMMER's results (rigid, decoupled, and coupled)
-2. A comparison of (1) with an analytical solution (rigid only)
-3. Possibly some trends from publications? I think that's probably better suited for the [Examples](examples.qmd) section.
+# Verification
+
+PySLAMMER's rigid, decoupled, and coupled analysis methods are intended to produce sliding block analysis results that match the legacy SLAMMER results. This is an important feature for sliding block displacements, which are used as a performance index (as opposed to providing a direct prediction of actual slope displacement) in practice. Equivalence with legacy results allows new results to be interpreted with reference to historical analyses and experience.
+
+Additionally, where available, analytical solutions provide another point verification. While analytical solutions to sliding block analyses are not possible for complex ground motions, they can be developed for simple harmonic motions and pulses @conte1989.
+
+The following sections compare pySLAMMER's results to the legacy SLAMMER program results for a suite of recorded ground motions as well as analytical results for harmonic ground motions. For equivalent linear options for coupled analysis, the computational performance of pySLAMMER and SLAMMER are also compared.

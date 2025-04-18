@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.integrate as spint
 
-
 from pyslammer.constants import G_EARTH
 
 
@@ -11,7 +10,19 @@ class SlidingBlockAnalysis:
     Base class for all time-domain sliding block analyses.
     """
 
-    def __init__(self):
+    def __init__(self, ky, a_in, dt, scale_factor=1.0, target_pga=None):
+        if target_pga is not None:
+            if scale_factor != 1:
+                raise ValueError(
+                    "Both target_pga and scale_factor cannot be provided at the same time."
+                )
+            scale_factor = target_pga / max(abs(a_in))
+
+        self.scale_factor = scale_factor
+        self.a_in = (
+            a_in.copy() * scale_factor
+        )  # no longer accepts lists, only numpy arrays
+
         self.method = None
         self.ky = None
         self.time = None
@@ -33,54 +44,66 @@ class SlidingBlockAnalysis:
     def _compile_attributes(self):
         time = np.arange(0, self._npts * self.dt, self.dt)
         if self.ground_vel is None:
-            self.ground_vel = spint.cumulative_trapezoid(self.ground_acc, time, initial=0)
-            self.ground_disp = spint.cumulative_trapezoid(self.ground_vel, time, initial=0)
+            self.ground_vel = spint.cumulative_trapezoid(
+                self.ground_acc, time, initial=0
+            )
+            self.ground_disp = spint.cumulative_trapezoid(
+                self.ground_vel, time, initial=0
+            )
         if self.sliding_vel is None:
             self.sliding_vel = self.ground_vel - self.block_vel
         if self.sliding_disp is None:
-            self.sliding_disp = self.block_disp# - self.ground_disp
+            self.sliding_disp = self.block_disp  # - self.ground_disp
         pass
 
     def sliding_block_plot(self, sliding_vel_mode=True, fig=None):
         """
-        Plot the analysis result as a 3-by-1 array of time series figures. 
+        Plot the analysis result as a 3-by-1 array of time series figures.
         From top to bottom, the figures contain: acceleration, velocity, and displacement signals. By default, the acceleration figure shows the input acceleration and the block acceleration. The velocity figure shows the *sliding* (i.e., relative to the input motion) velocity of the block. If desired, `sliding_vel_mode` can be set to `False` to display the absolute velocity of the input motion and the block. The displacement figure shows the relative displacement of the block to the base.
         """
         self._compile_attributes()
         bclr = "k"
         gclr = "tab:blue"
+        inp_clr = "tab:gray"
         kyclr = "k"
         if fig is None:  # gAcc,gVel,bVel,bDisp,t,ky):
             fig, axs = plt.subplots(3, 1, sharex=True)
-
         else:
             axs = fig.get_axes()
         time = np.arange(0, self._npts * self.dt, self.dt)
 
-        # axs[0].plot(time, self.ky * np.ones(len(time))/G_EARTH, label='Yield Acc.', linestyle='--',
-        #             color=kyclr, linewidth=0.5)
-        axs[0].plot(time, self.ground_acc/G_EARTH, label='Ground Acc.', color=gclr)
-        axs[0].plot(time, self.block_acc/G_EARTH, label='Block Acc.', color=bclr)
-        axs[0].set_ylabel('Acc. (g)')
+        if hasattr(self, "HEA") and self.HEA is not None:
+            axs[0].plot(
+                time, self.ground_acc / G_EARTH, label="Input Acc.", color=inp_clr
+            )
+            axs[0].plot(
+                time,
+                self.HEA / G_EARTH,
+                label="Base Acc.",
+                color=gclr,
+            )
+        else:
+            axs[0].plot(time, self.ground_acc / G_EARTH, label="Base Acc.", color=gclr)
+
+        axs[0].plot(time, self.block_acc / G_EARTH, label="Block Acc.", color=bclr)
+
+        axs[0].set_ylabel("Acc. (g)")
         axs[0].set_xlim([time[0], time[-1]])
 
         if sliding_vel_mode:
-            axs[1].plot(time, self.sliding_vel, label='Sliding Vel.', color=bclr)
+            axs[1].plot(time, self.sliding_vel, label="Sliding Vel.", color=bclr)
         else:
-            axs[1].plot(time, self.ground_vel, label='Ground Vel.', color=gclr)
-            axs[1].plot(time, self.block_vel, label='Block Vel.', color=bclr)
-        axs[1].set_ylabel('Vel. (m/s)')
+            axs[1].plot(time, self.ground_vel, label="Base Vel.", color=gclr)
+            axs[1].plot(time, self.block_vel, label="Block Vel.", color=bclr)
+        axs[1].set_ylabel("Vel. (m/s)")
 
-        axs[2].plot(time, self.sliding_disp, label='Sliding Disp.', color=bclr)
-        axs[2].set_ylabel('Disp. (m)')
+        axs[2].plot(time, self.sliding_disp, label="Sliding Disp.", color=bclr)
+        axs[2].set_ylabel("Disp. (m)")
         for i in range(len(axs)):
             axs[i].set_xlabel("Time (s)")
-            axs[i].grid(which='both')
+            axs[i].grid(which="both")
             # Place the legend outside the plot area
-            axs[i].legend(loc='upper left', bbox_to_anchor=(1, 1))
+            axs[i].legend(loc="upper left", bbox_to_anchor=(1, 1))
         fig.tight_layout()
-        fig.canvas.toolbar_position = 'top'
+        fig.canvas.toolbar_position = "top"
         return fig
-
-
-

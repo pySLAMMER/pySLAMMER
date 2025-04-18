@@ -1,0 +1,19 @@
+---
+page-navigation: true
+---
+
+# Comparison with SLAMMER (results)
+
+Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.
+
+## Rigid Analysis
+
+Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.
+
+## Decoupled Analysis
+
+Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.
+
+## Coupled Analysis
+
+Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.

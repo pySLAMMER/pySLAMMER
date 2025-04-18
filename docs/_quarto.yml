@@ -52,11 +52,13 @@ website:
         contents:
           - rigid_flex.qmd
           - batch_simulations.qmd
-      - section: "API reference"
-        contents:
-          - reference/index.qmd
+      - href: reference/index.qmd
       - section: "Verifications"
         href: verification.qmd
+        contents:
+          - results_comp_SLAMMER.qmd
+          - performance_comp_SLAMMER.qmd
+          - results_comp_analytical.qmd
 
 
 format:
