@@ -41,7 +41,7 @@ rigid_inputs = {
 }
 print(rigid_inputs)
 
-rigid_result = slam.RigidAnalysis(**rigid_inputs, scale_factor=2, target_pga=.01)
+rigid_result = slam.RigidAnalysis(**rigid_inputs, scale_factor=2)
 ```
 
 ::: callout-note
