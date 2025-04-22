@@ -4,16 +4,37 @@ page-navigation: true
 
 # Comparison with SLAMMER (results)
 
-Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.
+PySLAMMER's rigid, decoupled, and coupled analysis methods are intended to produce sliding block analysis results that match the legacy SLAMMER results. This is an important feature for sliding block displacements, which are used as a performance index (as opposed to providing a direct prediction of actual slope displacement) in practice. Equivalence with legacy results allows new results to be interpreted with reference to historical analyses and experience.
 
-## Rigid Analysis
+## Approach
 
-Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.
+To demonstrate pySLAMMER's equivalence to SLAMMER, we performed several sliding block analyses across a broad parametric space. The three main categories of parameters studied were ground motion, analysis method, and analysis options.
 
-## Decoupled Analysis
+### Ground motion
 
-Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.
+A wide range of motions and scalings were used to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). We used all the motions in pySLAMMER's built-in sample ground motion suite (which are also all included in SLAMMER) to compare the two programs. The spectral accelerations are shown in Figure 1. Table 1 shows the duration (Dobry) and mean period (Rathje) of the ground motion suite. The motion suite was scaled to provide ky/kmax values from 0.05 to 1.0. 
 
-## Coupled Analysis
+### Analysis methods
 
-Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.
+The three rigorous analysis methods that SLAMMER performs are the Rigid, Decoupled, and Coupled methods. [brief explanation of each]. Each of these methods are implemented in pySLAMMER and included in this comparison.
+
+### Analysis options
+
+SLAMMER allows users to include a constant $k_y$ value or a variable $k_y$ that changes with accumulated sliding displacement. The $k_y$ -- displacement relationship is stepwise with a table of paired values. [purpose]. pySLAMMER includes additional options for variable yield acceleration (as an aside).
+
+For the Decoupled and Coupled analysis methods, the dynamic response of the system is calculated. The dynamic response calculation uses either *linear elastic* or *equivalent linear* assumptions. The minimum input parameters needed for the linear elastic analyses are [asdf]. For equivalent linear analysis, a reference strain parameter is also needed. Although not explicitly documented, SLAMMER uses XXX modulus reduction and damping.
+
+Separate entries for the shear wave velocity of the material above and below the slip surface are used to introduce an equivalent foundation radiation damping into the viscous material damping. This happens behind the scenes in SLAMMER by default and cannot be turned off. However, SLAMMER allows for negative values of damping ratio, which can effectively separate the overall damping behavior from the Vs/Vb. Therefore, we include only soil model, Ts/Tm, damping, and reference strain to characterize the variations in dynamic analysis options
+
+## Results
+
+I'd like some static plots and commentary and also a dynamic plot where different dimensions can be explored. Of course, the better the comparison, the more boring this will be.
+
+I think a good way of showing the comparison would be a table of RMS error by magnitude range. Alternatively, setting an absolute thresheold of "similarity" would work. Or maybe in addition.
+
+## Discussion
+Some differences should be expected. 
+
+To the extent the pySLAMMER code is doing the same calculations, the differences should be very small.
+
+The differences should not accumulate with displacement magnitude.

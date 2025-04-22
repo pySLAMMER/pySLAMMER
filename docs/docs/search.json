@@ -614,5 +614,16 @@
       "Verifications",
       "Comparison with SLAMMER (results)"
     ]
+  },
+  {
+    "objectID": "results_comp_SLAMMER.html#approach",
+    "href": "results_comp_SLAMMER.html#approach",
+    "title": "Comparison with SLAMMER (results)",
+    "section": "",
+    "text": "To demonstrate pySLAMMER’s equivalence to SLAMMER, we performed several sliding block analyses across a broad parametric space. The three main categories of parameters studied were ground motion, analysis method, and analysis options.\n\n\nA wide range of motions and scalings were used to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). We used all the motions in pySLAMMER’s built-in sample ground motion suite (which are also all included in SLAMMER) to compare the two programs. The spectral accelerations are shown in Figure 1. Table 1 shows the duration (Dobry) and mean period (Rathje) of the ground motion suite. The motion suite was scaled to provide ky/kmax values from 0.05 to 1.0.\n\n\n\nThe three rigorous analysis methods that SLAMMER performs are the Rigid, Decoupled, and Coupled methods. [brief explanation of each]. Each of these methods are implemented in pySLAMMER and included in this comparison.\n\n\n\nSLAMMER allows users to include a constant \\(k_y\\) value or a variable \\(k_y\\) that changes with accumulated sliding displacement. The \\(k_y\\) – displacement relationship is stepwise with a table of paired values. [purpose]. pySLAMMER includes additional options for variable yield acceleration (as an aside).\nFor the Decoupled and Coupled analysis methods, the dynamic response of the system is calculated. The dynamic response calculation uses either linear elastic or equivalent linear assumptions. The minimum input parameters needed for the linear elastic analyses are [asdf]. For equivalent linear analysis, a reference strain parameter is also needed. Although not explicitly documented, SLAMMER uses XXX modulus reduction and damping.\nSeparate entries for the shear wave velocity of the material above and below the slip surface are used to introduce an equivalent foundation radiation damping into the viscous material damping. This happens behind the scenes in SLAMMER by default and cannot be turned off. However, SLAMMER allows for negative values of damping ratio, which can effectively separate the overall damping behavior from the Vs/Vb. Therefore, we include only soil model, Ts/Tm, damping, and reference strain to characterize the variations in dynamic analysis options",
+    "crumbs": [
+      "Verifications",
+      "Comparison with SLAMMER (results)"
+    ]
   }
 ]
