@@ -1,7 +1,17 @@
 ---
 page-navigation: true
+fig-width: 4
 ---
-
+```{python}
+#| echo: false
+from pathlib import Path
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+import pyslammer as slam
+from cycler import cycler
+plt.style.use(slam.psfigstyle)
+```
 # Comparison with SLAMMER (results)
 
 PySLAMMER's rigid, decoupled, and coupled analysis methods are intended to produce sliding block analysis results that match the legacy SLAMMER results. This is an important feature for sliding block displacements, which are used as a performance index (as opposed to providing a direct prediction of actual slope displacement) in practice. Equivalence with legacy results allows new results to be interpreted with reference to historical analyses and experience.
@@ -13,6 +23,59 @@ To demonstrate pySLAMMER's equivalence to SLAMMER, we performed several sliding 
 ### Ground motion
 
 A wide range of motions and scalings were used to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). We used all the motions in pySLAMMER's built-in sample ground motion suite (which are also all included in SLAMMER) to compare the two programs. The spectral accelerations are shown in Figure 1. Table 1 shows the duration (Dobry) and mean period (Rathje) of the ground motion suite. The motion suite was scaled to provide ky/kmax values from 0.05 to 1.0. 
+
+```{python}
+#| code-fold: true
+#| width: 50%
+# Navigate to ground motion suite response spectra files
+current_dir = os.getcwd()
+folder_path = Path(current_dir).resolve().parents[0] / "tests" / "pySLAMMER_suite_resp"
+csv_files = list(folder_path.glob("*.csv"))
+
+# Read each CSV file into a DataFrame and store them in a list
+freq_index = 0
+resp_index = 1
+spectra = {}
+for csv_file in csv_files:
+    data = np.loadtxt(csv_file, delimiter=",", skiprows=2)
+    # convert response from cm/s^2 to g's
+    data[:, resp_index] = data[:, resp_index] / 981
+    spectra[csv_file.name.strip(".csv")] = data
+
+# Initialize the plot
+fig, ax = plt.subplots()
+fig.set_size_inches(4,4)
+ax.set_prop_cycle(cycler(color=plt.cm.tab20.colors))
+for motion in spectra:
+    ax.plot(
+        1/spectra[motion][:, freq_index],
+        spectra[motion][:, resp_index],
+        label=motion,
+        linewidth=0.5,
+    )
+
+ax.text(0.012, 2.75, "5% damping")
+# Add labels, legend, and grid
+ax.set_xlabel("Period (s)")
+ax.set_ylabel("Spectral Acceleration (g)")
+ax.set_title("Response Spectra")
+ax.set_xscale("log")
+ax.set_ylim(0,3)
+ax.set_xlim(0.01,100)
+
+# ax.ticklabel_format(style="plain")
+ax.legend(
+    loc="center left", 
+    bbox_to_anchor=(0.6, 0.6), 
+    fontsize="x-small", 
+    title="Ground Motion", 
+    title_fontsize="medium",
+    frameon=False
+)
+
+# Show the plot
+plt.show()
+```
 
 ### Analysis methods
 

@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -69,6 +103,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -199,38 +262,130 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#comparison-with-slammer-results" id="toc-comparison-with-slammer-results" class="nav-link active" data-scroll-target="#comparison-with-slammer-results">Comparison with SLAMMER (results)</a>
+  <li><a href="#approach" id="toc-approach" class="nav-link active" data-scroll-target="#approach">Approach</a>
   <ul class="collapse">
-  <li><a href="#rigid-analysis" id="toc-rigid-analysis" class="nav-link" data-scroll-target="#rigid-analysis">Rigid Analysis</a></li>
-  <li><a href="#decoupled-analysis" id="toc-decoupled-analysis" class="nav-link" data-scroll-target="#decoupled-analysis">Decoupled Analysis</a></li>
-  <li><a href="#coupled-analysis" id="toc-coupled-analysis" class="nav-link" data-scroll-target="#coupled-analysis">Coupled Analysis</a></li>
+  <li><a href="#ground-motion" id="toc-ground-motion" class="nav-link" data-scroll-target="#ground-motion">Ground motion</a></li>
+  <li><a href="#analysis-methods" id="toc-analysis-methods" class="nav-link" data-scroll-target="#analysis-methods">Analysis methods</a></li>
+  <li><a href="#analysis-options" id="toc-analysis-options" class="nav-link" data-scroll-target="#analysis-options">Analysis options</a></li>
   </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./verification.html">Verifications</a></li><li class="breadcrumb-item"><a href="./results_comp_SLAMMER.html">Comparison with SLAMMER (results)</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./verification.html">Verifications</a></li><li class="breadcrumb-item"><a href="./results_comp_SLAMMER.html">Comparison with SLAMMER (results)</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Comparison with SLAMMER (results)</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="comparison-with-slammer-results" class="level1">
-<h1>Comparison with SLAMMER (results)</h1>
-<p>Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.</p>
-<section id="rigid-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="rigid-analysis">Rigid Analysis</h2>
-<p>Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.</p>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>PySLAMMER’s rigid, decoupled, and coupled analysis methods are intended to produce sliding block analysis results that match the legacy SLAMMER results. This is an important feature for sliding block displacements, which are used as a performance index (as opposed to providing a direct prediction of actual slope displacement) in practice. Equivalence with legacy results allows new results to be interpreted with reference to historical analyses and experience.</p>
+<section id="approach" class="level2">
+<h2 class="anchored" data-anchor-id="approach">Approach</h2>
+<p>To demonstrate pySLAMMER’s equivalence to SLAMMER, we performed several sliding block analyses across a broad parametric space. The three main categories of parameters studied were ground motion, analysis method, and analysis options.</p>
+<section id="ground-motion" class="level3">
+<h3 class="anchored" data-anchor-id="ground-motion">Ground motion</h3>
+<p>A wide range of motions and scalings were used to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). We used all the motions in pySLAMMER’s built-in sample ground motion suite (which are also all included in SLAMMER) to compare the two programs. The spectral accelerations are shown in Figure 1. Table 1 shows the duration (Dobry) and mean period (Rathje) of the ground motion suite. The motion suite was scaled to provide ky/kmax values from 0.05 to 1.0.</p>
+<div id="070f5636" class="cell" width="50%" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate to ground motion suite response spectra files</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>current_dir <span class="op">=</span> os.getcwd()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>folder_path <span class="op">=</span> Path(current_dir).resolve().parents[<span class="dv">0</span>] <span class="op">/</span> <span class="st">"tests"</span> <span class="op">/</span> <span class="st">"pySLAMMER_suite_resp"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>csv_files <span class="op">=</span> <span class="bu">list</span>(folder_path.glob(<span class="st">"*.csv"</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Read each CSV file into a DataFrame and store them in a list</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>freq_index <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>resp_index <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>spectra <span class="op">=</span> {}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> csv_file <span class="kw">in</span> csv_files:</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> np.loadtxt(csv_file, delimiter<span class="op">=</span><span class="st">","</span>, skiprows<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert response from cm/s^2 to g's</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    data[:, resp_index] <span class="op">=</span> data[:, resp_index] <span class="op">/</span> <span class="dv">981</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    spectra[csv_file.name.strip(<span class="st">".csv"</span>)] <span class="op">=</span> data</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the plot</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">4</span>,<span class="dv">4</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>ax.set_prop_cycle(cycler(color<span class="op">=</span>plt.cm.tab20.colors))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> motion <span class="kw">in</span> spectra:</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    ax.plot(</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1</span><span class="op">/</span>spectra[motion][:, freq_index],</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        spectra[motion][:, resp_index],</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span>motion,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.012</span>, <span class="fl">2.75</span>, <span class="st">"5</span><span class="sc">% d</span><span class="st">amping"</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels, legend, and grid</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Period (s)"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Spectral Acceleration (g)"</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Response Spectra"</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>ax.set_xscale(<span class="st">"log"</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">0</span>,<span class="dv">3</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="fl">0.01</span>,<span class="dv">100</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co"># ax.ticklabel_format(style="plain")</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>ax.legend(</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    loc<span class="op">=</span><span class="st">"center left"</span>, </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    bbox_to_anchor<span class="op">=</span>(<span class="fl">0.6</span>, <span class="fl">0.6</span>), </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="st">"x-small"</span>, </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Ground Motion"</span>, </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    title_fontsize<span class="op">=</span><span class="st">"medium"</span>,</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    frameon<span class="op">=</span><span class="va">False</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="results_comp_SLAMMER_files/figure-html/cell-3-output-1.png" width="1340" height="1182" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="decoupled-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="decoupled-analysis">Decoupled Analysis</h2>
-<p>Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.</p>
+<section id="analysis-methods" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-methods">Analysis methods</h3>
+<p>The three rigorous analysis methods that SLAMMER performs are the Rigid, Decoupled, and Coupled methods. [brief explanation of each]. Each of these methods are implemented in pySLAMMER and included in this comparison.</p>
 </section>
-<section id="coupled-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="coupled-analysis">Coupled Analysis</h2>
-<p>Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.</p>
+<section id="analysis-options" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-options">Analysis options</h3>
+<p>SLAMMER allows users to include a constant <span class="math inline">\(k_y\)</span> value or a variable <span class="math inline">\(k_y\)</span> that changes with accumulated sliding displacement. The <span class="math inline">\(k_y\)</span> – displacement relationship is stepwise with a table of paired values. [purpose]. pySLAMMER includes additional options for variable yield acceleration (as an aside).</p>
+<p>For the Decoupled and Coupled analysis methods, the dynamic response of the system is calculated. The dynamic response calculation uses either <em>linear elastic</em> or <em>equivalent linear</em> assumptions. The minimum input parameters needed for the linear elastic analyses are [asdf]. For equivalent linear analysis, a reference strain parameter is also needed. Although not explicitly documented, SLAMMER uses XXX modulus reduction and damping.</p>
+<p>Separate entries for the shear wave velocity of the material above and below the slip surface are used to introduce an equivalent foundation radiation damping into the viscous material damping. This happens behind the scenes in SLAMMER by default and cannot be turned off. However, SLAMMER allows for negative values of damping ratio, which can effectively separate the overall damping behavior from the Vs/Vb. Therefore, we include only soil model, Ts/Tm, damping, and reference strain to characterize the variations in dynamic analysis options</p>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>I’d like some static plots and commentary and also a dynamic plot where different dimensions can be explored. Of course, the better the comparison, the more boring this will be.</p>
+<p>I think a good way of showing the comparison would be a table of RMS error by magnitude range. Alternatively, setting an absolute thresheold of “similarity” would work. Or maybe in addition.</p>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>Some differences should be expected.</p>
+<p>To the extent the pySLAMMER code is doing the same calculations, the differences should be very small.</p>
+<p>The differences should not accumulate with displacement magnitude.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
