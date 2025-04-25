@@ -1,15 +1,18 @@
 ---
 page-navigation: true
-fig-width: 4
 ---
 ```{python}
 #| echo: false
 from pathlib import Path
 import numpy as np
+import pandas as pd
 import os
 import matplotlib.pyplot as plt
 import pyslammer as slam
+import scipy.stats.mstats as ssmstat
 from cycler import cycler
+from tests.verification_processes import import_verification_data
+%matplotlib widget
 plt.style.use(slam.psfigstyle)
 ```
 # Comparison with SLAMMER (results)
@@ -26,7 +29,7 @@ A wide range of motions and scalings were used to capture a reasonable breadth o
 
 ```{python}
 #| code-fold: true
-#| width: 50%
+#| fig-align: center
 # Navigate to ground motion suite response spectra files
 current_dir = os.getcwd()
 folder_path = Path(current_dir).resolve().parents[0] / "tests" / "pySLAMMER_suite_resp"
@@ -44,7 +47,7 @@ for csv_file in csv_files:
 
 # Initialize the plot
 fig, ax = plt.subplots()
-fig.set_size_inches(4,4)
+# fig.set_size_inches(7,5)
 ax.set_prop_cycle(cycler(color=plt.cm.tab20.colors))
 for motion in spectra:
     ax.plot(
@@ -95,9 +98,114 @@ I'd like some static plots and commentary and also a dynamic plot where differen
 
 I think a good way of showing the comparison would be a table of RMS error by magnitude range. Alternatively, setting an absolute thresheold of "similarity" would work. Or maybe in addition.
 
+```{python}
+#| code-fold: true
+#| fig-align: center
+
+# Navigate to ground motion suite response spectra files
+current_dir = os.getcwd()
+data_path = Path(current_dir).resolve().parents[0] / "tests" / "SLAMMER_results.xlsx"
+
+df = import_verification_data(data_path)
+df["kykmax"] = df["ky (g)"] / df["kmax (g)"]
+
+dfp = df[df["kykmax"] < 1.0]
+
+############
+# pySLAMMER v. SLAMMER
+############
+fig, ax = plt.subplots()
+cmap = plt.cm.viridis  # You can use other colormaps like 'plasma', 'coolwarm', etc.
+
+# Define the numeric values for coloring (e.g., SLAMMER values)
+color_values = dfp["kykmax"] # Replace with the column you want to use for coloring
+
+# Scatter plot with color mapping
+scatter = ax.scatter(
+    dfp["SLAMMER"],  # x-axis values
+    dfp["pySLAMMER"],  # y-axis values # abs(dfp["SLAMMER"] - dfp["pySLAMMER"]) / dfp["pySLAMMER"],  # y-axis values
+    c=color_values,  # Numeric values for coloring
+    cmap=cmap,  # Colormap
+    alpha=0.5,  # Transparency
+    marker=".",
+)
+
+# Add a colorbar
+cbar = plt.colorbar(scatter, ax=ax, alpha=1)
+cbar.set_label("Yield Ratio ($k_y/k_{max}$)")  # Label for the colorbar
+
+log = False
+if not log:
+    ax.set_xlim(0, 1000)
+    ax.set_ylim(0, 1000)
+
+else:
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    ax.set_xlim(1e-3, 1e3)
+    ax.set_ylim(1e-3, 1e3)
+
+
+# ax.set_aspect('equal', adjustable='box')
+
+plt.grid()
+
+# plt.legend(loc='upper right', bbox_to_anchor=(0.2, 1))
+plt.legend()
+
+plt.xlabel("SLAMMER displacement (cm)")
+plt.ylabel("pySLAMMER displacement (cm)")
+plt.title("Comparison of pySLAMMER and SLAMMER results")
+plt.show()
+```
+
+```{python}
+ax.set_xscale("log")
+ax.set_yscale("log")
+ax.set_xlim(1e-3, 1e3)
+ax.set_ylim(1e-3, 1e3)
+
+plt.show()
+```
+
+```{python}
+comp = {
+    "Range": [],
+    "Engineering\nInterest": [],
+    "Computation\nMatch": [],
+    "Slope": [],
+    "Intercept": [],
+    "R$^2$": [],
+    "95th percentile\nerror": []
+}
+
+for i in range(len(scales)-1):
+    segment = dfp[
+        (dfp["SLAMMER"] > scales[i])
+        & (dfp["SLAMMER"] < scales[i+1])
+    ]
+    slope, intercept, r, p, se = ssmstat.linregress(
+        segment["SLAMMER"],
+        segment["pySLAMMER"],
+    )
+    comp["Range"].append(f"{scales[i]} to {scales[i+1]} cm")
+    comp["Engineering\nInterest"].append(interest[i])
+    comp["Computation\nMatch"].append(match[i])
+    comp["Slope"].append(f"{slope:.2f}")
+    comp["Intercept"].append(f"{intercept:.2f}")
+    comp["R$^2$"].append(f"{r**2:.2f}")
+    comp["95th percentile\nerror"].append(f"{np.percentile(
+        abs(segment["pySLAMMER"] - segment["SLAMMER"]),
+        95):.2f}")
+```
 ## Discussion
 Some differences should be expected. 
 
 To the extent the pySLAMMER code is doing the same calculations, the differences should be very small.
 
 The differences should not accumulate with displacement magnitude.
+
+## Conclusions
+1. PySLAMMER is performing the same analysis as SLAMMER.
+2. Numerical differences are insignificant for engineering purposes, both in research and practice.
+3. To the extent historical SLAMMER results are well documented, comparison with pySLAMMER results is appropriate.

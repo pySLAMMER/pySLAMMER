@@ -302,7 +302,7 @@ window.Quarto = {
 <section id="ground-motion" class="level3">
 <h3 class="anchored" data-anchor-id="ground-motion">Ground motion</h3>
 <p>A wide range of motions and scalings were used to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). We used all the motions in pySLAMMER’s built-in sample ground motion suite (which are also all included in SLAMMER) to compare the two programs. The spectral accelerations are shown in Figure 1. Table 1 shows the duration (Dobry) and mean period (Rathje) of the ground motion suite. The motion suite was scaled to provide ky/kmax values from 0.05 to 1.0.</p>
-<div id="070f5636" class="cell" width="50%" data-execution_count="2">
+<div id="117e61be" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate to ground motion suite response spectra files</span></span>
@@ -322,7 +322,7 @@ window.Quarto = {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the plot</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">4</span>,<span class="dv">4</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># fig.set_size_inches(7,5)</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>ax.set_prop_cycle(cycler(color<span class="op">=</span>plt.cm.tab20.colors))</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> motion <span class="kw">in</span> spectra:</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    ax.plot(</span>
@@ -355,9 +355,9 @@ window.Quarto = {
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="results_comp_SLAMMER_files/figure-html/cell-3-output-1.png" width="1340" height="1182" class="figure-img"></p>
+<p><img src="results_comp_SLAMMER_files/figure-html/cell-3-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="596" height="454"></p>
 </figure>
 </div>
 </div>

@@ -12,11 +12,11 @@ __all__ = ["csv_time_hist", "sample_ground_motions", "psfigstyle"]
 psfigstyle = {
     "font.family": "sans-serif",
     "font.sans-serif": ["Arial"],
-    "axes.labelweight": "bold",
+    # "axes.labelweight": "bold",
     "axes.titleweight": "bold",
     "axes.formatter.use_mathtext": True,
-    "mathtext.default": "regular",
-    "figure.dpi": 300,
+    # "mathtext.default": "regular",
+    # "figure.dpi": 300,
 }
 
 
