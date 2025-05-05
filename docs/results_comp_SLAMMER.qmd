@@ -1,6 +1,8 @@
 ---
 page-navigation: true
+bibliography: references.bib
 ---
+
 ```{python}
 #| echo: false
 from pathlib import Path
@@ -12,9 +14,10 @@ import pyslammer as slam
 import scipy.stats.mstats as ssmstat
 from cycler import cycler
 from tests.verification_processes import import_verification_data
-%matplotlib widget
+from great_tables import GT, md, html
 plt.style.use(slam.psfigstyle)
 ```
+
 # Comparison with SLAMMER (results)
 
 PySLAMMER's rigid, decoupled, and coupled analysis methods are intended to produce sliding block analysis results that match the legacy SLAMMER results. This is an important feature for sliding block displacements, which are used as a performance index (as opposed to providing a direct prediction of actual slope displacement) in practice. Equivalence with legacy results allows new results to be interpreted with reference to historical analyses and experience.
@@ -25,11 +28,13 @@ To demonstrate pySLAMMER's equivalence to SLAMMER, we performed several sliding 
 
 ### Ground motion
 
-A wide range of motions and scalings were used to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). We used all the motions in pySLAMMER's built-in sample ground motion suite (which are also all included in SLAMMER) to compare the two programs. The spectral accelerations are shown in Figure 1. Table 1 shows the duration (Dobry) and mean period (Rathje) of the ground motion suite. The motion suite was scaled to provide ky/kmax values from 0.05 to 1.0. 
+We used the motions from pySLAMMER's built-in sample ground motion suite at several scales to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). The acceleration response spectra for the input motion suite are shown in @fig-resp. Additional details on the ground motions are provided on the [ground motion suite page](ground_motion_suite.qmd).
 
 ```{python}
 #| code-fold: true
+#| label: fig-resp
 #| fig-align: center
+#| fig-cap: "Acceleration response spectra for input ground motions"
 # Navigate to ground motion suite response spectra files
 current_dir = os.getcwd()
 folder_path = Path(current_dir).resolve().parents[0] / "tests" / "pySLAMMER_suite_resp"
@@ -47,7 +52,6 @@ for csv_file in csv_files:
 
 # Initialize the plot
 fig, ax = plt.subplots()
-# fig.set_size_inches(7,5)
 ax.set_prop_cycle(cycler(color=plt.cm.tab20.colors))
 for motion in spectra:
     ax.plot(
@@ -66,7 +70,6 @@ ax.set_xscale("log")
 ax.set_ylim(0,3)
 ax.set_xlim(0.01,100)
 
-# ax.ticklabel_format(style="plain")
 ax.legend(
     loc="center left", 
     bbox_to_anchor=(0.6, 0.6), 
@@ -76,21 +79,76 @@ ax.legend(
     frameon=False
 )
 
-# Show the plot
 plt.show()
 ```
 
 ### Analysis methods
 
-The three rigorous analysis methods that SLAMMER performs are the Rigid, Decoupled, and Coupled methods. [brief explanation of each]. Each of these methods are implemented in pySLAMMER and included in this comparison.
+The three rigorous analysis methods that SLAMMER performs are the Rigid, Decoupled, and Coupled methods. Each of these methods, which are briefly described below, are implemented in pySLAMMER and included in this comparison.
+
+Rigid Block Analysis
+
+:   Conceptualized by Whitman in 1963 and further developed by Newmark in 1965 (@marcuson1994, @newmark1965), rigid block analysis models a potential landslide mass as a rigid mass on an inclined plane base with a perfectly plastic frictional interface. The rigid block motion matches the base motion exactly until the acceleration of the base exceeds some critical value (the yield acceleration, $k_y$). Once this critical $k_y$ value is reached, the block's acceleration remains constant $k_y$, resulting in relative velocity and displacement between block and base. The relative velocity is calculated by integrating the difference between the block and base accelerations. The displacement accumulated by the block moving down the ramp is calculated by integrating the relative velocity. Sliding stops (i.e., block motion again matches base motion exactly) when the relative velocity reaches zero.
+
+Decoupled Analysis
+
+:   Landslide materials are, of course, not rigid. Except for very shallow, stiff slide masses, the rigid block model does a poor job of approximating the dynamics of a co-seismic landslide system. The decoupled method was developed to provide some way of accounting for the deformation of the slope mass due to shaking (@seed1966, @makdisi1978) . It consists of two distinct (or decoupled, if you will) calculations: *dynamic response* and *rigid sliding*. During the dynamic response phase, the possibility of sliding is ignored while the slope response to strong ground motion is calculated. The average internal acceleration of the slope mass during this first phase is then used as the base input acceleration for the second phase (rigid sliding) which is simply a rigid block analysis.
+
+Coupled Analysis
+
+:   As indicated by the name, coupled analysis takes the two separate calculations from the decoupled analysis and performs them simultaneously. @chopra1991 introduced a model for earthquake-induced sliding of concrete gravity dams that considered the dynamic response of the dam during sliding. @rathje1999 modified the procedure and applied it to earth structures. With coupled sliding, the sliding mass's dynamic response is calculated for both sliding and non-sliding conditions. Sliding stops when the relative velocity of the sliding mass reaches zero. The stop of sliding can introduce an abrupt change in acceleration applied to the sliding mass. Because the dynamic response is being calculated continually through the analysis, the approach to identifying the timing of these abrupt changes will affect potential subsequent sliding events.
+
+Dynamic Response
+
+:   The Decoupled and Coupled methods both require the calculation of the slope's dynamic response. The two methods for dynamic response in SLAMMER, which have been carried over to pySLAMMER are *linear elastic* and *equivalent linear*.
 
 ### Analysis options
 
-SLAMMER allows users to include a constant $k_y$ value or a variable $k_y$ that changes with accumulated sliding displacement. The $k_y$ -- displacement relationship is stepwise with a table of paired values. [purpose]. pySLAMMER includes additional options for variable yield acceleration (as an aside).
+SLAMMER allows users to include a constant $k_y$ value or a variable $k_y$ that changes with accumulated sliding displacement. The $k_y$ -- displacement relationship is stepwise with a table of paired values. This feature provides a rough means of approximating post-peak residual strength. \[pySLAMMER includes additional options for variable yield acceleration, but only stepwise variation is applicable to comparison with SLAMMER\]
 
-For the Decoupled and Coupled analysis methods, the dynamic response of the system is calculated. The dynamic response calculation uses either *linear elastic* or *equivalent linear* assumptions. The minimum input parameters needed for the linear elastic analyses are [asdf]. For equivalent linear analysis, a reference strain parameter is also needed. Although not explicitly documented, SLAMMER uses XXX modulus reduction and damping.
+The dynamic response of the system (applicable to decoupled and coupled analyses) is calculated using either *linear elastic* or *equivalent linear* assumptions. The minimum input parameters needed for the linear elastic analyses are a damping ration, the slope height, and the shear wave velocity of the material above and below the slip surface. For equivalent linear analysis, a reference strain parameter is also needed. Although not explicitly documented, inspection of the SLAMMER source code uses Darendeli (2001) modulus reduction and damping curves with a curvature coefficient of 1.
 
-Separate entries for the shear wave velocity of the material above and below the slip surface are used to introduce an equivalent foundation radiation damping into the viscous material damping. This happens behind the scenes in SLAMMER by default and cannot be turned off. However, SLAMMER allows for negative values of damping ratio, which can effectively separate the overall damping behavior from the Vs/Vb. Therefore, we include only soil model, Ts/Tm, damping, and reference strain to characterize the variations in dynamic analysis options
+Separate entries for the shear wave velocity of the material above and below the slip surface are used to introduce an equivalent foundation radiation damping into the viscous material damping as described by @lee2004. This happens behind the scenes in SLAMMER by default and cannot be turned off. \[If lower total damping than the equivalent foundation radiation damping is needed for some reason (e.g., for comparison with published analyses that did not include this damping mechanism) both SLAMMER and pySLAMMER accept negative values for damping ratio, which can be used to offset the damping applied by the foundation radiation damping\]
+
+Motion: kmax, Tm, Duration
+
+Slope: ky, variable ky?, Vs, Vbase, damping, height
+
+Analysis methods: rigid, decoupled, coupled
+
+Dynamic response methods: linear elastic, equivalent linear
+
+```{python}
+#| code-fold: true
+#| label: tab-comparison
+params = {
+    "ky/kmax":[0.05, 1.0],
+    "Tm/Tx": [0.1, 10.0],
+    "Duration (5-95%), sec": [0.1, 100]
+    
+}
+    
+
+tbl = (
+    GT(pd.DataFrame(comp))
+    .tab_header(
+    title = "pySLAMMER-SLAMMER Results Comparison",
+    subtitle = "Computational match by order of displacment magnitude"
+    )
+    .tab_spanner(
+    label="Linear Regression Parameters",
+    columns=["Slope","Intercept","R_sq"]
+    )
+    .cols_label(
+    Range=html("Displacement Range<br>(cm)"),
+    Intercept=html("Intercept<br>(cm)"),
+    R_sq=html("R<sup>2</sup>"),
+    error_95=html("95<sup>th</sup> percentile error<br>(cm)")
+
+    )
+)
+tbl
+```
 
 ## Results
 
@@ -100,7 +158,9 @@ I think a good way of showing the comparison would be a table of RMS error by ma
 
 ```{python}
 #| code-fold: true
+#| label: fig-linear
 #| fig-align: center
+#| fig-cap: "Linear scale comparison of pySLAMMER and SLAMMER analysis results. At this scale, the differences are too small to be distinguished visually."
 
 # Navigate to ground motion suite response spectra files
 current_dir = os.getcwd()
@@ -115,68 +175,63 @@ dfp = df[df["kykmax"] < 1.0]
 # pySLAMMER v. SLAMMER
 ############
 fig, ax = plt.subplots()
-cmap = plt.cm.viridis  # You can use other colormaps like 'plasma', 'coolwarm', etc.
+cmap = plt.cm.viridis  
 
-# Define the numeric values for coloring (e.g., SLAMMER values)
-color_values = dfp["kykmax"] # Replace with the column you want to use for coloring
+# Match color values to kykmax values
+color_values = dfp["kykmax"] 
 
 # Scatter plot with color mapping
 scatter = ax.scatter(
     dfp["SLAMMER"],  # x-axis values
-    dfp["pySLAMMER"],  # y-axis values # abs(dfp["SLAMMER"] - dfp["pySLAMMER"]) / dfp["pySLAMMER"],  # y-axis values
+    dfp["pySLAMMER"],  # y-axis values
     c=color_values,  # Numeric values for coloring
     cmap=cmap,  # Colormap
     alpha=0.5,  # Transparency
     marker=".",
 )
 
-# Add a colorbar
+# Add colorbar
 cbar = plt.colorbar(scatter, ax=ax, alpha=1)
 cbar.set_label("Yield Ratio ($k_y/k_{max}$)")  # Label for the colorbar
 
-log = False
-if not log:
-    ax.set_xlim(0, 1000)
-    ax.set_ylim(0, 1000)
 
-else:
-    ax.set_xscale("log")
-    ax.set_yscale("log")
-    ax.set_xlim(1e-3, 1e3)
-    ax.set_ylim(1e-3, 1e3)
-
-
-# ax.set_aspect('equal', adjustable='box')
+ax.set_xlim(0, 1000)
+ax.set_ylim(0, 1000)
 
 plt.grid()
 
-# plt.legend(loc='upper right', bbox_to_anchor=(0.2, 1))
-plt.legend()
-
-plt.xlabel("SLAMMER displacement (cm)")
-plt.ylabel("pySLAMMER displacement (cm)")
-plt.title("Comparison of pySLAMMER and SLAMMER results")
+ax.set_xlabel("SLAMMER displacement (cm)")
+ax.set_ylabel("pySLAMMER displacement (cm)")
 plt.show()
 ```
 
 ```{python}
+#| code-fold: true
+#| label: fig-loglog
+#| fig-align: center
+#| fig-cap: "Log-log scale comparison of pySLAMMER and SLAMMER analysis results. At this scale, the small differences become visible. Nevertheless, the match between the two is excellent in the range of engineering interest."
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlim(1e-3, 1e3)
 ax.set_ylim(1e-3, 1e3)
 
-plt.show()
+fig
 ```
 
 ```{python}
+#| code-fold: true
+#| label: tab-comparison
+scales = [0.001, 0.01, 0.1, 1, 10, 100 ,1000]
+interest = ["no", "no", "yes", "yes", "yes", "yes"]
+match_quality = ["moderate", "very good", "excellent", "excellent", "excellent", "excellent"]
 comp = {
     "Range": [],
     "Engineering\nInterest": [],
     "Computation\nMatch": [],
+    "error_95": [],
     "Slope": [],
     "Intercept": [],
-    "R$^2$": [],
-    "95th percentile\nerror": []
+    "R_sq": []
 }
 
 for i in range(len(scales)-1):
@@ -188,24 +243,48 @@ for i in range(len(scales)-1):
         segment["SLAMMER"],
         segment["pySLAMMER"],
     )
-    comp["Range"].append(f"{scales[i]} to {scales[i+1]} cm")
+    comp["Range"].append(f"{scales[i]} to {scales[i+1]}")
     comp["Engineering\nInterest"].append(interest[i])
-    comp["Computation\nMatch"].append(match[i])
-    comp["Slope"].append(f"{slope:.2f}")
-    comp["Intercept"].append(f"{intercept:.2f}")
-    comp["R$^2$"].append(f"{r**2:.2f}")
-    comp["95th percentile\nerror"].append(f"{np.percentile(
+    comp["error_95"].append(f"{np.percentile(
         abs(segment["pySLAMMER"] - segment["SLAMMER"]),
         95):.2f}")
+    comp["Slope"].append(f"{slope:.2f}")
+    comp["Intercept"].append(f"{intercept:.2f}")
+    comp["R_sq"].append(f"{r**2:.2f}")
+    comp["Computation\nMatch"].append(match_quality[i])
+    
+
+tbl = (
+    GT(pd.DataFrame(comp))
+    .tab_header(
+    title = "pySLAMMER-SLAMMER Results Comparison",
+    subtitle = "Computational match by order of displacment magnitude"
+    )
+    .tab_spanner(
+    label="Linear Regression Parameters",
+    columns=["Slope","Intercept","R_sq"]
+    )
+    .cols_label(
+    Range=html("Displacement Range<br>(cm)"),
+    Intercept=html("Intercept<br>(cm)"),
+    R_sq=html("R<sup>2</sup>"),
+    error_95=html("95<sup>th</sup> percentile error<br>(cm)")
+
+    )
+)
+tbl
 ```
+
 ## Discussion
-Some differences should be expected. 
+
+Some differences should be expected.
 
 To the extent the pySLAMMER code is doing the same calculations, the differences should be very small.
 
 The differences should not accumulate with displacement magnitude.
 
 ## Conclusions
-1. PySLAMMER is performing the same analysis as SLAMMER.
-2. Numerical differences are insignificant for engineering purposes, both in research and practice.
-3. To the extent historical SLAMMER results are well documented, comparison with pySLAMMER results is appropriate.
+
+1.  PySLAMMER is performing the same analysis as SLAMMER.
+2.  Numerical differences are insignificant for engineering purposes, both in research and practice.
+3.  To the extent historical SLAMMER results are well documented, comparison with pySLAMMER results is appropriate.
