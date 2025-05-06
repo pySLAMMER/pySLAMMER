@@ -1,4 +1,0 @@
-# ky_const { #pyslammer.ky_const }
-
-`ky_const`
-

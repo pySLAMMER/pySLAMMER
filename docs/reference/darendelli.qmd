@@ -1,4 +1,0 @@
-# darendelli { #pyslammer.darendelli }
-
-`darendelli`
-

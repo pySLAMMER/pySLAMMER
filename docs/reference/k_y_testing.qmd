@@ -1,4 +1,0 @@
-# k_y_testing { #pyslammer.k_y_testing }
-
-`k_y_testing`
-

@@ -1,6 +1,0 @@
-# sample_ground_motions { #pyslammer.sample_ground_motions }
-
-```python
-sample_ground_motions()
-```
-

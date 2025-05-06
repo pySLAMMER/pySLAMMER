@@ -1,4 +1,0 @@
-# strains { #pyslammer.strains }
-
-`strains`
-

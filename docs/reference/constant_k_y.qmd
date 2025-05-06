@@ -1,6 +1,0 @@
-# constant_k_y { #pyslammer.constant_k_y }
-
-```python
-constant_k_y(k_y)
-```
-

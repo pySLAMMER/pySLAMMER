@@ -1,4 +1,0 @@
-# da { #pyslammer.da }
-
-`da`
-

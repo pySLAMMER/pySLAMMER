@@ -1,6 +1,0 @@
-# strain_mod_update { #pyslammer.strain_mod_update }
-
-```python
-strain_mod_update(effective_strain, ref_strain)
-```
-

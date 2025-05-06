@@ -1,4 +1,0 @@
-# equivalent_linear_testing { #pyslammer.equivalent_linear_testing }
-
-`equivalent_linear_testing`
-

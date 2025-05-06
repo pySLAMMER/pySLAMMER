@@ -163,15 +163,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Quickstart guide</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../quickstart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Quickstart guide</span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../examples.html" class="sidebar-item-text sidebar-link">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Examples</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -195,12 +189,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">API reference</span></a>
+ <span class="menu-text">Function reference</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Verifications</span></span>
+      <div class="sidebar-item-container"> 
+            <a href="../verification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Verifications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../results_comp_SLAMMER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with SLAMMER (results)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../performance_comp_SLAMMER.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with SLAMMER (speed)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../results_comp_analytical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with analytical solution</span></a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -212,7 +231,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#pyslammer.Coupled" id="toc-pyslammer.Coupled" class="nav-link active" data-scroll-target="#pyslammer.Coupled">Coupled</a></li>
+  <li><a href="#pyslammer.Coupled" id="toc-pyslammer.Coupled" class="nav-link active" data-scroll-target="#pyslammer.Coupled">Coupled</a>
+  <ul class="collapse">
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -235,12 +258,311 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    damp_ratio,</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    ref_strain,</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    scale_factor<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    soil_model<span class="op">=</span><span class="st">'linear_elastic'</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    si_units<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    lite<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    target_pga<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    soil_model<span class="op">=</span><span class="st">'linear_elastic'</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    si_units<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    lite<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Coupled analysis for sliding block and ground motion interaction.</p>
+<section id="parameters" class="level2 doc-section doc-section-parameters">
+<h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 50%">
+<col style="width: 32%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ky</td>
+<td>float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable</td>
+<td>Yield acceleration or function defining yield acceleration.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>a_in</td>
+<td>list[float] or np.ndarray</td>
+<td>Input acceleration time history.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>dt</td>
+<td>float</td>
+<td>Time step of the input acceleration.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>height</td>
+<td>int or float</td>
+<td>Height of the sliding block.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>vs_slope</td>
+<td>int or float</td>
+<td>Shear wave velocity slope.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>vs_base</td>
+<td>int or float</td>
+<td>Base shear wave velocity.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>damp_ratio</td>
+<td>float</td>
+<td>Damping ratio.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>ref_strain</td>
+<td>float</td>
+<td>Reference strain.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>scale_factor</td>
+<td>float</td>
+<td>Scale factor for input acceleration, by default 1.</td>
+<td><code>1</code></td>
+</tr>
+<tr class="even">
+<td>soil_model</td>
+<td>str</td>
+<td>Soil model type, by default “linear_elastic”.</td>
+<td><code>'linear_elastic'</code></td>
+</tr>
+<tr class="odd">
+<td>si_units</td>
+<td>bool</td>
+<td>Use SI units, by default True.</td>
+<td><code>True</code></td>
+</tr>
+<tr class="even">
+<td>lite</td>
+<td>bool</td>
+<td>Lite mode, by default False.</td>
+<td><code>False</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes" class="level2 doc-section doc-section-attributes">
+<h2 class="doc-section doc-section-attributes anchored" data-anchor-id="attributes">Attributes</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 11%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>s1</td>
+<td>float</td>
+<td>Sliding displacement at time step 1.</td>
+</tr>
+<tr class="even">
+<td>sdot1</td>
+<td>float</td>
+<td>Sliding velocity at time step 1.</td>
+</tr>
+<tr class="odd">
+<td>sdotdot1</td>
+<td>float</td>
+<td>Sliding acceleration at time step 1.</td>
+</tr>
+<tr class="even">
+<td>s2</td>
+<td>float</td>
+<td>Sliding displacement at time step 2.</td>
+</tr>
+<tr class="odd">
+<td>sdot2</td>
+<td>float</td>
+<td>Sliding velocity at time step 2.</td>
+</tr>
+<tr class="even">
+<td>sdotdot2</td>
+<td>float</td>
+<td>Sliding acceleration at time step 2.</td>
+</tr>
+<tr class="odd">
+<td>u1</td>
+<td>float</td>
+<td>Block displacement at time step 1.</td>
+</tr>
+<tr class="even">
+<td>udot1</td>
+<td>float</td>
+<td>Block velocity at time step 1.</td>
+</tr>
+<tr class="odd">
+<td>udotdot1</td>
+<td>float</td>
+<td>Block acceleration at time step 1.</td>
+</tr>
+<tr class="even">
+<td>u2</td>
+<td>float</td>
+<td>Block displacement at time step 2.</td>
+</tr>
+<tr class="odd">
+<td>udot2</td>
+<td>float</td>
+<td>Block velocity at time step 2.</td>
+</tr>
+<tr class="even">
+<td>udotdot2</td>
+<td>float</td>
+<td>Block acceleration at time step 2.</td>
+</tr>
+<tr class="odd">
+<td>baseacc</td>
+<td>float</td>
+<td>Base acceleration.</td>
+</tr>
+<tr class="even">
+<td>basef</td>
+<td>float</td>
+<td>Base force.</td>
+</tr>
+<tr class="odd">
+<td>acc11</td>
+<td>float</td>
+<td>Acceleration at time step 1.</td>
+</tr>
+<tr class="even">
+<td>acc22</td>
+<td>float</td>
+<td>Acceleration at time step 2.</td>
+</tr>
+<tr class="odd">
+<td>normalf1</td>
+<td>float</td>
+<td>Normal force at time step 1.</td>
+</tr>
+<tr class="even">
+<td>normalf2</td>
+<td>float</td>
+<td>Normal force at time step 2.</td>
+</tr>
+<tr class="odd">
+<td>gameff1</td>
+<td>float</td>
+<td>Effective acceleration at time step 1.</td>
+</tr>
+<tr class="even">
+<td>mx</td>
+<td>float</td>
+<td>Maximum sliding displacement.</td>
+</tr>
+<tr class="odd">
+<td>mx1</td>
+<td>float</td>
+<td>Maximum sliding displacement at time step 1.</td>
+</tr>
+<tr class="even">
+<td>mmax</td>
+<td>float</td>
+<td>Maximum sliding displacement overall.</td>
+</tr>
+<tr class="odd">
+<td>s</td>
+<td>np.ndarray</td>
+<td>Sliding displacement time history.</td>
+</tr>
+<tr class="even">
+<td>u</td>
+<td>np.ndarray</td>
+<td>Block displacement time history.</td>
+</tr>
+<tr class="odd">
+<td>udotdot</td>
+<td>np.ndarray</td>
+<td>Block acceleration time history.</td>
+</tr>
+<tr class="even">
+<td>HEA</td>
+<td>np.ndarray</td>
+<td>Horizontal equivalent acceleration time history from dynamic response.</td>
+</tr>
+<tr class="odd">
+<td>udot</td>
+<td>np.ndarray</td>
+<td>Block velocity time history.</td>
+</tr>
+<tr class="even">
+<td>angle</td>
+<td>float</td>
+<td>Angle of inclination.</td>
+</tr>
+<tr class="odd">
+<td>COS</td>
+<td>float</td>
+<td>Cosine of the angle.</td>
+</tr>
+<tr class="even">
+<td>SIN</td>
+<td>float</td>
+<td>Sine of the angle.</td>
+</tr>
+<tr class="odd">
+<td>gCOS</td>
+<td>float</td>
+<td>Gravitational acceleration component along cosine.</td>
+</tr>
+<tr class="even">
+<td>gSIN</td>
+<td>float</td>
+<td>Gravitational acceleration component along sine.</td>
+</tr>
+<tr class="odd">
+<td>beta</td>
+<td>float</td>
+<td>Integration parameter beta.</td>
+</tr>
+<tr class="even">
+<td>gamma</td>
+<td>float</td>
+<td>Integration parameter gamma.</td>
+</tr>
+<tr class="odd">
+<td>block_acc</td>
+<td>np.ndarray</td>
+<td>Block acceleration time history.</td>
+</tr>
+<tr class="even">
+<td>ground_acc</td>
+<td>np.ndarray</td>
+<td>Ground acceleration time history.</td>
+</tr>
+<tr class="odd">
+<td>max_sliding_disp</td>
+<td>float</td>
+<td>Maximum sliding displacement.</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

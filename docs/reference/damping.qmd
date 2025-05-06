@@ -1,4 +1,0 @@
-# damping { #pyslammer.damping }
-
-`damping`
-

@@ -1,64 +1,53 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: _build
 
-# toc-depth: 3
-
-quartodoc:
-  # the name used to import the package you want to create reference docs for
-  package: pyslammer
-  sidebar: _sidebar.yml
-  sections:
-    - title: "API Reference"
-      desc: "API reference for pySLAMMER"
-      contents:
-        - record
-        - RigidAnalysis
+metadata-files:
+  - api/_sidebar.yml
 
 website:
   title: "pySLAMMER"
   favicon: _static/pySLAMMER_logo_square.svg
-  search: 
-    location: sidebar
-    type: textbox
-
   navbar: 
+    left:
+    - file: index.qmd
+      text: Welcome
+    - file: quickstart.qmd
+      text: Quickstart
+    - file: rigid_flex.qmd
+      text: Examples
+    - file: api/index.qmd
+      text: API Reference
+    - file: verifications/verification.qmd
+      text: Verifications
     title: "pySLAMMER"
-    search: false
+    search: true
     tools:
       - icon: github
         href: "https://github.com/lornearnold/pyslammer"
 
-
-    # sections:
-    #   - title: Some functions
-    #     desc: Functions to inspect docstrings.
-    #     contents:
-    #       # the functions being documented in the package.
-    #       # you can refer to anything: class methods, modules, etc..
-    #       - get_object
-    #       - preview
-
   sidebar:
-    style: "docked"
-    search: true
-    logo: _static/pySLAMMER_logo_square.svg
-    contents: 
-      - text: "Overview"
-        href: index.qmd
-      - text: "Quickstart guide"
-        href: quickstart.qmd
-      - section: "Examples"
-        contents:
-          - rigid_flex.qmd
-          - batch_simulations.qmd
-      - href: reference/index.qmd
-      - section: "Verifications"
-        href: verification.qmd
-        contents:
-          - results_comp_SLAMMER.qmd
-          - performance_comp_SLAMMER.qmd
-          - results_comp_analytical.qmd
+    - id: asdf
+      title: pySLAMMER
+      style: "docked"
+      search: false
+      logo: _static/pySLAMMER_logo_square.svg
+      contents: 
+        - text: "Overview"
+          href: index.qmd
+        - text: "Quickstart guide"
+          href: quickstart.qmd
+        - section: "Examples"
+          contents:
+            - rigid_flex.qmd
+            - batch_simulations.qmd
+        - href: reference/index.qmd
+        - section: "Verifications"
+          href: verification.qmd
+          contents:
+            - comp_SLAMMER_results.qmd
+            - comp_SLAMMER_perf.qmd
+            - comp_analytical.qmd
 
 
 format:
@@ -67,5 +56,18 @@ format:
       - cosmo
     css: styles.css
     toc: true
-    toc-depth: 3
     default-image-extension: svg
+
+quartodoc:
+  # the name used to import the package you want to create reference docs for
+  package: pyslammer
+  dir: api
+  sidebar: api/_sidebar.yml
+  sections:
+    - title: "API Reference"
+      desc: "API reference for pySLAMMER"
+      contents:
+        - SlidingBlockAnalysis
+        - RigidAnalysis
+        - Decoupled
+        - Coupled

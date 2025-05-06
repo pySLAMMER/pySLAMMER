@@ -1,4 +1,0 @@
-# M_TO_CM { #pyslammer.M_TO_CM }
-
-`M_TO_CM`
-

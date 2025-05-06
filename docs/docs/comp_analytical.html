@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>decoupled – pySLAMMER</title>
+<title>comp_analytical – pySLAMMER</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,60 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../_static/pySLAMMER_logo_square.svg" rel="icon" type="image/svg+xml">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-3f13cc09417cf69baaf74afa0e2e3cf6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./comp_SLAMMER_perf.html" rel="prev">
+<link href="./_static/pySLAMMER_logo_square.svg" rel="icon" type="image/svg+xml">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3f13cc09417cf69baaf74afa0e2e3cf6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -102,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -112,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">pySLAMMER</span>
     </a>
   </div>
@@ -126,7 +93,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./verification.html">Verifications</a></li><li class="breadcrumb-item"><a href="./comp_analytical.html">Comparison with analytical solution</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -140,8 +107,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../_static/pySLAMMER_logo_square.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./_static/pySLAMMER_logo_square.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -153,13 +120,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quickstart.html" class="sidebar-item-text sidebar-link">
+  <a href="./quickstart.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Quickstart guide</span></a>
   </div>
 </li>
@@ -174,13 +141,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rigid_flex.html" class="sidebar-item-text sidebar-link">
+  <a href="./rigid_flex.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rigid and Flexible Anlysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../batch_simulations.html" class="sidebar-item-text sidebar-link">
+  <a href="./batch_simulations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Batch Simulations</span></a>
   </div>
 </li>
@@ -188,13 +155,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
+  <a href="./reference/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Function reference</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../verification.html" class="sidebar-item-text sidebar-link">
+            <a href="./verification.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Verifications</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -203,19 +170,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../results_comp_SLAMMER.html" class="sidebar-item-text sidebar-link">
+  <a href="./comp_SLAMMER_results.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Comparison with SLAMMER (results)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../performance_comp_SLAMMER.html" class="sidebar-item-text sidebar-link">
+  <a href="./comp_SLAMMER_perf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Comparison with SLAMMER (speed)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../results_comp_analytical.html" class="sidebar-item-text sidebar-link">
+  <a href="./comp_analytical.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Comparison with analytical solution</span></a>
   </div>
 </li>
@@ -231,310 +198,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#pyslammer.Decoupled" id="toc-pyslammer.Decoupled" class="nav-link active" data-scroll-target="#pyslammer.Decoupled">Decoupled</a>
+  <li><a href="#comparison-with-analytical-solution" id="toc-comparison-with-analytical-solution" class="nav-link active" data-scroll-target="#comparison-with-analytical-solution">Comparison with analytical solution</a>
   <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
+  <li><a href="#analytical-solution" id="toc-analytical-solution" class="nav-link" data-scroll-target="#analytical-solution">Analytical Solution</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./verification.html">Verifications</a></li><li class="breadcrumb-item"><a href="./comp_analytical.html">Comparison with analytical solution</a></li></ol></nav></header>
 
 
 
 
-<section id="pyslammer.Decoupled" class="level1">
-<h1>Decoupled</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Decoupled(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    ky,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    a_in,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    dt,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    height,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    vs_slope,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    vs_base,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    damp_ratio,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    ref_strain,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    scale_factor<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    target_pga<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    soil_model<span class="op">=</span><span class="st">'linear_elastic'</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    si_units<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    lite<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Decoupled analysis for sliding block and ground motion interaction.</p>
-<section id="parameters" class="level2 doc-section doc-section-parameters">
-<h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 51%">
-<col style="width: 30%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ky</td>
-<td>float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable</td>
-<td>Yield acceleration function or constant.</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
-<td>a_in</td>
-<td>list[float] or np.ndarray</td>
-<td>Input acceleration time history.</td>
-<td><em>required</em></td>
-</tr>
-<tr class="odd">
-<td>dt</td>
-<td>float</td>
-<td>Time step of the input acceleration.</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
-<td>height</td>
-<td>int or float</td>
-<td>Height of the sliding block.</td>
-<td><em>required</em></td>
-</tr>
-<tr class="odd">
-<td>vs_slope</td>
-<td>int or float</td>
-<td>Shear wave velocity of the slope.</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
-<td>vs_base</td>
-<td>int or float</td>
-<td>Shear wave velocity of the base.</td>
-<td><em>required</em></td>
-</tr>
-<tr class="odd">
-<td>damp_ratio</td>
-<td>float</td>
-<td>Damping ratio of the sliding block.</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
-<td>ref_strain</td>
-<td>float</td>
-<td>Reference strain for modulus reduction.</td>
-<td><em>required</em></td>
-</tr>
-<tr class="odd">
-<td>scale_factor</td>
-<td>float</td>
-<td>Scale factor for the input acceleration. Default is 1.</td>
-<td><code>1</code></td>
-</tr>
-<tr class="even">
-<td>soil_model</td>
-<td>str</td>
-<td>Soil model type. Default is “linear_elastic”.</td>
-<td><code>'linear_elastic'</code></td>
-</tr>
-<tr class="odd">
-<td>si_units</td>
-<td>bool</td>
-<td>Whether to use SI units. Default is True.</td>
-<td><code>True</code></td>
-</tr>
-<tr class="even">
-<td>lite</td>
-<td>bool</td>
-<td>Whether to use lite mode. Default is False.</td>
-<td><code>False</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="attributes" class="level2 doc-section doc-section-attributes">
-<h2 class="doc-section doc-section-attributes anchored" data-anchor-id="attributes">Attributes</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 17%">
-<col style="width: 27%">
-<col style="width: 55%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>k_y</td>
-<td>callable</td>
-<td>Yield acceleration function.</td>
-</tr>
-<tr class="even">
-<td>a_in</td>
-<td>list[float] or np.ndarray</td>
-<td>Input acceleration time history.</td>
-</tr>
-<tr class="odd">
-<td>dt</td>
-<td>float</td>
-<td>Time step of the input acceleration.</td>
-</tr>
-<tr class="even">
-<td>height</td>
-<td>int or float</td>
-<td>Height of the sliding block.</td>
-</tr>
-<tr class="odd">
-<td>vs_slope</td>
-<td>int or float</td>
-<td>Shear wave velocity of the slope.</td>
-</tr>
-<tr class="even">
-<td>vs_base</td>
-<td>int or float</td>
-<td>Shear wave velocity of the base.</td>
-</tr>
-<tr class="odd">
-<td>damp_ratio</td>
-<td>float</td>
-<td>Damping ratio of the sliding block.</td>
-</tr>
-<tr class="even">
-<td>ref_strain</td>
-<td>float</td>
-<td>Reference strain for modulus reduction.</td>
-</tr>
-<tr class="odd">
-<td>scale_factor</td>
-<td>float</td>
-<td>Scale factor for the input acceleration.</td>
-</tr>
-<tr class="even">
-<td>soil_model</td>
-<td>str</td>
-<td>Soil model type.</td>
-</tr>
-<tr class="odd">
-<td>si_units</td>
-<td>bool</td>
-<td>Whether to use SI units.</td>
-</tr>
-<tr class="even">
-<td>lite</td>
-<td>bool</td>
-<td>Whether to use lite mode.</td>
-</tr>
-<tr class="odd">
-<td>npts</td>
-<td>int</td>
-<td>Number of points in the input acceleration time history.</td>
-</tr>
-<tr class="even">
-<td>g</td>
-<td>float</td>
-<td>Gravitational acceleration.</td>
-</tr>
-<tr class="odd">
-<td>unit_weight</td>
-<td>float</td>
-<td>Unit weight of the sliding block.</td>
-</tr>
-<tr class="even">
-<td>rho</td>
-<td>float</td>
-<td>Density of the sliding block.</td>
-</tr>
-<tr class="odd">
-<td>mass</td>
-<td>float</td>
-<td>Mass of the sliding block.</td>
-</tr>
-<tr class="even">
-<td>max_shear_mod</td>
-<td>float</td>
-<td>Maximum shear modulus of the sliding block.</td>
-</tr>
-<tr class="odd">
-<td>HEA</td>
-<td>np.ndarray</td>
-<td>Horizontal earthquake acceleration.</td>
-</tr>
-<tr class="even">
-<td>block_disp</td>
-<td>np.ndarray</td>
-<td>Displacement of the sliding block.</td>
-</tr>
-<tr class="odd">
-<td>block_vel</td>
-<td>np.ndarray</td>
-<td>Velocity of the sliding block.</td>
-</tr>
-<tr class="even">
-<td>block_acc</td>
-<td>np.ndarray</td>
-<td>Acceleration of the sliding block.</td>
-</tr>
-<tr class="odd">
-<td>x_resp</td>
-<td>np.ndarray</td>
-<td>Response displacement.</td>
-</tr>
-<tr class="even">
-<td>v_resp</td>
-<td>np.ndarray</td>
-<td>Response velocity.</td>
-</tr>
-<tr class="odd">
-<td>a_resp</td>
-<td>np.ndarray</td>
-<td>Response acceleration.</td>
-</tr>
-<tr class="even">
-<td>max_sliding_disp</td>
-<td>float</td>
-<td>Maximum sliding displacement.</td>
-</tr>
-<tr class="odd">
-<td>_slide</td>
-<td>bool</td>
-<td>Whether the block is sliding.</td>
-</tr>
-<tr class="even">
-<td>_vs_slope</td>
-<td>float</td>
-<td>Shear wave velocity of the slope during analysis.</td>
-</tr>
-<tr class="odd">
-<td>_omega</td>
-<td>float</td>
-<td>Angular frequency.</td>
-</tr>
-<tr class="even">
-<td>_damp_imp</td>
-<td>float</td>
-<td>Impedance damping.</td>
-</tr>
-<tr class="odd">
-<td>_damp_tot</td>
-<td>float</td>
-<td>Total damping.</td>
-</tr>
-<tr class="even">
-<td>ground_acc</td>
-<td>np.ndarray</td>
-<td>Ground acceleration.</td>
-</tr>
-</tbody>
-</table>
+<section id="comparison-with-analytical-solution" class="level1">
+<h1>Comparison with analytical solution</h1>
+<p>In addition to comparing to the legacy results from SLAMMER, it is also worth comparing pySLAMMER’s results to analytical solutions to sliding block problems. In this section, we compare pySLAMMER’s calculated sliding displacements for rigid sliding blocks for single cycle harmonic motions of frequencies ranging from 0.5 to 10 Hz to an analytical solution.</p>
+<section id="analytical-solution" class="level2">
+<h2 class="anchored" data-anchor-id="analytical-solution">Analytical Solution</h2>
+<p>Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.</p>
 
 
 </section>
@@ -958,6 +640,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./comp_SLAMMER_perf.html" class="pagination-link" aria-label="Comparison with SLAMMER (speed)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Comparison with SLAMMER (speed)</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

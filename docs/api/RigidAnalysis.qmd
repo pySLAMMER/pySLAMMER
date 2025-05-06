@@ -1,7 +1,15 @@
 # RigidAnalysis { #pyslammer.RigidAnalysis }
 
 ```python
-RigidAnalysis(self, a_in, dt, ky, method='jibson')
+RigidAnalysis(
+    self,
+    ky,
+    a_in,
+    dt,
+    scale_factor=1.0,
+    target_pga=None,
+    method='jibson',
+)
 ```
 
 Rigid Block Analysis

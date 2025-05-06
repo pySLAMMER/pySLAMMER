@@ -1,4 +1,0 @@
-# mrd_testing { #pyslammer.mrd_testing }
-
-`mrd_testing`
-

@@ -74,7 +74,7 @@
     "href": "reference/Decoupled.html",
     "title": "Decoupled",
     "section": "",
-    "text": "Decoupled\nDecoupled(\n    self,\n    ky,\n    a_in,\n    dt,\n    height,\n    vs_slope,\n    vs_base,\n    damp_ratio,\n    ref_strain,\n    scale_factor=1,\n    soil_model='linear_elastic',\n    si_units=True,\n    lite=False,\n)"
+    "text": "Decoupled(\n    self,\n    ky,\n    a_in,\n    dt,\n    height,\n    vs_slope,\n    vs_base,\n    damp_ratio,\n    ref_strain,\n    scale_factor=1,\n    target_pga=None,\n    soil_model='linear_elastic',\n    si_units=True,\n    lite=False,\n)\nDecoupled analysis for sliding block and ground motion interaction.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nky\nfloat or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable\nYield acceleration function or constant.\nrequired\n\n\na_in\nlist[float] or np.ndarray\nInput acceleration time history.\nrequired\n\n\ndt\nfloat\nTime step of the input acceleration.\nrequired\n\n\nheight\nint or float\nHeight of the sliding block.\nrequired\n\n\nvs_slope\nint or float\nShear wave velocity of the slope.\nrequired\n\n\nvs_base\nint or float\nShear wave velocity of the base.\nrequired\n\n\ndamp_ratio\nfloat\nDamping ratio of the sliding block.\nrequired\n\n\nref_strain\nfloat\nReference strain for modulus reduction.\nrequired\n\n\nscale_factor\nfloat\nScale factor for the input acceleration. Default is 1.\n1\n\n\nsoil_model\nstr\nSoil model type. Default is “linear_elastic”.\n'linear_elastic'\n\n\nsi_units\nbool\nWhether to use SI units. Default is True.\nTrue\n\n\nlite\nbool\nWhether to use lite mode. Default is False.\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nk_y\ncallable\nYield acceleration function.\n\n\na_in\nlist[float] or np.ndarray\nInput acceleration time history.\n\n\ndt\nfloat\nTime step of the input acceleration.\n\n\nheight\nint or float\nHeight of the sliding block.\n\n\nvs_slope\nint or float\nShear wave velocity of the slope.\n\n\nvs_base\nint or float\nShear wave velocity of the base.\n\n\ndamp_ratio\nfloat\nDamping ratio of the sliding block.\n\n\nref_strain\nfloat\nReference strain for modulus reduction.\n\n\nscale_factor\nfloat\nScale factor for the input acceleration.\n\n\nsoil_model\nstr\nSoil model type.\n\n\nsi_units\nbool\nWhether to use SI units.\n\n\nlite\nbool\nWhether to use lite mode.\n\n\nnpts\nint\nNumber of points in the input acceleration time history.\n\n\ng\nfloat\nGravitational acceleration.\n\n\nunit_weight\nfloat\nUnit weight of the sliding block.\n\n\nrho\nfloat\nDensity of the sliding block.\n\n\nmass\nfloat\nMass of the sliding block.\n\n\nmax_shear_mod\nfloat\nMaximum shear modulus of the sliding block.\n\n\nHEA\nnp.ndarray\nHorizontal earthquake acceleration.\n\n\nblock_disp\nnp.ndarray\nDisplacement of the sliding block.\n\n\nblock_vel\nnp.ndarray\nVelocity of the sliding block.\n\n\nblock_acc\nnp.ndarray\nAcceleration of the sliding block.\n\n\nx_resp\nnp.ndarray\nResponse displacement.\n\n\nv_resp\nnp.ndarray\nResponse velocity.\n\n\na_resp\nnp.ndarray\nResponse acceleration.\n\n\nmax_sliding_disp\nfloat\nMaximum sliding displacement.\n\n\n_slide\nbool\nWhether the block is sliding.\n\n\n_vs_slope\nfloat\nShear wave velocity of the slope during analysis.\n\n\n_omega\nfloat\nAngular frequency.\n\n\n_damp_imp\nfloat\nImpedance damping.\n\n\n_damp_tot\nfloat\nTotal damping.\n\n\nground_acc\nnp.ndarray\nGround acceleration."
   },
   {
     "objectID": "reference/BETA.html",
@@ -340,7 +340,7 @@
     "href": "reference/RigidAnalysis.html",
     "title": "RigidAnalysis",
     "section": "",
-    "text": "RigidAnalysis(self, a_in, dt, ky, method='jibson')\nRigid Block Analysis\n\n\n\n\n\nName\nDescription\n\n\n\n\njibson\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\n\n\n\nRigidAnalysis.jibson()\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method."
+    "text": "RigidAnalysis(\n    self,\n    ky,\n    a_in,\n    dt,\n    scale_factor=1.0,\n    target_pga=None,\n    method='jibson',\n)\nRigid Block Analysis\n\n\n\n\n\nName\nDescription\n\n\n\n\njibson\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.\n\n\n\n\n\nRigidAnalysis.jibson()\nCalculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method."
   },
   {
     "objectID": "reference/RigidAnalysis.html#methods",
@@ -361,14 +361,14 @@
     "href": "reference/Coupled.html",
     "title": "Coupled",
     "section": "",
-    "text": "Coupled\nCoupled(\n    self,\n    ky,\n    a_in,\n    dt,\n    height,\n    vs_slope,\n    vs_base,\n    damp_ratio,\n    ref_strain,\n    scale_factor=1,\n    soil_model='linear_elastic',\n    si_units=True,\n    lite=False,\n)"
+    "text": "Coupled(\n    self,\n    ky,\n    a_in,\n    dt,\n    height,\n    vs_slope,\n    vs_base,\n    damp_ratio,\n    ref_strain,\n    scale_factor=1,\n    target_pga=None,\n    soil_model='linear_elastic',\n    si_units=True,\n    lite=False,\n)\nCoupled analysis for sliding block and ground motion interaction.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nky\nfloat or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable\nYield acceleration or function defining yield acceleration.\nrequired\n\n\na_in\nlist[float] or np.ndarray\nInput acceleration time history.\nrequired\n\n\ndt\nfloat\nTime step of the input acceleration.\nrequired\n\n\nheight\nint or float\nHeight of the sliding block.\nrequired\n\n\nvs_slope\nint or float\nShear wave velocity slope.\nrequired\n\n\nvs_base\nint or float\nBase shear wave velocity.\nrequired\n\n\ndamp_ratio\nfloat\nDamping ratio.\nrequired\n\n\nref_strain\nfloat\nReference strain.\nrequired\n\n\nscale_factor\nfloat\nScale factor for input acceleration, by default 1.\n1\n\n\nsoil_model\nstr\nSoil model type, by default “linear_elastic”.\n'linear_elastic'\n\n\nsi_units\nbool\nUse SI units, by default True.\nTrue\n\n\nlite\nbool\nLite mode, by default False.\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\ns1\nfloat\nSliding displacement at time step 1.\n\n\nsdot1\nfloat\nSliding velocity at time step 1.\n\n\nsdotdot1\nfloat\nSliding acceleration at time step 1.\n\n\ns2\nfloat\nSliding displacement at time step 2.\n\n\nsdot2\nfloat\nSliding velocity at time step 2.\n\n\nsdotdot2\nfloat\nSliding acceleration at time step 2.\n\n\nu1\nfloat\nBlock displacement at time step 1.\n\n\nudot1\nfloat\nBlock velocity at time step 1.\n\n\nudotdot1\nfloat\nBlock acceleration at time step 1.\n\n\nu2\nfloat\nBlock displacement at time step 2.\n\n\nudot2\nfloat\nBlock velocity at time step 2.\n\n\nudotdot2\nfloat\nBlock acceleration at time step 2.\n\n\nbaseacc\nfloat\nBase acceleration.\n\n\nbasef\nfloat\nBase force.\n\n\nacc11\nfloat\nAcceleration at time step 1.\n\n\nacc22\nfloat\nAcceleration at time step 2.\n\n\nnormalf1\nfloat\nNormal force at time step 1.\n\n\nnormalf2\nfloat\nNormal force at time step 2.\n\n\ngameff1\nfloat\nEffective acceleration at time step 1.\n\n\nmx\nfloat\nMaximum sliding displacement.\n\n\nmx1\nfloat\nMaximum sliding displacement at time step 1.\n\n\nmmax\nfloat\nMaximum sliding displacement overall.\n\n\ns\nnp.ndarray\nSliding displacement time history.\n\n\nu\nnp.ndarray\nBlock displacement time history.\n\n\nudotdot\nnp.ndarray\nBlock acceleration time history.\n\n\nHEA\nnp.ndarray\nHorizontal equivalent acceleration time history from dynamic response.\n\n\nudot\nnp.ndarray\nBlock velocity time history.\n\n\nangle\nfloat\nAngle of inclination.\n\n\nCOS\nfloat\nCosine of the angle.\n\n\nSIN\nfloat\nSine of the angle.\n\n\ngCOS\nfloat\nGravitational acceleration component along cosine.\n\n\ngSIN\nfloat\nGravitational acceleration component along sine.\n\n\nbeta\nfloat\nIntegration parameter beta.\n\n\ngamma\nfloat\nIntegration parameter gamma.\n\n\nblock_acc\nnp.ndarray\nBlock acceleration time history.\n\n\nground_acc\nnp.ndarray\nGround acceleration time history.\n\n\nmax_sliding_disp\nfloat\nMaximum sliding displacement."
   },
   {
     "objectID": "reference/SlidingBlockAnalysis.html",
     "href": "reference/SlidingBlockAnalysis.html",
     "title": "SlidingBlockAnalysis",
     "section": "",
-    "text": "SlidingBlockAnalysis\nSlidingBlockAnalysis(self)"
+    "text": "SlidingBlockAnalysis(self, ky, a_in, dt, scale_factor=1.0, target_pga=None)\nBase class for all time-domain sliding block analyses.\n\n\n\n\n\nName\nDescription\n\n\n\n\nsliding_block_plot\nPlot the analysis result as a 3-by-1 array of time series figures.\n\n\n\n\n\nSlidingBlockAnalysis.sliding_block_plot(sliding_vel_mode=True, fig=None)\nPlot the analysis result as a 3-by-1 array of time series figures. From top to bottom, the figures contain: acceleration, velocity, and displacement signals. By default, the acceleration figure shows the input acceleration and the block acceleration. The velocity figure shows the sliding (i.e., relative to the input motion) velocity of the block. If desired, sliding_vel_mode can be set to False to display the absolute velocity of the input motion and the block. The displacement figure shows the relative displacement of the block to the base."
   },
   {
     "objectID": "reference/input_acc.html",
@@ -408,11 +408,11 @@
   {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
-    "title": "API Reference",
+    "title": "Function reference",
     "section": "",
-    "text": "API Reference\nAPI reference for pySLAMMER\n\n\n\nrecord\n\n\n\nRigidAnalysis\nRigid Block Analysis",
+    "text": "API reference for pySLAMMER\n\n\n\nSlidingBlockAnalysis\nBase class for all time-domain sliding block analyses.\n\n\nRigidAnalysis\nRigid Block Analysis\n\n\nDecoupled\nDecoupled analysis for sliding block and ground motion interaction.\n\n\nCoupled\nCoupled analysis for sliding block and ground motion interaction.",
     "crumbs": [
-      "API Reference"
+      "Function reference"
     ]
   },
   {
@@ -420,9 +420,8 @@
     "href": "reference/index.html#api-reference",
     "title": "Function reference",
     "section": "",
-    "text": "API reference for pySLAMMER\n\n\n\nrecord\n\n\n\nRigidAnalysis\nRigid Block Analysis",
+    "text": "API reference for pySLAMMER\n\n\n\nSlidingBlockAnalysis\nBase class for all time-domain sliding block analyses.\n\n\nRigidAnalysis\nRigid Block Analysis\n\n\nDecoupled\nDecoupled analysis for sliding block and ground motion interaction.\n\n\nCoupled\nCoupled analysis for sliding block and ground motion interaction.",
     "crumbs": [
-      "API reference",
       "Function reference"
     ]
   },
@@ -665,5 +664,150 @@
     "title": "Ground motions",
     "section": "",
     "text": "Ground motions\nInsert details of the ground motion suite."
+  },
+  {
+    "objectID": "reference/Decoupled.html#parameters",
+    "href": "reference/Decoupled.html#parameters",
+    "title": "Decoupled",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\nky\nfloat or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable\nYield acceleration function or constant.\nrequired\n\n\na_in\nlist[float] or np.ndarray\nInput acceleration time history.\nrequired\n\n\ndt\nfloat\nTime step of the input acceleration.\nrequired\n\n\nheight\nint or float\nHeight of the sliding block.\nrequired\n\n\nvs_slope\nint or float\nShear wave velocity of the slope.\nrequired\n\n\nvs_base\nint or float\nShear wave velocity of the base.\nrequired\n\n\ndamp_ratio\nfloat\nDamping ratio of the sliding block.\nrequired\n\n\nref_strain\nfloat\nReference strain for modulus reduction.\nrequired\n\n\nscale_factor\nfloat\nScale factor for the input acceleration. Default is 1.\n1\n\n\nsoil_model\nstr\nSoil model type. Default is “linear_elastic”.\n'linear_elastic'\n\n\nsi_units\nbool\nWhether to use SI units. Default is True.\nTrue\n\n\nlite\nbool\nWhether to use lite mode. Default is False.\nFalse"
+  },
+  {
+    "objectID": "reference/Decoupled.html#attributes",
+    "href": "reference/Decoupled.html#attributes",
+    "title": "Decoupled",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\nk_y\ncallable\nYield acceleration function.\n\n\na_in\nlist[float] or np.ndarray\nInput acceleration time history.\n\n\ndt\nfloat\nTime step of the input acceleration.\n\n\nheight\nint or float\nHeight of the sliding block.\n\n\nvs_slope\nint or float\nShear wave velocity of the slope.\n\n\nvs_base\nint or float\nShear wave velocity of the base.\n\n\ndamp_ratio\nfloat\nDamping ratio of the sliding block.\n\n\nref_strain\nfloat\nReference strain for modulus reduction.\n\n\nscale_factor\nfloat\nScale factor for the input acceleration.\n\n\nsoil_model\nstr\nSoil model type.\n\n\nsi_units\nbool\nWhether to use SI units.\n\n\nlite\nbool\nWhether to use lite mode.\n\n\nnpts\nint\nNumber of points in the input acceleration time history.\n\n\ng\nfloat\nGravitational acceleration.\n\n\nunit_weight\nfloat\nUnit weight of the sliding block.\n\n\nrho\nfloat\nDensity of the sliding block.\n\n\nmass\nfloat\nMass of the sliding block.\n\n\nmax_shear_mod\nfloat\nMaximum shear modulus of the sliding block.\n\n\nHEA\nnp.ndarray\nHorizontal earthquake acceleration.\n\n\nblock_disp\nnp.ndarray\nDisplacement of the sliding block.\n\n\nblock_vel\nnp.ndarray\nVelocity of the sliding block.\n\n\nblock_acc\nnp.ndarray\nAcceleration of the sliding block.\n\n\nx_resp\nnp.ndarray\nResponse displacement.\n\n\nv_resp\nnp.ndarray\nResponse velocity.\n\n\na_resp\nnp.ndarray\nResponse acceleration.\n\n\nmax_sliding_disp\nfloat\nMaximum sliding displacement.\n\n\n_slide\nbool\nWhether the block is sliding.\n\n\n_vs_slope\nfloat\nShear wave velocity of the slope during analysis.\n\n\n_omega\nfloat\nAngular frequency.\n\n\n_damp_imp\nfloat\nImpedance damping.\n\n\n_damp_tot\nfloat\nTotal damping.\n\n\nground_acc\nnp.ndarray\nGround acceleration."
+  },
+  {
+    "objectID": "reference/SlidingBlockAnalysis.html#methods",
+    "href": "reference/SlidingBlockAnalysis.html#methods",
+    "title": "SlidingBlockAnalysis",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\nsliding_block_plot\nPlot the analysis result as a 3-by-1 array of time series figures.\n\n\n\n\n\nSlidingBlockAnalysis.sliding_block_plot(sliding_vel_mode=True, fig=None)\nPlot the analysis result as a 3-by-1 array of time series figures. From top to bottom, the figures contain: acceleration, velocity, and displacement signals. By default, the acceleration figure shows the input acceleration and the block acceleration. The velocity figure shows the sliding (i.e., relative to the input motion) velocity of the block. If desired, sliding_vel_mode can be set to False to display the absolute velocity of the input motion and the block. The displacement figure shows the relative displacement of the block to the base."
+  },
+  {
+    "objectID": "reference/Coupled.html#parameters",
+    "href": "reference/Coupled.html#parameters",
+    "title": "Coupled",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\nky\nfloat or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable\nYield acceleration or function defining yield acceleration.\nrequired\n\n\na_in\nlist[float] or np.ndarray\nInput acceleration time history.\nrequired\n\n\ndt\nfloat\nTime step of the input acceleration.\nrequired\n\n\nheight\nint or float\nHeight of the sliding block.\nrequired\n\n\nvs_slope\nint or float\nShear wave velocity slope.\nrequired\n\n\nvs_base\nint or float\nBase shear wave velocity.\nrequired\n\n\ndamp_ratio\nfloat\nDamping ratio.\nrequired\n\n\nref_strain\nfloat\nReference strain.\nrequired\n\n\nscale_factor\nfloat\nScale factor for input acceleration, by default 1.\n1\n\n\nsoil_model\nstr\nSoil model type, by default “linear_elastic”.\n'linear_elastic'\n\n\nsi_units\nbool\nUse SI units, by default True.\nTrue\n\n\nlite\nbool\nLite mode, by default False.\nFalse"
+  },
+  {
+    "objectID": "reference/Coupled.html#attributes",
+    "href": "reference/Coupled.html#attributes",
+    "title": "Coupled",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\ns1\nfloat\nSliding displacement at time step 1.\n\n\nsdot1\nfloat\nSliding velocity at time step 1.\n\n\nsdotdot1\nfloat\nSliding acceleration at time step 1.\n\n\ns2\nfloat\nSliding displacement at time step 2.\n\n\nsdot2\nfloat\nSliding velocity at time step 2.\n\n\nsdotdot2\nfloat\nSliding acceleration at time step 2.\n\n\nu1\nfloat\nBlock displacement at time step 1.\n\n\nudot1\nfloat\nBlock velocity at time step 1.\n\n\nudotdot1\nfloat\nBlock acceleration at time step 1.\n\n\nu2\nfloat\nBlock displacement at time step 2.\n\n\nudot2\nfloat\nBlock velocity at time step 2.\n\n\nudotdot2\nfloat\nBlock acceleration at time step 2.\n\n\nbaseacc\nfloat\nBase acceleration.\n\n\nbasef\nfloat\nBase force.\n\n\nacc11\nfloat\nAcceleration at time step 1.\n\n\nacc22\nfloat\nAcceleration at time step 2.\n\n\nnormalf1\nfloat\nNormal force at time step 1.\n\n\nnormalf2\nfloat\nNormal force at time step 2.\n\n\ngameff1\nfloat\nEffective acceleration at time step 1.\n\n\nmx\nfloat\nMaximum sliding displacement.\n\n\nmx1\nfloat\nMaximum sliding displacement at time step 1.\n\n\nmmax\nfloat\nMaximum sliding displacement overall.\n\n\ns\nnp.ndarray\nSliding displacement time history.\n\n\nu\nnp.ndarray\nBlock displacement time history.\n\n\nudotdot\nnp.ndarray\nBlock acceleration time history.\n\n\nHEA\nnp.ndarray\nHorizontal equivalent acceleration time history from dynamic response.\n\n\nudot\nnp.ndarray\nBlock velocity time history.\n\n\nangle\nfloat\nAngle of inclination.\n\n\nCOS\nfloat\nCosine of the angle.\n\n\nSIN\nfloat\nSine of the angle.\n\n\ngCOS\nfloat\nGravitational acceleration component along cosine.\n\n\ngSIN\nfloat\nGravitational acceleration component along sine.\n\n\nbeta\nfloat\nIntegration parameter beta.\n\n\ngamma\nfloat\nIntegration parameter gamma.\n\n\nblock_acc\nnp.ndarray\nBlock acceleration time history.\n\n\nground_acc\nnp.ndarray\nGround acceleration time history.\n\n\nmax_sliding_disp\nfloat\nMaximum sliding displacement."
+  },
+  {
+    "objectID": "comp_SLAMMER_results.html",
+    "href": "comp_SLAMMER_results.html",
+    "title": "Comparison with SLAMMER (results)",
+    "section": "",
+    "text": "PySLAMMER’s rigid, decoupled, and coupled analysis methods are intended to produce sliding block analysis results that match the legacy SLAMMER results. This is an important feature for sliding block displacements, which are used as a performance index (as opposed to providing a direct prediction of actual slope displacement) in practice. Equivalence with legacy results allows new results to be interpreted with reference to historical analyses and experience.",
+    "crumbs": [
+      "Verifications",
+      "Comparison with SLAMMER (results)"
+    ]
+  },
+  {
+    "objectID": "comp_SLAMMER_results.html#approach",
+    "href": "comp_SLAMMER_results.html#approach",
+    "title": "Comparison with SLAMMER (results)",
+    "section": "Approach",
+    "text": "Approach\nTo demonstrate pySLAMMER’s equivalence to SLAMMER, we performed several sliding block analyses across a broad parametric space. The three main categories of parameters studied were ground motion, analysis method, and analysis options.\n\nGround motion\nWe used the motions from pySLAMMER’s built-in sample ground motion suite at several scales to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). The acceleration response spectra for the input motion suite are shown in Figure 1. Additional details on the ground motions are provided on the ground motion suite page.\n\n\nCode\n# Navigate to ground motion suite response spectra files\ncurrent_dir = os.getcwd()\nfolder_path = Path(current_dir).resolve().parents[0] / \"tests\" / \"pySLAMMER_suite_resp\"\ncsv_files = list(folder_path.glob(\"*.csv\"))\n\n# Read each CSV file into a DataFrame and store them in a list\nfreq_index = 0\nresp_index = 1\nspectra = {}\nfor csv_file in csv_files:\n    data = np.loadtxt(csv_file, delimiter=\",\", skiprows=2)\n    # convert response from cm/s^2 to g's\n    data[:, resp_index] = data[:, resp_index] / 981\n    spectra[csv_file.name.strip(\".csv\")] = data\n\n# Initialize the plot\nfig, ax = plt.subplots()\nax.set_prop_cycle(cycler(color=plt.cm.tab20.colors))\nfor motion in spectra:\n    ax.plot(\n        1/spectra[motion][:, freq_index],\n        spectra[motion][:, resp_index],\n        label=motion,\n        linewidth=0.5,\n    )\n\nax.text(0.012, 2.75, \"5% damping\")\n# Add labels, legend, and grid\nax.set_xlabel(\"Period (s)\")\nax.set_ylabel(\"Spectral Acceleration (g)\")\nax.set_title(\"Response Spectra\")\nax.set_xscale(\"log\")\nax.set_ylim(0,3)\nax.set_xlim(0.01,100)\n\nax.legend(\n    loc=\"center left\", \n    bbox_to_anchor=(0.6, 0.6), \n    fontsize=\"x-small\", \n    title=\"Ground Motion\", \n    title_fontsize=\"medium\",\n    frameon=False\n)\n\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1: Acceleration response spectra for input ground motions\n\n\n\n\n\n\n\nAnalysis methods\nThe three rigorous analysis methods that SLAMMER performs are the Rigid, Decoupled, and Coupled methods. Each of these methods, which are briefly described below, are implemented in pySLAMMER and included in this comparison.\n\nRigid Block Analysis\n\nConceptualized by Whitman in 1963 and further developed by Newmark in 1965 (Marcuson (1994), Newmark (1965)), rigid block analysis models a potential landslide mass as a rigid mass on an inclined plane base with a perfectly plastic frictional interface. The rigid block motion matches the base motion exactly until the acceleration of the base exceeds some critical value (the yield acceleration, \\(k_y\\)). Once this critical \\(k_y\\) value is reached, the block’s acceleration remains constant \\(k_y\\), resulting in relative velocity and displacement between block and base. The relative velocity is calculated by integrating the difference between the block and base accelerations. The displacement accumulated by the block moving down the ramp is calculated by integrating the relative velocity. Sliding stops (i.e., block motion again matches base motion exactly) when the relative velocity reaches zero.\n\nDecoupled Analysis\n\nLandslide materials are, of course, not rigid. Except for very shallow, stiff slide masses, the rigid block model does a poor job of approximating the dynamics of a co-seismic landslide system. The decoupled method was developed to provide some way of accounting for the deformation of the slope mass due to shaking (Seed and Martin (1966), Makdisi and Seed (1978)) . It consists of two distinct (or decoupled, if you will) calculations: dynamic response and rigid sliding. During the dynamic response phase, the possibility of sliding is ignored while the slope response to strong ground motion is calculated. The average internal acceleration of the slope mass during this first phase is then used as the base input acceleration for the second phase (rigid sliding) which is simply a rigid block analysis.\n\nCoupled Analysis\n\nAs indicated by the name, coupled analysis takes the two separate calculations from the decoupled analysis and performs them simultaneously. Chopra and Zhang (1991) introduced a model for earthquake-induced sliding of concrete gravity dams that considered the dynamic response of the dam during sliding. Rathje and Bray (1999) modified the procedure and applied it to earth structures. With coupled sliding, the sliding mass’s dynamic response is calculated for both sliding and non-sliding conditions. Sliding stops when the relative velocity of the sliding mass reaches zero. The stop of sliding can introduce an abrupt change in acceleration applied to the sliding mass. Because the dynamic response is being calculated continually through the analysis, the approach to identifying the timing of these abrupt changes will affect potential subsequent sliding events.\n\nDynamic Response\n\nThe Decoupled and Coupled methods both require the calculation of the slope’s dynamic response. The two methods for dynamic response in SLAMMER, which have been carried over to pySLAMMER are linear elastic and equivalent linear.\n\n\n\n\nAnalysis options\nSLAMMER allows users to include a constant \\(k_y\\) value or a variable \\(k_y\\) that changes with accumulated sliding displacement. The \\(k_y\\) – displacement relationship is stepwise with a table of paired values. This feature provides a rough means of approximating post-peak residual strength. 1\n1 pySLAMMER includes additional options for variable yield acceleration, but only stepwise variation is applicable to comparison with SLAMMERThe dynamic response of the system (applicable to decoupled and coupled analyses) is calculated using either linear elastic or equivalent linear assumptions. The minimum input parameters needed for the linear elastic analyses are a damping ration, the slope height, and the shear wave velocity of the material above and below the slip surface. For equivalent linear analysis, a reference strain parameter is also needed. Although not explicitly documented, inspection of the SLAMMER source code uses Darendeli (2001) modulus reduction and damping curves with a curvature coefficient of 1.\nSeparate entries for the shear wave velocity of the material above and below the slip surface (\\(V_s\\) and \\(V_b\\), respectively) are used to introduce an equivalent foundation radiation damping into the viscous material damping as described by Lee (2004). This happens behind the scenes in SLAMMER by default and cannot be turned off. 2\n2 If lower total damping than the equivalent foundation radiation damping is needed for some reason (e.g., for comparison with published analyses that did not include this damping mechanism) both SLAMMER and pySLAMMER accept negative values for damping ratio, which can be used to offset the damping applied by the foundation radiation damping.Table 1 shows the analysis options and ranges of input values used in the group of simulations used to compare pySLAMMER to\n\n\nCode\nkykmax = [0.05, 1.0]\ntmts = [0.1, 10.0]\nheight = [0.1, 100]\nvs =  [200, 1200]\nvsvb =  [0.1, 100]\ndamp =  [5, 25]\nref_str =  [1, 10]\n\nparams = {\n    \"param\": [\n        \"Methods\",\n        \"Dynamic Resp.\",\n        \"ky/kmax\",\n        \"Tm/Tx *\",\n        \"Slope height (m) *\",\n        \"Slope shear wave vel., Vs (m/s) *\",\n        \"Vs/Vb *\",\n        \"Damping (%) *\",\n        \"Reference strain (%) **\"\n    ],\n    \"val\": [\n        \"Rigid, Decoupled, Coupled\",\n        \"Linear elastic, Equivalent linear\",\n        f\"{kykmax[0]} to {kykmax[1]}\",\n        f\"{tmts[0]} to {tmts[1]}\",\n        f\"{height[0]} to {height[1]}\",\n        f\"{vs[0]} to {vs[1]}\",\n        f\"{vsvb[0]} to {vsvb[1]}\",\n        f\"{damp[0]} to {damp[1]}\",\n        f\"{ref_str[0]} to {ref_str[1]}\"\n    ]\n}\n\n# * only applicable to Decoupled and Coupled methods\n# ** only applicable to equivalent linear dynamic response\n\ntbl = (\n    GT(pd.DataFrame(params))\n    .cols_label(\n    param=html(\"Parameter\"),\n    val=html(\"Range / Options used\")\n    )\n    .cols_align(align=\"center\", columns=1)\n    .tab_source_note(\"* Only applies to Decouled and Coupled analyses\") \n    .tab_source_note(\"** Only applies to equivalent linear analyses\")\n)\ntbl\n\n\n\n\nTable 1: Sliding block parameters used for pySLAMMER to SLAMMER comparison analyses.\n\n\n\n\n\n\n\n\n\nParameter\nRange / Options used\n\n\n\n\nMethods\nRigid, Decoupled, Coupled\n\n\nDynamic Resp.\nLinear elastic, Equivalent linear\n\n\nky/kmax\n0.05 to 1.0\n\n\nTm/Tx *\n0.1 to 10.0\n\n\nSlope height (m) *\n0.1 to 100\n\n\nSlope shear wave vel., Vs (m/s) *\n200 to 1200\n\n\nVs/Vb *\n0.1 to 100\n\n\nDamping (%) *\n5 to 25\n\n\nReference strain (%) **\n1 to 10\n\n\n\n* Only applies to Decouled and Coupled analyses\n\n\n** Only applies to equivalent linear analyses",
+    "crumbs": [
+      "Verifications",
+      "Comparison with SLAMMER (results)"
+    ]
+  },
+  {
+    "objectID": "comp_SLAMMER_results.html#results",
+    "href": "comp_SLAMMER_results.html#results",
+    "title": "Comparison with SLAMMER (results)",
+    "section": "Results",
+    "text": "Results\nThe results of the simulations across the parametric space described in Table 1 show excellent agreement between pySLAMMER and SLAMMER. When viewed at a linear scale, the results seem to show complete agreement (see Figure 2). However, due to minor numerical differences and orders of operations between the two codes, some non-zero numerical differences should be expected.\n\n\nCode\n# Navigate to ground motion suite response spectra files\ncurrent_dir = os.getcwd()\ndata_path = Path(current_dir).resolve().parents[0] / \"tests\" / \"SLAMMER_results.xlsx\"\n\ndf = import_verification_data(data_path)\ndf[\"kykmax\"] = df[\"ky (g)\"] / df[\"kmax (g)\"]\n\ndfp = df[df[\"kykmax\"] &lt; 1.0]\n\n############\n# pySLAMMER v. SLAMMER\n############\nfig, ax = plt.subplots()\ncmap = plt.cm.viridis  \n\n# Match color values to kykmax values\ncolor_values = dfp[\"kykmax\"] \n\n# Scatter plot with color mapping\nscatter = ax.scatter(\n    dfp[\"SLAMMER\"],  # x-axis values\n    dfp[\"pySLAMMER\"],  # y-axis values\n    c=color_values,  # Numeric values for coloring\n    cmap=cmap,  # Colormap\n    alpha=0.5,  # Transparency\n    marker=\".\",\n)\n\n# Add colorbar\ncbar = plt.colorbar(scatter, ax=ax, alpha=1)\ncbar.set_label(\"Yield Ratio ($k_y/k_{max}$)\")  # Label for the colorbar\n\n\nax.set_xlim(0, 1000)\nax.set_ylim(0, 1000)\n\nplt.grid()\n\nax.set_xlabel(\"SLAMMER displacement (cm)\")\nax.set_ylabel(\"pySLAMMER displacement (cm)\")\nplt.show()\n\n\n\n\n\n\n\n\nFigure 2: Linear scale comparison of pySLAMMER and SLAMMER analysis results. At this scale, the differences are too small to be distinguished visually.\n\n\n\n\n\nViewed on a log-log scale, the numerical differences become become visible for analyses with sub-centimeter sliding displacements (Figure 3). In practice, sub-centimeter sliding block displacements are not typically considered significant and the error magnitudes present at this scale are beyond the level of precision that sliding block results are interpreted at.\n\n\nCode\nax.set_xscale(\"log\")\nax.set_yscale(\"log\")\nax.set_xlim(1e-3, 1e3)\nax.set_ylim(1e-3, 1e3)\n\nfig\n\n\n\n\n\n\n\n\nFigure 3: Log-log scale comparison of pySLAMMER and SLAMMER analysis results. At this scale, the small differences become visible. Nevertheless, the match between the two is excellent in the range of engineering interest.\n\n\n\n\n\nThe numerical error magnitudes that are visibile in Figure 3 are quantified in Table 2, which summarizes the fit of pySLAMMER to SLAMMER sliding block displacement results over different ranges of predicted displacement. The linear regression parameters in Table 2 show how well a straigt line fit would match the data set over discrete ranges of predicted displacements. Within each displacment range, the 95th percentile error 3 is also reported.\n3 95 percent of all simulations in the range had errors less than this.\n\nCode\nscales = [0.001, 0.01, 0.1, 1, 10, 100 ,1000]\ninterest = [\"no\", \"no\", \"yes\", \"yes\", \"yes\", \"yes\"]\nmatch_quality = [\"moderate\", \"very good\", \"excellent\", \"excellent\", \"excellent\", \"excellent\"]\ncomp = {\n    \"Range\": [],\n    \"Engineering\\nInterest\": [],\n    \"Computation\\nMatch\": [],\n    \"error_95\": [],\n    \"Slope\": [],\n    \"Intercept\": [],\n    \"R_sq\": []\n}\n\nfor i in range(len(scales)-1):\n    segment = dfp[\n        (dfp[\"SLAMMER\"] &gt; scales[i])\n        & (dfp[\"SLAMMER\"] &lt; scales[i+1])\n    ]\n    slope, intercept, r, p, se = ssmstat.linregress(\n        segment[\"SLAMMER\"],\n        segment[\"pySLAMMER\"],\n    )\n    comp[\"Range\"].append(f\"{scales[i]} to {scales[i+1]}\")\n    comp[\"Engineering\\nInterest\"].append(interest[i])\n    comp[\"error_95\"].append(f\"{np.percentile(\n        abs(segment[\"pySLAMMER\"] - segment[\"SLAMMER\"]),\n        95):.2f}\")\n    comp[\"Slope\"].append(f\"{slope:.2f}\")\n    comp[\"Intercept\"].append(f\"{intercept:.2f}\")\n    comp[\"R_sq\"].append(f\"{r**2:.2f}\")\n    comp[\"Computation\\nMatch\"].append(match_quality[i])\n    \n\ntbl = (\n    GT(pd.DataFrame(comp))\n    .tab_spanner(\n    label=\"Linear Regression Parameters\",\n    columns=[\"Slope\",\"Intercept\",\"R_sq\"]\n    )\n    .cols_label(\n    Range=html(\"Displacement Range&lt;br&gt;(cm)\"),\n    Intercept=html(\"Intercept&lt;br&gt;(cm)\"),\n    R_sq=html(\"R&lt;sup&gt;2&lt;/sup&gt;\"),\n    error_95=html(\"95&lt;sup&gt;th&lt;/sup&gt; percentile error&lt;br&gt;(cm)\")\n\n    )\n)\ntbl\n\n\n\n\nTable 2: Comparison of pySLAMMER-SLAMMER results agreement by order of displacement magnitude.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDisplacement Range\n(cm)\nEngineering Interest\nComputation Match\n95th percentile error\n(cm)\nLinear Regression Parameters\n\n\nSlope\nIntercept\n(cm)\nR2\n\n\n\n\n0.001 to 0.01\nno\nmoderate\n0.01\n1.06\n0.00\n0.54\n\n\n0.01 to 0.1\nno\nvery good\n0.01\n1.00\n0.00\n0.99\n\n\n0.1 to 1\nyes\nexcellent\n0.02\n1.00\n0.00\n1.00\n\n\n1 to 10\nyes\nexcellent\n0.07\n1.00\n0.00\n1.00\n\n\n10 to 100\nyes\nexcellent\n0.27\n1.00\n0.00\n1.00\n\n\n100 to 1000\nyes\nexcellent\n0.67\n1.00\n0.18\n1.00",
+    "crumbs": [
+      "Verifications",
+      "Comparison with SLAMMER (results)"
+    ]
+  },
+  {
+    "objectID": "comp_SLAMMER_results.html#discussion",
+    "href": "comp_SLAMMER_results.html#discussion",
+    "title": "Comparison with SLAMMER (results)",
+    "section": "Discussion",
+    "text": "Discussion\nSome differences should be expected.\nTo the extent the pySLAMMER code is doing the same calculations, the differences should be very small.\nThe differences should not accumulate with displacement magnitude.",
+    "crumbs": [
+      "Verifications",
+      "Comparison with SLAMMER (results)"
+    ]
+  },
+  {
+    "objectID": "comp_SLAMMER_results.html#conclusions",
+    "href": "comp_SLAMMER_results.html#conclusions",
+    "title": "Comparison with SLAMMER (results)",
+    "section": "Conclusions",
+    "text": "Conclusions\n\nPySLAMMER is performing the same analysis as SLAMMER.\nNumerical differences are insignificant for engineering purposes, both in research and practice.\nTo the extent historical SLAMMER results are well documented, comparison with pySLAMMER results is appropriate.",
+    "crumbs": [
+      "Verifications",
+      "Comparison with SLAMMER (results)"
+    ]
+  },
+  {
+    "objectID": "comp_analytical.html",
+    "href": "comp_analytical.html",
+    "title": "Comparison with analytical solution",
+    "section": "",
+    "text": "In addition to comparing to the legacy results from SLAMMER, it is also worth comparing pySLAMMER’s results to analytical solutions to sliding block problems. In this section, we compare pySLAMMER’s calculated sliding displacements for rigid sliding blocks for single cycle harmonic motions of frequencies ranging from 0.5 to 10 Hz to an analytical solution.\n\n\nVoluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.",
+    "crumbs": [
+      "Verifications",
+      "Comparison with analytical solution"
+    ]
+  },
+  {
+    "objectID": "comp_analytical.html#analytical-solution",
+    "href": "comp_analytical.html#analytical-solution",
+    "title": "Comparison with analytical solution",
+    "section": "",
+    "text": "Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.",
+    "crumbs": [
+      "Verifications",
+      "Comparison with analytical solution"
+    ]
+  },
+  {
+    "objectID": "comp_SLAMMER_results.html#footnotes",
+    "href": "comp_SLAMMER_results.html#footnotes",
+    "title": "Comparison with SLAMMER (results)",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\npySLAMMER includes additional options for variable yield acceleration, but only stepwise variation is applicable to comparison with SLAMMER↩︎\nIf lower total damping than the equivalent foundation radiation damping is needed for some reason (e.g., for comparison with published analyses that did not include this damping mechanism) both SLAMMER and pySLAMMER accept negative values for damping ratio, which can be used to offset the damping applied by the foundation radiation damping.↩︎\n95 percent of all simulations in the range had errors less than this.↩︎",
+    "crumbs": [
+      "Verifications",
+      "Comparison with SLAMMER (results)"
+    ]
+  },
+  {
+    "objectID": "comp_SLAMMER_perf.html",
+    "href": "comp_SLAMMER_perf.html",
+    "title": "Comparison with SLAMMER (speed)",
+    "section": "",
+    "text": "Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.\n\n\nVoluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.",
+    "crumbs": [
+      "Verifications",
+      "Comparison with SLAMMER (speed)"
+    ]
+  },
+  {
+    "objectID": "comp_SLAMMER_perf.html#equivalent-linear-execution-time",
+    "href": "comp_SLAMMER_perf.html#equivalent-linear-execution-time",
+    "title": "Comparison with SLAMMER (speed)",
+    "section": "",
+    "text": "Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.",
+    "crumbs": [
+      "Verifications",
+      "Comparison with SLAMMER (speed)"
+    ]
   }
 ]

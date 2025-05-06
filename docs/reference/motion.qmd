@@ -1,4 +1,0 @@
-# motion { #pyslammer.motion }
-
-`motion`
-

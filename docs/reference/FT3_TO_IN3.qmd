@@ -1,4 +1,0 @@
-# FT3_TO_IN3 { #pyslammer.FT3_TO_IN3 }
-
-`FT3_TO_IN3`
-

@@ -1,6 +1,0 @@
-# some_ky_func { #pyslammer.some_ky_func }
-
-```python
-some_ky_func(disp)
-```
-

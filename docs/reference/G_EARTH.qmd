@@ -1,4 +1,0 @@
-# G_EARTH { #pyslammer.G_EARTH }
-
-`G_EARTH`
-

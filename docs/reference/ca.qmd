@@ -1,4 +1,0 @@
-# ca { #pyslammer.ca }
-
-`ca`
-

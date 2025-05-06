@@ -1,4 +1,0 @@
-# FT_TO_M { #pyslammer.FT_TO_M }
-
-`FT_TO_M`
-

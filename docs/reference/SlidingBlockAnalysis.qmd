@@ -1,6 +1,0 @@
-# SlidingBlockAnalysis { #pyslammer.SlidingBlockAnalysis }
-
-```python
-SlidingBlockAnalysis(self)
-```
-

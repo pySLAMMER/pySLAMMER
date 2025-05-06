@@ -19,6 +19,6 @@ pySLAMMER includes the following sliding block models:
 
 [Examples](examples.qmd)
 
-[API Reference](reference/index.qmd)
+[API Reference](api/index.qmd)
 
-[Verification](verification.qmd)
+[Verification](verifications/verification.qmd)

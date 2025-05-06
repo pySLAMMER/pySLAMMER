@@ -1,0 +1,12 @@
+# Function reference {.doc .doc-index}
+
+## API Reference
+
+API reference for pySLAMMER
+
+| | |
+| --- | --- |
+| [SlidingBlockAnalysis](SlidingBlockAnalysis.qmd#pyslammer.SlidingBlockAnalysis) | Base class for all time-domain sliding block analyses. |
+| [RigidAnalysis](RigidAnalysis.qmd#pyslammer.RigidAnalysis) | Rigid Block Analysis |
+| [Decoupled](Decoupled.qmd#pyslammer.Decoupled) | Decoupled analysis for sliding block and ground motion interaction. |
+| [Coupled](Coupled.qmd#pyslammer.Coupled) | Coupled analysis for sliding block and ground motion interaction. |

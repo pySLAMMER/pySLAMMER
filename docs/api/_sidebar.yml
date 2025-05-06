@@ -1,0 +1,12 @@
+website:
+  sidebar:
+  - contents:
+    - api/index.qmd
+    - contents:
+      - api/SlidingBlockAnalysis.qmd
+      - api/RigidAnalysis.qmd
+      - api/Decoupled.qmd
+      - api/Coupled.qmd
+      section: API Reference
+    id: api
+  - id: dummy-sidebar

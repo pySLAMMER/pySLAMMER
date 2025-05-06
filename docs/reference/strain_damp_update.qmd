@@ -1,6 +1,0 @@
-# strain_damp_update { #pyslammer.strain_damp_update }
-
-```python
-strain_damp_update(g_over_gmax, shear_strain, ref_strain)
-```
-

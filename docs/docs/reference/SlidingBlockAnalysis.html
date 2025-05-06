@@ -163,15 +163,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Quickstart guide</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../quickstart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Quickstart guide</span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../examples.html" class="sidebar-item-text sidebar-link">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Examples</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -195,12 +189,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">API reference</span></a>
+ <span class="menu-text">Function reference</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Verifications</span></span>
+      <div class="sidebar-item-container"> 
+            <a href="../verification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Verifications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../comp_SLAMMER_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with SLAMMER (results)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../comp_SLAMMER_perf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with SLAMMER (speed)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../comp_analytical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison with analytical solution</span></a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -212,7 +231,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#pyslammer.SlidingBlockAnalysis" id="toc-pyslammer.SlidingBlockAnalysis" class="nav-link active" data-scroll-target="#pyslammer.SlidingBlockAnalysis">SlidingBlockAnalysis</a></li>
+  <li><a href="#pyslammer.SlidingBlockAnalysis" id="toc-pyslammer.SlidingBlockAnalysis" class="nav-link active" data-scroll-target="#pyslammer.SlidingBlockAnalysis">SlidingBlockAnalysis</a>
+  <ul class="collapse">
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#pyslammer.SlidingBlockAnalysis.sliding_block_plot" id="toc-pyslammer.SlidingBlockAnalysis.sliding_block_plot" class="nav-link" data-scroll-target="#pyslammer.SlidingBlockAnalysis.sliding_block_plot">sliding_block_plot</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -224,9 +249,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="pyslammer.SlidingBlockAnalysis" class="level1">
 <h1>SlidingBlockAnalysis</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SlidingBlockAnalysis(<span class="va">self</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SlidingBlockAnalysis(<span class="va">self</span>, ky, a_in, dt, scale_factor<span class="op">=</span><span class="fl">1.0</span>, target_pga<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Base class for all time-domain sliding block analyses.</p>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#pyslammer.SlidingBlockAnalysis.sliding_block_plot">sliding_block_plot</a></td>
+<td>Plot the analysis result as a 3-by-1 array of time series figures.</td>
+</tr>
+</tbody>
+</table>
+<section id="pyslammer.SlidingBlockAnalysis.sliding_block_plot" class="level3">
+<h3 class="anchored" data-anchor-id="pyslammer.SlidingBlockAnalysis.sliding_block_plot">sliding_block_plot</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>SlidingBlockAnalysis.sliding_block_plot(sliding_vel_mode<span class="op">=</span><span class="va">True</span>, fig<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Plot the analysis result as a 3-by-1 array of time series figures. From top to bottom, the figures contain: acceleration, velocity, and displacement signals. By default, the acceleration figure shows the input acceleration and the block acceleration. The velocity figure shows the <em>sliding</em> (i.e., relative to the input motion) velocity of the block. If desired, <code>sliding_vel_mode</code> can be set to <code>False</code> to display the absolute velocity of the input motion and the block. The displacement figure shows the relative displacement of the block to the base.</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

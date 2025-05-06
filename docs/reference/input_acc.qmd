@@ -1,4 +1,0 @@
-# input_acc { #pyslammer.input_acc }
-
-`input_acc`
-

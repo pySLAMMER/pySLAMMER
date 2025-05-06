@@ -1,4 +1,0 @@
-# GAMMA { #pyslammer.GAMMA }
-
-`GAMMA`
-
