@@ -1,0 +1,8 @@
+---
+title: Glossary 
+bibliography: references.bib
+sidebar: main
+page-navigation: true
+---
+
+Some definitions of terms

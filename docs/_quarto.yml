@@ -7,19 +7,16 @@ metadata-files:
 
 website:
   title: "pySLAMMER"
+  page-navigation: true
   favicon: _static/pySLAMMER_logo_square.svg
   navbar: 
     left:
-    - file: index.qmd
-      text: Welcome
     - file: quickstart.qmd
-      text: Quickstart
-    - file: rigid_flex.qmd
+      text: Quickstart guide
+    - file: examples/index.qmd
       text: Examples
     - file: api/index.qmd
       text: API Reference
-    - file: verifications/verification.qmd
-      text: Verifications
     title: "pySLAMMER"
     search: true
     tools:
@@ -27,27 +24,38 @@ website:
         href: "https://github.com/lornearnold/pyslammer"
 
   sidebar:
-    - id: asdf
+    - id: main
       title: pySLAMMER
       style: "docked"
       search: false
       logo: _static/pySLAMMER_logo_square.svg
       contents: 
-        - text: "Overview"
+        - text: Welcome
           href: index.qmd
-        - text: "Quickstart guide"
-          href: quickstart.qmd
-        - section: "Examples"
+        - section: "Technical guide"
+          href: technical/tech_manual.qmd
           contents:
-            - rigid_flex.qmd
-            - batch_simulations.qmd
-        - href: reference/index.qmd
-        - section: "Verifications"
-          href: verification.qmd
+            - technical/glossary.qmd
+            - section: "Verification"
+              contents:
+                - technical/comp_SLAMMER_results.qmd
+                - technical/comp_SLAMMER_perf.qmd
+                - technical/comp_analytical.qmd
+        - section: "About"
           contents:
-            - comp_SLAMMER_results.qmd
-            - comp_SLAMMER_perf.qmd
-            - comp_analytical.qmd
+            - about/motivation.qmd
+            - about/roadmap.qmd
+            - about/develop.qmd
+
+    - id: examples
+      contents:
+        - section: Examples
+          href: examples/index.qmd
+          contents:
+            - examples/rigid_flex.qmd
+            - examples/batch_simulations.qmd
+
+    - id: quickstart
 
 
 format:

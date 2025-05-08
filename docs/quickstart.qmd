@@ -1,6 +1,6 @@
 ---
 title: Quickstart guide
-toc-depth: 3
+sidebar: quickstart
 ---
 ## Requirements
 The pyslammer package is built on Python 3.12. Earlier versions of Python 3 may work, but have not been tested.
