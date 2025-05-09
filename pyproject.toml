@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.24.2", "hatch-vcs>=0.3.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "pyslammer/__init__.py"
+
+[tool.uv.sources]
+pyslammer = { workspace = true }
+
+[project]
+name = "pyslammer"
+requires-python = ">=3.11"
+dynamic = ["version"]
+description = "Python code for calculating sliding block displacements (based on the USGS software SLAMMER)."
+keywords = ["earthquake", "geotech", "slope stability", "sliding block", "seismic"]
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+dependencies = [
+    "numpy",
+    "scipy",
+    "sphinx-book-theme>=1.1.4",
+]
+authors = [{name = "Lorne Arnold"}, {name = "Donald Garcia-Rivas"}]
+maintainers = [{name = "Lorne Arnold", email = "arnoldl@uw.edu"}]
+
+[project.optional-dependencies]
+demo = ["ipywidgets", "sympy", "matplotlib", "pandas"]
+
+[project.urls]
+Repository = "https://github.com/lornearnold/pyslammer"
+
+[dependency-groups]
+dev = [
+    "ipympl>=0.9.7",
+    "ipywidgets>=8.1.5",
+    "jupytext>=1.16.7",
+    "livereload>=2.7.1",
+    "matplotlib>=3.10.1",
+    "myst-nb>=1.2.0",
+    "myst-parser>=4.0.1",
+    "nbconvert>=7.16.6",
+    "nbsphinx>=0.9.7",
+    "pandas>=2.2.3",
+    "pyslammer",
+    "sphinx>=8.1.3",
+    "sphinx-autodoc2>=0.5.0",
+    "sphinx-design>=0.6.1",
+    "sympy>=1.13.3",
+    "pytest>=8.3.5",
+]
+#Documentation = "https://pyslammer.readthedocs.io"
+#Examples = "https://lornearnold.github.io/pyslammer/"
