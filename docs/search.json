@@ -564,24 +564,11 @@
     ]
   },
   {
-    "objectID": "technical/comp_SLAMMER_results.html#discussion",
-    "href": "technical/comp_SLAMMER_results.html#discussion",
-    "title": "Results comparison to SLAMMER",
-    "section": "Discussion",
-    "text": "Discussion\nSome differences should be expected.\nTo the extent the pySLAMMER code is doing the same calculations, the differences should be very small.\nThe differences should not accumulate with displacement magnitude.",
-    "crumbs": [
-      "Quickstart guide",
-      "Technical guide",
-      "Verifications",
-      "Results comparison to SLAMMER"
-    ]
-  },
-  {
     "objectID": "technical/comp_SLAMMER_results.html#conclusions",
     "href": "technical/comp_SLAMMER_results.html#conclusions",
     "title": "Results comparison to SLAMMER",
     "section": "Conclusions",
-    "text": "Conclusions\n\nPySLAMMER is performing the same analysis as SLAMMER.\nNumerical differences are insignificant for engineering purposes, both in research and practice.\nTo the extent historical SLAMMER results are well documented, comparison with pySLAMMER results is appropriate.",
+    "text": "Conclusions\nThe results show that pySLAMMER is performing the same rigorous analysis methods as SLAMMER. Across a broad array of input parameters, the results are identical or nearly identical. Minor numerical differences between the output of the two programs is to be expected. However, the differences are so small as to be insignificant for engineering purposes, both in research and practice.",
     "crumbs": [
       "Quickstart guide",
       "Technical guide",

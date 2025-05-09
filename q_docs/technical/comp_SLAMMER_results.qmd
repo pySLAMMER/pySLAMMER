@@ -292,16 +292,9 @@ tbl = (
 tbl
 ```
 
-## Discussion
-
-Some differences should be expected.
-
-To the extent the pySLAMMER code is doing the same calculations, the differences should be very small.
-
-The differences should not accumulate with displacement magnitude.
 
 ## Conclusions
 
-1.  PySLAMMER is performing the same analysis as SLAMMER.
-2.  Numerical differences are insignificant for engineering purposes, both in research and practice.
-3.  To the extent historical SLAMMER results are well documented, comparison with pySLAMMER results is appropriate.
+The results show that pySLAMMER is performing the same rigorous analysis methods as SLAMMER.
+Across a broad array of input parameters, the results are identical or nearly identical.
+Minor numerical differences between the output of the two programs is to be expected. However, the differences are so small as to be insignificant for engineering purposes, both in research and practice.
