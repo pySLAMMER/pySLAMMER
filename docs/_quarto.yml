@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: _build
 
+execute:
+  freeze: auto
+  
 metadata-files:
   - api/_sidebar.yml
 
