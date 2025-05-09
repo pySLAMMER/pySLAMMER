@@ -1,0 +1,71 @@
+# Decoupled { #pyslammer.Decoupled }
+
+```python
+Decoupled(
+    self,
+    ky,
+    a_in,
+    dt,
+    height,
+    vs_slope,
+    vs_base,
+    damp_ratio,
+    ref_strain,
+    scale_factor=1,
+    target_pga=None,
+    soil_model='linear_elastic',
+    si_units=True,
+    lite=False,
+)
+```
+
+Decoupled analysis for sliding block and ground motion interaction.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type                                                                                          | Description                                            | Default            |
+|--------------|-----------------------------------------------------------------------------------------------|--------------------------------------------------------|--------------------|
+| ky           | float or tuple\[list\[float\], list\[float\]\] or tuple\[np.ndarray, np.ndarray\] or callable | Yield acceleration function or constant.               | _required_         |
+| a_in         | list\[float\] or np.ndarray                                                                   | Input acceleration time history.                       | _required_         |
+| dt           | float                                                                                         | Time step of the input acceleration.                   | _required_         |
+| height       | int or float                                                                                  | Height of the sliding block.                           | _required_         |
+| vs_slope     | int or float                                                                                  | Shear wave velocity of the slope.                      | _required_         |
+| vs_base      | int or float                                                                                  | Shear wave velocity of the base.                       | _required_         |
+| damp_ratio   | float                                                                                         | Damping ratio of the sliding block.                    | _required_         |
+| ref_strain   | float                                                                                         | Reference strain for modulus reduction.                | _required_         |
+| scale_factor | float                                                                                         | Scale factor for the input acceleration. Default is 1. | `1`                |
+| soil_model   | str                                                                                           | Soil model type. Default is "linear_elastic".          | `'linear_elastic'` |
+| si_units     | bool                                                                                          | Whether to use SI units. Default is True.              | `True`             |
+| lite         | bool                                                                                          | Whether to use lite mode. Default is False.            | `False`            |
+
+## Attributes {.doc-section .doc-section-attributes}
+
+| Name             | Type                        | Description                                              |
+|------------------|-----------------------------|----------------------------------------------------------|
+| k_y              | callable                    | Yield acceleration function.                             |
+| a_in             | list\[float\] or np.ndarray | Input acceleration time history.                         |
+| dt               | float                       | Time step of the input acceleration.                     |
+| height           | int or float                | Height of the sliding block.                             |
+| vs_slope         | int or float                | Shear wave velocity of the slope.                        |
+| vs_base          | int or float                | Shear wave velocity of the base.                         |
+| damp_ratio       | float                       | Damping ratio of the sliding block.                      |
+| ref_strain       | float                       | Reference strain for modulus reduction.                  |
+| scale_factor     | float                       | Scale factor for the input acceleration.                 |
+| soil_model       | str                         | Soil model type.                                         |
+| si_units         | bool                        | Whether to use SI units.                                 |
+| lite             | bool                        | Whether to use lite mode.                                |
+| npts             | int                         | Number of points in the input acceleration time history. |
+| g                | float                       | Gravitational acceleration.                              |
+| unit_weight      | float                       | Unit weight of the sliding block.                        |
+| rho              | float                       | Density of the sliding block.                            |
+| mass             | float                       | Mass of the sliding block.                               |
+| max_shear_mod    | float                       | Maximum shear modulus of the sliding block.              |
+| HEA              | np.ndarray                  | Horizontal earthquake acceleration.                      |
+| block_disp       | np.ndarray                  | Displacement of the sliding block.                       |
+| block_vel        | np.ndarray                  | Velocity of the sliding block.                           |
+| block_acc        | np.ndarray                  | Acceleration of the sliding block.                       |
+| x_resp           | np.ndarray                  | Response displacement.                                   |
+| v_resp           | np.ndarray                  | Response velocity.                                       |
+| a_resp           | np.ndarray                  | Response acceleration.                                   |
+| max_sliding_disp | float                       | Maximum sliding displacement.                            |
+| ground_acc       | np.ndarray                  | Ground acceleration.                                     |

@@ -1,0 +1,19 @@
+﻿Earthquake,Record,Digitization interval,Magnitude,Arias intensity (m/s),Duration (5-95%),PGA (g),PGV (m/s),Mean period  (s),Epicentral distance (km),Focal distance (km),Rupture distance (km),Focal mechanism
+Cape Mendocino 1992,PET-090,0.02,7.1,3.822,16.1,0.662,90.1,0.68,4.5,10.5,8.2,Reverse
+"Chi-Chi, Taiwan 1999",TCU068-090,0.005,7.6,3.303,12.5,0.566,176.9,1.5,47.9,48.5,0.3,Obl. reverse
+Coalinga 1983,PVB-045,0.005,6.4,1.571,8.1,0.38,32.4,0.61,10,11,8.4,Reverse
+Coyote Lake 1979,G02-050,0.005,5.7,0.287,7.5,0.211,11,0.37,10.9,13.6,9,Strike-slip
+"Duzce, Turkey 1999",375-090,0.01,7.1,2.037,13.2,0.514,20.4,0.29,24.1,27.8,3.9,Strike-slip
+Imperial Valley 1979,BCR-230,0.005,6.5,5.99,9.8,0.775,45.9,0.47,6.2,11.7,2.7,Strike-slip
+"Kobe, Japan 1995",TAK-090,0.01,6.9,8.134,9.9,0.616,120.7,0.99,13.1,22.2,1.5,Strike-slip
+"Kocaeli, Turkey 1999",ATS-090,0.005,7.5,1.24,37.2,0.185,32.8,0.98,112.3,113.4,69.6,Strike-slip
+Landers 1992,LCN-345,0.005,7.3,6.588,13.9,0.789,32.5,0.17,44,44.6,2.2,Strike-slip
+Loma Prieta 1989,HSP-000,0.005,6.9,2.205,16.4,0.371,62.3,0.95,48.2,51.3,27.9,Obl. reverse
+Mammoth Lakes-1 1980,CVK-090,0.005,6.1,2.256,9.2,0.416,23.2,0.32,1.4,9.1,6.6,Obl. normal
+Mammoth Lakes-2 1980,CVK-090,0.005,5.9,0.394,6.8,0.266,19,0.39,12,18.5,,Strike-slip
+Morgan Hill 1984,CYC-285,0.005,6.2,3.85,3.2,1.298,80.8,0.55,24.6,26,0.5,Strike-slip
+N. Palm Springs 1986,WWT-180,0.005,6.1,1.768,5.4,0.492,34.7,0.35,4.2,11.8,6,Obl. reverse
+"Nahanni, Canada 1985",NS1-280,0.005,6.8,3.852,8.1,1.096,46.1,0.36,6.8,10.5,9.6,Reverse
+Nisqually 2001,UNR-058,0.01,6.8,1.458,31.6,0.274,22.9,0.69,57.6,77.9,77.9,Normal
+Northridge 1994,PAC-175,0.02,6.7,0.936,4.3,0.415,45.8,0.47,20.4,26.9,7,Reverse
+Northridge 1994,VSP-360,0.005,6.7,6.987,8.5,0.934,76.2,0.46,8.5,19.5,8.4,Reverse

@@ -1,36 +1,78 @@
 import numpy as np
 import scipy.integrate as spint
-import matplotlib.pyplot as plt
 
 from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
 
 M_TO_CM = 100
-G_EARTH = 9.80665 # Acceleration due to gravity (m/block_disp^2).
+G_EARTH = 9.80665  # Acceleration due to gravity (m/block_disp^2).
 
 
 class RigidAnalysis(SlidingBlockAnalysis):
-    """Rigid Block Analysis."""
+    """
+    Rigid Block Analysis.
 
-    def __init__(self, a_in, dt, ky, method='jibson'):
+    Parameters
+    ----------
+    ky : float
+        Critical acceleration (in g).
+    a_in : list
+        Ground acceleration time series (in g).
+    dt : float
+        Time step of the input acceleration time series (in seconds).
+    scale_factor : float, optional
+        Scaling factor for the input acceleration. Default is 1.0.
+    target_pga : float, optional
+        Target peak ground acceleration (in m/s^2). If provided, the input acceleration
+        will be scaled to match this value. Cannot be used with `scale_factor`.
+    method : str, optional
+        Analysis method. Options are 'jibson', 'dgr', or 'gra'. Default is 'jibson'.
+
+    Raises
+    ------
+    ValueError
+        If both `target_pga` and `scale_factor` are provided.
+
+    Attributes
+    ----------
+    analysis_methods : dict
+        Dictionary mapping method names to their corresponding functions.
+    ground_acc : numpy.ndarray
+        Ground acceleration time series (in m/s^2).
+    """
+
+    def __init__(
+        self, ky, a_in, dt, scale_factor=1.0, target_pga=None, method="jibson"
+    ):
         """
         Initialize rigid block analysis.
-        Args:
-            a_in (list): Ground acceleration (g).
-            dt (float): Time step (s).
-            ky (float): Critical acceleration (g).
-            method (str, optional): Analysis method. Default is 'jibson'.
+
+        Parameters
+        ----------
+        ky : float
+            Critical acceleration (in g).
+        a_in : list
+            Ground acceleration time series (in g).
+        dt : float
+            Time step of the input acceleration time series (in seconds).
+        scale_factor : float, optional
+            Scaling factor for the input acceleration. Default is 1.0.
+        target_pga : float, optional
+            Target peak ground acceleration (in m/s^2). If provided, the input acceleration
+            will be scaled to match this value. Cannot be used with `scale_factor`.
+        method : str, optional
+            Analysis method. Options are 'jibson', 'dgr', or 'gra'. Default is 'jibson'.
         """
-        super().__init__()
+        super().__init__(ky, a_in, dt, scale_factor, target_pga)
 
         self.analysis_methods = {
             "jibson": self.jibson,
-            "dgr": self.downslope_dgr,
-            "gra": self.garcia_rivas_arnold,
+            "dgr": self._downslope_dgr,
+            "gra": self._garcia_rivas_arnold,
         }
         self._npts = len(a_in)
-        self.ground_acc = np.array(a_in) * G_EARTH
+        self.ground_acc = np.array(self.a_in) * G_EARTH
         self.dt = dt
-        self.ky = ky*G_EARTH
+        self.ky = ky * G_EARTH
         self.method = method
 
         analysis_function = self.analysis_methods.get(self.method)
@@ -53,13 +95,17 @@ class RigidAnalysis(SlidingBlockAnalysis):
         #             +'Disp    : {:.3f} m'.format(self.total_disp)
         #         )
         # return info
-        #TODO: Re-implement
+        # TODO: Re-implement
         return "Rigid Block Analysis"
-
 
     def jibson(self):
         """
         Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.
+
+        Notes
+        -----
+        This method iteratively calculates the block's acceleration, velocity, and displacement
+        based on the input ground acceleration and critical acceleration.
         """
         tol = 1e-5
         self.block_acc = np.zeros(len(self.ground_acc))
@@ -94,17 +140,23 @@ class RigidAnalysis(SlidingBlockAnalysis):
             self.block_acc[i] = gnd_acc_curr - acc[1]
         self.max_sliding_disp = self.sliding_disp[-1]
 
-    def garcia_rivas_arnold(self):
-        # for future implementation with velocity verlet
+    def _garcia_rivas_arnold(self):
+        """
+        Placeholder for future implementation using the velocity Verlet method.
+
+        Notes
+        -----
+        This method is not yet implemented.
+        """
         pass
 
-    def downslope_dgr(self):
+    def _downslope_dgr(self):
         """
-        Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.
-        Args:
-            ky (float, optional): Critical acceleration in multiples of g.
-        Returns:
-            None
+        Calculate the downslope rigid block displacement, differential velocity, and acceleration using the DGR method.
+
+        Notes
+        -----
+        This method is a placeholder for future implementation.
         """
         if self.dt == -1.0:
             return
@@ -118,7 +170,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
                 self.block_acc.append(self.gnd_acc[i])
                 self.block_vel.append(self.gnd_vel[i])
                 continue
-            tmp_block_vel = self.block_vel[i-1] + self.ky * self.dt
+            tmp_block_vel = self.block_vel[i - 1] + self.ky * self.dt
             if self.gnd_acc[i] > self.ky:
                 block_sliding = True
             elif tmp_block_vel > self.gnd_vel[i]:
@@ -134,88 +186,3 @@ class RigidAnalysis(SlidingBlockAnalysis):
         self.block_vel = abs(self.gnd_vel - self.block_vel)
         self.block_disp = spint.cumulative_trapezoid(self.block_vel, time, initial=0)
         self.total_disp = self.block_disp[-1]
-
-    def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, gnd_motion: bool=False):
-        """
-        Plot the ground motion and the block response.
-        Args:
-            acc (bool, optional): Plot block acceleration.
-            vel (bool, optional): Plot block differential velocity.
-            disp (bool, optional): Plot block displacement.
-            gnd_motion (bool, optional): Plot ground motion.
-        Returns:
-            None
-        """
-        num_plots = sum([acc, vel, disp])
-        if self.dt == 1.0:
-            return
-        elif num_plots == 0:
-            return
-        elif len(self.block_acc) == 0:
-            if gnd_motion:
-                super().plot(acc, vel, disp, gnd_motion, called=False)
-                return
-            else:
-                return
-    # Perform rigid block downslope analysis via integration of relative velocity
-    # between the block and the ground. Trapezoid integration is used to caluclate
-    # ground velocity. Block velocity matches ground velocity until ground acceleration
-    # exceeds the critical acceleration, at which point the block begins to _slide
-    # accelerating at the critical acceleration. The block stops sliding when its velocity
-    # exceeds ground velocity. Block displacement is then calculated by integrating
-    # the relative velocity between the block and the ground.
-
-        if time_history is None:
-            return
-        else:
-            pass
-        acc_crit = acc_crit * G_EARTH
-        time = time_history[0][:]
-        dt = time[1]-time[0]
-        gnd_acc = time_history[1][:]
-        gnd_vel = spint.cumulative_trapezoid(gnd_acc, time, initial=0)
-        block_vel = np.copy(gnd_vel)
-        block_acc = []
-        block_sliding = False
-        for i in range(len(gnd_acc)):
-            if i == 0:
-                continue
-            tmp_block_vel = block_vel[i-1] + acc_crit*dt
-            if gnd_acc[i] > acc_crit:
-                block_sliding = True
-            elif tmp_block_vel > gnd_vel[i]:
-                block_sliding = False
-            else:
-                pass
-            fig, ax = super().plot(acc, vel, disp, gnd_motion, called=True)
-            fig.suptitle('Rigid Block Analysis\n{}'.format(self.name))
-            remain_plots = num_plots
-            if acc:
-                if num_plots == 1:
-                    acc = ax
-                else:
-                    i = num_plots - remain_plots
-                    remain_plots -= 1
-                    acc = ax[i]
-                acc.plot(self.time, self.block_acc, label='Block Acceleration')
-                acc.plot(self.time, [self.ky for i in range(len(self.time))], label='Critical Acceleration')
-                acc.legend()
-            if vel:
-                if num_plots == 1:
-                    vel = ax
-                else:
-                    j = num_plots - remain_plots
-                    remain_plots -= 1
-                    vel = ax[j]
-                vel.plot(self.time, self.block_vel, label='Block Differential Velocity')
-                vel.legend()
-            if disp:
-                if num_plots == 1:
-                    disp = ax
-                else:
-                    k = num_plots - remain_plots
-                    remain_plots -= 1
-                    disp = ax[k]
-                disp.plot(self.time, self.block_disp, label='Block Displacement')
-                disp.legend()
-            plt.show()

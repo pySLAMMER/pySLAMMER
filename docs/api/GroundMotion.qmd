@@ -1,0 +1,123 @@
+# GroundMotion { #pyslammer.GroundMotion }
+
+```python
+GroundMotion(self, accel, dt, name='None')
+```
+
+Ground Motion Record.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type               | Description                             | Default    |
+|--------|--------------------|-----------------------------------------|------------|
+| accel  | np.ndarray or list | Ground motion acceleration record in g. | _required_ |
+| dt     | float              | Time step of the record (s).            | _required_ |
+| name   | str                | Name of the record (default is 'None'). | `'None'`   |
+
+## Attributes {.doc-section .doc-section-attributes}
+
+| Name        | Type       | Description                             |
+|-------------|------------|-----------------------------------------|
+| accel       | np.ndarray | Ground motion acceleration record in g. |
+| dt          | float      | Time step of the record (s).            |
+| name        | str        | Name of the record.                     |
+| pga         | float      | Peak ground acceleration in g.          |
+| mean_period | float      | Mean period of the ground motion.       |
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [invert](#pyslammer.GroundMotion.invert) | Invert the ground motion. |
+| [plot](#pyslammer.GroundMotion.plot) | Plots desired ground motion parameters. |
+| [scale](#pyslammer.GroundMotion.scale) | Scale the ground motion using desired method. Does nothing if more than one method is selected. |
+| [uninvert](#pyslammer.GroundMotion.uninvert) | Uninverts the ground motion. |
+| [unscale](#pyslammer.GroundMotion.unscale) | Unscales the ground motion. |
+
+### invert { #pyslammer.GroundMotion.invert }
+
+```python
+GroundMotion.invert()
+```
+
+Invert the ground motion.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description   |
+|--------|--------|---------------|
+|        | None   |               |
+
+### plot { #pyslammer.GroundMotion.plot }
+
+```python
+GroundMotion.plot(acc=True, vel=True, disp=True, enable=True, called=False)
+```
+
+Plots desired ground motion parameters.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type   | Description                                                                    | Default   |
+|--------|--------|--------------------------------------------------------------------------------|-----------|
+| acc    | bool   | Plot acceleration.                                                             | `True`    |
+| vel    | bool   | Plot velocity.                                                                 | `True`    |
+| disp   | bool   | Plot displacement.                                                             | `True`    |
+| enable | bool   | Enable plotting of ground parameters. Used if called from a RigidBlock object. | `True`    |
+| called | bool   | True if called from a RigidBlock object.                                       | `False`   |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type       | Description                                       |
+|--------|------------|---------------------------------------------------|
+| fig    | plt.figure | Figure object if called from a RigidBlock object. |
+| ax     | plt.axis   | Axis object if called from a RigidBlock object.   |
+
+### scale { #pyslammer.GroundMotion.scale }
+
+```python
+GroundMotion.scale(pga=False, scale_factor=False)
+```
+
+Scale the ground motion using desired method. Does nothing if more than one method is selected.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type   | Description                            | Default   |
+|--------------|--------|----------------------------------------|-----------|
+| pga          | float  | Desired peak ground acceleration in g. | `False`   |
+| scale_factor | float  | Desired scale factor.                  | `False`   |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description   |
+|--------|--------|---------------|
+|        | None   |               |
+
+### uninvert { #pyslammer.GroundMotion.uninvert }
+
+```python
+GroundMotion.uninvert()
+```
+
+Uninverts the ground motion.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description   |
+|--------|--------|---------------|
+|        | None   |               |
+
+### unscale { #pyslammer.GroundMotion.unscale }
+
+```python
+GroundMotion.unscale()
+```
+
+Unscales the ground motion.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description   |
+|--------|--------|---------------|
+|        | None   |               |
