@@ -11,7 +11,7 @@ metadata-files:
 website:
   title: "pySLAMMER"
   page-navigation: true
-  favicon: _static/pySLAMMER_logo_square.svg
+  favicon: _static/pySLAMMER_logo_square.png
   navbar: 
     left:
     - file: quickstart.qmd
