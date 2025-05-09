@@ -1,12 +1,14 @@
+import matplotlib.pyplot as plt
 import numpy as np
-import pyslammer.constants as constants
 import scipy.integrate as spint
 from scipy.fft import rfft, rfftfreq
-import matplotlib.pyplot as plt
 
-#TODO: bring this into utilities.py
+import pyslammer.constants as constants
 
-class GroundMotion():
+# TODO: bring this into utilities.py
+
+
+class GroundMotion:
     """
     Ground Motion Record.
 
@@ -27,18 +29,13 @@ class GroundMotion():
         Time step of the record (s).
     name : str
         Name of the record.
-    _is_inverted : bool
-        True if the record is inverted.
-    _is_scaled : bool
-        True if the record is scaled.
-    _npts : int
-        Number of points in the acceleration record.
     pga : float
         Peak ground acceleration in g.
     mean_period : float
         Mean period of the ground motion.
     """
-    def __init__(self, accel: np.ndarray or list, dt: float, name: str='None'):
+
+    def __init__(self, accel: np.ndarray or list, dt: float, name: str = "None"):
         self.accel = np.array(accel)
         self.dt = dt
         self.name = name
@@ -52,9 +49,9 @@ class GroundMotion():
         freqs = rfftfreq(self._npts, dt)[1::]
         x_real = np.real(x)
         x_imag = np.imag(x)
-        c = np.sqrt(x_real ** 2 + x_imag ** 2)
+        c = np.sqrt(x_real**2 + x_imag**2)
 
-        self.mean_period = sum(c ** 2 / freqs) / sum(c ** 2)
+        self.mean_period = sum(c**2 / freqs) / sum(c**2)
 
     def __str__(self):
         """
@@ -66,7 +63,7 @@ class GroundMotion():
             A string describing the ground motion record.
         """
         return f"Ground Motion: {self.name}, PGA: {self.pga:.3f} g, dt: {self.dt:.3f} s, npts: {self._npts}"
-    
+
     def _calc_gnd_params(self):
         """
         Semi-private method to initialize and recalculate ground motion parameters.
@@ -86,8 +83,8 @@ class GroundMotion():
         self.gnd_vel = spint.cumulative_trapezoid(self.gnd_acc, self.time, initial=0)
         self.gnd_disp = spint.cumulative_trapezoid(self.gnd_vel, self.time, initial=0)
         self.pga = max(abs(self.gnd_acc)) / constants.G_EARTH
-    
-    def scale(self, pga: float=False, scale_factor: float=False):
+
+    def scale(self, pga: float = False, scale_factor: float = False):
         """
         Scale the ground motion using desired method. Does nothing if more than one method is selected.
 
@@ -106,7 +103,7 @@ class GroundMotion():
             return
         else:
             pass
-        if (pga and scale_factor):
+        if pga and scale_factor:
             return
         else:
             if self._is_scaled:
@@ -125,9 +122,9 @@ class GroundMotion():
             self.gnd_disp *= scale_factor
             self.pga *= scale_factor
         else:
-            return        
+            return
         self._is_scaled = True
-        self.name = self.name + '_SCALED'
+        self.name = self.name + "_SCALED"
 
     def unscale(self):
         """
@@ -142,7 +139,7 @@ class GroundMotion():
         else:
             pass
         self._calc_gnd_params()
-        self.name = self.name.replace('_SCALED', '')
+        self.name = self.name.replace("_SCALED", "")
 
     def invert(self):
         """
@@ -164,7 +161,7 @@ class GroundMotion():
             self.gnd_vel *= -1
             self.gnd_disp *= -1
         self._is_inverted = True
-        self.name = self.name + '_INVERTED'
+        self.name = self.name + "_INVERTED"
 
     def uninvert(self):
         """
@@ -175,7 +172,7 @@ class GroundMotion():
         None
         """
         if self.dt == -1.0:
-            return  
+            return
         else:
             pass
         if self._is_inverted:
@@ -183,11 +180,18 @@ class GroundMotion():
             self.gnd_vel *= -1
             self.gnd_disp *= -1
             self._is_inverted = False
-            self.name = self.name.replace('_INVERTED', '')
+            self.name = self.name.replace("_INVERTED", "")
         else:
             return
-    
-    def plot(self, acc: bool=True, vel: bool=True, disp: bool=True, enable: bool=True, called: bool=False):
+
+    def plot(
+        self,
+        acc: bool = True,
+        vel: bool = True,
+        disp: bool = True,
+        enable: bool = True,
+        called: bool = False,
+    ):
         """
         Plots desired ground motion parameters.
 
@@ -221,11 +225,11 @@ class GroundMotion():
             return
         elif num_plots == 1:
             fig, ax = plt.subplots(num=self.name)
-            ax.set_xlabel('Time (s)')
+            ax.set_xlabel("Time (s)")
         else:
             fig, ax = plt.subplots(num_plots, 1, num=self.name)
-            ax[-1].set_xlabel('Time (s)')
-        fig.suptitle('Ground Motion\n{}'.format(self.name))
+            ax[-1].set_xlabel("Time (s)")
+        fig.suptitle("Ground Motion\n{}".format(self.name))
         if enable:
             pass
         else:
@@ -237,9 +241,9 @@ class GroundMotion():
                 i = num_plots - remain_plots
                 remain_plots -= 1
                 acc = ax[i]
-            acc.plot(self.time, self.gnd_acc, label='Ground Acceleration')
-            acc.set_ylabel('Acceleration (m/s^2)')
-            acc.set_title('Ground Acceleration')
+            acc.plot(self.time, self.gnd_acc, label="Ground Acceleration")
+            acc.set_ylabel("Acceleration (m/s^2)")
+            acc.set_title("Ground Acceleration")
             acc.legend()
         if vel:
             if num_plots == 1:
@@ -248,9 +252,9 @@ class GroundMotion():
                 j = num_plots - remain_plots
                 remain_plots -= 1
                 vel = ax[j]
-            vel.plot(self.time, self.gnd_vel, label='Ground Velocity')
-            vel.set_ylabel('Velocity (m/s)')
-            vel.set_title('Ground Velocity')
+            vel.plot(self.time, self.gnd_vel, label="Ground Velocity")
+            vel.set_ylabel("Velocity (m/s)")
+            vel.set_title("Ground Velocity")
             vel.legend()
         if disp:
             if num_plots == 1:
@@ -259,9 +263,9 @@ class GroundMotion():
                 k = num_plots - remain_plots
                 remain_plots -= 1
                 disp = ax[k]
-            disp.plot(self.time, self.gnd_disp, label='Ground Displacement')
-            disp.set_ylabel('Displacement (m)')
-            disp.set_title('Ground Displacement')
+            disp.plot(self.time, self.gnd_disp, label="Ground Displacement")
+            disp.set_ylabel("Displacement (m)")
+            disp.set_title("Ground Displacement")
             disp.legend()
         if called:
             return fig, ax

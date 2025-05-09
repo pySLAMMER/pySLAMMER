@@ -21,6 +21,21 @@ psfigstyle = {
 
 
 def sample_ground_motions():
+    """
+    Load sample ground motions from the `sample_ground_motions` folder.
+
+    Returns
+    -------
+    dict
+        A dictionary where keys are motion names (str) and values are `GroundMotion` objects
+        containing the time history data and metadata.
+
+    Notes
+    -----
+    This function reads all CSV files in the `sample_ground_motions` folder and creates
+    `GroundMotion` objects for each file. The file name (without extension) is used as the
+    key in the returned dictionary.
+    """
     sgms = {}
 
     # Get the path to the sample_ground_motions folder

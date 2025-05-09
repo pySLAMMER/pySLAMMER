@@ -2,11 +2,14 @@
 page-navigation: true
 ---
 
-# Comparison with analytical solution
+## Comparison with analytical solution
 
 In addition to comparing to the legacy results from SLAMMER, it is also worth comparing pySLAMMER's results to analytical solutions to sliding block problems. 
 In this section, we compare pySLAMMER's calculated sliding displacements for rigid sliding blocks for single cycle harmonic motions of frequencies ranging from 0.5 to 10 Hz to an analytical solution.
 
-## Analytical Solution
+While analytical solutions to sliding block analyses are not possible for complex ground motions, they can be developed for simple harmonic motions and pulses @conte1989.
 
-Voluptate reprehenderit velit elit deserunt qui anim cillum aliqua exercitation exercitation proident fugiat ad nulla veniam quis excepteur ut. Proident est laboris aliquip enim minim qui mollit do elit nisi culpa aliquip. Deserunt duis commodo fugiat enim adipiscing cupidatat quis pariatur incididunt occaecat elit mollit mollit quis. Laboris commodo ex minim eu aliquip incididunt reprehenderit sint eiusmod.
+::: {.callout-note}
+This page is a stub and will be updated soon.
+:::
+

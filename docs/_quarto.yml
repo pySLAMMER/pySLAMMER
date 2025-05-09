@@ -36,7 +36,8 @@ website:
           href: technical/tech_manual.qmd
           contents:
             - technical/glossary.qmd
-            - section: "Verification"
+            - section: "Verifications"
+              href: technical/verification.qmd
               contents:
                 - technical/comp_SLAMMER_results.qmd
                 - technical/comp_SLAMMER_perf.qmd
@@ -79,3 +80,5 @@ quartodoc:
         - RigidAnalysis
         - Decoupled
         - Coupled
+        - GroundMotion
+        - sample_ground_motions

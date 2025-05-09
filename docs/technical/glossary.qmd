@@ -5,4 +5,6 @@ sidebar: main
 page-navigation: true
 ---
 
-Some definitions of terms
+::: {.callout-note}
+This page is a stub and will be updated soon.
+:::

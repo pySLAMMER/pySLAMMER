@@ -40,72 +40,8 @@ class Coupled(Decoupled):
 
     Attributes
     ----------
-    s1 : float
-        Sliding displacement at time step 1.
-    sdot1 : float
-        Sliding velocity at time step 1.
-    sdotdot1 : float
-        Sliding acceleration at time step 1.
-    s2 : float
-        Sliding displacement at time step 2.
-    sdot2 : float
-        Sliding velocity at time step 2.
-    sdotdot2 : float
-        Sliding acceleration at time step 2.
-    u1 : float
-        Block displacement at time step 1.
-    udot1 : float
-        Block velocity at time step 1.
-    udotdot1 : float
-        Block acceleration at time step 1.
-    u2 : float
-        Block displacement at time step 2.
-    udot2 : float
-        Block velocity at time step 2.
-    udotdot2 : float
-        Block acceleration at time step 2.
-    baseacc : float
-        Base acceleration.
-    basef : float
-        Base force.
-    acc11 : float
-        Acceleration at time step 1.
-    acc22 : float
-        Acceleration at time step 2.
-    normalf1 : float
-        Normal force at time step 1.
-    normalf2 : float
-        Normal force at time step 2.
-    gameff1 : float
-        Effective acceleration at time step 1.
-    mx : float
-        Maximum sliding displacement.
-    mx1 : float
-        Maximum sliding displacement at time step 1.
-    mmax : float
-        Maximum sliding displacement overall.
-    s : np.ndarray
-        Sliding displacement time history.
-    u : np.ndarray
-        Block displacement time history.
-    udotdot : np.ndarray
-        Block acceleration time history.
     HEA : np.ndarray
         Horizontal equivalent acceleration time history from dynamic response.
-    udot : np.ndarray
-        Block velocity time history.
-    angle : float
-        Angle of inclination.
-    COS : float
-        Cosine of the angle.
-    SIN : float
-        Sine of the angle.
-    gCOS : float
-        Gravitational acceleration component along cosine.
-    gSIN : float
-        Gravitational acceleration component along sine.
-    beta : float
-        Integration parameter beta.
     gamma : float
         Integration parameter gamma.
     block_acc : np.ndarray

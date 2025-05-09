@@ -68,9 +68,4 @@ Decoupled analysis for sliding block and ground motion interaction.
 | v_resp           | np.ndarray                  | Response velocity.                                       |
 | a_resp           | np.ndarray                  | Response acceleration.                                   |
 | max_sliding_disp | float                       | Maximum sliding displacement.                            |
-| _slide           | bool                        | Whether the block is sliding.                            |
-| _vs_slope        | float                       | Shear wave velocity of the slope during analysis.        |
-| _omega           | float                       | Angular frequency.                                       |
-| _damp_imp        | float                       | Impedance damping.                                       |
-| _damp_tot        | float                       | Total damping.                                           |
 | ground_acc       | np.ndarray                  | Ground acceleration.                                     |

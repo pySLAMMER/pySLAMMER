@@ -8,18 +8,59 @@ G_EARTH = 9.80665  # Acceleration due to gravity (m/block_disp^2).
 
 
 class RigidAnalysis(SlidingBlockAnalysis):
-    """Rigid Block Analysis"""
+    """
+    Rigid Block Analysis.
+
+    Parameters
+    ----------
+    ky : float
+        Critical acceleration (in g).
+    a_in : list
+        Ground acceleration time series (in g).
+    dt : float
+        Time step of the input acceleration time series (in seconds).
+    scale_factor : float, optional
+        Scaling factor for the input acceleration. Default is 1.0.
+    target_pga : float, optional
+        Target peak ground acceleration (in m/s^2). If provided, the input acceleration
+        will be scaled to match this value. Cannot be used with `scale_factor`.
+    method : str, optional
+        Analysis method. Options are 'jibson', 'dgr', or 'gra'. Default is 'jibson'.
+
+    Raises
+    ------
+    ValueError
+        If both `target_pga` and `scale_factor` are provided.
+
+    Attributes
+    ----------
+    analysis_methods : dict
+        Dictionary mapping method names to their corresponding functions.
+    ground_acc : numpy.ndarray
+        Ground acceleration time series (in m/s^2).
+    """
 
     def __init__(
         self, ky, a_in, dt, scale_factor=1.0, target_pga=None, method="jibson"
     ):
         """
         Initialize rigid block analysis.
-        Args:
-            a_in (list): Ground acceleration (g).
-            dt (float): Time step (s).
-            ky (float): Critical acceleration (g).
-            method (str, optional): Analysis method. Default is 'jibson'.
+
+        Parameters
+        ----------
+        ky : float
+            Critical acceleration (in g).
+        a_in : list
+            Ground acceleration time series (in g).
+        dt : float
+            Time step of the input acceleration time series (in seconds).
+        scale_factor : float, optional
+            Scaling factor for the input acceleration. Default is 1.0.
+        target_pga : float, optional
+            Target peak ground acceleration (in m/s^2). If provided, the input acceleration
+            will be scaled to match this value. Cannot be used with `scale_factor`.
+        method : str, optional
+            Analysis method. Options are 'jibson', 'dgr', or 'gra'. Default is 'jibson'.
         """
         super().__init__(ky, a_in, dt, scale_factor, target_pga)
 
@@ -60,6 +101,11 @@ class RigidAnalysis(SlidingBlockAnalysis):
     def jibson(self):
         """
         Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.
+
+        Notes
+        -----
+        This method iteratively calculates the block's acceleration, velocity, and displacement
+        based on the input ground acceleration and critical acceleration.
         """
         tol = 1e-5
         self.block_acc = np.zeros(len(self.ground_acc))
@@ -95,16 +141,22 @@ class RigidAnalysis(SlidingBlockAnalysis):
         self.max_sliding_disp = self.sliding_disp[-1]
 
     def _garcia_rivas_arnold(self):
-        # for future implementation with velocity verlet
+        """
+        Placeholder for future implementation using the velocity Verlet method.
+
+        Notes
+        -----
+        This method is not yet implemented.
+        """
         pass
 
     def _downslope_dgr(self):
         """
-        Calculate the downslope rigid block displacement, differential velocity, and acceleration using the Jibson method.
-        Args:
-            ky (float, optional): Critical acceleration in multiples of g.
-        Returns:
-            None
+        Calculate the downslope rigid block displacement, differential velocity, and acceleration using the DGR method.
+
+        Notes
+        -----
+        This method is a placeholder for future implementation.
         """
         if self.dt == -1.0:
             return

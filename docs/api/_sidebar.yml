@@ -7,6 +7,8 @@ website:
       - api/RigidAnalysis.qmd
       - api/Decoupled.qmd
       - api/Coupled.qmd
+      - api/GroundMotion.qmd
+      - api/sample_ground_motions.qmd
       section: API Reference
     id: api
   - id: dummy-sidebar

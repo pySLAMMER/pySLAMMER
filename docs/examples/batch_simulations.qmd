@@ -4,11 +4,7 @@ This notebook shows an example use case of pyslammer for running batch simulatio
 
 ## Setup
 
-Assumes pyslammer is installed in the current python environment. *Documentation on installation pending*, but for now, you can install it using pip:
-
-``` bash
-pip install pyslammer
-```
+*The next steps assume you've already installed pySLAMMER from PYPI. See the [quickstart guide](../quickstart.qmd) for installation instructions.*
 
 Import pyslammer using:
 
@@ -26,7 +22,7 @@ plt.style.use(slam.psfigstyle)
 ```
 
 ```{python}
-kys = np.linspace(0.01,0.3,20)
+kys = np.linspace(0.01,0.7,100)
 histories = slam.sample_ground_motions()
 output = {}
 ```
@@ -56,11 +52,10 @@ df
 The results of the analyses can be plotted to show trends in total accumulated displacement with $k_y$ for each ground motion in the sample ground motion suite.
 
 ```{python}
-#| label: fig_multi_motion
+#| label: fig-multi_motion
 #| fig-cap: "Variation in final displacement with $k_y$ for the sample ground motion suite."
 plt.close('all')
-fig, ax = plt.subplots()
-# fig.set_size_inches(10,6)   
+fig, ax = plt.subplots()  
 for key, grp in df.groupby(['motion']):
     ax.scatter(grp["ky"]/grp["k_max"], grp["d_max"], label=key[0], alpha=0.5)
 ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
@@ -76,11 +71,11 @@ plt.show()
 
 ## Variation in a single motion's time history
 
-Alternatively, for any given motion, the displacement time histories for different values of $k_y$ could be of interest. In Figure @fig_variation_single, the results from all the simulations with the `Imperial_Valley_1979_BCR-230` motion are shown. Although a different dimension of the data are being shown, the figure is simply pulling from the the results dataframe used in @fig_multi_motion.
+Alternatively, for any given motion, the displacement time histories for different values of $k_y$ could be of interest. In @fig-variation_single, the results from all the simulations with the `Imperial_Valley_1979_BCR-230` motion are shown. Although a different dimension of the data are being shown, the figure is simply pulling from the the results dataframe used in @fig-multi_motion.
 
 ```{python}
 #| code-fold: true
-#| label: fig_variation_single
+#| label: fig-variation_single
 #| fig-cap: "Variation in cumulative displacement with $k_y$ for the Imperial Valley motion."
 import matplotlib.cm as cm
 from matplotlib.colors import LogNorm

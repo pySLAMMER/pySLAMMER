@@ -172,16 +172,6 @@ class Decoupled(SlidingBlockAnalysis):
         Response acceleration.
     max_sliding_disp : float
         Maximum sliding displacement.
-    _slide : bool
-        Whether the block is sliding.
-    _vs_slope : float
-        Shear wave velocity of the slope during analysis.
-    _omega : float
-        Angular frequency.
-    _damp_imp : float
-        Impedance damping.
-    _damp_tot : float
-        Total damping.
     ground_acc : np.ndarray
         Ground acceleration.
     """

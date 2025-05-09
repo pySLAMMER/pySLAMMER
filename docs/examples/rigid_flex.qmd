@@ -2,11 +2,7 @@
 
 This notebook shows an example use case of pyslammer for running rigid, decoupled, and coupled sliding block analyses.
 
-*The next steps assume you've already installed pySLAMMER from PYPI:*
-
-``` bash
-    pip install pyslammer
-```
+*The next steps assume you've already installed pySLAMMER from PYPI. See the [quickstart guide](../quickstart.qmd) for installation instructions.*
 
 First, import pySLAMMER and a couple other helpful packages
 
@@ -39,7 +35,6 @@ rigid_inputs = {
     "dt": gm.dt,
     "ky": 0.2
 }
-print(rigid_inputs)
 
 rigid_result = slam.RigidAnalysis(**rigid_inputs, scale_factor=2)
 ```
@@ -105,6 +100,8 @@ plt.grid(True)
 # Show the plot
 plt.show()
 ```
+
+Or each analysis can be plotted on its own using the `sliding_block_plot` method (inherited from the parent `SlidingBlockAnalysis` class).
 
 ```{python}
 rigid_fig = rigid_result.sliding_block_plot()
