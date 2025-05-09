@@ -1,0 +1,87 @@
+project:
+  type: website
+  output-dir: ../docs
+
+execute:
+  freeze: auto
+  
+metadata-files:
+  - api/_sidebar.yml
+
+website:
+  title: "pySLAMMER"
+  page-navigation: true
+  favicon: _static/pySLAMMER_logo_square.svg
+  navbar: 
+    left:
+    - file: quickstart.qmd
+      text: Quickstart guide
+    - file: examples/index.qmd
+      text: Examples
+    - file: api/index.qmd
+      text: API Reference
+    title: "pySLAMMER"
+    search: true
+    tools:
+      - icon: github
+        href: "https://github.com/lornearnold/pyslammer"
+
+  sidebar:
+    - id: main
+      title: pySLAMMER
+      style: "docked"
+      search: false
+      logo: _static/pySLAMMER_logo_square.svg
+      contents: 
+        - text: Welcome
+          href: index.qmd
+        - section: "Technical guide"
+          href: technical/tech_manual.qmd
+          contents:
+            - technical/glossary.qmd
+            - section: "Verifications"
+              href: technical/verification.qmd
+              contents:
+                - technical/comp_SLAMMER_results.qmd
+                - technical/comp_SLAMMER_perf.qmd
+                - technical/comp_analytical.qmd
+        - section: "About"
+          contents:
+            - about/motivation.qmd
+            - about/roadmap.qmd
+            - about/develop.qmd
+
+    - id: examples
+      contents:
+        - section: Examples
+          href: examples/index.qmd
+          contents:
+            - examples/rigid_flex.qmd
+            - examples/batch_simulations.qmd
+
+    - id: quickstart
+
+
+format:
+  html:
+    theme:
+      - cosmo
+    css: styles.css
+    toc: true
+    default-image-extension: svg
+
+quartodoc:
+  # the name used to import the package you want to create reference docs for
+  package: pyslammer
+  dir: api
+  sidebar: api/_sidebar.yml
+  sections:
+    - title: "API Reference"
+      desc: "API reference for pySLAMMER"
+      contents:
+        - SlidingBlockAnalysis
+        - RigidAnalysis
+        - Decoupled
+        - Coupled
+        - GroundMotion
+        - sample_ground_motions
