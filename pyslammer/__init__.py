@@ -7,6 +7,6 @@ from pyslammer.rigid_analysis import *
 from pyslammer.sliding_block_analysis import *
 from pyslammer.utilities import *
 
-__version__ = "0.1.19"
+__version__ = "0.2.1"
 
 import os

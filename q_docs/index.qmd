@@ -70,23 +70,13 @@ What's next?
 :::
 
 
+## How to cite pySLAMMER
+Please include citations for both the pySLAMMER code and marker paper if you use pySLAMMER.
 
-<!-- 
-See the [roadmap] for additional models we plan to add. 
-Have your own sliding block model you'd like to add? Community [contributions] are welcome!
+**Code**:
 
-Welcome
-Technical stuff
-Verifications
-Invitation to contribute
-Roadmap
+Arnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.1) [Python]. Zenodo. https://doi.org/10.5281/zenodo.15385356
 
-## Contents
+**Marker paper**:
 
-[Quickstart guide](quickstart.qmd)
-
-[Examples](examples.qmd)
-
-[API Reference](api/index.qmd)
-
-[Verification](verifications/verification.qmd) -->
+*Pending (manuscript in review)*

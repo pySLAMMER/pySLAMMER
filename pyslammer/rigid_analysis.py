@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.integrate as spint
 
+from pyslammer.decoupled_analysis import assign_k_y
 from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
 
 M_TO_CM = 100
@@ -15,10 +16,8 @@ class RigidAnalysis(SlidingBlockAnalysis):
     ----------
     ky : float
         Critical acceleration (in g).
-    a_in : list
-        Ground acceleration time series (in g).
-    dt : float
-        Time step of the input acceleration time series (in seconds).
+    ground_motion : GroundMotion
+        Ground motion object containing acceleration time history and time step.
     scale_factor : float, optional
         Scaling factor for the input acceleration. Default is 1.0.
     target_pga : float, optional
@@ -41,7 +40,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
     """
 
     def __init__(
-        self, ky, a_in, dt, scale_factor=1.0, target_pga=None, method="jibson"
+        self, ky, ground_motion, scale_factor=1.0, target_pga=None, method="jibson"
     ):
         """
         Initialize rigid block analysis.
@@ -50,10 +49,8 @@ class RigidAnalysis(SlidingBlockAnalysis):
         ----------
         ky : float
             Critical acceleration (in g).
-        a_in : list
-            Ground acceleration time series (in g).
-        dt : float
-            Time step of the input acceleration time series (in seconds).
+        ground_motion : GroundMotion
+            Ground motion object containing acceleration time series and metadata.
         scale_factor : float, optional
             Scaling factor for the input acceleration. Default is 1.0.
         target_pga : float, optional
@@ -62,25 +59,24 @@ class RigidAnalysis(SlidingBlockAnalysis):
         method : str, optional
             Analysis method. Options are 'jibson', 'dgr', or 'gra'. Default is 'jibson'.
         """
-        super().__init__(ky, a_in, dt, scale_factor, target_pga)
+        super().__init__(ky, ground_motion, scale_factor, target_pga)
 
         self.analysis_methods = {
             "jibson": self.jibson,
             "dgr": self._downslope_dgr,
             "gra": self._garcia_rivas_arnold,
         }
-        self._npts = len(a_in)
+        self._npts = len(self.a_in)
         self.ground_acc = np.array(self.a_in) * G_EARTH
-        self.dt = dt
-        self.ky = ky * G_EARTH
+        self.dt = ground_motion.dt
+        # self.ky = ky * G_EARTH
         self.method = method
 
         analysis_function = self.analysis_methods.get(self.method)
         if analysis_function:
             analysis_function()
         else:
-            print(f"Analysis type {self.method} is not supported.")
-        pass
+            raise ValueError(f"Unknown method: {self.method}")
 
     def __str__(self):
         # if self.dt == -1.0:
@@ -162,7 +158,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
             return
         else:
             self._clear_block_params()
-            self.ky = k_y * G_EARTH
+            self.ky = assign_k_y(ky) * G_EARTH
         time = np.arange(0, len(self.ground_acc) * self.dt, self.dt)
         block_sliding = False
         for i in range(len(self.gnd_acc)):
@@ -177,7 +173,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
                 block_sliding = False
             else:
                 pass
-            if block_sliding == True:
+            if block_sliding:
                 self.block_vel.append(tmp_block_vel)
                 self.block_acc.append(self.ky)
             else:

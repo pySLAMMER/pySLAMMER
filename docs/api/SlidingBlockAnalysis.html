@@ -250,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="pyslammer.SlidingBlockAnalysis" class="level1">
 <h1>SlidingBlockAnalysis</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SlidingBlockAnalysis(<span class="va">self</span>, ky, a_in, dt, scale_factor<span class="op">=</span><span class="fl">1.0</span>, target_pga<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SlidingBlockAnalysis(<span class="va">self</span>, ky, ground_motion, scale_factor<span class="op">=</span><span class="fl">1.0</span>, target_pga<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Base class for all time-domain sliding block analyses. <code>SlidingBlockAnalysis</code> does not perform any analysis by itself. It is meant to be subclassed by other classes that implement specific sliding block analysis methods. It performs checks on the input parameters and initializes the attributes for the analysis. The class also provides a method to plot the results of the analysis.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
@@ -277,24 +277,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><em>required</em></td>
 </tr>
 <tr class="even">
-<td>a_in</td>
-<td>numpy.ndarray</td>
-<td>Input acceleration time series (in m/s^2).</td>
+<td>ground_motion</td>
+<td>GroundMotion</td>
+<td>Ground motion object containing acceleration time series and metadata.</td>
 <td><em>required</em></td>
 </tr>
 <tr class="odd">
-<td>dt</td>
-<td>float</td>
-<td>Time step of the input acceleration time series (in seconds).</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
 <td>scale_factor</td>
 <td>float</td>
 <td>Scaling factor for the input acceleration. Default is 1.0.</td>
 <td><code>1.0</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>target_pga</td>
 <td>float</td>
 <td>Target peak ground acceleration (in m/s^2). If provided, the input acceleration will be scaled to match this value. Cannot be used with <code>scale_factor</code>.</td>
@@ -331,9 +325,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="doc-section doc-section-attributes anchored" data-anchor-id="attributes">Attributes</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 18%">
-<col style="width: 23%">
-<col style="width: 58%">
+<col style="width: 17%">
+<col style="width: 22%">
+<col style="width: 60%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -352,6 +346,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>a_in</td>
 <td>numpy.ndarray</td>
 <td>Scaled input acceleration time series.</td>
+</tr>
+<tr class="odd">
+<td>dt</td>
+<td>float</td>
+<td>Time step of the input acceleration time series (in seconds).</td>
+</tr>
+<tr class="even">
+<td>motion_name</td>
+<td>str</td>
+<td>Name of the ground motion record.</td>
 </tr>
 <tr class="odd">
 <td>method</td>
@@ -439,7 +443,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <section id="pyslammer.SlidingBlockAnalysis.sliding_block_plot" class="level3">
 <h3 class="anchored" data-anchor-id="pyslammer.SlidingBlockAnalysis.sliding_block_plot">sliding_block_plot</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>SlidingBlockAnalysis.sliding_block_plot(sliding_vel_mode<span class="op">=</span><span class="va">True</span>, fig<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>SlidingBlockAnalysis.sliding_block_plot(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    sliding_vel_mode<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    fig<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Plot the analysis result as a 3-by-1 array of time series figures.</p>
 <section id="parameters-1" class="level4 doc-section doc-section-parameters">
 <h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>

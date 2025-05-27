@@ -4,8 +4,7 @@
 RigidAnalysis(
     self,
     ky,
-    a_in,
-    dt,
+    ground_motion,
     scale_factor=1.0,
     target_pga=None,
     method='jibson',
@@ -16,14 +15,13 @@ Rigid Block Analysis.
 
 ## Parameters {.doc-section .doc-section-parameters}
 
-| Name         | Type   | Description                                                                                                                                             | Default    |
-|--------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| ky           | float  | Critical acceleration (in g).                                                                                                                           | _required_ |
-| a_in         | list   | Ground acceleration time series (in g).                                                                                                                 | _required_ |
-| dt           | float  | Time step of the input acceleration time series (in seconds).                                                                                           | _required_ |
-| scale_factor | float  | Scaling factor for the input acceleration. Default is 1.0.                                                                                              | `1.0`      |
-| target_pga   | float  | Target peak ground acceleration (in m/s^2). If provided, the input acceleration will be scaled to match this value. Cannot be used with `scale_factor`. | `None`     |
-| method       | str    | Analysis method. Options are 'jibson', 'dgr', or 'gra'. Default is 'jibson'.                                                                            | `'jibson'` |
+| Name          | Type         | Description                                                                                                                                             | Default    |
+|---------------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| ky            | float        | Critical acceleration (in g).                                                                                                                           | _required_ |
+| ground_motion | GroundMotion | Ground motion object containing acceleration time history and time step.                                                                                | _required_ |
+| scale_factor  | float        | Scaling factor for the input acceleration. Default is 1.0.                                                                                              | `1.0`      |
+| target_pga    | float        | Target peak ground acceleration (in m/s^2). If provided, the input acceleration will be scaled to match this value. Cannot be used with `scale_factor`. | `None`     |
+| method        | str          | Analysis method. Options are 'jibson', 'dgr', or 'gra'. Default is 'jibson'.                                                                            | `'jibson'` |
 
 ## Raises {.doc-section .doc-section-raises}
 

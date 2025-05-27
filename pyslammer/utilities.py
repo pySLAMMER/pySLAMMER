@@ -15,6 +15,8 @@ psfigstyle = {
     # "axes.labelweight": "bold",
     "axes.titleweight": "bold",
     "axes.formatter.use_mathtext": True,
+    "legend.framealpha": 1.0,
+    "legend.edgecolor": "white",
     # "mathtext.default": "regular",
     # "figure.dpi": 300,
 }

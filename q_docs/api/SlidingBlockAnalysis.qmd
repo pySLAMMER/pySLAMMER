@@ -1,7 +1,7 @@
 # SlidingBlockAnalysis { #pyslammer.SlidingBlockAnalysis }
 
 ```python
-SlidingBlockAnalysis(self, ky, a_in, dt, scale_factor=1.0, target_pga=None)
+SlidingBlockAnalysis(self, ky, ground_motion, scale_factor=1.0, target_pga=None)
 ```
 
 Base class for all time-domain sliding block analyses. `SlidingBlockAnalysis` does not
@@ -12,13 +12,12 @@ The class also provides a method to plot the results of the analysis.
 
 ## Parameters {.doc-section .doc-section-parameters}
 
-| Name         | Type          | Description                                                                                                                                             | Default    |
-|--------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| ky           | float         | Yield acceleration of the sliding block (in g).                                                                                                         | _required_ |
-| a_in         | numpy.ndarray | Input acceleration time series (in m/s^2).                                                                                                              | _required_ |
-| dt           | float         | Time step of the input acceleration time series (in seconds).                                                                                           | _required_ |
-| scale_factor | float         | Scaling factor for the input acceleration. Default is 1.0.                                                                                              | `1.0`      |
-| target_pga   | float         | Target peak ground acceleration (in m/s^2). If provided, the input acceleration will be scaled to match this value. Cannot be used with `scale_factor`. | `None`     |
+| Name          | Type         | Description                                                                                                                                             | Default    |
+|---------------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| ky            | float        | Yield acceleration of the sliding block (in g).                                                                                                         | _required_ |
+| ground_motion | GroundMotion | Ground motion object containing acceleration time series and metadata.                                                                                  | _required_ |
+| scale_factor  | float        | Scaling factor for the input acceleration. Default is 1.0.                                                                                              | `1.0`      |
+| target_pga    | float        | Target peak ground acceleration (in m/s^2). If provided, the input acceleration will be scaled to match this value. Cannot be used with `scale_factor`. | `None`     |
 
 ## Raises {.doc-section .doc-section-raises}
 
@@ -28,23 +27,25 @@ The class also provides a method to plot the results of the analysis.
 
 ## Attributes {.doc-section .doc-section-attributes}
 
-| Name             | Type                  | Description                                             |
-|------------------|-----------------------|---------------------------------------------------------|
-| scale_factor     | float                 | Scaling factor applied to the input acceleration.       |
-| a_in             | numpy.ndarray         | Scaled input acceleration time series.                  |
-| method           | str or None           | Analysis method used (to be defined in subclasses).     |
-| ky               | float or None         | Yield acceleration of the sliding block (in g).         |
-| time             | numpy.ndarray or None | Time array corresponding to the input acceleration.     |
-| ground_acc       | numpy.ndarray or None | Ground acceleration time series (in m/s^2).             |
-| ground_vel       | numpy.ndarray or None | Ground velocity time series (in m/s).                   |
-| ground_disp      | numpy.ndarray or None | Ground displacement time series (in m).                 |
-| block_acc        | numpy.ndarray or None | Block acceleration time series (in m/s^2).              |
-| block_vel        | numpy.ndarray or None | Block velocity time series (in m/s).                    |
-| block_disp       | numpy.ndarray or None | Block displacement time series (in m).                  |
-| sliding_vel      | numpy.ndarray or None | Sliding velocity time series (in m/s).                  |
-| sliding_disp     | numpy.ndarray or None | Sliding displacement time series (in m).                |
-| max_sliding_disp | float or None         | Maximum sliding displacement (in m).                    |
-| _npts            | int or None           | Number of points in the input acceleration time series. |
+| Name             | Type                  | Description                                                   |
+|------------------|-----------------------|---------------------------------------------------------------|
+| scale_factor     | float                 | Scaling factor applied to the input acceleration.             |
+| a_in             | numpy.ndarray         | Scaled input acceleration time series.                        |
+| dt               | float                 | Time step of the input acceleration time series (in seconds). |
+| motion_name      | str                   | Name of the ground motion record.                             |
+| method           | str or None           | Analysis method used (to be defined in subclasses).           |
+| ky               | float or None         | Yield acceleration of the sliding block (in g).               |
+| time             | numpy.ndarray or None | Time array corresponding to the input acceleration.           |
+| ground_acc       | numpy.ndarray or None | Ground acceleration time series (in m/s^2).                   |
+| ground_vel       | numpy.ndarray or None | Ground velocity time series (in m/s).                         |
+| ground_disp      | numpy.ndarray or None | Ground displacement time series (in m).                       |
+| block_acc        | numpy.ndarray or None | Block acceleration time series (in m/s^2).                    |
+| block_vel        | numpy.ndarray or None | Block velocity time series (in m/s).                          |
+| block_disp       | numpy.ndarray or None | Block displacement time series (in m).                        |
+| sliding_vel      | numpy.ndarray or None | Sliding velocity time series (in m/s).                        |
+| sliding_disp     | numpy.ndarray or None | Sliding displacement time series (in m).                      |
+| max_sliding_disp | float or None         | Maximum sliding displacement (in m).                          |
+| _npts            | int or None           | Number of points in the input acceleration time series.       |
 
 ## Methods
 
@@ -55,7 +56,11 @@ The class also provides a method to plot the results of the analysis.
 ### sliding_block_plot { #pyslammer.SlidingBlockAnalysis.sliding_block_plot }
 
 ```python
-SlidingBlockAnalysis.sliding_block_plot(sliding_vel_mode=True, fig=None)
+SlidingBlockAnalysis.sliding_block_plot(
+    time_range=None,
+    sliding_vel_mode=True,
+    fig=None,
+)
 ```
 
 Plot the analysis result as a 3-by-1 array of time series figures.

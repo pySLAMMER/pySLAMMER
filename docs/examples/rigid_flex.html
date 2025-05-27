@@ -202,6 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#rigid-block-analysis" id="toc-rigid-block-analysis" class="nav-link active" data-scroll-target="#rigid-block-analysis">Rigid block analysis</a></li>
   <li><a href="#flexible-sliding-block-analysis" id="toc-flexible-sliding-block-analysis" class="nav-link" data-scroll-target="#flexible-sliding-block-analysis">Flexible sliding block analysis</a></li>
   <li><a href="#comparison-of-analysis-methods" id="toc-comparison-of-analysis-methods" class="nav-link" data-scroll-target="#comparison-of-analysis-methods">Comparison of analysis methods</a></li>
+  <li><a href="#inherited-plotting" id="toc-inherited-plotting" class="nav-link" data-scroll-target="#inherited-plotting">Inherited plotting</a></li>
   </ul>
 </nav>
     </div>
@@ -230,33 +231,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This notebook shows an example use case of pyslammer for running rigid, decoupled, and coupled sliding block analyses.</p>
 <p><em>The next steps assume you’ve already installed pySLAMMER from PYPI. See the <a href="../quickstart.html">quickstart guide</a> for installation instructions.</em></p>
 <p>First, import pySLAMMER and a couple other helpful packages</p>
-<div id="e1f540f1" class="cell" data-execution_count="1">
+<div id="5d48ab4b" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyslammer <span class="im">as</span> slam</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next define the ground motion to use in the analysis. For this example, we will use one of pySLAMMER’s built in ground motions from the 1995 Kobe earthquake. This creates a ground motion object with <code>accel</code> and <code>dt</code> attributes with the acceleration array and timestep, respectively.</p>
-<div id="97ba736d" class="cell" data-execution_count="2">
+<div id="c29d6088" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>record_name <span class="op">=</span> <span class="st">"Kobe_1995_TAK-090"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>gm <span class="op">=</span> slam.sample_ground_motions()[record_name]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="rigid-block-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="rigid-block-analysis">Rigid block analysis</h2>
-<p>A rigid block analysis requires at least three input parameters:</p>
+<p>A rigid block analysis requires at least two input parameters:</p>
 <ul>
-<li><code>a_in</code> - the input acceleration time history (in units of g)</li>
-<li><code>dt</code> - the timestep separating the acceleration data points</li>
+<li><code>ground_motion</code> - the input ground motion object, which contains the name, acceleration signal, and timestep</li>
 <li><code>ky</code> - the slope’s yield acceleration (in units of g)</li>
 </ul>
 <p>These parameters are stored in a dictionary (<code>rigid_inputs</code>) and used as kwarg input to the <code>RigidAnalysis</code> method.</p>
-<div id="f362e130" class="cell" data-execution_count="3">
+<div id="83dbe08f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rigid_inputs <span class="op">=</span> {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a_in"</span>: gm.accel,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"dt"</span>: gm.dt,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ky"</span>: <span class="fl">0.2</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>rigid_result <span class="op">=</span> slam.RigidAnalysis(<span class="op">**</span>rigid_inputs, scale_factor<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ground_motion"</span>: gm,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ky"</span>: <span class="fl">0.2</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>rigid_result <span class="op">=</span> slam.RigidAnalysis(<span class="op">**</span>rigid_inputs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -269,7 +268,7 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>Passing the input variables to <code>slam.RigidAnalysis</code> as a dictionary isn’t necessary, it’s just a convenient way to package groups of input variables. The following line would have produced the same result as the previous cell:</p>
-<p><code>rigid_result = slam.RigidAnalysis(gm.accel, gm.dt, 0.2)</code></p>
+<p><code>rigid_result = slam.RigidAnalysis(ground_motion, 0.2)</code></p>
 </div>
 </div>
 </section>
@@ -285,7 +284,7 @@ Note
 <li><code>soil_model</code> - the dynamic analysis method used (either <code>linear_elastic</code> or <code>equivalent_linear</code>)</li>
 </ul>
 <p>These parameters are stored in a dictionary (<code>flexible_inputs</code>) and used as kwargs along with those used in the rigid analysis. The decoupled and coupled analyses are run with the <code>Decoupled</code> and <code>Coupled</code> methods, respectively.</p>
-<div id="6dddaa41" class="cell" data-execution_count="4">
+<div id="9955cc14" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>flexible_inputs <span class="op">=</span> {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"height"</span>: <span class="fl">50.0</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"vs_slope"</span>: <span class="fl">600.0</span>,</span>
@@ -304,56 +303,96 @@ Note
 <section id="comparison-of-analysis-methods" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-analysis-methods">Comparison of analysis methods</h2>
 <p>A simple plot comparing the block displacements with time can be generated by accessing the <code>.sliding_disp</code> attribute of each analysis result.</p>
-<div id="dc51cb03" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="bu">len</span>(gm.accel) <span class="op">*</span> gm.dt, gm.dt)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot block displacement vs time for each analysis method</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, rigid_result.sliding_disp, label<span class="op">=</span><span class="st">'Rigid Analysis'</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.plot(time, decoupled_result.sliding_disp, label<span class="op">=</span><span class="st">'Decoupled Analysis'</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time, coupled_result.sliding_disp, label<span class="op">=</span><span class="st">'Coupled Analysis'</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels and legend</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (s)'</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Block Displacement (m)'</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Block Displacement with Different Analysis Methods</span><span class="ch">\n</span><span class="ss"> for </span><span class="sc">{</span>record_name<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="925a5b54" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Some extra stuff to make the p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-fig-comb" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="bu">len</span>(gm.accel) <span class="op">*</span> gm.dt, gm.dt)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot block displacement vs time for each analysis method</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, rigid_result.sliding_disp, label<span class="op">=</span><span class="st">'Rigid Analysis'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.plot(time, decoupled_result.sliding_disp, label<span class="op">=</span><span class="st">'Decoupled Analysis'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time, coupled_result.sliding_disp, label<span class="op">=</span><span class="st">'Coupled Analysis'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>summary_text <span class="op">=</span> <span class="ss">f"ky: </span><span class="sc">{</span>rigid_result<span class="sc">.</span>ky <span class="op">/</span> slam<span class="sc">.</span>G_EARTH<span class="sc">:.2f}</span><span class="ss">g | Motion: </span><span class="sc">{</span>rigid_result<span class="sc">.</span>motion_name<span class="sc">}</span><span class="ss"> (PGA: </span><span class="sc">{</span><span class="bu">max</span>(<span class="bu">abs</span>(rigid_result.a_in))<span class="sc">:.2f}</span><span class="ss">g)"</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.suptitle(summary_text, fontsize<span class="op">=</span><span class="dv">10</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels and legend</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (s)'</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Block Displacement (m)'</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.title(f'Block Displacement with Different Analysis Methods\n for {record_name}')</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="rigid_flex_files/figure-html/cell-6-output-1.png" width="812" height="541" class="figure-img"></p>
+<div id="fig-comb" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-comb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rigid_flex_files/figure-html/fig-comb-output-1.png" width="812" height="561" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-comb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Block Displacement with Different Analysis Methods
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Or each analysis can be plotted on its own using the <code>sliding_block_plot</code> method (inherited from the parent <code>SlidingBlockAnalysis</code> class).</p>
-<div id="2bd2f102" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rigid_fig <span class="op">=</span> rigid_result.sliding_block_plot()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>decoupled_fig <span class="op">=</span> decoupled_result.sliding_block_plot()</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>coupled_fig <span class="op">=</span> coupled_result.sliding_block_plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="inherited-plotting" class="level2">
+<h2 class="anchored" data-anchor-id="inherited-plotting">Inherited plotting</h2>
+<p>Since all of these are instances of classes that have <code>SlidingBlockAnalysis</code> as their parent class, they all inherit the <code>SlidingBlockAnalysis.sliding_block_plot</code> method. Calling the plotting method on each result object produces a concise plot of the analysis. By inspection of the <a href="#fig-comb" class="quarto-xref">Figure&nbsp;1</a>, we can see that all the sliding occurs in the first 10 seconds or so of this particular analysis. The plotting method accepts an optional parameter to focus on the time range of interest which will help show some of the differences in the analysis methods.</p>
+<p>When we call <code>sliding_block_plot()</code> from <code>rigid_result</code>, the plot shows the familiar features of a traditional “Newmark-like” sliding block analysis.</p>
+<div id="cell-fig-rigid" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [<span class="dv">0</span>,<span class="dv">15</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rigid_fig <span class="op">=</span> rigid_result.sliding_block_plot(time_range<span class="op">=</span>times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="rigid_flex_files/figure-html/cell-7-output-1.png" width="662" height="470" class="figure-img"></p>
+<div id="fig-rigid" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rigid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rigid_flex_files/figure-html/fig-rigid-output-1.png" width="661" height="474" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rigid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Result of calling the <code>sliding_block_plot()</code> method on the rigid analysis result.
+</figcaption>
 </figure>
 </div>
 </div>
+</div>
+<p>With the decoupled results, the <code>sliding_block_plot()</code> method automatically recognizes the need to display the input motion and the “base” motion as separate arrays. The input acceleration is the motion <em>before</em> the dynamic response of the slope was calculated. The “base” acceleration is the acceleration of the ground beneath the sliding block, which is an output of the slope dynamic response calculation. If we ignore the input acceleration, the base and block acceleration signals look exactly like a rigid analysis result (which is expected because the second half of the decoupled analysis uses rigid sliding assumptions).</p>
+<div id="cell-fig-decoupled" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>decoupled_fig <span class="op">=</span> decoupled_result.sliding_block_plot(time_range<span class="op">=</span>times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="rigid_flex_files/figure-html/cell-7-output-2.png" width="662" height="470" class="figure-img"></p>
+<div id="fig-decoupled" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-decoupled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rigid_flex_files/figure-html/fig-decoupled-output-1.png" width="661" height="474" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decoupled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Result of calling the <code>sliding_block_plot()</code> method on the decoupled analysis result.
+</figcaption>
 </figure>
 </div>
 </div>
+</div>
+<p>With the coupled result, we see the differences from the decoupled analysis assumption manifested in the acceleration signals. First, the block acceleration signal no longer shows the distinct plateau of the yield acceleration during sliding events. This is because the dynamic response of the sliding mass continues to be calculated during sliding and the “block acceleration” signal is showing the average acceleration of the whole mass rather than the acceleration at the sliding interface. Second, the base acceleration signal is different than that of the decoupled analysis method during (and very shortly after) sliding because the dynamic response of the slope <em>beneath</em> the failure surface is also affected by sliding. In fact, a close inspection of the stop of sliding times reveals an abrupt jump in the base acceleration as the two masses above and below the sliding surface affect each others’ dynamic response.</p>
+<div id="cell-fig-coupled" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>coupled_fig <span class="op">=</span> coupled_result.sliding_block_plot(time_range<span class="op">=</span>times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="rigid_flex_files/figure-html/cell-7-output-3.png" width="662" height="470" class="figure-img"></p>
+<div id="fig-coupled" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coupled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rigid_flex_files/figure-html/fig-coupled-output-1.png" width="661" height="474" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coupled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Result of calling the <code>sliding_block_plot()</code> method on the coupled analysis result.
+</figcaption>
 </figure>
 </div>
 </div>

@@ -4,8 +4,7 @@
 Decoupled(
     self,
     ky,
-    a_in,
-    dt,
+    ground_motion,
     height,
     vs_slope,
     vs_base,
@@ -23,20 +22,19 @@ Decoupled analysis for sliding block and ground motion interaction.
 
 ## Parameters {.doc-section .doc-section-parameters}
 
-| Name         | Type                                                                                          | Description                                            | Default            |
-|--------------|-----------------------------------------------------------------------------------------------|--------------------------------------------------------|--------------------|
-| ky           | float or tuple\[list\[float\], list\[float\]\] or tuple\[np.ndarray, np.ndarray\] or callable | Yield acceleration function or constant.               | _required_         |
-| a_in         | list\[float\] or np.ndarray                                                                   | Input acceleration time history.                       | _required_         |
-| dt           | float                                                                                         | Time step of the input acceleration.                   | _required_         |
-| height       | int or float                                                                                  | Height of the sliding block.                           | _required_         |
-| vs_slope     | int or float                                                                                  | Shear wave velocity of the slope.                      | _required_         |
-| vs_base      | int or float                                                                                  | Shear wave velocity of the base.                       | _required_         |
-| damp_ratio   | float                                                                                         | Damping ratio of the sliding block.                    | _required_         |
-| ref_strain   | float                                                                                         | Reference strain for modulus reduction.                | _required_         |
-| scale_factor | float                                                                                         | Scale factor for the input acceleration. Default is 1. | `1`                |
-| soil_model   | str                                                                                           | Soil model type. Default is "linear_elastic".          | `'linear_elastic'` |
-| si_units     | bool                                                                                          | Whether to use SI units. Default is True.              | `True`             |
-| lite         | bool                                                                                          | Whether to use lite mode. Default is False.            | `False`            |
+| Name          | Type                                                                                          | Description                                                              | Default            |
+|---------------|-----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------------|
+| ky            | float or tuple\[list\[float\], list\[float\]\] or tuple\[np.ndarray, np.ndarray\] or callable | Yield acceleration function or constant.                                 | _required_         |
+| ground_motion | GroundMotion                                                                                  | Ground motion object containing acceleration time history and time step. | _required_         |
+| height        | int or float                                                                                  | Height of the sliding block.                                             | _required_         |
+| vs_slope      | int or float                                                                                  | Shear wave velocity of the slope.                                        | _required_         |
+| vs_base       | int or float                                                                                  | Shear wave velocity of the base.                                         | _required_         |
+| damp_ratio    | float                                                                                         | Damping ratio of the sliding block.                                      | _required_         |
+| ref_strain    | float                                                                                         | Reference strain for modulus reduction.                                  | _required_         |
+| scale_factor  | float                                                                                         | Scale factor for the input acceleration. Default is 1.                   | `1`                |
+| soil_model    | str                                                                                           | Soil model type. Default is "linear_elastic".                            | `'linear_elastic'` |
+| si_units      | bool                                                                                          | Whether to use SI units. Default is True.                                | `True`             |
+| lite          | bool                                                                                          | Whether to use lite mode. Default is False.                              | `False`            |
 
 ## Attributes {.doc-section .doc-section-attributes}
 

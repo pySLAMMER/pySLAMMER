@@ -3,8 +3,8 @@ import math
 import numpy as np
 
 import pyslammer as slam
-from pyslammer.constants import *
 from pyslammer.decoupled_analysis import Decoupled
+from pyslammer.record import GroundMotion
 
 
 class Coupled(Decoupled):
@@ -15,10 +15,8 @@ class Coupled(Decoupled):
     ----------
     ky : float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable
         Yield acceleration or function defining yield acceleration.
-    a_in : list[float] or np.ndarray
-        Input acceleration time history.
-    dt : float
-        Time step of the input acceleration.
+    ground_motion : GroundMotion
+        Ground motion object containing acceleration time history and time step.
     height : int or float
         Height of the sliding block.
     vs_slope : int or float
@@ -31,6 +29,8 @@ class Coupled(Decoupled):
         Reference strain.
     scale_factor : float, optional
         Scale factor for input acceleration, by default 1.
+    target_pga : float, optional
+        Target peak ground acceleration, by default None.
     soil_model : str, optional
         Soil model type, by default "linear_elastic".
     si_units : bool, optional
@@ -58,8 +58,7 @@ class Coupled(Decoupled):
         or tuple[list[float], list[float]]
         or tuple[np.ndarray, np.ndarray]
         or callable,
-        a_in: list[float] or np.ndarray,
-        dt: float,
+        ground_motion: GroundMotion,
         height: int or float,
         vs_slope: int or float,
         vs_base: int or float,
@@ -73,8 +72,7 @@ class Coupled(Decoupled):
     ):
         super().__init__(
             ky,
-            a_in,
-            dt,
+            ground_motion,
             height,
             vs_slope,
             vs_base,
@@ -369,8 +367,7 @@ if __name__ == "__main__":
 
     ca = slam.Coupled(
         ky=ky_func,
-        a_in=motion.accel,
-        dt=motion.dt,
+        ground_motion=motion,
         height=50.0,
         vs_slope=600.0,
         vs_base=600.0,

@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import pyslammer as slam
-from pyslammer.constants import *
+from pyslammer.constants import G_EARTH, KNM3_TO_LBFT3, M_TO_FT
+from pyslammer.record import GroundMotion
 from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
 
 
@@ -95,10 +96,8 @@ class Decoupled(SlidingBlockAnalysis):
     ----------
     ky : float or tuple[list[float], list[float]] or tuple[np.ndarray, np.ndarray] or callable
         Yield acceleration function or constant.
-    a_in : list[float] or np.ndarray
-        Input acceleration time history.
-    dt : float
-        Time step of the input acceleration.
+    ground_motion : GroundMotion
+        Ground motion object containing acceleration time history and time step.
     height : int or float
         Height of the sliding block.
     vs_slope : int or float
@@ -182,8 +181,7 @@ class Decoupled(SlidingBlockAnalysis):
         or tuple[list[float], list[float]]
         or tuple[np.ndarray, np.ndarray]
         or callable,
-        a_in: list[float] or np.ndarray,
-        dt: float,
+        ground_motion: GroundMotion,
         height: int or float,
         vs_slope: int or float,
         vs_base: int or float,
@@ -195,11 +193,10 @@ class Decoupled(SlidingBlockAnalysis):
         si_units: bool = True,
         lite: bool = False,
     ):
-        super().__init__(ky, a_in, dt, scale_factor, target_pga)
-        self._npts = len(a_in)
-        self.k_y = assign_k_y(ky)  # Move to base class
-        # self.a_in = a_in.copy()  # FIXME: will no long work with list input
-        self.dt = dt
+        super().__init__(ky, ground_motion, scale_factor, target_pga)
+        self._npts = len(self.a_in)
+        self.k_y = assign_k_y(ky)
+        self.dt = ground_motion.dt
         self.height = height
         self.vs_slope = vs_slope
         self.vs_base = vs_base
@@ -209,9 +206,7 @@ class Decoupled(SlidingBlockAnalysis):
         self.soil_model = soil_model
         self.lite = lite
 
-        self.scale_factor = scale_factor
-
-        self.npts = len(a_in)
+        self.npts = len(self.a_in)
         self.g = G_EARTH * (si_units + (not si_units) * M_TO_FT)
         self.unit_weight = 20.0 * (
             si_units + (not si_units) * KNM3_TO_LBFT3

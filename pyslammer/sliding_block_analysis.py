@@ -3,6 +3,7 @@ import numpy as np
 import scipy.integrate as spint
 
 from pyslammer.constants import G_EARTH
+from pyslammer.utilities import psfigstyle
 
 
 class SlidingBlockAnalysis:
@@ -17,10 +18,8 @@ class SlidingBlockAnalysis:
     ----------
     ky : float
         Yield acceleration of the sliding block (in g).
-    a_in : numpy.ndarray
-        Input acceleration time series (in m/s^2).
-    dt : float
-        Time step of the input acceleration time series (in seconds).
+    ground_motion : GroundMotion
+        Ground motion object containing acceleration time series and metadata.
     scale_factor : float, optional
         Scaling factor for the input acceleration. Default is 1.0.
     target_pga : float, optional
@@ -38,6 +37,10 @@ class SlidingBlockAnalysis:
         Scaling factor applied to the input acceleration.
     a_in : numpy.ndarray
         Scaled input acceleration time series.
+    dt : float
+        Time step of the input acceleration time series (in seconds).
+    motion_name : str
+        Name of the ground motion record.
     method : str or None
         Analysis method used (to be defined in subclasses).
     ky : float or None
@@ -66,21 +69,23 @@ class SlidingBlockAnalysis:
         Number of points in the input acceleration time series.
     """
 
-    def __init__(self, ky, a_in, dt, scale_factor=1.0, target_pga=None):
+    def __init__(self, ky, ground_motion, scale_factor=1.0, target_pga=None):
         if target_pga is not None:
             if scale_factor != 1:
                 raise ValueError(
                     "Both target_pga and scale_factor cannot be provided at the same time."
                 )
-            scale_factor = target_pga / max(abs(a_in))
+            scale_factor = target_pga / max(abs(ground_motion.accel))
 
         self.scale_factor = scale_factor
         self.a_in = (
-            a_in.copy() * scale_factor
+            ground_motion.accel.copy() * scale_factor
         )  # no longer accepts lists, only numpy arrays
+        self.dt = ground_motion.dt
 
         self.method = None
-        self.ky = None
+        self.motion_name = ground_motion.name
+        self.ky = ky * G_EARTH
         self.time = None
 
         self.ground_acc = None
@@ -112,7 +117,7 @@ class SlidingBlockAnalysis:
             self.sliding_disp = self.block_disp  # - self.ground_disp
         pass
 
-    def sliding_block_plot(self, sliding_vel_mode=True, fig=None):
+    def sliding_block_plot(self, time_range=None, sliding_vel_mode=True, fig=None):
         """
         Plot the analysis result as a 3-by-1 array of time series figures.
 
@@ -130,6 +135,7 @@ class SlidingBlockAnalysis:
         matplotlib.figure.Figure
             The figure containing the plots.
         """
+        plt.style.use(psfigstyle)
         self._compile_attributes()
         bclr = "k"
         gclr = "tab:blue"
@@ -140,6 +146,12 @@ class SlidingBlockAnalysis:
         else:
             axs = fig.get_axes()
         time = np.arange(0, self._npts * self.dt, self.dt)
+
+        # Add analysis summary text above the plots
+        analysis_type = self.__class__.__name__
+        motion_name = getattr(self, "motion_name", "Unknown")
+        summary_text = f"{analysis_type} | ky: {self.ky / G_EARTH:.2f}g | Motion: {motion_name} (PGA: {max(abs(self.a_in)):.2f}g)"
+        fig.suptitle(summary_text, fontsize=10, y=0.98)
 
         if hasattr(self, "HEA") and self.HEA is not None:
             axs[0].plot(
@@ -169,10 +181,45 @@ class SlidingBlockAnalysis:
         axs[2].plot(time, self.sliding_disp, label="Sliding Disp.", color=bclr)
         axs[2].set_ylabel("Disp. (m)")
         for i in range(len(axs)):
-            axs[i].set_xlabel("Time (s)")
             axs[i].grid(which="both")
-            # Place the legend outside the plot area
-            axs[i].legend(loc="upper left", bbox_to_anchor=(1, 1))
+            # Position legends inside the axis limits
+            if i == 0 or i == 1:  # Acc and Vel plots
+                axs[i].legend(loc="upper right")
+            else:  # Disp plot
+                axs[i].legend(loc="lower right")
+        # Only the bottom plot (Disp) should show the xlabel
+        axs[2].set_xlabel("Time (s)")
+
+        if time_range is not None:
+            if (
+                not isinstance(time_range, (list, tuple))
+                or len(time_range) != 2
+                or not all(isinstance(val, (int, float)) for val in time_range)
+                or time_range[0] >= time_range[1]
+                or time_range[0] < time[0]
+                or time_range[1] > time[-1]
+            ):
+                raise ValueError(
+                    "`time_range` must be a list or tuple with two numeric values within the time range, and the second value must be larger than the first."
+                )
+            axs[0].set_xlim(time_range)
+            axs[1].set_xlim(time_range)
+            axs[2].set_xlim(time_range)
+
         fig.tight_layout()
         fig.canvas.toolbar_position = "top"
         return fig
+
+
+if __name__ == "__main__":
+    from pyslammer.rigid_analysis import RigidAnalysis
+    from pyslammer.utilities import sample_ground_motions
+
+    record_name = "Kobe_1995_TAK-090"
+    gm = sample_ground_motions()[record_name]
+    rigid_inputs = {"ground_motion": gm, "ky": 0.2}
+
+    rigid_result = RigidAnalysis(**rigid_inputs, scale_factor=2)
+    plt.close("all")
+    fig = rigid_result.sliding_block_plot(time_range=[2, 10])
+    plt.show()
