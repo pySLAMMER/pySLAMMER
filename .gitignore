@@ -123,3 +123,4 @@ _output
 /.idea
 .idea/workspace.xml
 
+.vdoc.*
