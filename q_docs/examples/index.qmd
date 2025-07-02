@@ -1,7 +1,0 @@
----
-title: Examples 
-bibliography: ../technical/references.bib
----
-
-* [Running Rigid, Decoupled, and Coupled analyses](rigid_flex.qmd)
-* [Batch simulations](batch_simulations.qmd)
