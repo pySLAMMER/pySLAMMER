@@ -1,7 +1,0 @@
----
-title: Technical guide 
-bibliography: references.bib
----
-
-* [Glossary](glossary.qmd)
-* [Verifications](verification.qmd)
