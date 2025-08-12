@@ -22,5 +22,6 @@ Repository = "https://github.com/pyslammer/pyslammer"
 
 [dependency-groups]
 dev = [
+    "pandas",
     "pytest>=8.3.5",
 ]
