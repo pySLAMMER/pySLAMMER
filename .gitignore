@@ -5,11 +5,9 @@ node_modules/
 *.egg-info/
 .ipynb_checkpoints
 *.tsbuildinfo
-*.venv/
-
-
-# Created by https://www.gitignore.io/api/python
-# Edit at https://www.gitignore.io/?templates=python
+# Virtual environments
+.venv/
+venv/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
