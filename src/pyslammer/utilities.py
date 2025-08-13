@@ -3,7 +3,7 @@ import importlib.resources as pkg_resources
 
 import numpy as np
 
-from .record import GroundMotion
+from .ground_motion import GroundMotion
 
 G_EARTH = 9.80665
 

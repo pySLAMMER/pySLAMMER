@@ -7,9 +7,8 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
-from . import constants
 from .constants import G_EARTH, KNM3_TO_LBFT3, M_TO_FT
-from .record import GroundMotion
+from .ground_motion import GroundMotion
 from .sliding_block_analysis import SlidingBlockAnalysis
 from .utilities import sample_ground_motions
 

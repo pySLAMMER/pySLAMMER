@@ -1,8 +1,11 @@
+from typing import Union
+
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.integrate as spint
 
 from .constants import G_EARTH
+from .ground_motion import GroundMotion
 from .utilities import psfigstyle
 
 
@@ -18,12 +21,15 @@ class SlidingBlockAnalysis:
     ----------
     ky : float
         Yield acceleration of the sliding block (in g).
-    ground_motion : GroundMotion
-        Ground motion object containing acceleration time series and metadata.
+    ground_motion : GroundMotion or dict
+        Ground motion data. Can be:
+        - A GroundMotion object
+        - A dictionary with keys: 'accel', 'dt', and optionally 'name'
+          Example: {'accel': [0.1, 0.2, 0.1], 'dt': 0.01, 'name': 'MyMotion'}
     scale_factor : float, optional
         Scaling factor for the input acceleration. Default is 1.0.
     target_pga : float, optional
-        Target peak ground acceleration (in m/s^2). If provided, the input acceleration
+        Target peak ground acceleration (in g). If provided, the input acceleration
         will be scaled to match this value. Cannot be used with `scale_factor`.
 
     Raises
@@ -69,7 +75,30 @@ class SlidingBlockAnalysis:
         Number of points in the input acceleration time series.
     """
 
-    def __init__(self, ky, ground_motion, scale_factor=1.0, target_pga=None):
+    def __init__(
+        self,
+        ky,
+        ground_motion: Union[GroundMotion, dict],
+        scale_factor=1.0,
+        target_pga=None,
+    ):
+        # Convert dict to GroundMotion if needed
+        if isinstance(ground_motion, dict):
+            try:
+                ground_motion = self._dict_to_ground_motion(ground_motion)
+            except (KeyError, TypeError, ValueError) as e:
+                raise ValueError(f"Invalid ground_motion dictionary: {e}")
+        elif not isinstance(ground_motion, GroundMotion):
+            raise TypeError(
+                f"ground_motion must be GroundMotion object or dict, got {type(ground_motion)}"
+            )
+
+        # Validate ky
+        if ky <= 0:
+            raise ValueError(
+                f"Yield acceleration ky must be positive, got {ky} (upslope sliding not yet supported)."
+            )
+
         if target_pga is not None:
             if scale_factor != 1:
                 raise ValueError(
@@ -78,13 +107,10 @@ class SlidingBlockAnalysis:
             scale_factor = target_pga / max(abs(ground_motion.accel))
 
         self.scale_factor = scale_factor
-        self.a_in = (
-            ground_motion.accel.copy() * scale_factor
-        )  # no longer accepts lists, only numpy arrays
+        self.a_in = ground_motion.accel.copy() * scale_factor
         self.dt = ground_motion.dt
-
-        self.method = None
         self.motion_name = ground_motion.name
+        self.method = None
         self.ky = ky * G_EARTH
         self.time = None
 
@@ -102,15 +128,74 @@ class SlidingBlockAnalysis:
         self._npts = None
         pass
 
-    def _compile_attributes(self):
-        time = np.arange(0, self._npts * self.dt, self.dt)
+    @staticmethod
+    def _dict_to_ground_motion(gm_dict: dict) -> GroundMotion:
+        """
+        Convert a dictionary to a GroundMotion object.
+
+        Parameters
+        ----------
+        gm_dict : dict
+            Dictionary with required keys 'accel' and 'dt', optional 'name'
+
+        Returns
+        -------
+        GroundMotion
+            Constructed GroundMotion object
+
+        Raises
+        ------
+        KeyError
+            If required keys are missing
+        """
+        required_keys = {"accel", "dt"}
+        if not required_keys.issubset(gm_dict.keys()):
+            missing = required_keys - gm_dict.keys()
+            raise KeyError(f"Missing required keys: {missing}")
+
+        name = gm_dict.get("name", "Unknown")
+        return GroundMotion(accel=gm_dict["accel"], dt=gm_dict["dt"], name=name)
+
+    @staticmethod
+    def _motion_integration(motion: np.ndarray, dt: float) -> np.ndarray:
+        """
+        Integrate a component of motion (acceleration or velocity) to get its
+        integral (velocity or displacement).
+
+        Parameters
+        ----------
+        motion : numpy.ndarray
+            The input motion time series (acceleration or velocity).
+            The input units for acceleration should not be in terms of g.
+        dt : float
+            The time step of the motion time series (in seconds).
+
+        Returns
+        -------
+        numpy.ndarray
+            The integrated motion time series (velocity or displacement).
+        """
+        return spint.cumulative_trapezoid(motion, dx=dt, initial=0)
+
+    def _compile_base_attributes(self):
+        if self.ground_acc is None:
+            self.ground_acc = self.a_in * G_EARTH
         if self.ground_vel is None:
-            self.ground_vel = spint.cumulative_trapezoid(
-                self.ground_acc, time, initial=0
-            )
-            self.ground_disp = spint.cumulative_trapezoid(
-                self.ground_vel, time, initial=0
-            )
+            self.ground_vel = self._motion_integration(self.ground_acc, self.dt)
+        if self.ground_disp is None:
+            self.ground_disp = self._motion_integration(self.ground_vel, self.dt)
+        pass
+
+    def _compile_block_attributes(self):
+        if self.block_vel is None:
+            self.block_vel = self._motion_integration(self.block_acc, self.dt)
+        if self.block_disp is None:
+            self.block_disp = self._motion_integration(self.block_vel, self.dt)
+        pass
+
+    def _compile_sliding_attributes(self):
+        self._compile_base_attributes()
+        self._compile_block_attributes()
         if self.sliding_vel is None:
             self.sliding_vel = self.ground_vel - self.block_vel
         if self.sliding_disp is None:
@@ -136,7 +221,7 @@ class SlidingBlockAnalysis:
             The figure containing the plots.
         """
         plt.style.use(psfigstyle)
-        self._compile_attributes()
+        self._compile_sliding_attributes()
         bclr = "k"
         gclr = "tab:blue"
         inp_clr = "tab:gray"

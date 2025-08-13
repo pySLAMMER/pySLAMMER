@@ -3,7 +3,7 @@ import math
 import numpy as np
 
 from .decoupled_analysis import Decoupled
-from .record import GroundMotion
+from .ground_motion import GroundMotion
 from .utilities import sample_ground_motions
 
 
