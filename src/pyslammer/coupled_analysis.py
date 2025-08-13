@@ -2,9 +2,8 @@ import math
 
 import numpy as np
 
-import pyslammer as slam
-from pyslammer.decoupled_analysis import Decoupled
-from pyslammer.record import GroundMotion
+from .decoupled_analysis import Decoupled
+from .record import GroundMotion
 
 
 class Coupled(Decoupled):
@@ -357,6 +356,8 @@ def some_ky_func(disp):
 
 
 if __name__ == "__main__":
+    import pyslammer as slam
+
     histories = slam.sample_ground_motions()
     ky_const = 0.15
     ky_interp = ([0.2, 0.3, 0.4, 0.5], [0.15, 0.14, 0.13, 0.12])

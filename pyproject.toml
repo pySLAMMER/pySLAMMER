@@ -14,6 +14,12 @@ dependencies = [
 authors = [{name = "Lorne Arnold"}, {name = "Donald Garcia-Rivas"}]
 maintainers = [{name = "Lorne Arnold", email = "arnoldl@uw.edu"}]
 
+[tool.uv.scripts]
+test = "pytest -q"
+
+[tool.uv.sources]
+pyslammer = { path = "src/pyslammer", editable = true }
+
 [project.optional-dependencies]
 demo = []
 
