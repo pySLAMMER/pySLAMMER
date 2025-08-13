@@ -7,10 +7,11 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
-import pyslammer as slam
-from pyslammer.constants import G_EARTH, KNM3_TO_LBFT3, M_TO_FT
-from pyslammer.record import GroundMotion
-from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
+from . import constants
+from .constants import G_EARTH, KNM3_TO_LBFT3, M_TO_FT
+from .record import GroundMotion
+from .sliding_block_analysis import SlidingBlockAnalysis
+from .utilities import sample_ground_motions
 
 
 def mod_damp_testing(effective_strain, ref_strain):
@@ -414,7 +415,7 @@ if __name__ == "__main__":
         plt.semilogx(strains, damping)
         plt.show()
     else:
-        histories = slam.sample_ground_motions()
+        histories = sample_ground_motions()
         ky_const = 0.15
         ky_interp = ([0.2, 0.3, 0.4, 0.5], [0.15, 0.14, 0.13, 0.12])
         ky_func = some_ky_func
@@ -422,7 +423,7 @@ if __name__ == "__main__":
         t_step = motion[0][1] - motion[0][0]
         input_acc = motion[1] / 9.80665
 
-        da = slam.Decoupled(
+        da = Decoupled(
             ky=ky_const,
             a_in=input_acc,
             dt=t_step,

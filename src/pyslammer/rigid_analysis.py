@@ -1,8 +1,8 @@
 import numpy as np
 import scipy.integrate as spint
 
-from pyslammer.decoupled_analysis import assign_k_y
-from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
+from .decoupled_analysis import assign_k_y
+from .sliding_block_analysis import SlidingBlockAnalysis
 
 M_TO_CM = 100
 G_EARTH = 9.80665  # Acceleration due to gravity (m/block_disp^2).

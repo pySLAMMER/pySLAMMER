@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.integrate as spint
 
-from pyslammer.constants import G_EARTH
-from pyslammer.utilities import psfigstyle
+from .constants import G_EARTH
+from .utilities import psfigstyle
 
 
 class SlidingBlockAnalysis:

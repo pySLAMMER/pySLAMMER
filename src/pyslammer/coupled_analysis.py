@@ -4,6 +4,7 @@ import numpy as np
 
 from .decoupled_analysis import Decoupled
 from .record import GroundMotion
+from .utilities import sample_ground_motions
 
 
 class Coupled(Decoupled):
@@ -356,9 +357,8 @@ def some_ky_func(disp):
 
 
 if __name__ == "__main__":
-    import pyslammer as slam
-
-    histories = slam.sample_ground_motions()
+    # import pyslammer as slam
+    histories = sample_ground_motions()
     ky_const = 0.15
     ky_interp = ([0.2, 0.3, 0.4, 0.5], [0.15, 0.14, 0.13, 0.12])
     ky_func = some_ky_func
@@ -366,8 +366,8 @@ if __name__ == "__main__":
     # t_step = motion[0][1] - motion[0][0]
     # input_acc = motion[1] / 9.80665
 
-    ca = slam.Coupled(
-        ky=ky_func,
+    ca = Coupled(
+        ky=ky_const,
         ground_motion=motion,
         height=50.0,
         vs_slope=600.0,

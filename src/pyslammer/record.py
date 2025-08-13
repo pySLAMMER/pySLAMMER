@@ -3,7 +3,7 @@ import numpy as np
 import scipy.integrate as spint
 from scipy.fft import rfft, rfftfreq
 
-import pyslammer.constants as constants
+from . import constants
 
 # TODO: bring this into utilities.py
 

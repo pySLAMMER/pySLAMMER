@@ -3,7 +3,7 @@ import importlib.resources as pkg_resources
 
 import numpy as np
 
-from pyslammer.record import GroundMotion
+from .record import GroundMotion
 
 G_EARTH = 9.80665
 

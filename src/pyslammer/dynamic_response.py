@@ -1,6 +1,6 @@
 # This file is in the public domain.
-import pyslammer as slam
-from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
+from . import constants
+from .sliding_block_analysis import SlidingBlockAnalysis
 
 import math
 
