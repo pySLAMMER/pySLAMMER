@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Optional, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -106,6 +106,7 @@ class SlidingBlockAnalysis:
                 )
             scale_factor = target_pga / max(abs(ground_motion.accel))
 
+        self.ground_motion = ground_motion
         self.scale_factor = scale_factor
         self.a_in = ground_motion.accel.copy() * scale_factor
         self.dt = ground_motion.dt
@@ -125,7 +126,7 @@ class SlidingBlockAnalysis:
         self.sliding_vel = None
         self.sliding_disp = None
         self.max_sliding_disp = None
-        self._npts = None
+        self._npts: Optional[int] = None
         pass
 
     @staticmethod
@@ -189,7 +190,7 @@ class SlidingBlockAnalysis:
 
     def _compile_block_attributes(self):
         if self.block_vel is None:
-            self.block_vel = self._motion_integration(self.block_acc, self.dt)
+            self.block_vel = self._motion_integration(self.block_acc, self.dt)  # type: ignore[operator]
         if self.block_disp is None:
             self.block_disp = self._motion_integration(self.block_vel, self.dt)
         pass
@@ -198,7 +199,7 @@ class SlidingBlockAnalysis:
         self._compile_base_attributes()
         self._compile_block_attributes()
         if self.sliding_vel is None:
-            self.sliding_vel = self.ground_vel - self.block_vel
+            self.sliding_vel = self.ground_vel - self.block_vel  # type: ignore[operator]
         if self.sliding_disp is None:
             self.sliding_disp = self.block_disp  # - self.ground_disp
         pass
@@ -226,12 +227,11 @@ class SlidingBlockAnalysis:
         bclr = "k"
         gclr = "tab:blue"
         inp_clr = "tab:gray"
-        kyclr = "k"
         if fig is None:  # gAcc,gVel,bVel,bDisp,t,ky):
             fig, axs = plt.subplots(3, 1, sharex=True)
         else:
             axs = fig.get_axes()
-        time = np.arange(0, self._npts * self.dt, self.dt)
+        time = np.arange(0, self._npts * self.dt, self.dt)  # type: ignore[operator]
 
         # Add analysis summary text above the plots
         analysis_type = self.__class__.__name__
@@ -239,20 +239,23 @@ class SlidingBlockAnalysis:
         summary_text = f"{analysis_type} | ky: {self.ky / G_EARTH:.2f}g | Motion: {motion_name} (PGA: {max(abs(self.a_in)):.2f}g)"
         fig.suptitle(summary_text, fontsize=10, y=0.98)
 
-        if hasattr(self, "HEA") and self.HEA is not None:
+        if hasattr(self, "HEA") and self.HEA is not None:  # type: ignore[attr-defined]
             axs[0].plot(
-                time, self.ground_acc / G_EARTH, label="Input Acc.", color=inp_clr
+                time,
+                self.ground_acc / G_EARTH,  # type: ignore[operator]
+                label="Input Acc.",
+                color=inp_clr,  # type: ignore[operator]
             )
             axs[0].plot(
                 time,
-                self.HEA / G_EARTH,
+                self.HEA / G_EARTH,  # type: ignore[attr-defined]
                 label="Base Acc.",
                 color=gclr,
             )
         else:
-            axs[0].plot(time, self.ground_acc / G_EARTH, label="Base Acc.", color=gclr)
+            axs[0].plot(time, self.ground_acc / G_EARTH, label="Base Acc.", color=gclr)  # type: ignore[operator]
 
-        axs[0].plot(time, self.block_acc / G_EARTH, label="Block Acc.", color=bclr)
+        axs[0].plot(time, self.block_acc / G_EARTH, label="Block Acc.", color=bclr)  # type: ignore[operator]
 
         axs[0].set_ylabel("Acc. (g)")
         axs[0].set_xlim([time[0], time[-1]])
@@ -293,7 +296,6 @@ class SlidingBlockAnalysis:
             axs[2].set_xlim(time_range)
 
         fig.tight_layout()
-        fig.canvas.toolbar_position = "top"
         return fig
 
 
