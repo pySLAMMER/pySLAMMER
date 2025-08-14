@@ -35,11 +35,11 @@ class RigidAnalysis(SlidingBlockAnalysis):
     """
 
     def __init__(
-        self, 
-        ky: float, 
-        ground_motion: GroundMotion, 
-        scale_factor: float = 1.0, 
-        target_pga: Optional[float] = None
+        self,
+        ky: float,
+        ground_motion: GroundMotion,
+        scale_factor: float = 1.0,
+        target_pga: Optional[float] = None,
     ) -> None:
         """
         Initialize rigid block analysis.
@@ -61,7 +61,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
         self._npts = len(self.a_in)
         self.ground_acc = np.array(self.a_in) * G_EARTH
         self.dt = ground_motion.dt
-        
+
         self.run_rigid_analysis()
 
     def __str__(self) -> str:
@@ -111,4 +111,3 @@ class RigidAnalysis(SlidingBlockAnalysis):
             self.sliding_vel[i] = vel[1]
             self.block_acc[i] = gnd_acc_curr - acc[1]
         self.max_sliding_disp = self.sliding_disp[-1]
-
