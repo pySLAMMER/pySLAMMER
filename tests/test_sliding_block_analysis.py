@@ -108,7 +108,7 @@ class TestSlidingBlockAnalysis:
         with pytest.raises(
             TypeError, match="ground_motion must be GroundMotion object or dict"
         ):
-            SlidingBlockAnalysis(ky=0.1, ground_motion="invalid_type")
+            SlidingBlockAnalysis(ky=0.1, ground_motion="invalid_type")  # type: ignore[operator]
 
     def test_dict_to_ground_motion_missing_keys(self):
         """Test _dict_to_ground_motion with missing keys."""
@@ -139,13 +139,13 @@ class TestSlidingBlockAnalysis:
 
         # Check ground_acc is in correct units (m/s^2)
         expected_ground_acc = sba.a_in * G_EARTH
-        assert np.array_equal(sba.ground_acc, expected_ground_acc)
+        assert np.array_equal(sba.ground_acc, expected_ground_acc)  # type: ignore[operator]
 
         # Check that ground_vel and ground_disp are integrated versions
         assert sba.ground_vel is not None
         assert sba.ground_disp is not None
-        assert len(sba.ground_vel) == len(sba.ground_acc)
-        assert len(sba.ground_disp) == len(sba.ground_acc)
+        assert len(sba.ground_vel) == len(sba.ground_acc)  # type: ignore[operator]
+        assert len(sba.ground_disp) == len(sba.ground_acc)  # type: ignore[operator]
 
         # Verify integration relationship (velocity should be integral of acceleration)
         # First point should be zero (initial condition)
