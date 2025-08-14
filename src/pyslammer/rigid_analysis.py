@@ -1,11 +1,10 @@
 from typing import Optional
 
 import numpy as np
-from .sliding_block_analysis import SlidingBlockAnalysis
-from .ground_motion import GroundMotion
 
-M_TO_CM = 100
-G_EARTH = 9.80665  # Acceleration due to gravity (m/s^2).
+from .constants import G_EARTH
+from .ground_motion import GroundMotion
+from .sliding_block_analysis import SlidingBlockAnalysis
 
 
 class RigidAnalysis(SlidingBlockAnalysis):

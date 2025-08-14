@@ -182,8 +182,9 @@ The plan includes:
 - Use warnings for questionable but valid inputs
 
 ### Unit Consistency
-- Input accelerations in g (standard in earthquake engineering)
+- Ground motion and yield accelerations always input and reported in g
 - Internal calculations in SI units (m/s²)
+- Wrap acceleration variables in single underscores if they're not in g (e.g., `_ky_ = ky * G_EARTH`)
 - Clear documentation of expected units for all parameters
 
 ### Inheritance Pattern
