@@ -147,14 +147,15 @@ class SlidingBlockAnalysis:
         ------
         KeyError
             If required keys are missing
+        TypeError
+            If invalid parameters are passed to GroundMotion
         """
         required_keys = {"accel", "dt"}
         if not required_keys.issubset(gm_dict.keys()):
             missing = required_keys - gm_dict.keys()
             raise KeyError(f"Missing required keys: {missing}")
 
-        name = gm_dict.get("name", "Unknown")
-        return GroundMotion(accel=gm_dict["accel"], dt=gm_dict["dt"], name=name)
+        return GroundMotion(**gm_dict)
 
     @staticmethod
     def _motion_integration(motion: np.ndarray, dt: float) -> np.ndarray:

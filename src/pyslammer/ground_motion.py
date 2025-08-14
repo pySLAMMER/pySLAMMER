@@ -59,14 +59,23 @@ class GroundMotion:
         self._npts = len(self.accel)
         self.pga = np.max(np.abs(self.accel))
 
-        # FFT
-        x = rfft(accel)[1::]
-        freqs = rfftfreq(self._npts, dt)[1::]
-        x_real = np.real(x)
-        x_imag = np.imag(x)
-        c = np.sqrt(x_real**2 + x_imag**2)
+        # Check for zero amplitude ground motion
+        if self.pga == 0:
+            warnings.warn(
+                "This ground motion has zero amplitude",
+                UserWarning,
+                stacklevel=2,
+            )
+            self.mean_period = np.nan  # Set to NaN for zero amplitude
+        else:
+            # FFT
+            x = rfft(accel)[1::]
+            freqs = rfftfreq(self._npts, dt)[1::]
+            x_real = np.real(x)
+            x_imag = np.imag(x)
+            c = np.sqrt(x_real**2 + x_imag**2)
 
-        self.mean_period = sum(c**2 / freqs) / sum(c**2)
+            self.mean_period = sum(c**2 / freqs) / sum(c**2)
 
     def __str__(self):
         """
@@ -78,3 +87,22 @@ class GroundMotion:
             A string describing the ground motion record.
         """
         return f"Ground Motion: {self.name}, PGA: {self.pga:.2f} g, dt: {self.dt:.3f} s, npts: {self._npts}"
+
+    def __repr__(self):
+        """
+        Detailed string representation of the GroundMotion object.
+
+        Returns
+        -------
+        str
+            A detailed string representation that could be used to recreate the object.
+        """
+        # Show first few and last few acceleration values for brevity
+        if len(self.accel) <= 6:
+            accel_repr = f"[{', '.join(f'{x:.3f}' for x in self.accel)}]"
+        else:
+            first_three = ", ".join(f"{x:.3f}" for x in self.accel[:3])
+            last_three = ", ".join(f"{x:.3f}" for x in self.accel[-3:])
+            accel_repr = f"[{first_three}, ..., {last_three}]"
+
+        return f"GroundMotion(accel={accel_repr}, dt={self.dt}, name='{self.name}')"
