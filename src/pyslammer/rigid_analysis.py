@@ -30,8 +30,12 @@ class RigidAnalysis(SlidingBlockAnalysis):
 
     Attributes
     ----------
-    ground_acc : numpy.ndarray
-        Ground acceleration time series (in m/s^2).
+    _ground_acc_ : numpy.ndarray
+        Internal ground acceleration time series (in m/s^2).
+    ky : float
+        Yield acceleration (in g) for user interface.
+    _ky_ : float
+        Internal yield acceleration (in m/s^2) for calculations.
     """
 
     def __init__(
@@ -58,17 +62,26 @@ class RigidAnalysis(SlidingBlockAnalysis):
         """
         super().__init__(ky, ground_motion, scale_factor, target_pga)
 
-        self._npts = len(self.a_in)
-        self.ground_acc = np.array(self.a_in) * G_EARTH
+        self._ground_acc_ = (
+            np.array(self.a_in) * G_EARTH
+        )  # Internal ground acceleration in m/s²
         self.dt = ground_motion.dt
 
         self.run_rigid_analysis()
 
-    def __str__(self) -> str:
-        return f"RigidAnalysis(ky={self.ky:.3f}g, max_disp={getattr(self, 'max_sliding_disp', 0):.3f}m)"
+    def __str__(self):
+        return (
+            f"RigidAnalysis:\n"
+            f"  ky: {self.ky} g,\n"
+            f"  {self.ground_motion},\n"
+            f"  Scale factor: {self.scale_factor},\n"
+            f"  Displacement: {100 * getattr(self, 'max_sliding_disp', 0):.1f} cm"
+        )
 
-    def __repr__(self) -> str:
-        return f"RigidAnalysis(ky={self.ky}, ground_motion={self.ground_motion!r}, scale_factor={getattr(self, 'scale_factor', 1.0)}, target_pga={getattr(self, 'target_pga', None)})"
+    def __eq__(self, other):
+        if not isinstance(other, RigidAnalysis):
+            return NotImplemented
+        return super().__eq__(other)
 
     def run_rigid_analysis(self):
         """
@@ -80,24 +93,24 @@ class RigidAnalysis(SlidingBlockAnalysis):
         based on the input ground acceleration and critical acceleration.
         """
         tol = 1e-5
-        self.block_acc = np.zeros(len(self.ground_acc))
-        self.sliding_vel = np.zeros(len(self.ground_acc))
-        self.sliding_disp = np.zeros(len(self.ground_acc))
+        self._block_acc_ = np.zeros(len(self._ground_acc_))
+        self.sliding_vel = np.zeros(len(self._ground_acc_))
+        self.sliding_disp = np.zeros(len(self._ground_acc_))
         # [previous, current]
         acc = [0, 0]
         vel = [0, 0]
         pos = [0, 0]
 
-        for i in range(len(self.ground_acc)):
-            gnd_acc_curr = self.ground_acc[i]
+        for i in range(len(self._ground_acc_)):
+            gnd_acc_curr = self._ground_acc_[i]
             if vel[1] < tol:
-                if abs(gnd_acc_curr) > self.ky:
+                if abs(gnd_acc_curr) > self._ky_:
                     n = gnd_acc_curr / abs(gnd_acc_curr)
                 else:
-                    n = gnd_acc_curr / self.ky
+                    n = gnd_acc_curr / self._ky_
             else:
                 n = 1
-            acc[1] = gnd_acc_curr - n * self.ky
+            acc[1] = gnd_acc_curr - n * self._ky_
             vel[1] = vel[0] + (self.dt / 2) * (acc[1] + acc[0])
             if vel[1] > 0:
                 pos[1] = pos[0] + (self.dt / 2) * (vel[1] + vel[0])
@@ -109,5 +122,5 @@ class RigidAnalysis(SlidingBlockAnalysis):
             acc[0] = acc[1]
             self.sliding_disp[i] = pos[1]
             self.sliding_vel[i] = vel[1]
-            self.block_acc[i] = gnd_acc_curr - acc[1]
+            self._block_acc_[i] = gnd_acc_curr - acc[1]
         self.max_sliding_disp = self.sliding_disp[-1]

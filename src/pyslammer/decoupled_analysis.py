@@ -221,7 +221,7 @@ class Decoupled(SlidingBlockAnalysis):
         self.sliding_vel = np.zeros(self.npts)
         self.block_disp = np.zeros(self.npts)
         self.block_vel = np.zeros(self.npts)
-        self.block_acc = np.zeros(self.npts)
+        self._block_acc_ = np.zeros(self.npts)
         self.x_resp = np.zeros(self.npts)
         self.v_resp = np.zeros(self.npts)
         self.a_resp = np.zeros(self.npts)
@@ -236,7 +236,7 @@ class Decoupled(SlidingBlockAnalysis):
 
         if type(self) is Decoupled:
             self.run_sliding_analysis()
-        self.ground_acc = self.a_in * self.g
+        self._ground_acc_ = self.a_in * self.g
 
     def run_sliding_analysis(self):  # TODO: add ca to inputs
         if self.soil_model == "equivalent_linear":
@@ -271,13 +271,13 @@ class Decoupled(SlidingBlockAnalysis):
                 )
 
         if not self._slide:
-            self.block_acc[curr] = self.HEA[curr]
+            self._block_acc_[curr] = self.HEA[curr]
             self.block_vel[curr] = 0
             self.block_disp[curr] = self.block_disp[prev]
             if self.HEA[curr] > yield_acc:
                 self._slide = True
         else:
-            self.block_acc[curr] = yield_acc
+            self._block_acc_[curr] = yield_acc
             self.block_vel[curr] = (
                 self.block_vel[prev] + (excess_acc - 0.5 * delta_hea) * self.dt
             )

@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -50,11 +50,13 @@ class SlidingBlockAnalysis:
     method : str or None
         Analysis method used (to be defined in subclasses).
     ky : float or None
-        Yield acceleration of the sliding block (in g).
+        Yield acceleration of the sliding block (in g) for user interface.
+    _ky_ : float or None
+        Internal yield acceleration (in m/s^2) for calculations.
     time : numpy.ndarray or None
         Time array corresponding to the input acceleration.
-    ground_acc : numpy.ndarray or None
-        Ground acceleration time series (in m/s^2).
+    _ground_acc_ : numpy.ndarray or None
+        Internal ground acceleration time series (in m/s^2).
     ground_vel : numpy.ndarray or None
         Ground velocity time series (in m/s).
     ground_disp : numpy.ndarray or None
@@ -109,25 +111,46 @@ class SlidingBlockAnalysis:
         self.ground_motion = ground_motion
         self.scale_factor = scale_factor
         self.a_in = ground_motion.accel.copy() * scale_factor
+        self._npts = ground_motion._npts
         self.dt = ground_motion.dt
         self.motion_name = ground_motion.name
         self.method = None
-        self.ky = ky * G_EARTH
+        self.ky = ky  # Keep original value in g for user interface
+        self._ky_ = ky * G_EARTH  # Internal value in m/s² for calculations
         self.time = None
 
-        self.ground_acc = None
+        self._ground_acc_ = None  # Internal ground acceleration in m/s²
         self.ground_vel = None
         self.ground_disp = None
 
-        self.block_acc = None
+        self._block_acc_ = None
         self.block_vel = None
         self.block_disp = None
 
         self.sliding_vel = None
         self.sliding_disp = None
         self.max_sliding_disp = None
-        self._npts: Optional[int] = None
         pass
+
+    def __str__(self):
+        return (
+            f"SlidingBlockAnalysis:\n"
+            f"  ky: {self.ky} g,\n"
+            f"  {self.ground_motion},\n"
+            f"  Scale factor: {self.scale_factor}."
+        )
+
+    def __eq__(self, other):
+        if not isinstance(other, SlidingBlockAnalysis):
+            return NotImplemented
+        return (
+            self.ky == other.ky
+            and self._ky_ == other._ky_
+            and np.array_equal(self.a_in, other.a_in)
+            and self.dt == other.dt
+            and self.motion_name == other.motion_name
+            and self.scale_factor == other.scale_factor
+        )
 
     @staticmethod
     def _dict_to_ground_motion(gm_dict: dict) -> GroundMotion:
@@ -180,17 +203,17 @@ class SlidingBlockAnalysis:
         return spint.cumulative_trapezoid(motion, dx=dt, initial=0)
 
     def _compile_base_attributes(self):
-        if self.ground_acc is None:
-            self.ground_acc = self.a_in * G_EARTH
+        if self._ground_acc_ is None:
+            self._ground_acc_ = self.a_in * G_EARTH
         if self.ground_vel is None:
-            self.ground_vel = self._motion_integration(self.ground_acc, self.dt)
+            self.ground_vel = self._motion_integration(self._ground_acc_, self.dt)
         if self.ground_disp is None:
             self.ground_disp = self._motion_integration(self.ground_vel, self.dt)
         pass
 
     def _compile_block_attributes(self):
         if self.block_vel is None:
-            self.block_vel = self._motion_integration(self.block_acc, self.dt)  # type: ignore[operator]
+            self.block_vel = self._motion_integration(self._block_acc_, self.dt)  # type: ignore[operator]
         if self.block_disp is None:
             self.block_disp = self._motion_integration(self.block_vel, self.dt)
         pass
@@ -236,13 +259,13 @@ class SlidingBlockAnalysis:
         # Add analysis summary text above the plots
         analysis_type = self.__class__.__name__
         motion_name = getattr(self, "motion_name", "Unknown")
-        summary_text = f"{analysis_type} | ky: {self.ky / G_EARTH:.2f}g | Motion: {motion_name} (PGA: {max(abs(self.a_in)):.2f}g)"
+        summary_text = f"{analysis_type} | ky: {self.ky:.2f}g | Motion: {motion_name} (PGA: {max(abs(self.a_in)):.2f}g)"
         fig.suptitle(summary_text, fontsize=10, y=0.98)
 
         if hasattr(self, "HEA") and self.HEA is not None:  # type: ignore[attr-defined]
             axs[0].plot(
                 time,
-                self.ground_acc / G_EARTH,  # type: ignore[operator]
+                self._ground_acc_ / G_EARTH,  # type: ignore[operator]
                 label="Input Acc.",
                 color=inp_clr,  # type: ignore[operator]
             )
@@ -253,9 +276,14 @@ class SlidingBlockAnalysis:
                 color=gclr,
             )
         else:
-            axs[0].plot(time, self.ground_acc / G_EARTH, label="Base Acc.", color=gclr)  # type: ignore[operator]
+            axs[0].plot(
+                time,
+                self._ground_acc_ / G_EARTH,  # type: ignore
+                label="Base Acc.",
+                color=gclr,
+            )
 
-        axs[0].plot(time, self.block_acc / G_EARTH, label="Block Acc.", color=bclr)  # type: ignore[operator]
+        axs[0].plot(time, self._block_acc_ / G_EARTH, label="Block Acc.", color=bclr)  # type: ignore[operator]
 
         axs[0].set_ylabel("Acc. (g)")
         axs[0].set_xlim([time[0], time[-1]])
@@ -297,17 +325,3 @@ class SlidingBlockAnalysis:
 
         fig.tight_layout()
         return fig
-
-
-if __name__ == "__main__":
-    from pyslammer.rigid_analysis import RigidAnalysis
-    from pyslammer.utilities import sample_ground_motions
-
-    record_name = "Kobe_1995_TAK-090"
-    gm = sample_ground_motions()[record_name]
-    rigid_inputs = {"ground_motion": gm, "ky": 0.2}
-
-    rigid_result = RigidAnalysis(**rigid_inputs, scale_factor=2)
-    plt.close("all")
-    fig = rigid_result.sliding_block_plot(time_range=[2, 10])
-    plt.show()

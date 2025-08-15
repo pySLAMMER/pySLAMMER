@@ -108,14 +108,14 @@ class Coupled(Decoupled):
         self.beta = 0.25  # TODO: move to global constants
         self.gamma = 0.5  # TODO: move to global constants
 
-        self.block_acc = np.zeros(self.npts)
+        self._block_acc_ = np.zeros(self.npts)
         # Sign reversal below to match decoupled sliding direction
         self.a_in *= -1
         if type(self) is Coupled:
             self.run_sliding_analysis()
 
         # Sign reversal corrected for plotting
-        self.ground_acc = -self.a_in * self.g
+        self._ground_acc_ = -self.a_in * self.g
 
     def run_sliding_analysis(self):  # TODO: add ca to inputs
         if self.soil_model == "equivalent_linear":
@@ -144,7 +144,7 @@ class Coupled(Decoupled):
         # check if sliding has started
         self.c_slidingcheck(i)
         self.HEA[i - 1] = self.basef / self.mass  # Horizontal equivalent acceleration
-        self.block_acc[i - 1] = self.HEA[i - 1] - self.sdotdot1
+        self._block_acc_[i - 1] = self.HEA[i - 1] - self.sdotdot1
 
         self.s[i - 1] = self.s2
 

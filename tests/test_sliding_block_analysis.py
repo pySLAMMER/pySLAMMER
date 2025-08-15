@@ -26,7 +26,8 @@ class TestSlidingBlockAnalysis:
         ky = 0.15
         sba = SlidingBlockAnalysis(ky=ky, ground_motion=sample_ground_motion)
 
-        assert sba.ky == ky * G_EARTH
+        assert sba.ky == ky  # ky remains in g units for user interface
+        assert sba._ky_ == ky * G_EARTH  # _ky_ is in m/s² for internal calculations
         assert np.array_equal(sba.a_in, sample_ground_motion.accel)
         assert sba.dt == sample_ground_motion.dt
         assert sba.motion_name == sample_ground_motion.name
@@ -37,7 +38,8 @@ class TestSlidingBlockAnalysis:
         ky = 0.2
         sba = SlidingBlockAnalysis(ky=ky, ground_motion=sample_gm_dict)
 
-        assert sba.ky == ky * G_EARTH
+        assert sba.ky == ky  # ky remains in g units for user interface
+        assert sba._ky_ == ky * G_EARTH  # _ky_ is in m/s² for internal calculations
         assert np.array_equal(sba.a_in, sample_gm_dict["accel"])
         assert sba.dt == sample_gm_dict["dt"]
         assert sba.motion_name == sample_gm_dict["name"]
@@ -137,15 +139,15 @@ class TestSlidingBlockAnalysis:
         sba = SlidingBlockAnalysis(ky=0.1, ground_motion=sample_ground_motion)
         sba._compile_base_attributes()
 
-        # Check ground_acc is in correct units (m/s^2)
+        # Check _ground_acc_ is in correct units (m/s^2)
         expected_ground_acc = sba.a_in * G_EARTH
-        assert np.array_equal(sba.ground_acc, expected_ground_acc)  # type: ignore[operator]
+        assert np.array_equal(sba._ground_acc_, expected_ground_acc)  # type: ignore[operator]
 
         # Check that ground_vel and ground_disp are integrated versions
         assert sba.ground_vel is not None
         assert sba.ground_disp is not None
-        assert len(sba.ground_vel) == len(sba.ground_acc)  # type: ignore[operator]
-        assert len(sba.ground_disp) == len(sba.ground_acc)  # type: ignore[operator]
+        assert len(sba.ground_vel) == len(sba._ground_acc_)  # type: ignore[operator]
+        assert len(sba.ground_disp) == len(sba._ground_acc_)  # type: ignore[operator]
 
         # Verify integration relationship (velocity should be integral of acceleration)
         # First point should be zero (initial condition)
@@ -170,18 +172,22 @@ class TestSlidingBlockAnalysis:
         """Test that analysis attributes are initially None."""
         sba = SlidingBlockAnalysis(ky=0.1, ground_motion=sample_ground_motion)
 
-        assert sba.ground_acc is None
+        assert sba._ground_acc_ is None
         assert sba.ground_vel is None
         assert sba.ground_disp is None
-        assert sba.block_acc is None
+        assert sba._block_acc_ is None
         assert sba.block_vel is None
         assert sba.block_disp is None
         assert sba.sliding_vel is None
         assert sba.sliding_disp is None
         assert sba.max_sliding_disp is None
         assert sba.time is None
-        assert sba._npts is None
         assert sba.method is None
+
+    def test_npts(self, sample_ground_motion):
+        """Test that _npts is set correctly."""
+        sba = SlidingBlockAnalysis(ky=0.1, ground_motion=sample_ground_motion)
+        assert sba._npts == len(sample_ground_motion.accel)
 
     def test_plot_method_error_without_analysis(self, sample_ground_motion):
         """Test that plot() raises error when block attributes don't exist."""
@@ -192,12 +198,13 @@ class TestSlidingBlockAnalysis:
             sba.sliding_block_plot()
 
     def test_ky_units_conversion(self, sample_ground_motion):
-        """Test that ky is properly converted to m/s^2."""
+        """Test that ky is properly converted to m/s^2 internally."""
         ky_in_g = 0.25
         sba = SlidingBlockAnalysis(ky=ky_in_g, ground_motion=sample_ground_motion)
 
         expected_ky = ky_in_g * G_EARTH
-        assert sba.ky == expected_ky
+        assert sba.ky == ky_in_g  # User interface keeps value in g
+        assert sba._ky_ == expected_ky  # Internal value is in m/s²
 
     def test_default_target_pga_none(self, sample_ground_motion):
         """Test default target_pga is None."""
@@ -219,3 +226,49 @@ class TestSlidingBlockAnalysis:
         expected_first_value = original_accel[0] * 2.0
         assert sba.a_in[0] == expected_first_value
         assert sba.a_in[0] != sample_ground_motion.accel[0] * 2.0
+
+    def test_string_representation(self, sample_ground_motion):
+        """Test __str__ method provides descriptive information."""
+        ky = 0.15
+        scale_factor = 1.2
+        sba = SlidingBlockAnalysis(
+            ky=ky, ground_motion=sample_ground_motion, scale_factor=scale_factor
+        )
+
+        str_repr = str(sba)
+
+        assert "SlidingBlockAnalysis" in str_repr
+        assert f"{ky} g" in str_repr
+        assert sample_ground_motion.name in str_repr
+        assert f"Scale factor: {scale_factor}" in str_repr
+
+    def test_equality_method(self, sample_ground_motion):
+        """Test __eq__ method for SlidingBlockAnalysis objects."""
+        ky = 0.2
+        scale_factor = 1.0
+
+        sba1 = SlidingBlockAnalysis(
+            ky=ky, ground_motion=sample_ground_motion, scale_factor=scale_factor
+        )
+        sba2 = SlidingBlockAnalysis(
+            ky=ky, ground_motion=sample_ground_motion, scale_factor=scale_factor
+        )
+
+        # Same parameters should be equal
+        assert sba1 == sba2
+
+        # Different ky should not be equal
+        sba3 = SlidingBlockAnalysis(
+            ky=0.3, ground_motion=sample_ground_motion, scale_factor=scale_factor
+        )
+        assert sba1 != sba3
+
+        # Different scale_factor should not be equal
+        sba4 = SlidingBlockAnalysis(
+            ky=ky, ground_motion=sample_ground_motion, scale_factor=1.5
+        )
+        assert sba1 != sba4
+
+        # Not equal to non-SlidingBlockAnalysis objects
+        assert sba1 != "not a sliding block analysis"
+        assert sba1 != 42

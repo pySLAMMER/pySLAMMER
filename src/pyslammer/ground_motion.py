@@ -86,23 +86,21 @@ class GroundMotion:
         str
             A string describing the ground motion record.
         """
-        return f"Ground Motion: {self.name}, PGA: {self.pga:.2f} g, dt: {self.dt:.3f} s, npts: {self._npts}"
+        return (
+            f"Ground Motion:\n"
+            f"    Name: {self.name},\n"
+            f"    PGA: {self.pga:.2f} g,\n"
+            f"    dt: {self.dt:.3f} s,\n"
+            f"    Duration: {self._npts * self.dt:.2f} s,\n"
+            f"    Mean Period: {self.mean_period:.2f} s,\n"
+            f"    npts: {self._npts}"
+        )
 
-    def __repr__(self):
-        """
-        Detailed string representation of the GroundMotion object.
-
-        Returns
-        -------
-        str
-            A detailed string representation that could be used to recreate the object.
-        """
-        # Show first few and last few acceleration values for brevity
-        if len(self.accel) <= 6:
-            accel_repr = f"[{', '.join(f'{x:.3f}' for x in self.accel)}]"
-        else:
-            first_three = ", ".join(f"{x:.3f}" for x in self.accel[:3])
-            last_three = ", ".join(f"{x:.3f}" for x in self.accel[-3:])
-            accel_repr = f"[{first_three}, ..., {last_three}]"
-
-        return f"GroundMotion(accel={accel_repr}, dt={self.dt}, name='{self.name}')"
+    def __eq__(self, other):
+        if not isinstance(other, GroundMotion):
+            return NotImplemented
+        return (
+            np.array_equal(self.accel, other.accel)
+            and self.dt == other.dt
+            and self.name == other.name
+        )
