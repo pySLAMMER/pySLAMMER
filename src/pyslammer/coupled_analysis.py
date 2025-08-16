@@ -69,6 +69,7 @@ class Coupled(Decoupled):
         soil_model: str = "linear_elastic",
         si_units: bool = True,
         lite: bool = False,
+        inverse: bool = False,
     ):
         super().__init__(
             ky,
@@ -83,6 +84,7 @@ class Coupled(Decoupled):
             soil_model,
             si_units,
             lite,
+            inverse,
         )
 
         self.s1 = self.sdot1 = self.sdotdot1 = 0.0
@@ -116,6 +118,29 @@ class Coupled(Decoupled):
 
         # Sign reversal corrected for plotting
         self._ground_acc_ = -self.a_in * self.g
+
+    def __str__(self):
+        return (
+            f"Coupled:\n"
+            f"  ky: {self.ky} g,\n"
+            f"  {self.ground_motion},\n"
+            f"  Scale factor: {self.scale_factor},\n"
+            f"  Displacement: {100 * getattr(self, 'max_sliding_disp', 0):.1f} cm"
+        )
+
+    def __eq__(self, other):
+        if not isinstance(other, Coupled):
+            return NotImplemented
+        return super().__eq__(other) and (
+            self.height == other.height
+            and self.vs_slope == other.vs_slope
+            and self.vs_base == other.vs_base
+            and self.damp_ratio == other.damp_ratio
+            and self.ref_strain == other.ref_strain
+            and self.soil_model == other.soil_model
+            and self.SI_units == other.SI_units
+            and self.lite == other.lite
+        )
 
     def run_sliding_analysis(self):  # TODO: add ca to inputs
         if self.soil_model == "equivalent_linear":

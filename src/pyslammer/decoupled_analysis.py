@@ -192,8 +192,9 @@ class Decoupled(SlidingBlockAnalysis):
         soil_model: str = "linear_elastic",
         si_units: bool = True,
         lite: bool = False,
+        inverse: bool = False,
     ):
-        super().__init__(ky, ground_motion, scale_factor, target_pga)
+        super().__init__(ky, ground_motion, scale_factor, target_pga, inverse)
         self._npts = len(self.a_in)
         self.k_y = assign_k_y(ky)
         self.dt = ground_motion.dt
@@ -237,6 +238,20 @@ class Decoupled(SlidingBlockAnalysis):
         if type(self) is Decoupled:
             self.run_sliding_analysis()
         self._ground_acc_ = self.a_in * self.g
+
+    def __str__(self):
+        return (
+            f"Decoupled:\n"
+            f"  ky: {self.ky} g,\n"
+            f"  {self.ground_motion},\n"
+            f"  Scale factor: {self.scale_factor},\n"
+            f"  Displacement: {100 * getattr(self, 'max_sliding_disp', 0):.1f} cm"
+        )
+
+    def __eq__(self, other):
+        if not isinstance(other, Decoupled):
+            return NotImplemented
+        return super().__eq__(other)
 
     def run_sliding_analysis(self):  # TODO: add ca to inputs
         if self.soil_model == "equivalent_linear":

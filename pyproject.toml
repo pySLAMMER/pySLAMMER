@@ -1,3 +1,7 @@
+[build-system]
+requires = ["uv_build>=0.8.11,<0.9.0"]
+build-backend = "uv_build"
+
 [project]
 name = "pyslammer"
 requires-python = ">=3.11"
@@ -10,15 +14,14 @@ dependencies = [
     "numpy",
     "scipy",
     "matplotlib",
+    "toml>=0.10.2",
+    "jsonschema>=4.25.0",
 ]
 authors = [{name = "Lorne Arnold"}, {name = "Donald Garcia-Rivas"}]
 maintainers = [{name = "Lorne Arnold", email = "arnoldl@uw.edu"}]
 
-[tool.uv.scripts]
-test = "pytest -q"
-
 [tool.uv.sources]
-pyslammer = { path = "src/pyslammer", editable = true }
+pyslammer = { path = ".", editable = true }
 
 [project.optional-dependencies]
 demo = []

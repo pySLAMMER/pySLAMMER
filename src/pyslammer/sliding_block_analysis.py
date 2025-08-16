@@ -31,6 +31,9 @@ class SlidingBlockAnalysis:
     target_pga : float, optional
         Target peak ground acceleration (in g). If provided, the input acceleration
         will be scaled to match this value. Cannot be used with `scale_factor`.
+    inverse : bool, optional
+        If True, inverts the direction of the ground motion by negating the scale factor.
+        This is equivalent to running the analysis in the "inverse" direction. Default is False.
 
     Raises
     ------
@@ -83,6 +86,7 @@ class SlidingBlockAnalysis:
         ground_motion: Union[GroundMotion, dict],
         scale_factor=1.0,
         target_pga=None,
+        inverse=False,
     ):
         # Convert dict to GroundMotion if needed
         if isinstance(ground_motion, dict):
@@ -107,6 +111,10 @@ class SlidingBlockAnalysis:
                     "Both target_pga and scale_factor cannot be provided at the same time."
                 )
             scale_factor = target_pga / max(abs(ground_motion.accel))
+        
+        # Apply inverse direction by flipping the scale factor sign
+        if inverse:
+            scale_factor *= -1
 
         self.ground_motion = ground_motion
         self.scale_factor = scale_factor

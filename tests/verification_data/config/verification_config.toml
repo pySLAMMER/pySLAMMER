@@ -1,0 +1,86 @@
+# Verification Configuration for pySLAMMER
+# This file contains tolerance settings and configuration for automated verification
+# against legacy SLAMMER results.
+
+[metadata]
+config_version = "1.0"
+description = "Verification tolerances and settings for pySLAMMER vs SLAMMER comparison"
+
+# Default tolerance settings
+[tolerances]
+default_relative = 0.05  # 5% relative error tolerance
+default_absolute = 0.01  # 1 cm absolute error tolerance
+
+# Method-specific tolerances
+[tolerances.method_specific]
+[tolerances.method_specific.rigid]
+relative = 0.02  # 2% - rigid analysis should be most precise
+absolute = 0.005 # 0.5 cm
+
+[tolerances.method_specific.decoupled]
+relative = 0.05  # 5% - moderate tolerance for decoupled analysis
+absolute = 0.01  # 1 cm
+
+[tolerances.method_specific.coupled]
+relative = 0.08  # 8% - higher tolerance for coupled analysis (more complex)
+absolute = 0.02  # 2 cm
+
+# Value-dependent tolerances for better handling of small displacements
+[tolerances.value_dependent]
+small_displacement_threshold = 1.0  # cm - threshold for "small" displacements
+small_displacement_relative = 0.15   # 15% - more lenient for small values
+small_displacement_absolute = 0.1    # 0.1 cm - absolute floor for small values
+
+# Large displacement handling
+large_displacement_threshold = 50.0  # cm - threshold for "large" displacements  
+large_displacement_relative = 0.03   # 3% - stricter for large values
+large_displacement_absolute = 1.0    # 1 cm - reasonable absolute tolerance
+
+# Additional output tolerances for decoupled/coupled methods
+[tolerances.additional_outputs]
+kmax_relative = 0.05      # 5% tolerance for amplification factor
+vs_relative = 0.02        # 2% tolerance for final shear wave velocity
+damping_relative = 0.10   # 10% tolerance for final damping (can vary more)
+
+# Cache settings
+[cache]
+default_expiry_days = 30        # Cache results for 30 days by default
+force_recompute_on_version_change = true  # Always recompute if pySLAMMER version changes
+cache_compression = true        # Use gzip compression for cache files
+
+# File paths (relative to verification_data directory)
+[paths]
+reference_data = "reference/slammer_results.json.gz"
+cache_directory = "cache"
+schema_file = "schemas/legacy_results_schema.json"
+results_output = "results"  # Directory for verification reports
+
+# Test execution settings
+[execution]
+parallel_tests = true           # Run tests in parallel when possible
+max_workers = 4                 # Maximum number of parallel workers
+timeout_seconds = 300           # Timeout for individual test execution
+fail_fast = false              # Continue testing even if some tests fail
+
+# Reporting settings
+[reporting]
+default_format = "json"         # Default output format: json, csv, html
+include_passed_tests = false    # Only report failed tests by default
+detailed_statistics = true     # Include statistical analysis in reports
+generate_plots = false         # Generate comparison plots (requires matplotlib)
+
+# Analysis method configuration
+[methods]
+enabled = ["rigid", "decoupled", "coupled"]  # Which methods to verify
+default_directions = ["normal", "inverse"]   # Which directions to compare
+
+# Ground motion handling
+[ground_motion]
+sample_directory = "../../src/pyslammer/sample_ground_motions"  # Path to sample ground motions
+validate_file_existence = true  # Check that referenced files exist
+
+# Development and debugging
+[debug]
+verbose_logging = false         # Enable detailed logging
+save_intermediate_results = false  # Save intermediate computation results
+validate_schema_on_load = true     # Always validate JSON against schema

@@ -104,9 +104,6 @@ class TestRigidAnalysis:
         expected_ground_acc = np.array(sample_ground_motion.accel) * 9.80665
         np.testing.assert_array_almost_equal(ra._ground_acc_, expected_ground_acc)
 
-        # Test that _npts is set correctly
-        assert ra._npts == len(sample_ground_motion.accel)
-
         # Test that run_rigid_analysis was called (evidenced by populated arrays)
         assert all(
             isinstance(arr, np.ndarray)

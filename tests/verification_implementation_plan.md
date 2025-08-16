@@ -19,9 +19,59 @@ The existing system (`verification_processes.py` and `SLAMMER_comp.ipynb`):
 
 ## Implementation Plan
 
-### Phase 1: Data Storage Modernization 🔄
+### Phase 1: Data Migration & Schema 🔄
 
-**Replace Excel with secure, version-controlled formats:**
+**One-time Migration Script:**
+```python
+def migrate_excel_to_json():
+    """Convert existing Excel files to new JSON format"""
+    # Read SLAMMER_results.xlsx
+    # Extract reference data vs. computed results
+    # Validate against schema
+    # Generate compressed JSON files
+    # Create checksums for integrity
+```
+
+**JSON Schema Design:**
+```json
+{
+  "schema_version": "1.0",
+  "metadata": {
+    "source": "SLAMMER v7.55",
+    "date_extracted": "2024-01-01",
+    "total_tests": 1250
+  },
+  "tests": [
+    {
+      "test_id": "eq1_rec1_rigid_normal",
+      "earthquake": "Northridge 1994",
+      "record": "TAR090.txt", 
+      "method": "rigid",
+      "direction": "normal",
+      "parameters": {
+        "ky_g": 0.15,
+        "target_pga": 0.25,
+        "damping_ratio": null,
+        "ref_strain": null
+      },
+      "expected_result": {
+        "max_sliding_disp_cm": 4.23,
+        "units": "cm"
+      }
+    }
+  ]
+}
+```
+
+**Benefits:**
+- Version control friendly (no binary Excel files)
+- Tamper-resistant (checksums, schema validation)
+- Faster I/O (compressed JSON)
+- Platform independent
+
+### Phase 2: Data Storage Infrastructure 🏗️
+
+**Set up directory structure and data handling:**
 
 ```
 verification_data/
@@ -35,13 +85,12 @@ verification_data/
     └── verification_config.toml       # Test configurations & tolerances
 ```
 
-**Benefits:**
-- Version control friendly (no binary Excel files)
-- Tamper-resistant (checksums, schema validation)
-- Faster I/O (compressed JSON)
-- Platform independent
+**Data Management Components:**
+- `DataManager`: Handles data loading/saving with validation
+- Schema validation using JSON Schema
+- Compressed storage for large datasets
 
-### Phase 2: Verification Framework 🏗️
+### Phase 3: Verification Framework 🏗️
 
 **Core Components:**
 
@@ -61,7 +110,7 @@ verification/
 - `ComparisonEngine`: Statistical analysis and tolerance checking
 - `DataManager`: Handles data loading/saving with validation
 
-### Phase 3: Intelligent Caching System 💾
+### Phase 4: Intelligent Caching System 💾
 
 **Cache Strategy:**
 ```python
@@ -86,7 +135,7 @@ class ResultCache:
 - Manual force refresh (`--force-recompute`)
 - Configurable cache expiry
 
-### Phase 4: Statistical Comparison Engine 📊
+### Phase 5: Statistical Comparison Engine 📊
 
 **Comparison Metrics:**
 ```python
@@ -129,7 +178,7 @@ small_displacement_threshold = 1.0  # cm
 small_displacement_tolerance = { relative = 0.10, absolute = 0.1 }
 ```
 
-### Phase 5: CLI Interface 💻
+### Phase 6: CLI Interface 💻
 
 **Command Structure:**
 ```bash
@@ -152,7 +201,7 @@ uv run python -m verification cache --clear
 uv run python -m verification migrate --from SLAMMER_results.xlsx
 ```
 
-### Phase 6: Integration with Test Suite 🧪
+### Phase 7: Integration with Test Suite 🧪
 
 **Pytest Integration:**
 ```python
@@ -176,58 +225,15 @@ class TestLegacyVerification:
 - Generate verification reports on releases
 - Fail CI if verification tolerances exceeded
 
-### Phase 7: Data Migration & Schema 🔄
-
-**One-time Migration Script:**
-```python
-def migrate_excel_to_json():
-    """Convert existing Excel files to new JSON format"""
-    # Read SLAMMER_results.xlsx
-    # Extract reference data vs. computed results
-    # Validate against schema
-    # Generate compressed JSON files
-    # Create checksums for integrity
-```
-
-**JSON Schema Example:**
-```json
-{
-  "schema_version": "1.0",
-  "metadata": {
-    "source": "SLAMMER v7.55",
-    "date_extracted": "2024-01-01",
-    "total_tests": 1250
-  },
-  "tests": [
-    {
-      "test_id": "eq1_rec1_rigid_normal",
-      "earthquake": "Northridge 1994",
-      "record": "TAR090.txt", 
-      "method": "rigid",
-      "direction": "normal",
-      "parameters": {
-        "ky_g": 0.15,
-        "target_pga": 0.25,
-        "damping_ratio": null,
-        "ref_strain": null
-      },
-      "expected_result": {
-        "max_sliding_disp_cm": 4.23,
-        "units": "cm"
-      }
-    }
-  ]
-}
-```
 
 ## Implementation Timeline
 
 **Recommended Implementation Order:**
 
-1. **Week 1**: Data migration script + JSON schema design
-2. **Week 2**: Core verification framework + caching system  
-3. **Week 3**: Statistical comparison engine + tolerance configuration
-4. **Week 4**: CLI interface + pytest integration
+1. **Week 1**: Data migration script + JSON schema design (Phase 1)
+2. **Week 2**: Data storage infrastructure + verification framework (Phases 2-3)  
+3. **Week 3**: Caching system + statistical comparison engine (Phases 4-5)
+4. **Week 4**: CLI interface + pytest integration (Phases 6-7)
 5. **Week 5**: Documentation + CI/CD integration
 
 ## Key Benefits
@@ -270,13 +276,15 @@ tests/
 
 ## Success Criteria
 
-1. ✅ All legacy Excel data successfully migrated to JSON format
-2. ✅ Verification runs automatically cache results
-3. ✅ Statistical comparisons identify regressions within defined tolerances
-4. ✅ CLI interface provides easy access to all functionality
-5. ✅ Integration with pytest and CI/CD pipelines
-6. ✅ Documentation and examples for maintainers
-7. ✅ Performance improvement over current Excel-based approach
+1. ✅ All legacy Excel data successfully migrated to JSON format (Phase 1)
+2. ✅ Data storage infrastructure handles validation and compression (Phase 2)
+3. ✅ Verification framework orchestrates the comparison process (Phase 3)
+4. ✅ Intelligent caching reduces redundant computations (Phase 4)
+5. ✅ Statistical comparisons identify regressions within defined tolerances (Phase 5)
+6. ✅ CLI interface provides easy access to all functionality (Phase 6)
+7. ✅ Integration with pytest and CI/CD pipelines (Phase 7)
+8. ✅ Documentation and examples for maintainers
+9. ✅ Performance improvement over current Excel-based approach
 
 ## Future Enhancements
 

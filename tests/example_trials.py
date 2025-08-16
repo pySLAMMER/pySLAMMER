@@ -1,26 +1,27 @@
 """Demo script for SlidingBlockAnalysis."""
 
-from pyslammer.ground_motion import GroundMotion
-from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
+from pyslammer.coupled_analysis import Coupled
+from pyslammer.decoupled_analysis import Decoupled
+from pyslammer.rigid_analysis import RigidAnalysis
+from pyslammer.utilities import sample_ground_motions
 
-gm_dict_1 = {
-    "accel": [0.1, 0.2, 0.1, -0.1, 0.0],
-    "dt": 0.01,
-    "name": "Dict Motion 1",
-}
-
-gm_dict_2 = {
-    "accel": [0.1, 0.2, 0.1, -0.1, 0.0],
-    "dt": 0.02,
-    "name": "Dict Motion 2",
-}
-
-target_pga = 1
+sgms = sample_ground_motions()
 
 
 if __name__ == "__main__":
-    gm_1 = GroundMotion(**gm_dict_1)
-    gm_2 = GroundMotion(**gm_dict_2)
-    sba_1 = SlidingBlockAnalysis(ky=0.15, ground_motion=gm_1)
-    sba_2 = SlidingBlockAnalysis(ky=0.15, ground_motion=gm_2)
-    print(sba_1)
+    gm = sgms["Imperial_Valley_1979_BCR-230"]
+
+    rigid_inputs = {"ground_motion": gm, "ky": 0.2, "scale_factor": 1.0}
+    flexible_inputs = {
+        "height": 50.0,
+        "vs_slope": 600.0,
+        "vs_base": 600.0,
+        "damp_ratio": 0.05,
+        "ref_strain": 0.0005,
+        "soil_model": "equivalent_linear",
+    }
+
+    rigid_result = RigidAnalysis(**rigid_inputs)
+    decoupled_result = Decoupled(**rigid_inputs, **flexible_inputs)
+    coupled_result = Coupled(**rigid_inputs, **flexible_inputs)
+    print(decoupled_result)

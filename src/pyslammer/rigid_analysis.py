@@ -44,6 +44,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
         ground_motion: GroundMotion,
         scale_factor: float = 1.0,
         target_pga: Optional[float] = None,
+        inverse: bool = False,
     ) -> None:
         """
         Initialize rigid block analysis.
@@ -59,13 +60,16 @@ class RigidAnalysis(SlidingBlockAnalysis):
         target_pga : float, optional
             Target peak ground acceleration (in m/s^2). If provided, the input acceleration
             will be scaled to match this value. Cannot be used with `scale_factor`.
+        inverse : bool, optional
+            If True, inverts the direction of the ground motion by negating the scale factor.
+            Default is False.
         """
-        super().__init__(ky, ground_motion, scale_factor, target_pga)
+        super().__init__(ky, ground_motion, scale_factor, target_pga, inverse)
 
         self._ground_acc_ = (
             np.array(self.a_in) * G_EARTH
         )  # Internal ground acceleration in m/s²
-        self.dt = ground_motion.dt
+        # dt is already set by parent class
 
         self.run_rigid_analysis()
 
