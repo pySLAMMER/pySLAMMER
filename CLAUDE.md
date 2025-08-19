@@ -1,5 +1,9 @@
 # Claude Code Guidelines for pySLAMMER
 
+## Environment Management
+- Use uv to manage the project virtual environment and dependencies
+- Keep dev-only and production dependencies separate
+
 ## Testing Conventions
 
 ### Avoid Test Redundancy

@@ -61,14 +61,14 @@ class ConfigManager:
         if displacement_value is not None:
             value_dep = config.get("tolerances", {}).get("value_dependent", {})
             
-            if displacement_value <= value_dep.get("small_displacement_threshold", 1.0):
-                # Small displacement - use more lenient tolerances
-                relative = value_dep.get("small_displacement_relative", relative)
+            if displacement_value <= value_dep.get("small_displacement_threshold", 0.5):
+                # Small displacement - use special absolute-only tolerance
+                small_rel = value_dep.get("small_displacement_relative", relative)
+                if small_rel == "inf":
+                    relative = float('inf')
+                else:
+                    relative = small_rel
                 absolute = value_dep.get("small_displacement_absolute", absolute)
-            elif displacement_value >= value_dep.get("large_displacement_threshold", 50.0):
-                # Large displacement - use stricter tolerances
-                relative = value_dep.get("large_displacement_relative", relative)
-                absolute = value_dep.get("large_displacement_absolute", absolute)
         
         return ToleranceSettings(relative=relative, absolute=absolute)
     

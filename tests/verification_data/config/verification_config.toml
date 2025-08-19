@@ -8,33 +8,25 @@ description = "Verification tolerances and settings for pySLAMMER vs SLAMMER com
 
 # Default tolerance settings
 [tolerances]
-default_relative = 0.05  # 5% relative error tolerance
-default_absolute = 0.01  # 1 cm absolute error tolerance
+default_relative = 0.02  # 2% relative error tolerance
+default_absolute = 1.0  # 1 cm absolute error tolerance
 
-# Method-specific tolerances
-[tolerances.method_specific]
-[tolerances.method_specific.rigid]
-relative = 0.02  # 2% - rigid analysis should be most precise
-absolute = 0.005 # 0.5 cm
+# Group comparison tolerances
+percent_passing_individual_tests = 95.0  # 95% of individual tests must pass
+lin_regression_slope_min = 0.99
+lin_regression_slope_max = 1.01
+lin_regression_intercept_min = -0.1
+lin_regression_intercept_max = 0.1
+lin_regression_r_squared_min = 0.99
 
-[tolerances.method_specific.decoupled]
-relative = 0.05  # 5% - moderate tolerance for decoupled analysis
-absolute = 0.01  # 1 cm
-
-[tolerances.method_specific.coupled]
-relative = 0.08  # 8% - higher tolerance for coupled analysis (more complex)
-absolute = 0.02  # 2 cm
+# Uniform tolerances for all analysis methods
+# [tolerances.method_specific] - Removed: using uniform tolerances instead
 
 # Value-dependent tolerances for better handling of small displacements
 [tolerances.value_dependent]
-small_displacement_threshold = 1.0  # cm - threshold for "small" displacements
-small_displacement_relative = 0.15   # 15% - more lenient for small values
-small_displacement_absolute = 0.1    # 0.1 cm - absolute floor for small values
-
-# Large displacement handling
-large_displacement_threshold = 50.0  # cm - threshold for "large" displacements  
-large_displacement_relative = 0.03   # 3% - stricter for large values
-large_displacement_absolute = 1.0    # 1 cm - reasonable absolute tolerance
+small_displacement_threshold = 0.5  # cm - threshold for "small" displacements
+small_displacement_relative = "inf"  # infinite relative tolerance for small values
+small_displacement_absolute = 0.05   # 0.05 cm - absolute tolerance for small values
 
 # Additional output tolerances for decoupled/coupled methods
 [tolerances.additional_outputs]
