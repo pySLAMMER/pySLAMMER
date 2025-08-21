@@ -5,7 +5,7 @@ Data loading and management for the verification framework.
 import gzip
 import hashlib
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -41,13 +41,38 @@ class DataManager:
             ValidationError: If data fails validation
             FileNotFoundError: If reference file doesn't exist
         """
-        reference_path = self.data_path / "results" / "slammer_results.json.gz"
+        return self.load_results("slammer", validate=validate)
+
+    def load_results(self, source: str, version: Optional[str] = None, validate: bool = True) -> VerificationData:
+        """Load results from either SLAMMER or pySLAMMER.
+
+        Args:
+            source: Either "slammer" for reference data or "pyslammer" for test data
+            version: Version string (required for pySLAMMER, ignored for SLAMMER)
+            validate: Whether to validate against schema
+
+        Returns:
+            VerificationData containing test results
+
+        Raises:
+            ValidationError: If data fails validation
+            FileNotFoundError: If results file doesn't exist
+        """
+        if source == "slammer":
+            results_path = self.data_path / "results" / "slammer_results.json.gz"
+        elif source == "pyslammer":
+            if version is None:
+                raise ValueError("Version required for pySLAMMER results")
+            # Use version directly in filename (keeping periods)
+            results_path = self.data_path / "results" / f"pyslammer_{version}_results.json.gz"
+        else:
+            raise ValueError(f"Unknown source: {source}. Must be 'slammer' or 'pyslammer'")
 
         try:
-            with gzip.open(reference_path, "rt", encoding="utf-8") as f:
+            with gzip.open(results_path, "rt", encoding="utf-8") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            raise FileNotFoundError(f"Reference data not found at {reference_path}")
+            raise FileNotFoundError(f"{source.upper()} results not found at {results_path}")
 
         if validate:
             self.schema_validator.validate(data)
@@ -55,13 +80,17 @@ class DataManager:
         return VerificationData.from_dict(data)
 
     def save_results(
-        self, results: Dict[str, Any], filename: str = None, pyslammer_version: str = "unknown", compress: bool = True
+        self,
+        results: Dict[str, Any],
+        filename: str = None,
+        pyslammer_version: str = "unknown",
+        compress: bool = True,
     ) -> Path:
         """Save verification results to file with pyslammer version in filename.
 
         Args:
             results: Results data to save (should follow results_schema.json format)
-            filename: Optional custom filename, defaults to pyslammer_VERSION_results.json.gz
+            filename: Optional custom filename, defaults to pyslammer_{version}_results.json.gz
             pyslammer_version: Version of pySLAMMER for filename generation
             compress: Whether to compress the output
 
@@ -70,12 +99,11 @@ class DataManager:
         """
         # Validate results against schema before saving
         self.schema_validator.validate(results)
-        
+
         if filename is None:
-            # Generate filename with version, replacing periods with underscores if they cause issues
-            safe_version = pyslammer_version.replace(".", "_")
-            filename = f"pyslammer_{safe_version}_results.json"
-            
+            # Generate filename with version (keeping periods)
+            filename = f"pyslammer_{pyslammer_version}_results.json"
+
         results_dir = self.data_path / "results"
         results_dir.mkdir(exist_ok=True)
 
@@ -125,13 +153,13 @@ class DataManager:
         Args:
             cache_key: Unique identifier for the results
             results: Results data to cache (individual analysis result)
-            
+
         Raises:
             ValidationError: If the individual result doesn't match schema requirements
         """
         # Validate individual cached result against schema
         self.schema_validator.validate_analysis_record(results)
-        
+
         cache_dir = self.data_path / "cache"
         cache_dir.mkdir(exist_ok=True)
 
@@ -155,7 +183,9 @@ class DataManager:
         # Create a deterministic hash from analysis parameters and version
         key_data = {
             "analysis_id": analysis_record.analysis_id,
-            "ground_motion": asdict(analysis_record.ground_motion_parameters),
+            "ground_motion_parameters": asdict(
+                analysis_record.ground_motion_parameters
+            ),
             "analysis": asdict(analysis_record.analysis),
             "site_parameters": asdict(analysis_record.site_parameters),
             "pyslammer_version": pyslammer_version,
@@ -189,7 +219,9 @@ class DataManager:
 
         if earthquakes:
             analyses = [
-                a for a in analyses if a.ground_motion_parameters.earthquake in earthquakes
+                a
+                for a in analyses
+                if a.ground_motion_parameters.earthquake in earthquakes
             ]
 
         if analysis_ids:

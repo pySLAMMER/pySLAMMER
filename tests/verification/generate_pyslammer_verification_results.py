@@ -199,7 +199,6 @@ def run_verification_analyses(
             input_dict = pyslammer_inputs["input_dict"]
 
             # Create and run the analysis (normal and inverse)
-            print(f"  Running analysis for {analysis_record.analysis_id}...")
             normal_analysis = method_class(**input_dict)
             inverse_analysis = method_class(**input_dict, inverse=True)
 
@@ -262,7 +261,6 @@ def run_verification_analyses(
             # Cache the result
             data_manager.save_cached_results(cache_key, result_record)
             run_count += 1
-            print(f"  Completed: {analysis_record.analysis_id}")
 
         except Exception as e:
             print(f"  Error running analysis for {analysis_record.analysis_id}: {e}")
@@ -307,6 +305,7 @@ def collect_and_save_pyslammer_results(
 
     # Collect cached results
     cached_analyses = []
+    cache_keys_to_delete = []
 
     for analysis_record in all_analyses:
         cache_key = data_manager.generate_cache_key(analysis_record, pyslammer_version)
@@ -314,6 +313,7 @@ def collect_and_save_pyslammer_results(
 
         if cached_result is not None:
             cached_analyses.append(cached_result)
+            cache_keys_to_delete.append(cache_key)
 
     if not cached_analyses:
         raise ValueError("No cached pySLAMMER results found")
@@ -339,8 +339,19 @@ def collect_and_save_pyslammer_results(
     )
 
     print(f"Saved {len(cached_analyses)} pySLAMMER results to {output_path}")
+    
+    # Delete cached individual results now that they're collected in the final file
+    cache_dir = data_manager.data_path / "cache"
+    deleted_count = 0
+    
+    for cache_key in cache_keys_to_delete:
+        cache_file = cache_dir / f"{cache_key}.json.gz"
+        try:
+            if cache_file.exists():
+                cache_file.unlink()
+                deleted_count += 1
+        except OSError as e:
+            print(f"Warning: Failed to delete cache file {cache_file}: {e}")
+    
+    print(f"Cleaned up {deleted_count} cached result files")
     return output_path
-
-
-if __name__ == "__main__":
-    run_verification_analyses(max_analyses=1000)

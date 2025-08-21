@@ -11,6 +11,12 @@ def pytest_addoption(parser):
         "--runslow", action="store_true", default=False,
         help="run slow tests"
     )
+    parser.addoption(
+        "--pyslammer-version",
+        action="store", 
+        default=None,
+        help="Specify pySLAMMER version to test against"
+    )
 
 
 def pytest_configure(config):
