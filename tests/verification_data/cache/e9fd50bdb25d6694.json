@@ -1,0 +1,24 @@
+{
+  "analysis_id": "analysis_0000_decoupled",
+  "ground_motion_parameters": {
+    "earthquake": "Cape Mendocino 1992",
+    "record_station": "PET-090",
+    "target_pga_g": 0.2,
+    "ground_motion_file": "Cape_Mendocino_1992_PET-090.csv"
+  },
+  "analysis": {
+    "method": "decoupled",
+    "mode": "linear_elastic"
+  },
+  "site_parameters": {
+    "ky_g": 0.15,
+    "height_m": 50,
+    "vs_slope_mps": 600,
+    "vs_base_mps": 600,
+    "damping_ratio": -0.05
+  },
+  "results": {
+    "normal_displacement_cm": 0.7734257530928714,
+    "inverse_displacement_cm": 0.7840506685441265
+  }
+}

@@ -4,6 +4,7 @@ import pytest
 from pyslammer.constants import G_EARTH
 from pyslammer.ground_motion import GroundMotion
 from pyslammer.sliding_block_analysis import SlidingBlockAnalysis
+from pyslammer.utilities import sample_ground_motions
 
 
 class TestSlidingBlockAnalysis:
@@ -272,3 +273,25 @@ class TestSlidingBlockAnalysis:
         # Not equal to non-SlidingBlockAnalysis objects
         assert sba1 != "not a sliding block analysis"
         assert sba1 != 42
+
+    def test_inverse_parameter(self):
+        """Test that the inverse parameter correctly inverts the scale factor."""
+        # Load a sample ground motion
+        motions = sample_ground_motions()
+        motion_key = "Cape_Mendocino_1992_PET-090"
+        motion = motions[motion_key]
+
+        # Test parameters
+        ky = 0.15
+        target_pga = 0.2
+
+        # Test analysis with and without inverse
+        sba_normal = SlidingBlockAnalysis(
+            ky=ky, ground_motion=motion, target_pga=target_pga, inverse=False
+        )
+        sba_inverse = SlidingBlockAnalysis(
+            ky=ky, ground_motion=motion, target_pga=target_pga, inverse=True
+        )
+
+        # Verify that inverse has opposite scale factor
+        assert sba_inverse.scale_factor == -sba_normal.scale_factor

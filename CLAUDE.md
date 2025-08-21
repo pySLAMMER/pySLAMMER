@@ -4,6 +4,10 @@
 - Use uv to manage the project virtual environment and dependencies
 - Keep dev-only and production dependencies separate
 
+## Coding style
+- Keep things as bare bones as possible.
+- After implementing the minimum required code to function, include notes for consideration to make things more robust.
+
 ## Testing Conventions
 
 ### Avoid Test Redundancy

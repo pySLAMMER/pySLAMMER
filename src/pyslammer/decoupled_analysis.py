@@ -3,6 +3,7 @@
 # TODO: add inherited variable values
 # TODO: add "testing" features?
 import math
+from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -106,7 +107,8 @@ class Decoupled(SlidingBlockAnalysis):
         Shear wave velocity of the base.
     damp_ratio : float
         Damping ratio of the sliding block.
-    ref_strain : float
+    ref_strain : float, optional
+        Reference strain for equivalent linear analysis. Required when soil_model is 'equivalent_linear'.
         Reference strain for modulus reduction.
     scale_factor : float, optional
         Scale factor for the input acceleration. Default is 1.
@@ -133,7 +135,8 @@ class Decoupled(SlidingBlockAnalysis):
         Shear wave velocity of the base.
     damp_ratio : float
         Damping ratio of the sliding block.
-    ref_strain : float
+    ref_strain : float, optional
+        Reference strain for equivalent linear analysis. Required when soil_model is 'equivalent_linear'.
         Reference strain for modulus reduction.
     scale_factor : float
         Scale factor for the input acceleration.
@@ -186,7 +189,7 @@ class Decoupled(SlidingBlockAnalysis):
         vs_slope: int or float,
         vs_base: int or float,
         damp_ratio: float,
-        ref_strain: float,
+        ref_strain: Optional[float] = None,
         scale_factor: float = 1,
         target_pga: float = None,
         soil_model: str = "linear_elastic",
@@ -202,10 +205,17 @@ class Decoupled(SlidingBlockAnalysis):
         self.vs_slope = vs_slope
         self.vs_base = vs_base
         self.damp_ratio = damp_ratio
-        self.ref_strain = ref_strain
         self.SI_units = si_units
         self.soil_model = soil_model
         self.lite = lite
+
+        # Validate ref_strain requirement based on soil_model
+        if soil_model == "equivalent_linear" and ref_strain is None:
+            raise ValueError(
+                "ref_strain is required when soil_model is 'equivalent_linear'"
+            )
+
+        self.ref_strain = ref_strain
 
         self.npts = len(self.a_in)
         self.g = G_EARTH * (si_units + (not si_units) * M_TO_FT)
@@ -328,7 +338,7 @@ class Decoupled(SlidingBlockAnalysis):
 
         delta_a_in = self.a_in[curr] - self.a_in[prev]
         delta_force = (
-            -self.L1 / self.M1 * delta_a_in * self.g * self.scale_factor
+            -self.L1 / self.M1 * delta_a_in * self.g  # * self.scale_factor
             + a * self.v_resp[prev]
             + b * self.a_resp[prev]
         )

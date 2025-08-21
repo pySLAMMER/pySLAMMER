@@ -33,6 +33,7 @@ Repository = "https://github.com/pyslammer/pyslammer"
 dev = [
     "click>=8.2.1",
     "jsonschema>=4.25.0",
+    "openpyxl>=3.1.5",
     "pandas",
     "pytest>=8.3.5",
     "scipy>=1.16.1",

@@ -1,4 +1,5 @@
 import math
+from typing import Optional
 
 import numpy as np
 
@@ -25,8 +26,8 @@ class Coupled(Decoupled):
         Base shear wave velocity.
     damp_ratio : float
         Damping ratio.
-    ref_strain : float
-        Reference strain.
+    ref_strain : float, optional
+        Reference strain for equivalent linear analysis. Required when soil_model is 'equivalent_linear'.
     scale_factor : float, optional
         Scale factor for input acceleration, by default 1.
     target_pga : float, optional
@@ -63,7 +64,7 @@ class Coupled(Decoupled):
         vs_slope: int or float,
         vs_base: int or float,
         damp_ratio: float,
-        ref_strain: float,
+        ref_strain: Optional[float] = None,
         scale_factor: float = 1,
         target_pga: float = None,
         soil_model: str = "linear_elastic",
@@ -191,15 +192,15 @@ class Coupled(Decoupled):
         # Set up acceleration loading. Normal force corrected for vertical component of a_in.
         self.normalf2 = (
             self.mass * self.gCOS
-            + self.mass * self.a_in[i - 1] * self.scale_factor * self.gSIN
+            + self.mass * self.a_in[i - 1] * self.gSIN  # * self.scale_factor
         )
 
         if i == 1:
             self.acc11 = 0.0
-            self.acc22 = self.a_in[i - 1] * self.gCOS * self.scale_factor
+            self.acc22 = self.a_in[i - 1] * self.gCOS  # * self.scale_factor
         elif not self._slide:
-            self.acc11 = self.a_in[i - 2] * self.gCOS * self.scale_factor
-            self.acc22 = self.a_in[i - 1] * self.gCOS * self.scale_factor
+            self.acc11 = self.a_in[i - 2] * self.gCOS  # * self.scale_factor
+            self.acc22 = self.a_in[i - 1] * self.gCOS  # * self.scale_factor
         else:
             self.acc11 = self.gSIN - self.k_y(self.s[i - 2]) * self.normalf1 / self.mass
             self.acc22 = self.gSIN - self.k_y(self.s[i - 2]) * self.normalf2 / self.mass
@@ -264,7 +265,7 @@ class Coupled(Decoupled):
         # update sliding acceleration based on calc'd response
         if self._slide:
             self.sdotdot2 = (
-                -self.a_in[i - 1] * self.gCOS * self.scale_factor
+                -self.a_in[i - 1] * self.gCOS  # * self.scale_factor
                 - self.k_y(self.s[i - 2]) * self.normalf2 / self.mass
                 - self.L1 * self.udotdot2 / self.mass
                 + self.gSIN
@@ -272,7 +273,7 @@ class Coupled(Decoupled):
 
         # calc. base force based on a_resp calc
         self.basef = (
-            -self.mass * self.a_in[i - 1] * self.gCOS * self.scale_factor
+            -self.mass * self.a_in[i - 1] * self.gCOS  # * self.scale_factor
             - self.L1 * self.udotdot2
             + self.mass * self.gSIN
         )
@@ -305,11 +306,11 @@ class Coupled(Decoupled):
         dd = -self.sdot1 / (self.sdot2 - self.sdot1)
         ddt = dd * delt
         acc11 = self.gSIN - self.k_y(self.s[i - 2]) * (
-            self.gCOS + self.a_in[i - 1] * self.scale_factor * self.gSIN
+            self.gCOS + self.a_in[i - 1] * self.gSIN  # * self.scale_factor
         )
         acc1b = (
-            self.a_in[i - 2] * self.g * self.scale_factor
-            + dd * (self.a_in[i - 1] - self.a_in[i - 2]) * self.g * self.scale_factor
+            self.a_in[i - 2] * self.g  # * self.scale_factor
+            + dd * (self.a_in[i - 1] - self.a_in[i - 2]) * self.g  # * self.scale_factor
         )
         acc22 = self.gSIN - self.k_y(self.s[i - 2]) * (self.gCOS + acc1b * self.SIN)
 
@@ -335,7 +336,7 @@ class Coupled(Decoupled):
         ddt = (1.0 - dd) * delt
         self._slide = False
         acc11 = acc22
-        acc22 = self.a_in[i - 1] * self.gCOS * self.scale_factor
+        acc22 = self.a_in[i - 1] * self.gCOS  # * self.scale_factor
 
         khat = (
             1.0
