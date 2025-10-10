@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: ../docs
+  output-dir: _site
 
 execute:
   freeze: auto
@@ -85,3 +85,4 @@ quartodoc:
         - Coupled
         - GroundMotion
         - sample_ground_motions
+        - utilities

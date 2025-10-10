@@ -14,7 +14,7 @@
         "\n",
         "Import pyslammer using:"
       ],
-      "id": "50be558e"
+      "id": "31d3733f"
     },
     {
       "cell_type": "code",
@@ -22,7 +22,7 @@
       "source": [
         "import pyslammer as slam"
       ],
-      "id": "d027d708",
+      "id": "192cb4e0",
       "execution_count": null,
       "outputs": []
     },
@@ -32,7 +32,7 @@
       "source": [
         "Additional Python libraries, such as `matplotlib` may also be useful."
       ],
-      "id": "1f12223a"
+      "id": "491a817e"
     },
     {
       "cell_type": "code",
@@ -43,7 +43,7 @@
         "import matplotlib.pyplot as plt\n",
         "plt.style.use(slam.psfigstyle)"
       ],
-      "id": "094931d7",
+      "id": "20d0e67c",
       "execution_count": null,
       "outputs": []
     },
@@ -55,7 +55,7 @@
         "histories = slam.sample_ground_motions()\n",
         "output = {}"
       ],
-      "id": "0459a6f0",
+      "id": "7ee55447",
       "execution_count": null,
       "outputs": []
     },
@@ -67,7 +67,7 @@
         "\n",
         "The code below evaluates all combinations of $k_y$ contained in `kys` and every motion in `histories`. Some key features (motion, ky, max displacement, and displacement time histories) are stored in a dictionary, which is then converted to a pandas dataframe."
       ],
-      "id": "47673ac2"
+      "id": "d22dfc01"
     },
     {
       "cell_type": "code",
@@ -81,7 +81,7 @@
         "        .sliding_disp}\n",
         "        run += 1"
       ],
-      "id": "0659fae9",
+      "id": "1bb8a31b",
       "execution_count": null,
       "outputs": []
     },
@@ -93,7 +93,7 @@
         "df = pd.DataFrame.from_dict(output,orient='index')\n",
         "df"
       ],
-      "id": "2d26680d",
+      "id": "5943633b",
       "execution_count": null,
       "outputs": []
     },
@@ -105,7 +105,7 @@
         "\n",
         "The results of the analyses can be plotted to show trends in total accumulated displacement with $k_y$ for each ground motion in the sample ground motion suite."
       ],
-      "id": "c9ce92bf"
+      "id": "516ffc3e"
     },
     {
       "cell_type": "code",
@@ -139,7 +139,7 @@
         "\n",
         "Alternatively, for any given motion, the displacement time histories for different values of $k_y$ could be of interest. In @fig-variation_single, the results from all the simulations with the `Imperial_Valley_1979_BCR-230` motion are shown. Although a different dimension of the data are being shown, the figure is simply pulling from the the results dataframe used in @fig-multi_motion."
       ],
-      "id": "5b330da5"
+      "id": "f6d0d689"
     },
     {
       "cell_type": "code",
@@ -196,7 +196,7 @@
       "name": "python3",
       "language": "python",
       "display_name": "Python 3 (ipykernel)",
-      "path": "/Users/lornearnold/GitHub/pySLAMMER_docs/.venv/share/jupyter/kernels/python3"
+      "path": "/Users/lornearnold/GitHub/pySLAMMER/.venv/share/jupyter/kernels/python3"
     }
   },
   "nbformat": 4,

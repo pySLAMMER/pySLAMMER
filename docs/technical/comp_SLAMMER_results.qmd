@@ -15,7 +15,13 @@ import pyslammer as slam
 import scipy.stats.mstats as ssmstat
 from cycler import cycler
 from great_tables import GT, md, html
+import json
+import gzip
+from matplotlib.patches import FancyArrowPatch
 plt.style.use(slam.psfigstyle)
+
+current_dir = os.getcwd()
+project_root  = Path(current_dir).resolve().parents[1]
 ```
 
 PySLAMMER's rigid, decoupled, and coupled analysis methods are intended to produce sliding block analysis results that match the legacy SLAMMER results. This is an important feature for sliding block displacements, which are used as a performance index (as opposed to providing a direct prediction of actual slope displacement) in practice. Equivalence with legacy results allows new results to be interpreted with reference to historical analyses and experience.
@@ -180,16 +186,16 @@ Although the Python code in pySLAMMER essentially uses the same algorithms as th
 #| fig-cap: "Comparison of pySLAMMER and SLAMMER analysis results. At this scale, the differences are too small to be distinguished visually."
 
 # Load SLAMMER and pySLAMMER results from verification data
-import json
-import gzip
-from matplotlib.patches import FancyArrowPatch
 
-# Load SLAMMER results
-with gzip.open('../../verification_files/verification_data/results/slammer_results.json.gz', 'rt') as f:
+
+# Load SLAMMER results tests/verification_data/results/slammer_results.json.gz
+slammer_path = project_root / "tests" / "verification_data" / "results" / "slammer_results.json.gz"
+with gzip.open(slammer_path, 'rt') as f:
     slammer_data = json.load(f)
 
-# Load pySLAMMER results (using latest version)
-with gzip.open('../../verification_files/verification_data/results/pyslammer_0.2.3_results.json.gz', 'rt') as f:
+# Load pySLAMMER results 
+pyslammer_path = project_root / "tests" / "verification_data" / "results" / "pyslammer_0.2.2_results.json.gz"
+with gzip.open(pyslammer_path, 'rt') as f:
     pyslammer_data = json.load(f)
 
 # Create comparison dataframe

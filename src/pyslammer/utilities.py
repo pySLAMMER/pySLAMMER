@@ -7,7 +7,12 @@ from .ground_motion import GroundMotion
 
 G_EARTH = 9.80665
 
-__all__ = ["csv_time_hist", "sample_ground_motions", "load_sample_ground_motion", "psfigstyle"]
+__all__ = [
+    "csv_time_hist",
+    "sample_ground_motions",
+    "load_sample_ground_motion",
+    "psfigstyle",
+]
 
 psfigstyle = {
     "font.family": "sans-serif",
@@ -42,18 +47,20 @@ def load_sample_ground_motion(filename: str) -> GroundMotion:
         If the specified file is not found in the sample_ground_motions folder.
     """
     # Ensure filename has .csv extension
-    if not filename.endswith('.csv'):
-        filename += '.csv'
-    
+    if not filename.endswith(".csv"):
+        filename += ".csv"
+
     # Get the path to the sample_ground_motions folder
     folder_path = pkg_resources.files("pyslammer") / "sample_ground_motions"
     file_path = folder_path / filename
-    
+
     try:
         motion_name = filename[:-4]  # Remove .csv extension
         return GroundMotion(*csv_time_hist(str(file_path)), motion_name)
     except FileNotFoundError:
-        raise FileNotFoundError(f"Ground motion file '{filename}' not found in sample_ground_motions folder")
+        raise FileNotFoundError(
+            f"Ground motion file '{filename}' not found in sample_ground_motions folder"
+        )
 
 
 def sample_ground_motions():
@@ -80,15 +87,16 @@ def sample_ground_motions():
     # Iterate over all files in the folder
     try:
         for file_path in folder_path.iterdir():
-            if file_path.name.endswith('.csv'):
+            if file_path.name.endswith(".csv"):
                 motion_name = file_path.name[:-4]
                 sgms[motion_name] = load_sample_ground_motion(motion_name)
     except AttributeError:
         # Fallback for older Python versions
         import os
+
         folder_str = str(folder_path)
         for filename in os.listdir(folder_str):
-            if filename.endswith('.csv'):
+            if filename.endswith(".csv"):
                 motion_name = filename[:-4]
                 sgms[motion_name] = load_sample_ground_motion(motion_name)
 

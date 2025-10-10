@@ -10,8 +10,11 @@ node_modules/
 venv/
 
 # Quarto
-/.quarto/
-/_site/
+.quarto/
+docs/_freeze/
+docs/_site/
+docs/.gitignore
+docs/quickstart.quarto_ipynb
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

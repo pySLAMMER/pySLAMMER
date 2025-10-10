@@ -10,7 +10,7 @@
         "sidebar: main\n",
         "---"
       ],
-      "id": "d60c305a"
+      "id": "010d877c"
     },
     {
       "cell_type": "code",
@@ -26,9 +26,15 @@
         "import scipy.stats.mstats as ssmstat\n",
         "from cycler import cycler\n",
         "from great_tables import GT, md, html\n",
-        "plt.style.use(slam.psfigstyle)"
+        "import json\n",
+        "import gzip\n",
+        "from matplotlib.patches import FancyArrowPatch\n",
+        "plt.style.use(slam.psfigstyle)\n",
+        "\n",
+        "current_dir = os.getcwd()\n",
+        "project_root  = Path(current_dir).resolve().parents[1]"
       ],
-      "id": "0dad276c",
+      "id": "7c43a455",
       "execution_count": null,
       "outputs": []
     },
@@ -46,7 +52,7 @@
         "\n",
         "We used the motions from pySLAMMER's built-in sample ground motion suite at several scales to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). The acceleration response spectra for the input motion suite are shown in @fig-resp. Additional details on the ground motions are provided on the [ground motion suite page](ground_motions.qmd)."
       ],
-      "id": "31487c51"
+      "id": "1851af23"
     },
     {
       "cell_type": "code",
@@ -145,7 +151,7 @@
         "\n",
         "@tbl-params shows the analysis options and ranges of input values used in the group of simulations used to compare pySLAMMER to"
       ],
-      "id": "5ee84beb"
+      "id": "48c89803"
     },
     {
       "cell_type": "code",
@@ -215,7 +221,7 @@
         "\n",
         "Although the Python code in pySLAMMER essentially uses the same algorithms as the Java code in SLAMMER, some non-zero differences in results should be expected due to minor numerical differences (e.g., number type handling, order of operations) [@ince2012]. However, the results can be considered functionally equivalent if they contain no apparent tendency to diverge and the differences are relatively small. For engineering purposes, sliding block displacements below 0.5 cm can be considered equivalent to zero displacement [@bray2019]. The results of the simulations across the parametric space described in @tbl-params are shown on @fig-comp. The data are plotted on a log-log scale to make minor numerical differences visible near and below the \"equivalent zero\" displacement threshold. As indicated by the linear regression, the differences between SLAMMER and pySLAMMER results are negligibly small relative to the scales of engineering significance."
       ],
-      "id": "d1f1aa63"
+      "id": "c2096896"
     },
     {
       "cell_type": "code",
@@ -227,16 +233,16 @@
         "#| fig-cap: Comparison of pySLAMMER and SLAMMER analysis results. At this scale, the differences are too small to be distinguished visually.\n",
         "\n",
         "# Load SLAMMER and pySLAMMER results from verification data\n",
-        "import json\n",
-        "import gzip\n",
-        "from matplotlib.patches import FancyArrowPatch\n",
         "\n",
-        "# Load SLAMMER results\n",
-        "with gzip.open('../../verification_files/verification_data/results/slammer_results.json.gz', 'rt') as f:\n",
+        "\n",
+        "# Load SLAMMER results tests/verification_data/results/slammer_results.json.gz\n",
+        "slammer_path = project_root / \"tests\" / \"verification_data\" / \"results\" / \"slammer_results.json.gz\"\n",
+        "with gzip.open(slammer_path, 'rt') as f:\n",
         "    slammer_data = json.load(f)\n",
         "\n",
-        "# Load pySLAMMER results (using latest version)\n",
-        "with gzip.open('../../verification_files/verification_data/results/pyslammer_0.2.3_results.json.gz', 'rt') as f:\n",
+        "# Load pySLAMMER results \n",
+        "pyslammer_path = project_root / \"tests\" / \"verification_data\" / \"results\" / \"pyslammer_0.2.2_results.json.gz\"\n",
+        "with gzip.open(pyslammer_path, 'rt') as f:\n",
         "    pyslammer_data = json.load(f)\n",
         "\n",
         "# Create comparison dataframe\n",
@@ -389,7 +395,7 @@
         "\n",
         "The results show that pySLAMMER is performing the same rigorous analysis methods as SLAMMER. Across a broad array of input parameters, the results are identical or nearly identical. Minor numerical differences between the output of the two programs is to be expected. However, the differences are so small as to be insignificant for engineering purposes, both in research and practice."
       ],
-      "id": "46aca6e8"
+      "id": "6fcc3dc7"
     }
   ],
   "metadata": {
@@ -397,7 +403,7 @@
       "name": "python3",
       "language": "python",
       "display_name": "Python 3 (ipykernel)",
-      "path": "/Users/lornearnold/GitHub/pySLAMMER_docs/.venv/share/jupyter/kernels/python3"
+      "path": "/Users/lornearnold/GitHub/pySLAMMER/.venv/share/jupyter/kernels/python3"
     }
   },
   "nbformat": 4,

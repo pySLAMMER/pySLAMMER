@@ -12,3 +12,4 @@ API reference for pySLAMMER
 | [Coupled](Coupled.qmd#pyslammer.Coupled) | Coupled analysis for sliding block and ground motion interaction. |
 | [GroundMotion](GroundMotion.qmd#pyslammer.GroundMotion) | Ground Motion Record. |
 | [sample_ground_motions](sample_ground_motions.qmd#pyslammer.sample_ground_motions) | Load sample ground motions from the `sample_ground_motions` folder. |
+| [utilities](utilities.qmd#pyslammer.utilities) |  |
