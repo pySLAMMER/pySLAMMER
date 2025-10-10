@@ -1,0 +1,15 @@
+/* css styles */
+.btn {
+    background-color: #306998; /* Change this to your desired color */
+    border-radius: 0px; /* Adjust the value for corner rounding */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Adjust padding for button size */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #98b4cc; /* Change this to your desired hover color */
+}

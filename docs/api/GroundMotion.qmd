@@ -1,0 +1,25 @@
+# GroundMotion { #pyslammer.GroundMotion }
+
+```python
+GroundMotion(accel, dt, name='None')
+```
+
+Ground Motion Record.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type               | Description                             | Default    |
+|--------|--------------------|-----------------------------------------|------------|
+| accel  | np.ndarray or list | Ground motion acceleration record in g. | _required_ |
+| dt     | float              | Time step of the record (s).            | _required_ |
+| name   | str                | Name of the record (default is 'None'). | `'None'`   |
+
+## Attributes {.doc-section .doc-section-attributes}
+
+| Name        | Type       | Description                             |
+|-------------|------------|-----------------------------------------|
+| accel       | np.ndarray | Ground motion acceleration record in g. |
+| dt          | float      | Time step of the record (s).            |
+| name        | str        | Name of the record.                     |
+| pga         | float      | Peak ground acceleration in g.          |
+| mean_period | float      | Mean period of the ground motion.       |

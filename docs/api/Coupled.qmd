@@ -1,0 +1,48 @@
+# Coupled { #pyslammer.Coupled }
+
+```python
+Coupled(
+    ky,
+    ground_motion,
+    height,
+    vs_slope,
+    vs_base,
+    damp_ratio,
+    ref_strain=None,
+    scale_factor=1,
+    target_pga=None,
+    soil_model='linear_elastic',
+    si_units=True,
+    lite=False,
+    inverse=False,
+)
+```
+
+Coupled analysis for sliding block and ground motion interaction.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name          | Type                                                                                          | Description                                                                                       | Default            |
+|---------------|-----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|--------------------|
+| ky            | float or tuple\[list\[float\], list\[float\]\] or tuple\[np.ndarray, np.ndarray\] or callable | Yield acceleration or function defining yield acceleration.                                       | _required_         |
+| ground_motion | GroundMotion                                                                                  | Ground motion object containing acceleration time history and time step.                          | _required_         |
+| height        | int or float                                                                                  | Height of the sliding block.                                                                      | _required_         |
+| vs_slope      | int or float                                                                                  | Shear wave velocity slope.                                                                        | _required_         |
+| vs_base       | int or float                                                                                  | Base shear wave velocity.                                                                         | _required_         |
+| damp_ratio    | float                                                                                         | Damping ratio.                                                                                    | _required_         |
+| ref_strain    | float                                                                                         | Reference strain for equivalent linear analysis. Required when soil_model is 'equivalent_linear'. | `None`             |
+| scale_factor  | float                                                                                         | Scale factor for input acceleration, by default 1.                                                | `1`                |
+| target_pga    | float                                                                                         | Target peak ground acceleration, by default None.                                                 | `None`             |
+| soil_model    | str                                                                                           | Soil model type, by default "linear_elastic".                                                     | `'linear_elastic'` |
+| si_units      | bool                                                                                          | Use SI units, by default True.                                                                    | `True`             |
+| lite          | bool                                                                                          | Lite mode, by default False.                                                                      | `False`            |
+
+## Attributes {.doc-section .doc-section-attributes}
+
+| Name             | Type       | Description                                                            |
+|------------------|------------|------------------------------------------------------------------------|
+| HEA              | np.ndarray | Horizontal equivalent acceleration time history from dynamic response. |
+| gamma            | float      | Integration parameter gamma.                                           |
+| block_acc        | np.ndarray | Block acceleration time history.                                       |
+| ground_acc       | np.ndarray | Ground acceleration time history.                                      |
+| max_sliding_disp | float      | Maximum sliding displacement.                                          |

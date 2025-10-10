@@ -1,0 +1,204 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Batch Simulations\n",
+        "\n",
+        "This notebook shows an example use case of pyslammer for running batch simulations.\n",
+        "\n",
+        "## Setup\n",
+        "\n",
+        "*The next steps assume you've already installed pySLAMMER from PYPI. See the [quickstart guide](../quickstart.qmd) for installation instructions.*\n",
+        "\n",
+        "Import pyslammer using:"
+      ],
+      "id": "50be558e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pyslammer as slam"
+      ],
+      "id": "d027d708",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Additional Python libraries, such as `matplotlib` may also be useful."
+      ],
+      "id": "1f12223a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "import matplotlib.pyplot as plt\n",
+        "plt.style.use(slam.psfigstyle)"
+      ],
+      "id": "094931d7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "kys = np.linspace(0.01,0.7,100)\n",
+        "histories = slam.sample_ground_motions()\n",
+        "output = {}"
+      ],
+      "id": "0459a6f0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Batch Simulations\n",
+        "\n",
+        "The code below evaluates all combinations of $k_y$ contained in `kys` and every motion in `histories`. Some key features (motion, ky, max displacement, and displacement time histories) are stored in a dictionary, which is then converted to a pandas dataframe."
+      ],
+      "id": "47673ac2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "run = 0\n",
+        "for ky in kys:\n",
+        "    for motion, hist in histories.items():\n",
+        "        result = slam.RigidAnalysis(ky, histories[motion], target_pga=0.3)\n",
+        "        output[run] = {\"motion\":motion, \"ky\":ky, \"k_max\":np.max(result.a_in), \"d_max\": result.max_sliding_disp, \"dt\":result.dt, \"disp\": result\n",
+        "        .sliding_disp}\n",
+        "        run += 1"
+      ],
+      "id": "0659fae9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# convert the output to a pandas dataframe\n",
+        "df = pd.DataFrame.from_dict(output,orient='index')\n",
+        "df"
+      ],
+      "id": "2d26680d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Comparing multiple motions\n",
+        "\n",
+        "The results of the analyses can be plotted to show trends in total accumulated displacement with $k_y$ for each ground motion in the sample ground motion suite."
+      ],
+      "id": "c9ce92bf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| label: fig-multi_motion\n",
+        "#| fig-cap: Variation in final displacement with $k_y$ for the sample ground motion suite.\n",
+        "plt.close('all')\n",
+        "fig, ax = plt.subplots()  \n",
+        "for key, grp in df.groupby(['motion']):\n",
+        "    ax.scatter(grp[\"ky\"]/grp[\"k_max\"], grp[\"d_max\"], label=key[0], alpha=0.5)\n",
+        "ax.legend(loc='upper left', bbox_to_anchor=(1, 1))\n",
+        "ax.set_xlim(0,1)\n",
+        "ax.set_yscale('log')\n",
+        "ax.set_ylim(1e-3,1e1)\n",
+        "ax.set_xlabel('$k_y / k_{max}$')\n",
+        "ax.set_ylabel('Maximum Displacement (m)')\n",
+        "\n",
+        "plt.tight_layout()\n",
+        "plt.show()"
+      ],
+      "id": "fig-multi_motion",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Variation in a single motion's time history\n",
+        "\n",
+        "Alternatively, for any given motion, the displacement time histories for different values of $k_y$ could be of interest. In @fig-variation_single, the results from all the simulations with the `Imperial_Valley_1979_BCR-230` motion are shown. Although a different dimension of the data are being shown, the figure is simply pulling from the the results dataframe used in @fig-multi_motion."
+      ],
+      "id": "5b330da5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| code-fold: true\n",
+        "#| label: fig-variation_single\n",
+        "#| fig-cap: Variation in cumulative displacement with $k_y$ for the Imperial Valley motion.\n",
+        "import matplotlib.cm as cm\n",
+        "from matplotlib.colors import LogNorm\n",
+        "\n",
+        "motion = \"Imperial_Valley_1979_BCR-230\"\n",
+        "\n",
+        "plt.close('all')\n",
+        "\n",
+        "# Create a figure and axes\n",
+        "fig, ax = plt.subplots(figsize=(6, 4))\n",
+        "\n",
+        "# Create a color map\n",
+        "cmap = plt.colormaps['Spectral']#cm.get_cmap('viridis')\n",
+        "norm = LogNorm(df['ky'].min(), df['ky'].max())\n",
+        "\n",
+        "dt = df[df[\"motion\"]==motion].iloc[0]['dt']\n",
+        "npts = df[df[\"motion\"]==motion].iloc[0]['disp'].shape[0]\n",
+        "time = np.linspace(0, dt*npts, npts)\n",
+        "\n",
+        "for index, row in df[df[\"motion\"]==motion].iterrows():\n",
+        "    color = cmap(norm(row['ky']))\n",
+        "    ax.plot(time, row['disp'], color=color)\n",
+        "\n",
+        "# Add a color bar\n",
+        "sm = cm.ScalarMappable(cmap=cmap, norm=norm)\n",
+        "sm.set_array([])\n",
+        "cbar = fig.colorbar(sm, ax=ax, label='ky')\n",
+        "\n",
+        "# Set the colorbar ticks and labels\n",
+        "ticks = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]\n",
+        "cbar.set_ticks(ticks)\n",
+        "cbar.set_ticklabels([f'{tick:.2f}' for tick in ticks]) \n",
+        "\n",
+        "# Set the x-axis and y-axis labels\n",
+        "ax.set_xlabel('Time')\n",
+        "ax.set_ylabel('Displacement')\n",
+        "ax.set_title(motion)\n",
+        "plt.show()"
+      ],
+      "id": "fig-variation_single",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/lornearnold/GitHub/pySLAMMER_docs/.venv/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
