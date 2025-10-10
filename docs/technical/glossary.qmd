@@ -1,0 +1,10 @@
+---
+title: Glossary 
+bibliography: references.bib
+sidebar: main
+page-navigation: true
+---
+
+::: {.callout-note}
+This page is a stub and will be updated soon.
+:::

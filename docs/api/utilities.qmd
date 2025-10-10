@@ -1,0 +1,71 @@
+# utilities { #pyslammer.utilities }
+
+`utilities`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [csv_time_hist](#pyslammer.utilities.csv_time_hist) | Read a CSV file containing time history acceleration data and return a 1D numpy array and a timestep |
+| [load_sample_ground_motion](#pyslammer.utilities.load_sample_ground_motion) | Load a single sample ground motion by filename from the `sample_ground_motions` folder. |
+| [sample_ground_motions](#pyslammer.utilities.sample_ground_motions) | Load sample ground motions from the `sample_ground_motions` folder. |
+
+### csv_time_hist { #pyslammer.utilities.csv_time_hist }
+
+```python
+utilities.csv_time_hist(filename)
+```
+
+Read a CSV file containing time history acceleration data and return a 1D numpy array and a timestep
+
+Returns:
+    a_in: A 1D numpy array containing time history data.
+    dt: The timestep of the data.
+
+### load_sample_ground_motion { #pyslammer.utilities.load_sample_ground_motion }
+
+```python
+utilities.load_sample_ground_motion(filename)
+```
+
+Load a single sample ground motion by filename from the `sample_ground_motions` folder.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type   | Description                                                                 | Default    |
+|----------|--------|-----------------------------------------------------------------------------|------------|
+| filename | str    | The filename of the ground motion CSV file (with or without .csv extension) | _required_ |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                            |
+|--------|--------------|------------------------------------------------------------------------|
+|        | GroundMotion | A `GroundMotion` object containing the time history data and metadata. |
+
+#### Raises {.doc-section .doc-section-raises}
+
+| Name   | Type              | Description                                                             |
+|--------|-------------------|-------------------------------------------------------------------------|
+|        | FileNotFoundError | If the specified file is not found in the sample_ground_motions folder. |
+
+### sample_ground_motions { #pyslammer.utilities.sample_ground_motions }
+
+```python
+utilities.sample_ground_motions()
+```
+
+Load sample ground motions from the `sample_ground_motions` folder.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                                                                                                         |
+|--------|--------|-------------------------------------------------------------------------------------------------------------------------------------|
+|        | dict   | A dictionary where keys are motion names (str) and values are `GroundMotion` objects containing the time history data and metadata. |
+
+#### Notes {.doc-section .doc-section-notes}
+
+This function reads all CSV files in the `sample_ground_motions` folder and creates
+`GroundMotion` objects for each file. The file name (without extension) is used as the
+key in the returned dictionary.

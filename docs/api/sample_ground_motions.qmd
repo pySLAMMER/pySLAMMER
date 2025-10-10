@@ -1,0 +1,19 @@
+# sample_ground_motions { #pyslammer.sample_ground_motions }
+
+```python
+sample_ground_motions()
+```
+
+Load sample ground motions from the `sample_ground_motions` folder.
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                                                                                                         |
+|--------|--------|-------------------------------------------------------------------------------------------------------------------------------------|
+|        | dict   | A dictionary where keys are motion names (str) and values are `GroundMotion` objects containing the time history data and metadata. |
+
+## Notes {.doc-section .doc-section-notes}
+
+This function reads all CSV files in the `sample_ground_motions` folder and creates
+`GroundMotion` objects for each file. The file name (without extension) is used as the
+key in the returned dictionary.

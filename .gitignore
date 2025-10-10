@@ -5,11 +5,16 @@ node_modules/
 *.egg-info/
 .ipynb_checkpoints
 *.tsbuildinfo
-*.venv/
+# Virtual environments
+.venv/
+venv/
 
-
-# Created by https://www.gitignore.io/api/python
-# Edit at https://www.gitignore.io/?templates=python
+# Quarto
+.quarto/
+docs/_freeze/
+docs/_site/
+docs/.gitignore
+docs/quickstart.quarto_ipynb
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

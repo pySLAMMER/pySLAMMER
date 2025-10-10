@@ -1,0 +1,55 @@
+# RigidAnalysis { #pyslammer.RigidAnalysis }
+
+```python
+RigidAnalysis(
+    ky,
+    ground_motion,
+    scale_factor=1.0,
+    target_pga=None,
+    inverse=False,
+)
+```
+
+Rigid Block Analysis.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name          | Type         | Description                                                                                                                                             | Default    |
+|---------------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| ky            | float        | Critical acceleration (in g).                                                                                                                           | _required_ |
+| ground_motion | GroundMotion | Ground motion object containing acceleration time history and time step.                                                                                | _required_ |
+| scale_factor  | float        | Scaling factor for the input acceleration. Default is 1.0.                                                                                              | `1.0`      |
+| target_pga    | float        | Target peak ground acceleration (in m/s^2). If provided, the input acceleration will be scaled to match this value. Cannot be used with `scale_factor`. | `None`     |
+
+## Raises {.doc-section .doc-section-raises}
+
+| Name   | Type       | Description                                           |
+|--------|------------|-------------------------------------------------------|
+|        | ValueError | If both `target_pga` and `scale_factor` are provided. |
+
+## Attributes {.doc-section .doc-section-attributes}
+
+| Name         | Type          | Description                                              |
+|--------------|---------------|----------------------------------------------------------|
+| _ground_acc_ | numpy.ndarray | Internal ground acceleration time series (in m/s^2).     |
+| ky           | float         | Yield acceleration (in g) for user interface.            |
+| _ky_         | float         | Internal yield acceleration (in m/s^2) for calculations. |
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [run_rigid_analysis](#pyslammer.RigidAnalysis.run_rigid_analysis) | Calculate the downslope rigid block displacement, differential velocity, and acceleration. |
+
+### run_rigid_analysis { #pyslammer.RigidAnalysis.run_rigid_analysis }
+
+```python
+RigidAnalysis.run_rigid_analysis()
+```
+
+Calculate the downslope rigid block displacement, differential velocity, and acceleration.
+
+#### Notes {.doc-section .doc-section-notes}
+
+This method iteratively calculates the block's acceleration, velocity, and displacement
+based on the input ground acceleration and critical acceleration.
