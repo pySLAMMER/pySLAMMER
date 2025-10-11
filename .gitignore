@@ -10,6 +10,8 @@ node_modules/
 venv/
 
 # Quarto
+/.quarto/
+/_site/
 .quarto/
 docs/_freeze/
 docs/_site/
