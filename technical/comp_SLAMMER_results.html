@@ -440,7 +440,7 @@ Figure&nbsp;1: Acceleration response spectra for input ground motions
 </dd>
 <dt>Coupled Analysis</dt>
 <dd>
-<p>As indicated by the name, coupled analysis takes the two separate calculations from the decoupled analysis and performs them simultaneously. <span class="citation" data-cites="chopra1991">Chopra and Zhang (<a href="#ref-chopra1991" role="doc-biblioref">1991</a>)</span> introduced a model for earthquake-induced sliding of concrete gravity dams that considered the dynamic response of the dam during sliding. <span class="citation" data-cites="rathje1999">Rathje and Bray (<a href="#ref-rathje1999" role="doc-biblioref">1999</a>)</span> modified the procedure and applied it to earth structures. With coupled sliding, the sliding mass’s dynamic response is calculated for both sliding and non-sliding conditions. Sliding stops when the relative velocity of the sliding mass reaches zero. The stop of sliding can introduce an abrupt change in acceleration applied to the sliding mass. Because the dynamic response is being calculated continually through the analysis, the approach to identifying the timing of these abrupt changes will affect potential subsequent sliding events.</p>
+<p>As indicated by the name, coupled analysis takes the two separate calculations from the decoupled analysis and performs them simultaneously. <span class="citation" data-cites="chopra1991">Chopra and Zhang (<a href="#ref-chopra1991" role="doc-biblioref">1991</a>)</span> introduced a coupled sliding block method for concrete gravity dams that considers the dam as a distributed mass system. <span class="citation" data-cites="kramer1997">Kramer and Smith (<a href="#ref-kramer1997" role="doc-biblioref">1997</a>)</span> developed a coupled analysis method for soil slopes using discrete masses. <span class="citation" data-cites="rathje1999">Rathje and Bray (<a href="#ref-rathje1999" role="doc-biblioref">1999</a>)</span> modified Chopra and Zhang’s distributed mass approach and applied it to earth structures. The coupled method used by SLAMMER (and pySLAMMER) is Rathje and Bray’s modification of Chopra and Zhang. With coupled sliding, the sliding mass’s dynamic response is calculated for both sliding and non-sliding conditions. Sliding stops when the relative velocity of the sliding mass reaches zero. The stop of sliding can introduce an abrupt change in acceleration applied to the sliding mass. Because the dynamic response is being calculated continually through the analysis, the approach to identifying the timing of these abrupt changes will affect potential subsequent sliding events.</p>
 </dd>
 <dt>Dynamic Response</dt>
 <dd>
@@ -512,52 +512,52 @@ Table&nbsp;1: Sliding block parameters used for pySLAMMER to SLAMMER comparison 
 </figcaption>
 <div aria-describedby="tbl-params-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display" data-execution_count="3">
-<div id="nrgqqpcyty" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="lzrwamhjlb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#nrgqqpcyty table {
+#lzrwamhjlb table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#nrgqqpcyty thead, tbody, tfoot, tr, td, th { border-style: none; }
+#lzrwamhjlb thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#nrgqqpcyty p { margin: 0; padding: 0; }
- #nrgqqpcyty .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #nrgqqpcyty .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #nrgqqpcyty .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #nrgqqpcyty .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #nrgqqpcyty .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #nrgqqpcyty .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #nrgqqpcyty .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #nrgqqpcyty .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #nrgqqpcyty .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #nrgqqpcyty .gt_column_spanner_outer:first-child { padding-left: 0; }
- #nrgqqpcyty .gt_column_spanner_outer:last-child { padding-right: 0; }
- #nrgqqpcyty .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #nrgqqpcyty .gt_spanner_row { border-bottom-style: hidden; }
- #nrgqqpcyty .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #nrgqqpcyty .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #nrgqqpcyty .gt_from_md> :first-child { margin-top: 0; }
- #nrgqqpcyty .gt_from_md> :last-child { margin-bottom: 0; }
- #nrgqqpcyty .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #nrgqqpcyty .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #nrgqqpcyty .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #nrgqqpcyty .gt_row_group_first td { border-top-width: 2px; }
- #nrgqqpcyty .gt_row_group_first th { border-top-width: 2px; }
- #nrgqqpcyty .gt_striped { color: #333333; background-color: #F4F4F4; }
- #nrgqqpcyty .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #nrgqqpcyty .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #nrgqqpcyty .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #nrgqqpcyty .gt_left { text-align: left; }
- #nrgqqpcyty .gt_center { text-align: center; }
- #nrgqqpcyty .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #nrgqqpcyty .gt_font_normal { font-weight: normal; }
- #nrgqqpcyty .gt_font_bold { font-weight: bold; }
- #nrgqqpcyty .gt_font_italic { font-style: italic; }
- #nrgqqpcyty .gt_super { font-size: 65%; }
- #nrgqqpcyty .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #nrgqqpcyty .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#lzrwamhjlb p { margin: 0; padding: 0; }
+ #lzrwamhjlb .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #lzrwamhjlb .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #lzrwamhjlb .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #lzrwamhjlb .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #lzrwamhjlb .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #lzrwamhjlb .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #lzrwamhjlb .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #lzrwamhjlb .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #lzrwamhjlb .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #lzrwamhjlb .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #lzrwamhjlb .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #lzrwamhjlb .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #lzrwamhjlb .gt_spanner_row { border-bottom-style: hidden; }
+ #lzrwamhjlb .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #lzrwamhjlb .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #lzrwamhjlb .gt_from_md> :first-child { margin-top: 0; }
+ #lzrwamhjlb .gt_from_md> :last-child { margin-bottom: 0; }
+ #lzrwamhjlb .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #lzrwamhjlb .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #lzrwamhjlb .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #lzrwamhjlb .gt_row_group_first td { border-top-width: 2px; }
+ #lzrwamhjlb .gt_row_group_first th { border-top-width: 2px; }
+ #lzrwamhjlb .gt_striped { color: #333333; background-color: #F4F4F4; }
+ #lzrwamhjlb .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #lzrwamhjlb .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #lzrwamhjlb .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #lzrwamhjlb .gt_left { text-align: left; }
+ #lzrwamhjlb .gt_center { text-align: center; }
+ #lzrwamhjlb .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #lzrwamhjlb .gt_font_normal { font-weight: normal; }
+ #lzrwamhjlb .gt_font_bold { font-weight: bold; }
+ #lzrwamhjlb .gt_font_italic { font-style: italic; }
+ #lzrwamhjlb .gt_super { font-size: 65%; }
+ #lzrwamhjlb .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #lzrwamhjlb .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 
@@ -814,6 +814,9 @@ Chopra, Anil K., and Liping Zhang. 1991. <span>“Earthquake<span>-</span>Induce
 </div>
 <div id="ref-ince2012" class="csl-entry" role="listitem">
 Ince, Darrel C., Leslie Hatton, and John Graham-Cumming. 2012. <span>“The Case for Open Computer Programs.”</span> <em>Nature</em> 482 (7386): 485–88. <a href="https://doi.org/10.1038/nature10836">https://doi.org/10.1038/nature10836</a>.
+</div>
+<div id="ref-kramer1997" class="csl-entry" role="listitem">
+Kramer, Steven L, and Matthew W Smith. 1997. <span>“Modified Newmark Model for Seismic Displacements of Compliant Slopes.”</span> <em>Journal of Geotechnical and Geoenvironmental Engineering</em> 123 (7).
 </div>
 <div id="ref-lee2004" class="csl-entry" role="listitem">
 Lee, Yong Woo. 2004. <span>“Equivalent-Linear Dynamic Sliding Response Analysis of Geotechnical Earth Structures.”</span> PhD thesis.
