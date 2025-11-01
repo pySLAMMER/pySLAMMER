@@ -1,5 +1,5 @@
 ---
-title: Results comparison to SLAMMER 
+title: Verification with SLAMMER's results
 bibliography: references.bib
 sidebar: main
 ---

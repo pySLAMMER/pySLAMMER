@@ -35,32 +35,25 @@ website:
       contents: 
         - text: Welcome
           href: index.qmd
+        - text: Quickstart guide
+          href: quickstart.qmd
         - section: "Technical guide"
           href: technical/tech_manual.qmd
           contents:
             - technical/glossary.qmd
-            - section: "Verifications"
-              href: technical/verification.qmd
-              contents:
-                - technical/comp_SLAMMER_results.qmd
-                - technical/comp_SLAMMER_perf.qmd
-                - technical/comp_analytical.qmd
-        - section: "About"
-          contents:
-            - about/motivation.qmd
-            - about/roadmap.qmd
-            - about/develop.qmd
-
-    - id: examples
-      contents:
+            - technical/comp_SLAMMER_results.qmd
+            - text: API Reference
+              href: api/index.qmd
         - section: Examples
           href: examples/index.qmd
           contents:
             - examples/rigid_flex.qmd
             - examples/batch_simulations.qmd
-
-    - id: quickstart
-
+        - section: "About"
+          contents:
+            - about/motivation.qmd
+            - about/roadmap.qmd
+            - about/develop.qmd
 
 format:
   html:

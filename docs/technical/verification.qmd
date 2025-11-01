@@ -7,7 +7,7 @@ page-navigation: true
 The following sections compare pySLAMMER's results to the legacy SLAMMER program results for a suite of recorded ground motions as well as analytical results for harmonic ground motions. For equivalent linear options for coupled analysis, the computational performance of pySLAMMER and SLAMMER are also compared.
 
   * Comparison of pySLAMMER's [results to SLAMMER's](comp_SLAMMER_results.qmd)
-  * Comparison of pySLAMMER's [speed to SLAMMER's](comp_SLAMMER_perf.qmd) 
-  * Comparison of pySLAMMER's [results to an analytical solution](comp_analytical.qmd)
+  <!-- * Comparison of pySLAMMER's [speed to SLAMMER's](comp_SLAMMER_perf.qmd) 
+  * Comparison of pySLAMMER's [results to an analytical solution](comp_analytical.qmd) -->
   
 
