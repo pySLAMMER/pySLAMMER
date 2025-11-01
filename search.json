@@ -368,7 +368,7 @@
     "href": "index.html#how-to-cite-pyslammer",
     "title": "pySLAMMER",
     "section": "How to cite pySLAMMER",
-    "text": "How to cite pySLAMMER\nPlease include citations for both the pySLAMMER code and marker paper if you use pySLAMMER.\nCode:\nArnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zenodo. https://doi.org/10.5281/zenodo.15385356\nMarker paper:\nPending",
+    "text": "How to cite pySLAMMER\nPlease include citations for both the pySLAMMER code and marker paper if you use pySLAMMER.\nCode:\nArnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zenodo. https://doi.org/10.5281/zenodo.15385355\nMarker paper:\nPending",
     "crumbs": [
       "Quickstart guide",
       "Welcome"
