@@ -505,6 +505,16 @@ wheels = [
 ]
 
 [[package]]
+name = "eqsig"
+version = "1.2.17"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "scipy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/54/82/82128c6fd726b488775144974234a1e5be9fc36106d6efa1b5577887e1ef/eqsig-1.2.17.tar.gz", hash = "sha256:1dc3158499cc83f56ea8d3227d9a1952d47a2812b5daa589e46088b0def41fce", size = 72588, upload-time = "2024-09-03T20:39:26.711Z" }
+
+[[package]]
 name = "et-xmlfile"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1993,7 +2003,9 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "click" },
+    { name = "eqsig" },
     { name = "great-tables" },
+    { name = "ipykernel" },
     { name = "ipympl" },
     { name = "ipywidgets" },
     { name = "jsonschema" },
@@ -2020,7 +2032,9 @@ provides-extras = ["demo"]
 [package.metadata.requires-dev]
 dev = [
     { name = "click", specifier = ">=8.2.1" },
+    { name = "eqsig" },
     { name = "great-tables", specifier = ">=0.18.0" },
+    { name = "ipykernel" },
     { name = "ipympl", specifier = ">=0.9.7" },
     { name = "ipywidgets", specifier = ">=8.1.7" },
     { name = "jsonschema", specifier = ">=4.25.0" },

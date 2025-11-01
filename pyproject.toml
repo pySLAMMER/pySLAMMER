@@ -42,6 +42,8 @@ dev = [
     "toml>=0.10.2",
     "ipywidgets>=8.1.7",
     "ipympl>=0.9.7",
+    "ipykernel",
     "great-tables>=0.18.0",
     "jupyter>=1.0.0",
+    "eqsig"
 ]

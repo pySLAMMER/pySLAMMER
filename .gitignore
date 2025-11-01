@@ -9,6 +9,14 @@ node_modules/
 .venv/
 venv/
 
+# VS
+.vscode/
+
+# Copilot
+copilot-instructions.md
+
+
+
 # Quarto
 /.quarto/
 /_site/
