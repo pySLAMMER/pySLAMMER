@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Results comparison to SLAMMER – pySLAMMER</title>
+<title>Verification with SLAMMER’s results – pySLAMMER</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,8 +85,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../technical/comp_SLAMMER_perf.html" rel="next">
-<link href="../technical/verification.html" rel="prev">
+<link href="../api/index.html" rel="next">
+<link href="../technical/glossary.html" rel="prev">
 <link href="../_static/pySLAMMER_logo_square.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -180,7 +180,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../quickstart.html"> 
+    <a class="nav-link active" href="../quickstart.html" aria-current="page"> 
 <span class="menu-text">Quickstart guide</span></a>
   </li>  
   <li class="nav-item">
@@ -203,7 +203,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../technical/tech_manual.html">Technical guide</a></li><li class="breadcrumb-item"><a href="../technical/verification.html">Verifications</a></li><li class="breadcrumb-item"><a href="../technical/comp_SLAMMER_results.html">Results comparison to SLAMMER</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../technical/tech_manual.html">Technical guide</a></li><li class="breadcrumb-item"><a href="../technical/comp_SLAMMER_results.html">Verification with SLAMMER’s results</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -226,6 +226,12 @@ window.Quarto = {
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quickstart.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quickstart guide</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../technical/tech_manual.html" class="sidebar-item-text sidebar-link">
@@ -241,35 +247,41 @@ window.Quarto = {
  <span class="menu-text">Glossary</span></a>
   </div>
 </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../technical/verification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Verifications</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../technical/comp_SLAMMER_results.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Results comparison to SLAMMER</span></a>
+ <span class="menu-text">Verification with SLAMMER’s results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../technical/comp_SLAMMER_perf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Comparison with SLAMMER (speed)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../technical/comp_analytical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Comparison with analytical solution</span></a>
+  <a href="../api/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">API Reference</span></a>
   </div>
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../examples/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/rigid_flex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rigid and Flexible Anlysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/batch_simulations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Batch Simulations</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -325,9 +337,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../technical/tech_manual.html">Technical guide</a></li><li class="breadcrumb-item"><a href="../technical/verification.html">Verifications</a></li><li class="breadcrumb-item"><a href="../technical/comp_SLAMMER_results.html">Results comparison to SLAMMER</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../technical/tech_manual.html">Technical guide</a></li><li class="breadcrumb-item"><a href="../technical/comp_SLAMMER_results.html">Verification with SLAMMER’s results</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Results comparison to SLAMMER</h1>
+<h1 class="title">Verification with SLAMMER’s results</h1>
 </div>
 
 
@@ -500,52 +512,52 @@ Table&nbsp;1: Sliding block parameters used for pySLAMMER to SLAMMER comparison 
 </figcaption>
 <div aria-describedby="tbl-params-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display" data-execution_count="3">
-<div id="fxadoikvtq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="nrgqqpcyty" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#fxadoikvtq table {
+#nrgqqpcyty table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#fxadoikvtq thead, tbody, tfoot, tr, td, th { border-style: none; }
+#nrgqqpcyty thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#fxadoikvtq p { margin: 0; padding: 0; }
- #fxadoikvtq .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #fxadoikvtq .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #fxadoikvtq .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #fxadoikvtq .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #fxadoikvtq .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #fxadoikvtq .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #fxadoikvtq .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #fxadoikvtq .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #fxadoikvtq .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #fxadoikvtq .gt_column_spanner_outer:first-child { padding-left: 0; }
- #fxadoikvtq .gt_column_spanner_outer:last-child { padding-right: 0; }
- #fxadoikvtq .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #fxadoikvtq .gt_spanner_row { border-bottom-style: hidden; }
- #fxadoikvtq .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #fxadoikvtq .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #fxadoikvtq .gt_from_md> :first-child { margin-top: 0; }
- #fxadoikvtq .gt_from_md> :last-child { margin-bottom: 0; }
- #fxadoikvtq .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #fxadoikvtq .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #fxadoikvtq .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #fxadoikvtq .gt_row_group_first td { border-top-width: 2px; }
- #fxadoikvtq .gt_row_group_first th { border-top-width: 2px; }
- #fxadoikvtq .gt_striped { color: #333333; background-color: #F4F4F4; }
- #fxadoikvtq .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #fxadoikvtq .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #fxadoikvtq .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #fxadoikvtq .gt_left { text-align: left; }
- #fxadoikvtq .gt_center { text-align: center; }
- #fxadoikvtq .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #fxadoikvtq .gt_font_normal { font-weight: normal; }
- #fxadoikvtq .gt_font_bold { font-weight: bold; }
- #fxadoikvtq .gt_font_italic { font-style: italic; }
- #fxadoikvtq .gt_super { font-size: 65%; }
- #fxadoikvtq .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #fxadoikvtq .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#nrgqqpcyty p { margin: 0; padding: 0; }
+ #nrgqqpcyty .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #nrgqqpcyty .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #nrgqqpcyty .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #nrgqqpcyty .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #nrgqqpcyty .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #nrgqqpcyty .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #nrgqqpcyty .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #nrgqqpcyty .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #nrgqqpcyty .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #nrgqqpcyty .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #nrgqqpcyty .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #nrgqqpcyty .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #nrgqqpcyty .gt_spanner_row { border-bottom-style: hidden; }
+ #nrgqqpcyty .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #nrgqqpcyty .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #nrgqqpcyty .gt_from_md> :first-child { margin-top: 0; }
+ #nrgqqpcyty .gt_from_md> :last-child { margin-bottom: 0; }
+ #nrgqqpcyty .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #nrgqqpcyty .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #nrgqqpcyty .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #nrgqqpcyty .gt_row_group_first td { border-top-width: 2px; }
+ #nrgqqpcyty .gt_row_group_first th { border-top-width: 2px; }
+ #nrgqqpcyty .gt_striped { color: #333333; background-color: #F4F4F4; }
+ #nrgqqpcyty .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #nrgqqpcyty .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #nrgqqpcyty .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #nrgqqpcyty .gt_left { text-align: left; }
+ #nrgqqpcyty .gt_center { text-align: center; }
+ #nrgqqpcyty .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #nrgqqpcyty .gt_font_normal { font-weight: normal; }
+ #nrgqqpcyty .gt_font_bold { font-weight: bold; }
+ #nrgqqpcyty .gt_font_italic { font-style: italic; }
+ #nrgqqpcyty .gt_super { font-size: 65%; }
+ #nrgqqpcyty .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #nrgqqpcyty .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 
@@ -1229,13 +1241,13 @@ Seed, H. Bolton, and Geoffrey R. Martin. 1966. <span>“The Seismic Coefficient 
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../technical/verification.html" class="pagination-link" aria-label="Verifications">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Verifications</span>
+      <a href="../technical/glossary.html" class="pagination-link" aria-label="Glossary">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Glossary</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../technical/comp_SLAMMER_perf.html" class="pagination-link" aria-label="Comparison with SLAMMER (speed)">
-        <span class="nav-page-text">Comparison with SLAMMER (speed)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../api/index.html" class="pagination-link" aria-label="API Reference">
+        <span class="nav-page-text">API Reference</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

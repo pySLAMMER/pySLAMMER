@@ -65,6 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./technical/tech_manual.html" rel="next">
+<link href="./index.html" rel="prev">
 <link href="./_static/pySLAMMER_logo_square.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -178,7 +180,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Quickstart guide</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./quickstart.html">Quickstart guide</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -188,11 +190,108 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./_static/pySLAMMER_logo_square.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
       </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quickstart.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Quickstart guide</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./technical/tech_manual.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Technical guide</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./technical/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./technical/comp_SLAMMER_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Verification with SLAMMER’s results</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./api/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">API Reference</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./examples/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/rigid_flex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rigid and Flexible Anlysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/batch_simulations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Batch Simulations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">About</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about/motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about/roadmap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Roadmap</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about/develop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Develop</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -252,7 +351,7 @@ window.Quarto = {
 <section id="import-the-pyslammer-module" class="level3">
 <h3 class="anchored" data-anchor-id="import-the-pyslammer-module">Import the pyslammer module</h3>
 <p>The recommended ailas for pyslammer is <code>slam</code>:</p>
-<div id="811183e9" class="cell" data-execution_count="1">
+<div id="61518992" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyslammer <span class="im">as</span> slam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This allows use of pyslammer features within your code with the short prefix <code>slam</code>.</p>
@@ -261,7 +360,7 @@ window.Quarto = {
 <section id="import-a-ground-motion" class="level3">
 <h3 class="anchored" data-anchor-id="import-a-ground-motion">Import a ground motion</h3>
 <p>A small number of sample ground motion records are included with <code>pyslammer</code>. We will use one of the sample ground motion records, but we expect most users will import their ground motions from external sources. To use any signal for a ground motion, <code>pyslammer</code> needs a 1-D array of acceleration in units of <span class="math inline">\(g\)</span> and the signal timestep (in seconds). See The available sample ground motions can be viewed with:</p>
-<div id="8c45d06b" class="cell" data-execution_count="2">
+<div id="fb3de2b7" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>motions <span class="op">=</span> slam.sample_ground_motions() <span class="co"># Load all sample ground motions</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> motion <span class="kw">in</span> motions:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(motion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -287,7 +386,7 @@ Northridge_1994_VSP-360</code></pre>
 </div>
 </div>
 <p>For this example, we will use the<code>Imperial_Valley_1979_BCR-230</code> motion.</p>
-<div id="5cd2500e" class="cell" data-execution_count="3">
+<div id="7dca06e4" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gm <span class="op">=</span> motions[<span class="st">"Imperial_Valley_1979_BCR-230"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The timestep and acceleration signal for the imported ground motion are <code>gm.dt</code> and <code>gm.accel</code>, respectively.</p>
@@ -295,7 +394,7 @@ Northridge_1994_VSP-360</code></pre>
 <section id="perform-a-rigid-sliding-block-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="perform-a-rigid-sliding-block-analysis">Perform a rigid sliding block analysis</h3>
 <p>With the imported ground motion, <code>gm</code>, and the assumed value of <span class="math inline">\(k_y\)</span>, we can perform a rigid sliding block analysis with pySLAMMER’s <code>RigidAnalysis</code> object. This simultaneously creates an instance of <code>RigidAnalysis</code> and performs the analysis, which is stored as <code>result</code>. The inputs for <code>RigidAnalysis</code> are the yield acceleration and the ground motion object.</p>
-<div id="ef710acb" class="cell" data-execution_count="4">
+<div id="7417381f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ky <span class="op">=</span> <span class="fl">0.2</span> <span class="co"># yield acceleration in g</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> slam.RigidAnalysis(ky, gm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -303,7 +402,7 @@ Northridge_1994_VSP-360</code></pre>
 <section id="view-results" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="view-results">View results</h3>
 <p>The primary output of the sliding block analysis is the final displacement (<code>SlidingBlockAnalysis.max_sliding_disp</code>). By default, all lengths in pySLAMMER are in meters. The cell below shows the displacement induced by the sample ground motion in the example:</p>
-<div id="6d7b35eb" class="cell" data-execution_count="5">
+<div id="9da2be61" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Slope yield acc: </span><span class="sc">{</span>ky<span class="sc">:.2f}</span><span class="ss"> g </span><span class="ch">\n</span><span class="ss">Ground motion: </span><span class="sc">{</span>gm<span class="sc">.</span>name<span class="sc">}</span><span class="ss">; PGA: </span><span class="sc">{</span>gm<span class="sc">.</span>pga<span class="sc">:.2f}</span><span class="ss"> g </span><span class="ch">\n</span><span class="ss">Sliding displacement: </span><span class="sc">{</span>result<span class="sc">.</span>max_sliding_disp<span class="sc">:.3f}</span><span class="ss"> m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Slope yield acc: 0.20 g 
@@ -729,6 +828,18 @@ Sliding displacement: 0.213 m</code></pre>
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Welcome">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./technical/tech_manual.html" class="pagination-link" aria-label="Technical guide">
+        <span class="nav-page-text">Technical guide</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
