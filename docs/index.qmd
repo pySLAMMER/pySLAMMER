@@ -75,7 +75,7 @@ Please include citations for both the pySLAMMER code and marker paper if you use
 
 **Code**:
 
-Arnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zenodo. https://doi.org/10.5281/zenodo.15385356
+Arnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zenodo. [https://doi.org/10.5281/zenodo.15385355](https://doi.org/10.5281/zenodo.15385355)
 
 **Marker paper**:
 
