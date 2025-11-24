@@ -45,5 +45,4 @@ dev = [
     "ipykernel",
     "great-tables>=0.18.0",
     "jupyter>=1.0.0",
-    "eqsig"
 ]
