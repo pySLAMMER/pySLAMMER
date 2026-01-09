@@ -339,11 +339,11 @@ def collect_and_save_pyslammer_results(
     )
 
     print(f"Saved {len(cached_analyses)} pySLAMMER results to {output_path}")
-    
+
     # Delete cached individual results now that they're collected in the final file
     cache_dir = data_manager.data_path / "cache"
     deleted_count = 0
-    
+
     for cache_key in cache_keys_to_delete:
         cache_file = cache_dir / f"{cache_key}.json.gz"
         try:
@@ -352,6 +352,6 @@ def collect_and_save_pyslammer_results(
                 deleted_count += 1
         except OSError as e:
             print(f"Warning: Failed to delete cache file {cache_file}: {e}")
-    
+
     print(f"Cleaned up {deleted_count} cached result files")
     return output_path
