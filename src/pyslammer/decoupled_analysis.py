@@ -272,58 +272,11 @@ class Decoupled(RigidAnalysis):
         # calculate decoupled displacements using rigid analysis
         # Set the "ground" acceleration to the decoupled HEA for rigid analysis
         self._ground_acc_ = self.HEA.copy()
-        self.run_rigid_analysis(tol=1e-5, delay_displacement=True)
+        self.run_rigid_analysis(delay_displacement=True)
         # self.sliding()
 
         self.max_sliding_disp = self.sliding_disp[-1]
         return self.max_sliding_disp
-
-    def sliding(self):  # TODO: refactor
-        # variables for the previous and current time steps
-        # prev and curr are equal for the first time step
-        # TODO: consider just starting at i=2 and eliminating the logical statement in prev
-        # alternatively, removing logical and letting it use the last value of the array...
-        for i in range(1, self.npts + 1):
-            prev = i - 2 + (i == 1)
-            curr = i - 1
-
-            yield_acc = self._ky_  # self.k_y(self.block_disp[prev]) * self.g
-            excess_acc = yield_acc - self._ground_acc_[prev]  # self.HEA[prev]
-            delta_hea = (
-                self._ground_acc_[curr] - self._ground_acc_[prev]
-            )  # self.HEA[curr] - self.HEA[prev]
-
-            if not self._slide:
-                self._block_acc_[curr] = self._ground_acc_[curr]
-                self.sliding_vel[curr] = 0  # self.block_vel[curr] = 0
-                self.sliding_disp[curr] = self.sliding_disp[
-                    prev
-                ]  # self.block_disp[curr] = self.block_disp[prev]
-                if self._ground_acc_[curr] > yield_acc:
-                    self._slide = True
-            else:
-                self._block_acc_[curr] = yield_acc
-                a0 = self._ground_acc_[prev] - yield_acc
-                a1 = self._ground_acc_[curr] - yield_acc
-                self.sliding_vel[curr] = self.sliding_vel[prev] + self.trap_int(
-                    a0, a1, self.dt
-                )
-                v0 = self.sliding_vel[prev]
-                v1 = self.sliding_vel[curr]
-                self.sliding_disp[curr] = self.sliding_disp[prev] + self.trap_int(
-                    v0, v1, self.dt
-                )
-                # self.block_vel[curr] = (
-                #     self.block_vel[prev] + (excess_acc - 0.5 * delta_hea) * self.dt
-                # )
-                # self.block_disp[curr] = (
-                #     self.block_disp[prev]
-                #     - self.block_vel[prev] * self.dt
-                #     - 0.5 * (excess_acc + delta_hea / 6.0) * self.dt**2
-                # )
-                if self.sliding_vel[curr] < 1e-5:  # >= 0.0:
-                    self._slide = False
-            # self.sliding_vel[curr] = -self.block_vel[prev]
 
     def dynamic_response(self, i):
         prev = i - 2 + (i == 1)

@@ -129,12 +129,12 @@ class RigidAnalysis(SlidingBlockAnalysis):
             if delay_displacement and just_triggered and i > 0:
                 # Previous ground acceleration minus yield acceleration
                 acc[0] = self._ground_acc_[i - 1] - n * self._ky_
-            vel[1] = vel[0] + self.trap_int(acc[0], acc[1], self.dt)
+            vel[1] = vel[0] + (self.dt / 2) * (acc[1] + acc[0])
             if vel[1] > 0:
                 if delay_displacement and just_triggered:
                     pos[1] = pos[0]
                 else:
-                    pos[1] = pos[0] + self.trap_int(vel[0], vel[1], self.dt)
+                    pos[1] = pos[0] + (self.dt / 2) * (vel[1] + vel[0])
             else:
                 vel[1] = 0
                 acc[1] = 0
@@ -146,6 +146,3 @@ class RigidAnalysis(SlidingBlockAnalysis):
             self.sliding_vel[i] = vel[1]
             self._block_acc_[i] = gnd_acc_curr - acc[1]
         self.max_sliding_disp = self.sliding_disp[-1]
-
-    def trap_int(self, fx_0, fx_1, dt):
-        return (fx_0 + fx_1) * dt / 2
