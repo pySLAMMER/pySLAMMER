@@ -1,5 +1,5 @@
 # Verification Report
-pySLAMMER version: dev
+pySLAMMER version: dev_5
 SLAMMER version: 1.1
 
 ## Verification Results
@@ -11,7 +11,7 @@ SLAMMER version: 1.1
 ### DECOUPLED Method:
 - Normal: R² = 0.999999 ✅, slope = 1.000718 ✅, intercept = -0.006 ✅
 - Inverse: R² = 0.999999 ✅, slope = 1.000905 ✅, intercept = -0.010 ✅
-- Combined: 98.6% ✅ individual pass rate
+- Combined: 98.7% ✅ individual pass rate
 ### COUPLED Method:
 - Normal: R² = 0.999999 ✅, slope = 1.000665 ✅, intercept = 0.003 ✅
 - Inverse: R² = 0.999999 ✅, slope = 1.001000 ✅, intercept = -0.005 ✅

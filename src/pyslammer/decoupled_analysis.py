@@ -10,7 +10,7 @@ import numpy as np
 
 from .constants import G_EARTH, KNM3_TO_LBFT3, M_TO_FT
 from .ground_motion import GroundMotion
-from .sliding_block_analysis import SlidingBlockAnalysis
+from .rigid_analysis import RigidAnalysis
 from .utilities import sample_ground_motions
 
 
@@ -89,7 +89,7 @@ def assign_k_y(k_y):
 
 
 # FIXME: inconsistent use of a_in with/without scale_factor
-class Decoupled(SlidingBlockAnalysis):
+class Decoupled(RigidAnalysis):
     """
     Decoupled analysis for sliding block and ground motion interaction.
 
@@ -160,11 +160,11 @@ class Decoupled(SlidingBlockAnalysis):
         Maximum shear modulus of the sliding block.
     HEA : np.ndarray
         Horizontal earthquake acceleration.
-    block_disp : np.ndarray
+    sliding_disp : np.ndarray
         Displacement of the sliding block.
     block_vel : np.ndarray
         Velocity of the sliding block.
-    block_acc : np.ndarray
+    _block_acc_ : np.ndarray
         Acceleration of the sliding block.
     x_resp : np.ndarray
         Response displacement.
@@ -230,7 +230,7 @@ class Decoupled(SlidingBlockAnalysis):
 
         self.HEA = np.zeros(self.npts)
         self.sliding_vel = np.zeros(self.npts)
-        self.block_disp = np.zeros(self.npts)
+        self.sliding_disp = np.zeros(self.npts)
         self.block_vel = np.zeros(self.npts)
         self._block_acc_ = np.zeros(self.npts)
         self.x_resp = np.zeros(self.npts)
@@ -247,7 +247,6 @@ class Decoupled(SlidingBlockAnalysis):
 
         if type(self) is Decoupled:
             self.run_sliding_analysis()
-        self._ground_acc_ = self.a_in * self.g
 
     def __str__(self):
         return (
@@ -270,50 +269,61 @@ class Decoupled(SlidingBlockAnalysis):
         for i in range(1, self.npts + 1):
             self.dynamic_response(i)
 
-        # calculate decoupled displacements
-        for i in range(1, self.npts + 1):
-            self.sliding(i)
+        # calculate decoupled displacements using rigid analysis
+        # Set the "ground" acceleration to the decoupled HEA for rigid analysis
+        self._ground_acc_ = self.HEA.copy()
+        self.run_rigid_analysis(tol=1e-5, delay_displacement=True)
+        # self.sliding()
 
-        self.max_sliding_disp = self.block_disp[-1]
+        self.max_sliding_disp = self.sliding_disp[-1]
         return self.max_sliding_disp
 
-    def sliding(self, i):  # TODO: refactor
+    def sliding(self):  # TODO: refactor
         # variables for the previous and current time steps
         # prev and curr are equal for the first time step
         # TODO: consider just starting at i=2 and eliminating the logical statement in prev
         # alternatively, removing logical and letting it use the last value of the array...
-        prev = i - 2 + (i == 1)
-        curr = i - 1
+        for i in range(1, self.npts + 1):
+            prev = i - 2 + (i == 1)
+            curr = i - 1
 
-        yield_acc = self.k_y(self.block_disp[prev]) * self.g
-        excess_acc = yield_acc - self.HEA[prev]
-        delta_hea = self.HEA[curr] - self.HEA[prev]
+            yield_acc = self._ky_  # self.k_y(self.block_disp[prev]) * self.g
+            excess_acc = yield_acc - self._ground_acc_[prev]  # self.HEA[prev]
+            delta_hea = (
+                self._ground_acc_[curr] - self._ground_acc_[prev]
+            )  # self.HEA[curr] - self.HEA[prev]
 
-        if k_y_testing:
-            if i % 500 == 0:
-                print(
-                    f"disp: {self.block_disp[prev]}, ky: {self.k_y(self.block_disp[prev])}"
+            if not self._slide:
+                self._block_acc_[curr] = self._ground_acc_[curr]
+                self.sliding_vel[curr] = 0  # self.block_vel[curr] = 0
+                self.sliding_disp[curr] = self.sliding_disp[
+                    prev
+                ]  # self.block_disp[curr] = self.block_disp[prev]
+                if self._ground_acc_[curr] > yield_acc:
+                    self._slide = True
+            else:
+                self._block_acc_[curr] = yield_acc
+                a0 = self._ground_acc_[prev] - yield_acc
+                a1 = self._ground_acc_[curr] - yield_acc
+                self.sliding_vel[curr] = self.sliding_vel[prev] + self.trap_int(
+                    a0, a1, self.dt
                 )
-
-        if not self._slide:
-            self._block_acc_[curr] = self.HEA[curr]
-            self.block_vel[curr] = 0
-            self.block_disp[curr] = self.block_disp[prev]
-            if self.HEA[curr] > yield_acc:
-                self._slide = True
-        else:
-            self._block_acc_[curr] = yield_acc
-            self.block_vel[curr] = (
-                self.block_vel[prev] + (excess_acc - 0.5 * delta_hea) * self.dt
-            )
-            self.block_disp[curr] = (
-                self.block_disp[prev]
-                - self.block_vel[prev] * self.dt
-                - 0.5 * (excess_acc + delta_hea / 6.0) * self.dt**2
-            )
-            if self.block_vel[curr] >= 0.0:
-                self._slide = False
-        self.sliding_vel[curr] = -self.block_vel[prev]
+                v0 = self.sliding_vel[prev]
+                v1 = self.sliding_vel[curr]
+                self.sliding_disp[curr] = self.sliding_disp[prev] + self.trap_int(
+                    v0, v1, self.dt
+                )
+                # self.block_vel[curr] = (
+                #     self.block_vel[prev] + (excess_acc - 0.5 * delta_hea) * self.dt
+                # )
+                # self.block_disp[curr] = (
+                #     self.block_disp[prev]
+                #     - self.block_vel[prev] * self.dt
+                #     - 0.5 * (excess_acc + delta_hea / 6.0) * self.dt**2
+                # )
+                if self.sliding_vel[curr] < 1e-5:  # >= 0.0:
+                    self._slide = False
+            # self.sliding_vel[curr] = -self.block_vel[prev]
 
     def dynamic_response(self, i):
         prev = i - 2 + (i == 1)
@@ -444,13 +454,12 @@ if __name__ == "__main__":
         ky_interp = ([0.2, 0.3, 0.4, 0.5], [0.15, 0.14, 0.13, 0.12])
         ky_func = some_ky_func
         motion = histories["Chi-Chi_1999_TCU068-090"]
-        t_step = motion[0][1] - motion[0][0]
-        input_acc = motion[1] / 9.80665
+        # t_step = motion[0][1] - motion[0][0]
+        # input_acc = motion[1] / 9.80665
 
         da = Decoupled(
             ky=ky_const,
-            a_in=input_acc,
-            dt=t_step,
+            ground_motion=motion,
             height=50.0,
             vs_slope=600.0,
             vs_base=600.0,
@@ -464,4 +473,4 @@ if __name__ == "__main__":
 
         da.run_sliding_analysis()
 
-        print(da.block_disp[-1] * 100)
+        print(da.sliding_disp[-1] * 100)

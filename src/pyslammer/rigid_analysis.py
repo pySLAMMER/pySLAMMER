@@ -87,7 +87,11 @@ class RigidAnalysis(SlidingBlockAnalysis):
             return NotImplemented
         return super().__eq__(other)
 
-    def run_rigid_analysis(self):
+    def run_rigid_analysis(
+        self,
+        tol=1e-5,
+        delay_displacement=False,
+    ):
         """
         Calculate the downslope rigid block displacement, differential velocity, and acceleration.
 
@@ -96,7 +100,6 @@ class RigidAnalysis(SlidingBlockAnalysis):
         This method iteratively calculates the block's acceleration, velocity, and displacement
         based on the input ground acceleration and critical acceleration.
         """
-        tol = 1e-5
         self._block_acc_ = np.zeros(len(self._ground_acc_))
         self.sliding_vel = np.zeros(len(self._ground_acc_))
         self.sliding_disp = np.zeros(len(self._ground_acc_))
@@ -105,22 +108,37 @@ class RigidAnalysis(SlidingBlockAnalysis):
         vel = [0, 0]
         pos = [0, 0]
 
+        sliding_active = False
+
         for i in range(len(self._ground_acc_)):
             gnd_acc_curr = self._ground_acc_[i]
             if vel[1] < tol:
                 if abs(gnd_acc_curr) > self._ky_:
                     n = gnd_acc_curr / abs(gnd_acc_curr)
+                    just_triggered = not sliding_active
+                    sliding_active = True
                 else:
                     n = gnd_acc_curr / self._ky_
+                    just_triggered = False
+                    sliding_active = False
             else:
                 n = 1
+                just_triggered = False
             acc[1] = gnd_acc_curr - n * self._ky_
-            vel[1] = vel[0] + (self.dt / 2) * (acc[1] + acc[0])
+
+            if delay_displacement and just_triggered and i > 0:
+                # Previous ground acceleration minus yield acceleration
+                acc[0] = self._ground_acc_[i - 1] - n * self._ky_
+            vel[1] = vel[0] + self.trap_int(acc[0], acc[1], self.dt)
             if vel[1] > 0:
-                pos[1] = pos[0] + (self.dt / 2) * (vel[1] + vel[0])
+                if delay_displacement and just_triggered:
+                    pos[1] = pos[0]
+                else:
+                    pos[1] = pos[0] + self.trap_int(vel[0], vel[1], self.dt)
             else:
                 vel[1] = 0
                 acc[1] = 0
+                sliding_active = False
             pos[0] = pos[1]
             vel[0] = vel[1]
             acc[0] = acc[1]
@@ -128,3 +146,6 @@ class RigidAnalysis(SlidingBlockAnalysis):
             self.sliding_vel[i] = vel[1]
             self._block_acc_[i] = gnd_acc_curr - acc[1]
         self.max_sliding_disp = self.sliding_disp[-1]
+
+    def trap_int(self, fx_0, fx_1, dt):
+        return (fx_0 + fx_1) * dt / 2

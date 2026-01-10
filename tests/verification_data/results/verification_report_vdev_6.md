@@ -1,5 +1,5 @@
 # Verification Report
-pySLAMMER version: dev_1
+pySLAMMER version: dev_6
 SLAMMER version: 1.1
 
 ## Verification Results
@@ -9,16 +9,9 @@ SLAMMER version: 1.1
 - Inverse: R² = 0.999998 ✅, slope = 1.000911 ✅, intercept = -0.019 ✅
 - Combined: 98.9% ✅ individual pass rate
 ### DECOUPLED Method:
-used this code for decoupled sliding (consistent with Rigid Analysis sliding calc)
-```
-self.block_disp[curr] = (
-                self.block_disp[prev]
-                - self.dt * (self.block_vel[prev] + self.block_vel[curr]) / 2
-            )
-```
-- Normal: R² = 0.999999 ✅, slope = 1.000718 ✅, intercept = -0.006 ✅
-- Inverse: R² = 0.999999 ✅, slope = 1.000905 ✅, intercept = -0.010 ✅
-- Combined: 98.6% ✅ individual pass rate
+- Normal: R² = 0.999998 ✅, slope = 1.001047 ✅, intercept = 0.035 ✅
+- Inverse: R² = 0.999996 ✅, slope = 1.001319 ✅, intercept = 0.037 ✅
+- Combined: 96.6% ✅ individual pass rate
 ### COUPLED Method:
 - Normal: R² = 0.999999 ✅, slope = 1.000665 ✅, intercept = 0.003 ✅
 - Inverse: R² = 0.999999 ✅, slope = 1.001000 ✅, intercept = -0.005 ✅
