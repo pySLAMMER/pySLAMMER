@@ -194,7 +194,7 @@ with gzip.open(slammer_path, 'rt') as f:
     slammer_data = json.load(f)
 
 # Load pySLAMMER results 
-pyslammer_path = project_root / "tests" / "verification_data" / "results" / "pyslammer_0.2.2_results.json.gz"
+pyslammer_path = project_root / "tests" / "verification_data" / "results" / "pyslammer_dev_6_results.json.gz"
 with gzip.open(pyslammer_path, 'rt') as f:
     pyslammer_data = json.load(f)
 
