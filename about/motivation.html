@@ -231,8 +231,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-pyslammer" id="toc-why-pyslammer" class="nav-link active" data-scroll-target="#why-pyslammer">Why pySLAMMER?</a></li>
+  <li><a href="#what-pyslammer-provides" id="toc-what-pyslammer-provides" class="nav-link" data-scroll-target="#what-pyslammer-provides">What pySLAMMER provides</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -256,30 +263,22 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This page is a stub and will be updated soon.</p>
-</div>
-</div>
-<p>Why did we make pySLAMMER?</p>
+<section id="why-pyslammer" class="level2">
+<h2 class="anchored" data-anchor-id="why-pyslammer">Why pySLAMMER?</h2>
+<p>Sliding block analysis (SBA) is frequently used in assessing earthquake-induced landslides, some of the most common and damaging co-seismic hazards. Although the analysis produces a displacement value, this output should be understood as an index of slope movement rather than a literal field measurement. Because SBA results are index values, continuity with historical analyses is crucial.</p>
+<p>The USGS tool <a href="https://pubs.usgs.gov/tm/12b1/">SLAMMER</a> standardized rigid, decoupled, and coupled sliding block analysis and enabled the engineering community to apply coupled SBA broadly and consistently. However, SLAMMER’s GUI is not well-suited for the high-volume, chained analysis approaches needed in modern natural hazards research and performance-based geotechnical engineering practice. This limitation motivated the development of pySLAMMER.</p>
+</section>
+<section id="what-pyslammer-provides" class="level2">
+<h2 class="anchored" data-anchor-id="what-pyslammer-provides">What pySLAMMER provides</h2>
 <ul>
-<li>Sliding block analyses are common</li>
-<li>The code used isn’t always transparent</li>
-<li>SLAMMER is clunky</li>
-<li>There are a lot of additions to traditional sliding block analyses that have been introduced here and there, but they’re not all in one place.</li>
-<li>Reduced duplication of effort</li>
-<li>More eyes looking for errors</li>
+<li><strong>Verified functional equivalence to SLAMMER</strong> across a broad parametric space for rigid, decoupled, and coupled analyses, preserving historical continuity of index displacements.</li>
+<li><strong>A scriptable Python interface</strong> that enables large-scale batch computation, integration into chained analysis pipelines, and inclusion in regional-scale virtual testbeds.</li>
+<li><strong>Transparency and reproducibility</strong> through open-source code and automatic metadata storage.</li>
+<li><strong>An extensible platform</strong> for community contributions of new sliding block methods. The object-oriented architecture allows new analysis types to inherit input validation, metadata storage, and plotting from existing classes.</li>
 </ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
