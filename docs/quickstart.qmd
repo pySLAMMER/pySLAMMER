@@ -16,6 +16,7 @@ pip install pyslammer
 ```
 ## Basic Usage
 With `pyslammer` installed, basic usage involves the following steps:
+
 1. Import the `pyslammer` module
 2. Import a ground motion
 3. Perform a rigid sliding block analysis
