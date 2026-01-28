@@ -1,0 +1,490 @@
+%% 
+%% Copyright 2007, 2008, 2009 Elsevier Ltd
+%% 
+%% This file is part of the 'Elsarticle Bundle'.
+%% ---------------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'Elsarticle Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+
+%% Template article for Elsevier's document class `elsarticle'
+%% with numbered style bibliographic references
+%% SP 2008/03/01
+
+ \documentclass[preprint,review,12pt]{elsarticle}
+
+%% Use the option review to obtain double line spacing
+%% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
+
+%% For including figures, graphicx.sty has been loaded in
+%% elsarticle.cls. If you prefer to use the old commands
+%% please give \usepackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+\usepackage{hyperref}
+% \usepackage{subfigure}
+\usepackage{caption}
+\usepackage{subcaption}
+% \setlength{\parindent}{0pt}
+%% The amsthm package provides extended theorem environments
+%% \usepackage{amsthm}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers.
+%\usepackage{lineno}
+\newcommand{\figwidth}{4.0in}
+
+\journal{SoftwareX}
+
+\begin{document}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+
+\begin{frontmatter}
+ 
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for theassociated footnote;
+%% use the fnref command within \author or \address for footnotes;
+%% use the fntext command for theassociated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for theassociated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \address{Address\fnref{label3}}
+%% \fntext[label3]{}
+
+\title{pySLAMMER: a Python package for Seismic LAndslide Movement Modeled using Earthquake Records}
+
+%% use optional labels to link authors explicitly to addresses:
+%% \author[label1,label2]{}
+%% \address[label1]{}
+%% \address[label2]{}
+
+\author[label1]{Lorne Arnold}
+\author[]{Donald Garcia-Rivas}
+\address[label1]{University of Washington Tacoma, 1900 Commerce St., Tacoma, WA, arnoldl@uw.edu}
+% \address[label2]{Author2's affiliation, address, email}
+
+\begin{abstract}
+%% Text of abstract 
+Sliding block analysis (SBA) produces displacement indices which are frequently used in earthquake engineering design and risk analysis of landslide hazards.
+SLAMMER, the widely-used SBA from the USGS, has a GUI that limits modern workflow integration.
+But because SBA results are index values, continuity with historical analyses is crucial.
+pySLAMMER performs SBA with verified functional equivalence to SLAMMER, enabling modern programmatic workflows and historical continuity.
+A correction to SLAMMER's dynamic response algorithm reduces the complexity from $O(n^2)$ to $O(n)$. 
+pySLAMMER welcomes community contributions and provides a platform for introducing new sliding block methods as extensions of historical models.
+
+
+\end{abstract}
+
+% Highlights
+% Verified Python sliding block analysis equivalent to SLAMMER.
+% Programmatic interface enables inclusion in modern workflows.
+% Corrected O(n^2) algorithm to O(n).
+% Open-source platform for community extension.
+
+\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+sliding block analysis \sep seismic slope stability \sep verification study\sep open-source \sep Python 
+%% PACS codes here, in the form: \PACS code \sep code
+
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+
+\end{keyword}
+
+\end{frontmatter}
+
+%\linenumbers
+
+\section*{Metadata}
+
+\begin{table}[!h]
+\begin{tabular}{|l|p{6.5cm}|p{6.5cm}|}
+\hline
+\textbf{Nr.} & \textbf{Code metadata description} & \textbf{Metadata} \\
+\hline
+C1 & Current code version & 0.2.2 \\
+\hline
+C2 & Permanent link to code/repository used for this code version & \url{https://github.com/pySLAMMER/pySLAMMER} \\
+\hline
+C3  & Permanent link to Reproducible Capsule & none\\
+\hline
+C4 & Legal Code License   & GNU General Public License v3.0 \\
+\hline
+C5 & Code versioning system used & git \\
+\hline
+C6 & Software code languages, tools, and services used & Python v3.12+ \\
+\hline
+C7 & Compilation requirements, operating environments \& dependencies & numpy, scipy, matplotlib\\
+\hline
+C8 & If available Link to developer documentation/manual & \url{https://pyslammer.github.io/pySLAMMER/} \\
+\hline
+C9 & Support email for questions & arnoldl@uw.edu\\
+\hline
+\end{tabular}
+\caption{Code metadata (mandatory)}
+\label{codeMetadata} 
+\end{table}
+
+
+\section{Motivation and significance}
+
+Sliding block analysis (SBA) is frequently used in assessing earthquake-induced landslides; some of the most common and damaging co-seismic hazards.
+Conceptually, SBA models a potential landslide mass as a block resting on an inclined plane subjected to ground shaking as illustrated in \ref{fig:sliding_block_model}.
+The acceleration of the block is limited by the yield acceleration, $k_y$, which represents the resistance on the block-plane interface.
+When the ground motion acceleration exceeds $k_y$, the block slips and by twice integrating the differential acceleration, the sliding velocity and then sliding displacement of the block is obtained as illustrated in \ref{fig:SBA_integration}.
+The sliding displacement serves as a means of quantifying the potential impact of the landslide hazard on the surrounding environment.
+
+
+\begin{figure}
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[width=\linewidth]{sliding_block_model.pdf}
+\caption{Basic sliding block model}
+\label{fig:sliding_block_model}
+\end{subfigure}
+\hspace*{\fill}
+\begin{subfigure}{0.65\textwidth}
+\includegraphics[width=\linewidth]{SBA_integration.pdf}
+\caption{Sliding block double integration}
+\label{fig:SBA_integration}
+\end{subfigure}
+\caption{Basics}
+\label{fig:sba_basics}
+\end{figure} 
+
+Originally, SBA used rigid assumptions for the block \cite{newmark_effects_1965}, ignoring its dynamic response.
+Later, the decoupled method  considered the dynamic response of the system by calculating the dynamic response within the slope and using this signal as the input to a subsequent rigid sliding analysis \cite{makdisi_simplified_1978}.
+Eventually, fully coupled methods, which calculate the dynamic response and sliding simultaneously were developed \cite{chopra_earthquakeinduced_1991a,kramer_modified_1997b,rathje_examination_1999}.
+Relative to rigid and decoupled methods, coupled sliding analysis provides the most realistic representation of sliding slope dynamics and should be used in nearly all cases \cite{bray_performancebased_2023}.
+
+As with any modeling analysis, understanding the assumptions and limitations behind SBAs is critical to their use.
+Of particular importance for SBA is understanding that although the analysis produces a displacement value, this output should be understood as an index of slope movement, rather than a literal distance that would be measured in the field \citep{jibson_method_2000}.
+Like other indices, SBA results should be interpreted relative to historical results and predictive performance of the same algorithms.
+For this reason, rigid and decoupled methods continue to have a place in research and practice, but they should be used alongside the coupled method.
+
+The value of sliding block models is not in their precision, but in their conceptual simplicity which nevertheless captures enough of the behavior of the physical systems they represent to produce results that relate well to observed seismic performance of slopes \cite{jibson_method_2000}. 
+Relative to pseudostatic analysis (which only predict whether a slope will be destabilized by an earthquake, not how much it might move), SBA requires little additional input.
+But advanced stress-deformation methods (e.g., finite elements, finite difference), which provide more detailed predictions, come at a substantially higher computational and material characterization cost \citep{jibson_methods_2011}, making SBA a useful intermediate tool.
+
+Trends in natural hazards research and geotechnical engineering practice will  make sliding block analyses increasingly valuable.
+The grand challenges in the U.S. National Science Foundation's Natural Hazards Engineering Research Infrastructure (NHERI) Science Plan identify the need for understanding compounding and co-occurring hazards and their impacts on civil infrastructure and communities \citep{robertson_natural_2023}.
+This understanding requires multi-hazard, regional-scale, systems modeling approaches with several interdependent chained algorithms (e.g., virtual testbeds as presented by \cite{enderami_virtual_2023}).
+The Science Plan goals echo the trend in geotechnical practice towards probabilistic performance-based design approaches, which aim to quantify the performance of facilities and structures under anticipated hazards \citep{kramer_evolution_2024}.
+A shared attribute of these trends is the need for large volumes of analysis runs and chains of multiple kinds of analysis.
+Even while computational costs drop year over year, stress-deformation analysis methods are likely to remain prohibitively expensive for regional-scale or high-volume analyses for the foreseeable future.
+
+Although simple in concept, design choices at the algorithm level, particularly for the coupled method, impact SBA results enough that precise replication of results from another code base is challenging.
+This impeded adoption of coupled analysis until the United States Geological Survey introduced SLAMMER (Seismic LAndslide Movement Modeled using Earthquake Records), a GUI-based Java program for rigid, decoupled, and coupled analysis in 2013 \citep{jibson_slammer_2013}.
+SLAMMER enabled the engineering community to apply coupled SBA as a seismic hazard index broadly and consistently.
+However, with a GUI-only interface, SLAMMER is not well-suited for the high-volume, chained analysis approach needed in modern natural hazards research and geotechnical engineering practice.
+Additionally, several of SLAMMER's design choices are not explicitly documented, making broad replication of its results challenging.
+
+This paper introduces pySLAMMER, an open-source Python language tool for rigorous sliding block analysis designed to meet the needs of modern geotechnical and natural hazards analysis \citep{arnold_pyslammer_2025}.
+The tool's name pays homage to the long-used USGS tool in acknowledgement of its importance as a benchmark for historical index displacements.
+The programmatic interface of Python makes pySLAMMER useful as a standalone tool and as a hazard analysis module in a regional-scale virtual testbed, dynamically accepting as inputs the outputs of preceding analyses (e.g., design ground motions), and providing results for integration with subsequent analyses (e.g., road network impacts).
+
+The pySLAMMER package is available on the \href{https://pypi.org/project/pyslammer/}{Python Packaging Index} and can be installed via \texttt{pip install pyslammer}. 
+The open-source code and documentation are available through the \href{https://github.com/pyslammer/pyslammer}{pySLAMMER website}.
+
+\section{Software description}
+
+\subsection{Software architecture}
+In pySLAMMER, sliding block analysis types have their own classes, which are built on a common parent class, \texttt{SlidingBlockAnalysis}.
+The parent class's methods for validate the input needed for sliding block integrations and store them as attributes.
+\texttt{SlidingBlockAnalysis} instances are not created directly; rather, its attributes and methods are inherited by child classes.
+This enforces uniform behavior for input validation and record-keeping (as well as providing shared plotting functionality).
+Fig. \ref{fig:class_inheritance} illustrates pySLAMMER's class inheritance structure.
+Each analysis method inherits from \texttt{SlidingBlockAnalysis} (or one of its child classes) and adds methods for its unique algorithm and attributes for storing its analysis results.
+This architecture is designed to allow expansion with new analysis methods, which may inherit from any existing model, while preserving historical continuity by producing results functionally equivalent to SLAMMER.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\figwidth]{pySLAMMER_classes.pdf}
+\caption{Class inheritance structure for pySLAMMER current and potential future sliding block analysis models.}
+\label{fig:class_inheritance}
+\end{figure}
+
+Since coupled analysis is the most realistic of the three main types of sliding block models and its results are hardest to replicate, we will focus our descriptions on \texttt{Coupled}.
+The main components of the coupled sliding block algorithm are shown in Fig. \ref{fig:flow_chart}.
+While all the components are present in a coupled analysis, only $E$ and $G$ are unique to \texttt{Coupled}.
+Other components are inherited from, or at least introduced in a parent class.
+
+In order reproduce SLAMMER's results, it was necessary to extract its design choices. 
+For example, both \texttt{Decoupled} and \texttt{Coupled} contain  components $B$ and $C$.
+Component $B$ performs a decoupled dynamic response and $C$ changes the model damping.
+The coupled analysis starts with a decoupled dynamic response, which is used to calculate the equivalent-linear modulus and dampoing, but it also performs a coupled dynamic response during the sliding phase (component $E$).
+Equivalent-linear analysis is inherently iterative \cite{idriss_seismic_1968} and SLAMMER users may have assumed the noticeable time increase associated with this option was caused by the iteration towards strain-compatible modulus reduction and damping ratios.
+However, we identified an unnecessary nested loop in SLAMMER's equivalent-linear function as the source of its inefficiency.
+By correcting this, we reduced pySLAMMER's time complexity for equivalent-linear analysis relative to SLAMMER's from $O(n^2)$ to $O(n)$.
+
+Component $C$ increases the user-specified damping to include a foundation radiation damping factor, $\zeta_f$, as developed by \cite{lee_equivalentlinear_2004}.
+The formula in SLAMMER (Eq. \ref{eq:damp}) is not documented, making precise replication of its results nearly impossible without inspecting the source code.
+
+\begin{equation}\label{eq:damp}
+\zeta_f = \min\!\left(0.2,\; 0.55016 \left(\frac{V_s}{V_b}\right)^{-0.9904}\right)
+\end{equation}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\figwidth]{sliding_flowchart.pdf}
+\caption{Simplified flowchart of the coupled sliding block model in pySLAMMER. Components E and G are unique to \texttt{Coupled}; B and C are inherited from \texttt{Decoupled}, which inherits D and F from \texttt{Rigid}, which inherits A from \texttt{SlidingBlockAnalysis}}
+\label{fig:flow_chart}
+\end{figure}
+
+Other design choices extracted from SLAMMER were also necessary to reproduce its results.
+For example, component $C$ is used by both \texttt{Decoupled} and \texttt{Coupled}.
+It is not obvious that SLAMMER's coupled analysis would include this step since it also calculates the dynamic response during sliding, but for equivalent-linear analysis, the modulus reduction and damping parameters are determined without sliding.
+% SLAMMER uses Darendeli \cite{darendeli_development_2001} modulus reduction and damping curves with a curvature coefficient of 1.
+
+
+\subsection{Software functionalities}
+
+pySLAMMER performs rigid, decoupled, and coupled sliding block analyses.
+The results from all three of these methods are verified to be functionally equivalent to SLAMMER's results to preserve historical continuity of index displacement.
+To verify pySLAMMER's results against SLAMMER's we performed sliding block analyses across a broad parametric space in both SLAMMER and pySLAMMER as an equivalence check. 
+Table \ref{table:parametric_space} summarizes the range of parameters used in the verification study.
+
+A small suite of sample ground motions is included in pySLAMMER for testing and demonstration. For practical use, we expect users will need to use site-specific ground motions developed externally.
+The acceleration response spectra for the verification input motion suite are shown in Fig. \ref{fig:resp_spectra}.
+Full details on the ground motions and parametric study are available in pySLAMMER's documentation as a downloadable, executable Python notebook.
+
+\begin{figure}
+\centering
+\includegraphics[width=\figwidth]{resp_spectra.pdf}
+\caption{Acceleration response spectra for input ground motions.}
+\label{fig:resp_spectra}
+\end{figure}
+
+\begin{table}
+\caption{Sliding block analysis parameters for pySLAMMER to SLAMMER verification study.}
+\label{table:parametric_space}
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{l c}
+\hline\hline
+\multicolumn{1}{c}{Parameter} &
+\multicolumn{1}{c}{Range / Options used} \\
+\hline
+Methods	& Rigid, Decoup., Coupled\\
+Dynamic Resp. & Lin. elastic, Equiv. lin.\\
+ky/kmax	& 0.05 to 1.0\\
+Tm/Ts$^1$ &	0.1 to 10.0\\
+Slope height (m)$^1$	& 0.1 to 100\\
+Slope shear wave vel., Vs (m/s)$^1$ & 200 to 1200\\
+Base shear wave vel., Vb (m/s)$^1$ & 200 to 1200\\
+Damping (\%)$^1$	& 5 to 25\\
+Reference strain (\%)$^2$	& 1 to 10\\
+\hline
+\multicolumn{2}{l}{$^1$ Applies to Decoupled and Coupled analyses} \\
+\multicolumn{2}{l}{$^2$ Applies to equivalent linear analyses} \\
+\hline\hline
+\end{tabular}
+\normalsize
+\end{table}
+
+Although the Python code in pySLAMMER essentially uses the same algorithms as the Java code in SLAMMER, minor numerical differences should be expected due to implementation details (e.g., number type handling, order of operations) \citep{ince_case_2012}.
+However, the results can be considered functionally equivalent if they contain no diverging tendencies and the differences are relatively small.
+For engineering purposes, sliding block displacements below 0.5 cm can be considered equivalent to zero displacement \citep{bray_procedure_2019}.
+The thresholds we used to determine functional equivalence, shown in Table \ref{table:equivalence_criteria}, are based on linear regression of results between the two programs and absolute differences of individual analysis pairs.
+
+\begin{table}
+\caption{Equivalence criteria for pySLAMMER verification against SLAMMER.}
+\label{table:equivalence_criteria}
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{l c}
+\hline\hline
+\multicolumn{1}{c}{Criterion} &
+\multicolumn{1}{c}{Threshold} \\
+\hline
+\multicolumn{2}{l}{\textit{Individual test tolerances}} \\
+Relative error	& $\pm$2\% \\
+Absolute error & $\pm$1.0 cm \\
+Small displacement threshold$^1$ & 0.5 cm \\
+Small displacement absolute error$^1$ & $\pm$0.05 cm \\
+\hline
+\multicolumn{2}{l}{\textit{Group comparison criteria}} \\
+Individual tests passing & $\geq$95\% \\
+Linear regression slope & 1 $\pm$ 0.01 \\
+Linear regression intercept & 0 $\pm$ 0.1 cm \\
+Linear regression R$^2$ & $\geq$0.99 \\
+\hline
+\multicolumn{2}{l}{$^1$ For displacements below threshold, only absolute} \\
+\multicolumn{2}{l}{error criterion applies} \\
+\hline\hline
+\end{tabular}
+\normalsize
+\end{table}
+
+The equivalence check against these criteria is implemented through automated pre-release testing in pySLAMMER. 
+The complete verification report is available in the supplementary materials and at pySLAMMER's GitHub repository.
+All three methods (rigid, decoupled, and coupled) passed all equivalence criteria with R$^2$ values exceeding 0.99999 and individual test pass rates above 95\%.
+The results of the simulations across the parametric space described in Table \ref{table:parametric_space} are shown in Fig. \ref{fig:SLAMMER_comp}.
+The data are plotted on a log-log scale to make minor numerical differences visible near and below the ``equivalent zero'' displacement threshold.
+As indicated by the linear regression statistics, the differences between SLAMMER and pySLAMMER results are negligibly small relative to scales of engineering significance.
+
+\begin{figure}
+\centering
+\includegraphics[width=\figwidth]{SLAMMER_comp.pdf}
+\caption{Verification of functional equivalence of pySLAMMER and SLAMMER analysis results for rigid, decoupled, and coupled analysis.}
+\label{fig:SLAMMER_comp}
+\end{figure}
+
+\section{Illustrative examples}\label{sec:examples}
+
+\subsection{Probabilistic hazard analysis}
+A target application for pySLAMMER is repeated simulation in a probabilistic framework, connected with a series of other models to support performance based seismic design (PBSD) on a local or regional scale.
+PBSD requires an analysis framework like the one developed by the Pacific Earthquake Engineering Research center (PEER).
+In the PEER framework a response model calculates a system response to a ground motion, which is then used to predict physical damage and loss through damage and loss models. 
+% Fig. \ref{fig:peer_framework} shows the components of the PEER framework with pySLAMMER serving as the response model.
+As an example, we present a simple scenario of a state highway agency assessing the seismic vulnerability of bridges in its road network:
+
+
+The agency has a suite of ground motions representing their design earthquake, which has 5\% probability of exceedance in 50 years.
+Based on past performance of bridges adjacent to slopes and coupled SBA performed in SLAMMER, the agency has developed a damage model correlating index displacement, $D$,  and levels of physical damage to the bridge, ranging from negligible to severe.
+Relevant for this example is the 25 cm threshold, where severe damage (i.e., leading to loss of service and major repair or replacement) is expected.
+The state's resilience goals include a loss model that categorizes a probability of severe damage from the design earthquake greater than 10 $\%$ is ``unacceptable'' for bridges on critical routes.
+
+As part of a larger study, the agency evaluates two critical road segments (A and B) which have bridges adjacent to similar slopes.
+The available subsurface data indicate the relevant slope in Segment A is moderately weaker and softer than that in Segment B.
+The uncertainty in the soil strength and stiffness (captured by the yield acceleration, $k_y$, and shear wave velocity, $V_s$, respectively) is reflected in the distribution of these parameters shown in Table \ref{tab:pbsd_params}.
+This distribution is captured by repeatedly running coupled sliding block analyses with pySLAMMER with $k_y$ and $V_s$ from Numpy's log-normal random sample generator \cite{harris_array_2020}.
+For this study, the analyses were repeated until the relative standard error of the mean was less than 0.05.
+
+
+Fig. \ref{fig:pbsd_example} shows the results of the study as distributions of predicted displacement with respect to $k_y$ and the probability of exceedance.
+Despite having a higher yield acceleration, Segment B, has a 15$\%$ probability of exceeding 25 cm of displacement, while Segment A has only a 7$\%$ probability of exceedance. 
+Although counterintuitive, this result reflects an important physical aspect of co-seismic slope behavior that is captured by coupled analysis and ignored by rigid analysis. 
+
+% \begin{figure}
+% \centering
+% \includegraphics[width=\figwidth]{PEER_pySLAMMER.pdf}
+% \caption{PBSD with pySLAMMER as the response model in the PEER framework (modified from \cite{kramer_evolution_2024}).}
+% \label{fig:peer_framework}
+% \end{figure}
+
+
+
+\begin{table}[]
+\caption{Slope parameters for Segments A and B}
+\label{tab:pbsd_params}
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lcc}
+\hline\hline
+Parameters & Segment A & Segment B  \\
+\hline
+Mean yield accel., $\mu_{ky}$ (g) & 0.13         & 0.15      \\
+Mean shear wave vel. $\mu_{Vs}$ (m/s) & 250          & 400       \\
+$\sigma_{ln,ky}$    & \multicolumn{2}{c}{0.2}  \\
+$\sigma_{ln,Vs}$   & \multicolumn{2}{c}{0.15} \\
+Shear wave vel. of base, $V_b$ (m/s) & \multicolumn{2}{c}{1500} \\
+Damping & \multicolumn{2}{c}{0.05} \\
+Reference strain & \multicolumn{2}{c}{0.0005} \\
+Slope height, $H$ (m)      & \multicolumn{2}{c}{25}   \\
+\hline\hline
+\end{tabular}%
+
+\end{table}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\figwidth]{pbsd_example.pdf}
+\caption{Probability of exceedance (indicated by lines) and $k_y$ (indicated by scatter points) of coupled sliding block displacements for Segments A and B.}
+\label{fig:pbsd_example}
+\end{figure}
+
+With the study's results the agency is able to make informed decisions about how and where to invest resources towards meeting the state's resilience goals.
+Possible investments could include, but are not limited to: additional site investigation to reduce uncertainty, more sophisticated modeling, seismic retrofits, and developing alternate emergency routes for post-disaster use.
+Regardless of the investment strategy, the analysis leads the agency to focus on one segment (B) instead of two, allowing its resources to go further.
+
+
+\section{Impact}
+
+Our motivation in developing pySLAMMER was to create a modern sliding block analysis tool that meets the needs of the natural hazards and geotechnical engineering communities.
+By enabling the use of SBA in chained, programmable workflows, pySLAMMER can help address the hazard characterization goals outlined in the NHERI Science Plan.
+The PBSD example in Section \ref{sec:examples} illustrates the type of impact pySLAMMER can have on informing decision-making around hazards.
+
+Breaking away from the GUI brings additional benefits of efficiency and quality to SBA.
+More than the computational efficiency from reduced time complexity, pySLAMMER will benefit its users by enabling automation efficiency.
+For even modest numbers of analyses, interaction with a GUI is a bottleneck and an opportunity to introduce human error.
+The relatively simple PBSD presented in this paper would be possible, but cumbersome and error-prone with a GUI.
+Expanding the study to a regional scale would be prohibitively slow without a programmable tool.
+
+We also hope that pySLAMMER will serve as a platform for new sliding block analysis methods that extend its applications.
+As illustrated in Fig. \ref{fig:class_inheritance}, the existing analysis methods inherit input validation, metadata storage, and plotting features from \texttt{SlidingBlockAnalysis}.
+New analysis methods will also inherit these features from \texttt{SlidingBlockAnalysis} (or one of the other existing classes), eliminating the need to build them for each new model.
+The pySLAMMER website has a developers' page with additional instructions on making contributions to the code, which are welcome.
+With major version releases, authorship on pySLAMMER's permanent digital object identifier (DOI) will be updated based on contribution history to credit community contributions.
+Users are encouraged to cite the pySLAMMER software, this marker paper, and relevant method-specific works when publishing results from pySLAMMER.
+
+
+\section{Conclusions}
+
+Sliding block analysis is a valuable tool for assessing earthquake-induced landslide movement in geotechnical engineering and hazard analysis.
+This paper introduces pySLAMMER as a Python tool for sliding block analysis designed to fit into modern analysis frameworks.
+Through an equivalence study, pySLAMMER's rigid, decoupled, and coupled analyses are demonstrated to be functionally equivalent to SLAMMER's implementations across a broad parametric space.
+This equivalence makes pySLAMMER's index displacement results suitable for comparison with historical SLAMMER analyses.
+
+By replacing SLAMMER's GUI with a scriptable interface, pySLAMMER enables large-scale batch computation, increasing efficiency and reducing error opportunities.
+The object-oriented design promotes reproducibility through automatic metadata storage and supports extensibility through class inheritance.
+Community contributions to and feedback on pySLAMMER are welcomed at pySLAMMER's GitHub repository.
+
+\section*{Acknowledgements}
+This material is based upon work supported by the National Science Foundation under Award No. CMMI-2301519 and by the University of Washington Tacoma Undergraduate Research Fellows.
+The authors also thank Dr. Ellen Rathje for her encouragement and support and for providing source code and background materials on SLAMMER.
+
+
+%% The Appendices part is started with the command \appendix;
+%% appendix sections are then done as normal sections
+%% \appendix
+
+%% \section{}
+%% \label{}
+
+%% References:
+%% Use BibTeX to generate the bibliography. Specify the style and the
+%% .bib database file. Do not wrap these commands in a thebibliography
+%% environment; the generated .bbl will provide that.
+
+\bibliographystyle{elsarticle-num}
+\bibliography{/Users/lornearnold/Zotero/better-bibtex/export/my_library}
+
+
+
+
+
+\end{document}
+\endinput
+%%
+%% End of file `SoftwareX_article_template.tex'.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

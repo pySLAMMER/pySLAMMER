@@ -1,18 +1,28 @@
 ---
-title: Roadmap 
+title: Roadmap
 bibliography: ../technical/references.bib
 sidebar: main
 page-navigation: true
 ---
 
-::: {.callout-note}
-This page is a stub and will be updated soon.
-:::
+The following areas are under consideration for future development. Priorities and scope may shift as the project evolves.
 
-Where are we taking pySLAMMER?
+## Performance improvements
 
-* comprehensive unit tests
-* Speed improvements
-* Memory improvements
-* Additional models
-* Web app
+The initial development focus was on reproducing SLAMMER's results, and performance was considered acceptable as long as pySLAMMER was at least as fast as SLAMMER. The correction of SLAMMER's O(n^2^) equivalent-linear algorithm to O(n) achieved this without further optimization effort. With functional equivalence established, we plan to profile the codebase and pursue additional performance improvements.
+
+## Lite mode
+
+All analysis methods currently store multiple time series of metadata to promote reproducibility. At large scales, this storage may pose memory constraints. We plan to implement an optional lite mode that clears most metadata once it is no longer needed during analysis. Lite mode results will include the final displacement value and enough information to reproduce the full results if needed.
+
+## Additional models
+
+Several enhancements to traditional sliding block analysis have been proposed in the literature. We plan to begin integrating selected methods into pySLAMMER so they can be used in a consistent framework alongside the existing rigid, decoupled, and coupled models.
+
+## Graphical interface
+
+Since SLAMMER's GUI-only interface was one of the limitations that motivated pySLAMMER, a graphical interface was not an initial priority. However, a scripting-only interface can be a barrier for some users. We plan to develop a simple GUI to increase accessibility.
+
+## Expanded verification framework
+
+pySLAMMER includes a verification framework that compares results against SLAMMER across a broad parametric space. We plan to extend this framework to cover new models as they are added, ensuring that verification keeps pace with the package's growth.
