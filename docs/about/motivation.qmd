@@ -1,16 +1,21 @@
 ---
-title: Motivation 
+title: Motivation
 ---
 
-::: {.callout-note}
-This page is a stub and will be updated soon.
-:::
+## Why pySLAMMER?
 
-Why did we make pySLAMMER?
+Sliding block analysis (SBA) is frequently used in assessing earthquake-induced landslides, some of the most common and damaging co-seismic hazards.
+Although the analysis produces a displacement value, this output should be understood as an index of slope movement rather than a literal field measurement.
+Because SBA results are index values, continuity with historical analyses is crucial.
 
-* Sliding block analyses are common
-* The code used isn't always transparent
-* SLAMMER is clunky
-* There are a lot of additions to traditional sliding block analyses that have been introduced here and there, but they're not all in one place.
-* Reduced duplication of effort
-* More eyes looking for errors
+The USGS tool [SLAMMER](https://pubs.usgs.gov/tm/12b1/) standardized rigid, decoupled, and coupled sliding block analysis and enabled the engineering community to apply coupled SBA broadly and consistently.
+However, SLAMMER's GUI is not well-suited for the high-volume, chained analysis approaches needed in modern natural hazards research and performance-based geotechnical engineering practice.
+This limitation motivated the development of pySLAMMER.
+
+
+## What pySLAMMER provides
+
+- **Verified functional equivalence to SLAMMER** across a broad parametric space for rigid, decoupled, and coupled analyses, preserving historical continuity of index displacements.
+- **A scriptable Python interface** that enables large-scale batch computation, integration into chained analysis pipelines, and inclusion in regional-scale virtual testbeds.
+- **Transparency and reproducibility** through open-source code and automatic metadata storage.
+- **An extensible platform** for community contributions of new sliding block methods. The object-oriented architecture allows new analysis types to inherit input validation, metadata storage, and plotting from existing classes.

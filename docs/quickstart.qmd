@@ -22,7 +22,7 @@ With `pyslammer` installed, basic usage involves the following steps:
 4. View results
 
 ### Import the pyslammer module
-The recommended ailas for pyslammer is `slam`:
+The recommended alias for pyslammer is `slam`:
 
 ```{python}
 import pyslammer as slam 
@@ -38,7 +38,7 @@ As basic example, consider a rigid sliding block analysis on a slope with a yiel
 A small number of sample ground motion records are included with `pyslammer`.
 We will use one of the sample ground motion records, but we expect most users will import their ground motions from external sources. 
 To use any signal for a ground motion, `pyslammer` needs a 1-D array of acceleration in units of $g$ and the signal timestep (in seconds). 
-See The available sample ground motions can be viewed with:
+The available sample ground motions can be viewed with:
 
 ```{python}
 motions = slam.sample_ground_motions() # Load all sample ground motions
@@ -46,7 +46,7 @@ for motion in motions:
     print(motion)
 ```
 
-For this example, we will use the`Imperial_Valley_1979_BCR-230` motion.
+For this example, we will use the `Imperial_Valley_1979_BCR-230` motion.
 
 ```{python}
 gm = motions["Imperial_Valley_1979_BCR-230"]

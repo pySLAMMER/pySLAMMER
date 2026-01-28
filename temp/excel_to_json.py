@@ -143,7 +143,7 @@ def migrate_to_json(df, output_path):
             "source_program": "SLAMMER",
             "source_version": "1.1",
             "date_extracted": datetime.now().strftime("%Y-%m-%d"),
-            "total_tests": len(analyses),
+            "total_analyses": len(analyses),
             "description": f"Legacy SLAMMER results migrated from Excel format. Rigid tests deduplicated ({len(rigid_seen)} unique rigid tests from {len(df)} rows).",
         },
         "analyses": analyses,
@@ -165,8 +165,8 @@ def migrate_to_json(df, output_path):
 
 
 def main():
-    excel_path = "/Users/lornearnold/GitHub/pySLAMMER/tests/SLAMMER_results.xlsx"
-    output_path = "/Users/lornearnold/GitHub/pySLAMMER/tests/verification_data/reference/slammer_results.json.gz"
+    excel_path = "/Users/lornearnold/GitHub/pySLAMMER/tests/verification_data/reference/SLAMMER_results.xlsx"
+    output_path = "/Users/lornearnold/GitHub/pySLAMMER/tests/verification_data/results/slammer_results.json.gz"
 
     # First, let's explore the structure
     print("=== EXPLORING EXCEL STRUCTURE ===")
@@ -183,7 +183,7 @@ def main():
     print("\nSample converted test records:")
     print("Rigid test:")
     rigid_test = next(
-        t for t in json_data["tests"] if t["analysis"]["method"] == "rigid"
+        t for t in json_data["analyses"] if t["analysis"]["method"] == "rigid"
     )
     print(json.dumps(rigid_test, indent=2))
 
