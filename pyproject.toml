@@ -23,8 +23,6 @@ dependencies = [
     "numpy",
     "scipy",
     "matplotlib",
-    "toml>=0.10.2",
-    "jsonschema>=4.25.0",
 ]
 authors = [{name = "Lorne Arnold"}, {name = "Donald Garcia-Rivas"}]
 maintainers = [{name = "Lorne Arnold", email = "arnoldl@uw.edu"}]

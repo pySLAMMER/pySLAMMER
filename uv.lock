@@ -1807,11 +1807,9 @@ name = "pyslammer"
 version = "0.2.2"
 source = { editable = "." }
 dependencies = [
-    { name = "jsonschema" },
     { name = "matplotlib" },
     { name = "numpy" },
     { name = "scipy" },
-    { name = "toml" },
 ]
 
 [package.dev-dependencies]
@@ -1834,11 +1832,9 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "jsonschema", specifier = ">=4.25.0" },
     { name = "matplotlib" },
     { name = "numpy" },
     { name = "scipy" },
-    { name = "toml", specifier = ">=0.10.2" },
 ]
 provides-extras = ["demo"]
 
