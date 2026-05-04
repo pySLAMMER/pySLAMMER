@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.marimo.io)",
+      "Bash(pip show *)",
+      "Bash(uv pip *)",
+      "WebFetch(domain:pypi.org)"
+    ]
+  }
+}

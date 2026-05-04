@@ -175,9 +175,68 @@ tbl = (
 tbl
 ```
 
+## Equivalence criteria
+
+Although the Python code in pySLAMMER essentially uses the same algorithms as the Java code in SLAMMER, minor numerical differences should be expected due to implementation details (e.g., number type handling, order of operations) [@ince2012]. However, the results can be considered functionally equivalent if they contain no diverging tendencies and the differences are relatively small. For engineering purposes, sliding block displacements below 0.5 cm can be considered equivalent to zero displacement [@bray2019].
+
+The thresholds used to determine functional equivalence are based on linear regression of results between the two programs and absolute differences of individual analysis pairs. @tbl-equiv shows these criteria.
+
+```{python}
+#| code-fold: true
+#| label: tbl-equiv
+#| tbl-cap: Equivalence criteria for pySLAMMER verification against SLAMMER.
+
+equiv_data = {
+    "criterion": [
+        "Relative error",
+        "Absolute error",
+        "Small displacement threshold *",
+        "Small disp. absolute error *",
+        "Individual tests passing",
+        "Linear regression slope",
+        "Linear regression intercept",
+        "Linear regression R²",
+    ],
+    "threshold": [
+        "± 2%",
+        "± 1.0 cm",
+        "0.5 cm",
+        "± 0.05 cm",
+        "≥ 95%",
+        "1 ± 0.01",
+        "0 ± 0.1 cm",
+        "≥ 0.99",
+    ],
+    "category": [
+        "Individual",
+        "Individual",
+        "Individual",
+        "Individual",
+        "Group",
+        "Group",
+        "Group",
+        "Group",
+    ]
+}
+
+equiv_df = pd.DataFrame(equiv_data)
+
+tbl_equiv = (
+    GT(equiv_df, groupname_col="category")
+    .cols_label(
+        criterion=html("Criterion"),
+        threshold=html("Threshold"),
+    )
+    .cols_align(align="center", columns="threshold")
+    .tab_source_note("* For displacements below threshold, only absolute error criterion applies")
+    .tab_source_note("Individual test tolerances are enforced in aggregate by the group pass rate")
+)
+tbl_equiv
+```
+
 ## Results
 
-Although the Python code in pySLAMMER essentially uses the same algorithms as the Java code in SLAMMER, some non-zero differences in results should be expected due to minor numerical differences (e.g., number type handling, order of operations) [@ince2012]. However, the results can be considered functionally equivalent if they contain no apparent tendency to diverge and the differences are relatively small. For engineering purposes, sliding block displacements below 0.5 cm can be considered equivalent to zero displacement [@bray2019]. The results of the simulations across the parametric space described in @tbl-params are shown on @fig-comp. The data are plotted on a log-log scale to make minor numerical differences visible near and below the "equivalent zero" displacement threshold. As indicated by the linear regression, the differences between SLAMMER and pySLAMMER results are negligibly small relative to the scales of engineering significance.
+The results of the simulations across the parametric space described in @tbl-params are shown on @fig-comp. The data are plotted on a log-log scale to make minor numerical differences visible near and below the "equivalent zero" displacement threshold. As indicated by the linear regression statistics, the differences between SLAMMER and pySLAMMER results are negligibly small relative to scales of engineering significance.
 
 ```{python}
 #| code-fold: true
@@ -337,6 +396,8 @@ ax.legend(
 plt.show()
 ```
 
+The equivalence check against the criteria in @tbl-equiv is implemented through automated pre-release testing in pySLAMMER. All three methods (rigid, decoupled, and coupled) passed all equivalence criteria. The full verification report for the current release is available in the [pySLAMMER repository](https://github.com/pySLAMMER/pySLAMMER/blob/main/tests/verification_data/results/verification_report_v0.2.2.md).
+
 ## Conclusions
 
-The results show that pySLAMMER is performing the same rigorous analysis methods as SLAMMER. Across a broad array of input parameters, the results are identical or nearly identical. Minor numerical differences between the output of the two programs is to be expected. However, the differences are so small as to be insignificant for engineering purposes, both in research and practice.
+The results show that pySLAMMER is performing the same rigorous analysis methods as SLAMMER. Across a broad array of input parameters, the results are identical or nearly identical against the equivalence criteria in @tbl-equiv. Minor numerical differences between the output of the two programs are to be expected. However, the differences are so small as to be insignificant for engineering purposes, both in research and practice.

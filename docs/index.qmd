@@ -70,13 +70,14 @@ What's next?
 :::
 
 
-## How to cite pySLAMMER
-Please include citations for both the pySLAMMER code and marker paper if you use pySLAMMER.
+## How to cite
+
+Please include citations for both the pySLAMMER code and software paper if you use pySLAMMER.
 
 **Code**:
 
 Arnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zenodo. [https://doi.org/10.5281/zenodo.15385355](https://doi.org/10.5281/zenodo.15385355)
 
-**Marker paper**:
+**Software paper:**
 
-*Pending*
+*Pending (manuscript in review)*
