@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "pyslammer"
 requires-python = ">=3.12"
-version = "0.2.2"
+version = "0.2.3"
 description = "Python code for calculating sliding block displacements."
 keywords = ["earthquake", "geotech", "slope stability", "sliding block", "seismic"]
 classifiers = [
