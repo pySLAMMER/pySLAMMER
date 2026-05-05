@@ -253,7 +253,7 @@ with gzip.open(slammer_path, 'rt') as f:
     slammer_data = json.load(f)
 
 # Load pySLAMMER results 
-pyslammer_path = project_root / "tests" / "verification_data" / "results" / "pyslammer_0.2.2_results.json.gz"
+pyslammer_path = project_root / "tests" / "verification_data" / "results" / "pyslammer_0.2.3_results.json.gz"
 with gzip.open(pyslammer_path, 'rt') as f:
     pyslammer_data = json.load(f)
 
@@ -396,7 +396,7 @@ ax.legend(
 plt.show()
 ```
 
-The equivalence check against the criteria in @tbl-equiv is implemented through automated pre-release testing in pySLAMMER. All three methods (rigid, decoupled, and coupled) passed all equivalence criteria. The full verification report for the current release is available in the [pySLAMMER repository](https://github.com/pySLAMMER/pySLAMMER/blob/main/tests/verification_data/results/verification_report_v0.2.2.md).
+The equivalence check against the criteria in @tbl-equiv is implemented through automated pre-release testing in pySLAMMER. All three methods (rigid, decoupled, and coupled) passed all equivalence criteria. The full verification report for the current release (v0.2.3) is available in the [pySLAMMER repository](https://github.com/pySLAMMER/pySLAMMER/blob/main/tests/verification_data/results/verification_report_v0.2.3.md). Reports for all released versions can be browsed in the [verification results directory](https://github.com/pySLAMMER/pySLAMMER/tree/main/tests/verification_data/results).
 
 ## Conclusions
 

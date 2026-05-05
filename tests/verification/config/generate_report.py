@@ -120,8 +120,8 @@ def generate_report(results: VerificationResults) -> str:
         pass_rate = format_pass_rate(method_results.individual_pass_rate, config)
 
         section = f"""### {method_name} Method:
-- Normal: R² = {normal_r2}, slope = {normal_slope}, intercept = {normal_intercept}
-- Inverse: R² = {inverse_r2}, slope = {inverse_slope}, intercept = {inverse_intercept}
+- Normal: $R^2$ = {normal_r2}, slope = {normal_slope}, intercept = {normal_intercept}
+- Inverse: $R^2$ = {inverse_r2}, slope = {inverse_slope}, intercept = {inverse_intercept}
 - Combined: {pass_rate} individual pass rate"""
 
         method_sections.append(section)
@@ -146,19 +146,19 @@ SLAMMER version: {results.slammer_version}
 ## Verification Tolerances
 
 ### Linear regression tolerance
-  - R$^2 \\le {tol["lin_regression_r_squared_min"]:.2f}$
+  - $R^2 \\ge {tol["lin_regression_r_squared_min"]:.2f}$
   - slope $= 1 \\pm {abs(1 - tol["lin_regression_slope_min"]):.2f}$
   - intercept $= 0 \\pm {tol["lin_regression_intercept_max"]:.1f}$ cm
 
 ### Individual test tolerance
 The individual test tolerances are enforced in aggregate by the group pass rate tolerance.
 
-Expected values > {small_threshold} cm:
-  - Relative error <= {default_rel * 100:.0f}%
-  - Absolute error <= {default_abs} cm
-  
-Expected values <= {small_threshold} cm:
-  - Absolute error <= {small_abs:.2f} cm
+Expected values $>$ {small_threshold} cm:
+  - Relative error $\\le {default_rel * 100:.0f}$%
+  - Absolute error $\\le {default_abs}$ cm
+
+Expected values $\\le$ {small_threshold} cm:
+  - Absolute error $\\le {small_abs:.2f}$ cm
 
 ### Group pass rate tolerance
 - Group pass rate $\\ge {group_pass_rate:.0f}$%"""

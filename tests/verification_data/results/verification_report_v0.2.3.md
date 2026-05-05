@@ -1,5 +1,5 @@
 # Verification Report
-pySLAMMER version: 0.2.2
+pySLAMMER version: 0.2.3
 SLAMMER version: 1.1
 
 ## Verification Results
