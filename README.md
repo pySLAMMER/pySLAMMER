@@ -54,7 +54,7 @@ Arnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zeno
 
 **Software paper:**
 
-*Pending (manuscript in review)*
+Arnold, L., & Garcia-Rivas, D. (2026). pySLAMMER: a Python package for Seismic LAndslide Movement Modeled using Earthquake Records. *SoftwareX*, 34, 102599. https://doi.org/10.1016/j.softx.2026.102599
 
 ## License
 
