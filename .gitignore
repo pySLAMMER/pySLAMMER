@@ -140,3 +140,4 @@ _output
 
 .vdoc.*
 .claude/settings.local.json
+.claude/
