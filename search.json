@@ -380,7 +380,7 @@
     "href": "index.html#how-to-cite",
     "title": "pySLAMMER",
     "section": "How to cite",
-    "text": "How to cite\nPlease include citations for both the pySLAMMER code and software paper if you use pySLAMMER.\nCode:\nArnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zenodo. https://doi.org/10.5281/zenodo.15385355\nSoftware paper:\nPending (manuscript in review)",
+    "text": "How to cite\nPlease include citations for both the pySLAMMER code and software paper if you use pySLAMMER.\nCode:\nArnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zenodo. https://doi.org/10.5281/zenodo.15385355\nSoftware paper:\nArnold, L., & Garcia-Rivas, D. (2026). pySLAMMER: a Python package for Seismic LAndslide Movement Modeled using Earthquake Records. SoftwareX, 34, 102599. https://doi.org/10.1016/j.softx.2026.102599",
     "crumbs": [
       "Quickstart guide",
       "Welcome"
