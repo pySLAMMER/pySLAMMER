@@ -47,6 +47,7 @@ website:
         - section: Examples
           href: examples/index.qmd
           contents:
+            - examples/interactive.qmd
             - examples/rigid_flex.qmd
             - examples/batch_simulations.qmd
         - section: "About"

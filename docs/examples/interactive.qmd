@@ -1,0 +1,23 @@
+---
+title: Interactive demo
+sidebar: main
+page-navigation: true
+---
+
+Run pySLAMMER in your browser — no install required. The demo below uses [marimo](https://marimo.io)'s WASM build to load pySLAMMER straight into a Pyodide kernel; pick a sample ground motion, scale it, choose an analysis method, and adjust the slope parameters to see how each affects sliding displacement.
+
+[Open in molab (interactive)](https://molab.marimo.io/github/pySLAMMER/pySLAMMER/blob/main/notebooks/pyslammer_demo.py/wasm?show-code=false){.btn .btn-primary role="button"}
+[Download notebook (.py)](https://github.com/pySLAMMER/pySLAMMER/blob/main/notebooks/pyslammer_demo.py){.btn .btn-outline-secondary role="button"}
+
+## Preview
+
+The static preview below shows the demo's layout. It is read-only — use **Open in molab** above for the interactive WASM version, or **Download notebook** to run it locally with `marimo edit pyslammer_demo.py`.
+
+```{=html}
+<iframe
+  src="https://molab.marimo.io/github/pySLAMMER/pySLAMMER/blob/main/notebooks/pyslammer_demo.py?show-code=false"
+  width="100%" height="900"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+  loading="lazy"
+  title="pySLAMMER demo (static preview)"></iframe>
+```

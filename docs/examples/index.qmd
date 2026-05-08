@@ -3,5 +3,6 @@ title: Examples
 bibliography: ../technical/references.bib
 ---
 
+* [Interactive demo (in-browser, no install)](interactive.qmd)
 * [Running Rigid, Decoupled, and Coupled analyses](rigid_flex.qmd)
 * [Batch simulations](batch_simulations.qmd)

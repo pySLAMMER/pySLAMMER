@@ -20,7 +20,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
     scale_factor : float, optional
         Scaling factor for the input acceleration. Default is 1.0.
     target_pga : float, optional
-        Target peak ground acceleration (in m/s^2). If provided, the input acceleration
+        Target peak ground acceleration (in g). If provided, the input acceleration
         will be scaled to match this value. Cannot be used with `scale_factor`.
 
     Raises
@@ -58,7 +58,7 @@ class RigidAnalysis(SlidingBlockAnalysis):
         scale_factor : float, optional
             Scaling factor for the input acceleration. Default is 1.0.
         target_pga : float, optional
-            Target peak ground acceleration (in m/s^2). If provided, the input acceleration
+            Target peak ground acceleration (in g). If provided, the input acceleration
             will be scaled to match this value. Cannot be used with `scale_factor`.
         inverse : bool, optional
             If True, inverts the direction of the ground motion by negating the scale factor.

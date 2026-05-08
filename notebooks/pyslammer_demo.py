@@ -6,6 +6,7 @@
 #     "numpy",
 #     "scipy",
 #     "matplotlib",
+#     "plotly==6.7.0",
 # ]
 # ///
 
@@ -27,7 +28,7 @@ def _(mo):
     mo.md(r"""
     # pySLAMMER demo
 
-    A minimal demonstration of [pySLAMMER](https://pypi.org/project/pyslammer/). Pick sample ground motion, target PGA, an analysis type and set the slope parameters below.
+    A minimal demonstration of [pySLAMMER](https://pypi.org/project/pyslammer/). Pick sample ground motion, target PGA, analysis type, and slope parameters below.
     """)
     return
 
@@ -87,7 +88,7 @@ def _(slam):
     slam.utilities.psfigstyle["figure.dpi"] = 200
 
     plot_style_applied = True
-    return (plot_style_applied,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -109,22 +110,41 @@ def _(mo, motions):
         full_width=True,
     )
     target_pga = mo.ui.number(start=0.05, stop=1.5, step=0.05, value=0.5, full_width=True)
-    return ky, motion_name, target_pga
+    direction = mo.ui.radio(
+        options=["Normal", "Inverse"],
+        value="Normal",
+        inline=True,
+    )
+    return direction, ky, motion_name, target_pga
 
 
 @app.cell(hide_code=True)
-def _(analysis_type, ky, mo):
-    height = mo.ui.number(start=10, stop=200, step=5, value=50, full_width=True)
-    vs_slope = mo.ui.number(start=100, stop=1500, step=50, value=600, full_width=True)
-    vs_base = mo.ui.number(start=100, stop=2000, step=50, value=600, full_width=True)
-    damp_ratio = mo.ui.number(start=0.01, stop=0.20, step=0.01, value=0.05, full_width=True)
+def _(mo):
+    height = mo.ui.number(start=1, stop=200, step=1, value=30, full_width=True)
+    vs_slope = mo.ui.number(start=10, stop=2000, step=50, value=600, full_width=True)
+    vs_base = mo.ui.number(start=10, stop=2000, step=50, value=600, full_width=True)
+    damp_ratio = mo.ui.number(start=0.0, stop=0.50, step=0.01, value=0.05, full_width=True)
     soil_model = mo.ui.dropdown(
         options=["linear_elastic", "equivalent_linear"],
         value="equivalent_linear",
         full_width=True,
     )
-    ref_strain = mo.ui.number(start=1e-5, stop=1e-2, step=1e-4, value=5e-4, full_width=True)
+    ref_strain = mo.ui.number(start=0.00005, stop=0.01, step=0.00001, value=0.0005, full_width=True)
+    return damp_ratio, height, ref_strain, soil_model, vs_base, vs_slope
 
+
+@app.cell(hide_code=True)
+def _(
+    analysis_type,
+    damp_ratio,
+    height,
+    ky,
+    mo,
+    ref_strain,
+    soil_model,
+    vs_base,
+    vs_slope,
+):
     def _row(label, widget, label_w_px=170):
         return mo.hstack(
             [mo.Html(f'<div style="width:{label_w_px}px">{label}</div>'), widget],
@@ -139,22 +159,15 @@ def _(analysis_type, ky, mo):
             _row("Vs base (m/s)", vs_base),
             _row("Damping ratio", damp_ratio),
             _row("Soil model", soil_model),
-            _row("Reference strain", ref_strain),
         ]
+        if soil_model.value == "equivalent_linear":
+            slope_items.append(_row("Reference strain", ref_strain))
     slope_panel = mo.vstack(slope_items, gap=0.5, align="stretch")
-    return (
-        damp_ratio,
-        height,
-        ref_strain,
-        slope_panel,
-        soil_model,
-        vs_base,
-        vs_slope,
-    )
+    return (slope_panel,)
 
 
 @app.cell(hide_code=True)
-def _(mo, motion_name, target_pga):
+def _(direction, mo, motion_name, target_pga):
     def _row(label, widget, label_w_px=170):
         return mo.hstack(
             [mo.Html(f'<div style="width:{label_w_px}px">{label}</div>'), widget],
@@ -165,6 +178,7 @@ def _(mo, motion_name, target_pga):
         mo.md("**Ground motion parameters**"),
         _row("Ground motion", motion_name),
         _row("Target PGA (g)", target_pga),
+        _row("Direction", direction),
     ], gap=0.5, align="stretch")
     return (gm_panel,)
 
@@ -173,6 +187,7 @@ def _(mo, motion_name, target_pga):
 def _(
     analysis_type,
     damp_ratio,
+    direction,
     height,
     ky,
     motion_name,
@@ -184,12 +199,14 @@ def _(
     vs_base,
     vs_slope,
 ):
-    _gm_raw = motions[motion_name.value]
-    _scale = target_pga.value / _gm_raw.pga if _gm_raw.pga > 0 else 1.0
-    gm = slam.GroundMotion(_gm_raw.accel * _scale, _gm_raw.dt, name=_gm_raw.name)
+    gm = motions[motion_name.value]
+    scale_kwargs = dict(
+        target_pga=target_pga.value,
+        inverse=(direction.value == "Inverse"),
+    )
 
     if analysis_type.value == "Rigid":
-        result = slam.RigidAnalysis(ky.value, gm)
+        result = slam.RigidAnalysis(ky.value, gm, **scale_kwargs)
     else:
         flex_kwargs = dict(
             height=height.value,
@@ -200,9 +217,9 @@ def _(
             ref_strain=ref_strain.value,
         )
         if analysis_type.value == "Decoupled":
-            result = slam.Decoupled(ky.value, gm, **flex_kwargs)
+            result = slam.Decoupled(ky.value, gm, **flex_kwargs, **scale_kwargs)
         else:
-            result = slam.Coupled(ky.value, gm, **flex_kwargs)
+            result = slam.Coupled(ky.value, gm, **flex_kwargs, **scale_kwargs)
         result._compile_sliding_attributes()
     return (result,)
 
@@ -214,10 +231,157 @@ def _(mo, result):
 
 
 @app.cell(hide_code=True)
-def _(plot_style_applied, result):
-    _ = plot_style_applied  # ensure plot config runs first
-    fig = result.sliding_block_plot()
+def _(mo, result):
+    import numpy as np
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+    from pyslammer.utilities import G_EARTH
+
+    # Match matplotlib tab colors
+    _BLOCK = "black"
+    _BASE = "#1f77b4"   # tab:blue
+    _INPUT = "#7f7f7f"  # tab:gray
+
+    # Single scaling knob: bump base font size; line widths and most tick/
+    # title sizes are derived from it. Plotly's defaults render thinner than
+    # matplotlib at the same nominal sizes (CSS-px vs. matplotlib points), so
+    # we scale up here to match the matplotlib feel.
+    _BASE_FONT = 14
+    _LINE_W = 1.9
+
+    result._compile_sliding_attributes()
+    _t = np.arange(0, result._npts * result.dt, result.dt)
+    _pga = float(np.max(np.abs(result.a_in)))
+    _motion_name = getattr(result, "motion_name", "Unknown")
+    _summary = (
+        f"{type(result).__name__} | ky: {result.ky:.2f}g | "
+        f"Motion: {_motion_name} (PGA: {_pga:.2f}g)"
+    )
+
+    _plotly_fig = make_subplots(
+        rows=3, cols=1, shared_xaxes=True, vertical_spacing=0.04,
+    )
+
+    _has_hea = hasattr(result, "HEA") and result.HEA is not None
+    if _has_hea:
+        _plotly_fig.add_trace(go.Scatter(
+            x=_t, y=result._ground_acc_ / G_EARTH,
+            mode="lines", name="Input Acc.",
+            line=dict(color=_INPUT, width=_LINE_W),
+            legendgroup="r1",
+        ), row=1, col=1)
+        _plotly_fig.add_trace(go.Scatter(
+            x=_t, y=result.HEA / G_EARTH,
+            mode="lines", name="Base Acc.",
+            line=dict(color=_BASE, width=_LINE_W),
+            legendgroup="r1",
+        ), row=1, col=1)
+    else:
+        _plotly_fig.add_trace(go.Scatter(
+            x=_t, y=result._ground_acc_ / G_EARTH,
+            mode="lines", name="Base Acc.",
+            line=dict(color=_BASE, width=_LINE_W),
+            legendgroup="r1",
+        ), row=1, col=1)
+
+    _plotly_fig.add_trace(go.Scatter(
+        x=_t, y=result._block_acc_ / G_EARTH,
+        mode="lines", name="Block Acc.",
+        line=dict(color=_BLOCK, width=_LINE_W),
+        legendgroup="r1",
+    ), row=1, col=1)
+
+    _plotly_fig.add_trace(go.Scatter(
+        x=_t, y=result.sliding_vel,
+        mode="lines", name="Sliding Vel.",
+        line=dict(color=_BLOCK, width=_LINE_W),
+        legendgroup="r2",
+    ), row=2, col=1)
+
+    _plotly_fig.add_trace(go.Scatter(
+        x=_t, y=result.sliding_disp,
+        mode="lines", name="Sliding Disp.",
+        line=dict(color=_BLOCK, width=_LINE_W),
+        legendgroup="r3",
+    ), row=3, col=1)
+
+    _plotly_fig.update_layout(
+        title=dict(
+            text=_summary, x=0.5, xanchor="center", y=0.985,
+            font=dict(size=_BASE_FONT, color="black"),
+        ),
+        font=dict(
+            family="Arial, DejaVu Sans, Liberation Sans, Helvetica, sans-serif",
+            size=_BASE_FONT, color="black",
+        ),
+        margin=dict(l=70, r=20, t=45, b=50),
+        height=520,
+        plot_bgcolor="white",
+        paper_bgcolor="white",
+        showlegend=True,
+        legend=dict(
+            bgcolor="white", bordercolor="white",
+            font=dict(size=_BASE_FONT - 1, color="black"),
+            x=0.995, xanchor="right", y=0.995, yanchor="top",
+            tracegroupgap=0,
+        ),
+    )
+
+    # Plotly only supports a single legend, so emulate per-subplot legends
+    # (matplotlib places legends inside each axis): keep row-1 in the legend
+    # and annotate rows 2 and 3 directly.
+    _plotly_fig.update_traces(showlegend=False, selector=dict(legendgroup="r2"))
+    _plotly_fig.update_traces(showlegend=False, selector=dict(legendgroup="r3"))
+    _plotly_fig.add_annotation(
+        xref="x2 domain", yref="y2 domain", x=0.99, y=0.97,
+        xanchor="right", yanchor="top",
+        text="Sliding Vel.", showarrow=False,
+        bgcolor="white", bordercolor="white",
+        font=dict(size=_BASE_FONT - 1, color="black"),
+    )
+    _plotly_fig.add_annotation(
+        xref="x3 domain", yref="y3 domain", x=0.99, y=0.03,
+        xanchor="right", yanchor="bottom",
+        text="Sliding Disp.", showarrow=False,
+        bgcolor="white", bordercolor="white",
+        font=dict(size=_BASE_FONT - 1, color="black"),
+    )
+
+    # Axis styling: white background, single-level (coarser) gridlines, and
+    # auto-ticks tuned to a smaller count than plotly's default.
+    _axis_common = dict(
+        showgrid=True, gridcolor="#d9d9d9", gridwidth=1,
+        zeroline=False, showline=True, linecolor="#444", linewidth=1,
+        mirror=True, ticks="outside", ticklen=5,
+        tickfont=dict(size=_BASE_FONT - 1, color="black"),
+        nticks=8,
+    )
+    _plotly_fig.update_xaxes(**_axis_common, range=[_t[0], _t[-1]])
+    _yaxis_kwargs = {**_axis_common, 'nticks': 5}
+    _plotly_fig.update_yaxes(**_yaxis_kwargs)
+    _plotly_fig.update_yaxes(title_text="Acc. (g)", row=1, col=1,
+                     title_font=dict(size=_BASE_FONT, color="black"))
+    _plotly_fig.update_yaxes(title_text="Vel. (m/s)", row=2, col=1,
+                     title_font=dict(size=_BASE_FONT, color="black"))
+    _plotly_fig.update_yaxes(title_text="Disp. (m)", row=3, col=1,
+                     title_font=dict(size=_BASE_FONT, color="black"))
+    _plotly_fig.update_xaxes(title_text="Time (s)", row=3, col=1,
+                     title_font=dict(size=_BASE_FONT, color="black"))
+
+    # Curated modebar: download, box-zoom, pan, reset axes only.
+    fig = mo.ui.plotly(
+        _plotly_fig,
+        config={
+            "modeBarButtons": [["toImage", "zoom2d", "pan2d", "resetScale2d"]],
+            "displaylogo": False,
+        },
+    )
     return (fig,)
+
+
+@app.cell
+def _():
+    return
 
 
 if __name__ == "__main__":

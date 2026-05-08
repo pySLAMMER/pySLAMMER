@@ -9,6 +9,13 @@ pySLAMMER (**Py**thon package for **S**eismic **LA**ndslide **M**ovement **M**od
 
 pySLAMMER includes the same sliding block analysis methods ([rigid](api/RigidAnalysis.qmd), [decoupled](api/Decoupled.qmd), and [coupled](api/Coupled.qmd)) as SLAMMER. See the verifications section for [a comparison of results](technical/comp_SLAMMER_results.qmd) between pySLAMMER and the original SLAMMER.
 
+::: {.callout-tip icon=false}
+## Try pySLAMMER in your browser
+
+No install needed — the [interactive demo](examples/interactive.qmd) runs entirely in your browser.
+
+[Open in molab](https://molab.marimo.io/github/pySLAMMER/pySLAMMER/blob/main/notebooks/pyslammer_demo.py/wasm?show-code=false){.btn .btn-primary role="button"}
+:::
 
 ::: {.text-center}
 ## Site Contents
