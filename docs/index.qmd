@@ -13,8 +13,6 @@ pySLAMMER includes the same sliding block analysis methods ([rigid](api/RigidAna
 ## Try pySLAMMER in your browser
 
 No install needed — the [interactive demo](examples/interactive.qmd) runs entirely in your browser.
-
-[Open in molab](https://molab.marimo.io/github/pySLAMMER/pySLAMMER/blob/main/notebooks/pyslammer_demo.py/wasm?show-code=false){.btn .btn-primary role="button"}
 :::
 
 ::: {.text-center}

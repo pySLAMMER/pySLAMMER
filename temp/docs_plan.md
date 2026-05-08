@@ -11,25 +11,13 @@
 
 **Specific issues to clean up**
 - **Stubs and empty pages**: `technical/glossary.qmd` says "stub", `technical/ground_motions.qmd` is 1 line / empty, `technical/tech_manual.qmd` only links to two children, `technical/verification.qmd` has commented-out links to `comp_SLAMMER_perf.qmd` and `comp_analytical.qmd` (which exist on disk but are unlinked). Either finish them, hide them from the sidebar, or replace with placeholders that say what they will become.
-- **Truncated comment in `examples/rigid_flex.qmd:83`**: `# Some extra stuff to make the p` — was clearly mid-edit. The cell that follows it is essentially empty.
-- **API doc inconsistency**: `RigidAnalysis.qmd:22` says `target_pga` is "in m/s^2", but `SlidingBlockAnalysis.qmd:26` says "in g". From `quickstart.qmd:74` (PGA reported in g) and the consistency expected with `ky` (also g), the SlidingBlockAnalysis page is right. Source-of-truth bug to fix in the docstring.
 - **Sample-motion suite is undocumented**: there are ~20 motions in `sample_ground_motions/` with response spectra rendered in `comp_SLAMMER_results.qmd`, but no flat list/table that says "here's what's bundled and why." `_static/gm_summary.csv` exists — render it as a table on the (currently empty) `ground_motions.qmd`.
-- **No discoverability path to the marimo demo**: the demo + `temp/molab_link.md` exist but aren't linked from anywhere in the published docs.
 
 **Subjective gaps**
 - Quickstart shows a rigid analysis only — nothing on the more interesting flexible methods that motivate using pySLAMMER over hand-rolled Newmark code.
-- `target_pga` and `scale_factor` (built-in PGA scaling on every analysis class) are not mentioned in quickstart or rigid_flex. *Side-note for the marimo demo: the manual `gm.accel * scale` block in the compute cell can be replaced with `slam.RigidAnalysis(ky, gm, target_pga=...)`.*
+- `target_pga` and `scale_factor` (built-in PGA scaling on every analysis class) are not mentioned in quickstart or rigid_flex.
 
-## 2. Where the marimo demo goes
-
-A "featured" treatment, two surfaces:
-
-- **`examples/interactive.qmd`** — short page with a callout introducing the demo, a "Open in molab" button (the WASM link), a "Download notebook" link to the raw `.py`, and an embedded iframe of the static (non-WASM) molab preview so the page itself looks alive. Place it as the *first* item in the Examples sidebar so it's the first thing visitors hit when they click Examples.
-- **A "Try it now" affordance on the landing page** — either a new card alongside the existing six, or a banner above the cards. Links straight to the molab WASM URL. This is what gets a casual visitor playing in 5 seconds without `pip install`.
-
-Don't bury it inside `notebooks/` only. Notebooks-as-folder is fine for *source*, but the docs need to surface it.
-
-## 3. Format choices for example notebooks
+## 2. Format choices for example notebooks
 
 qmd is the canonical format for the docs. Most of the audience knows Jupyter; `quarto convert` does qmd ↔ ipynb cleanly, so a downloadable .ipynb is a true free derivative rather than a separately maintained artifact. Marimo is younger and less established; betting *most* of the docs on it carries more long-term risk than necessary. Use marimo only where its specific strength (reactive UI) is the point.
 
@@ -58,13 +46,13 @@ qmd is the canonical format for the docs. Most of the audience knows Jupyter; `q
 - Quarto's `freeze: auto` already caches qmd executions; don't break it.
 - Marimo notebooks live in `notebooks/`, link out to molab for live running. Don't try to embed live marimo into the Quarto site itself.
 - Add marimo `.py` notebooks to a CI smoke-test that runs each one headlessly so they don't bit-rot when the API changes.
-- Heavyweight kind-1 notebooks (see §4) need a precompute strategy so the docs build doesn't hang for hours.
+- Heavyweight kind-1 notebooks (see §3) need a precompute strategy so the docs build doesn't hang for hours.
 
 **Contributor onboarding**
 
 If marimo is the form for interactive demos, contributors who want to add one have to learn marimo. Lower the friction explicitly: add a short "Contributing an interactive notebook" subsection to `about/develop.qmd` linking to marimo's docs and pointing at `notebooks/pyslammer_demo.py` as the reference example.
 
-## 4. Suite of focused example notebooks
+## 3. Suite of focused example notebooks
 
 The current docs have two examples (`rigid_flex`, `batch_simulations`) plus the new `pyslammer_demo`. The "monster notebook" trap is to keep growing one of these. Better: one notebook = one question.
 
@@ -117,13 +105,12 @@ The PBSD notebook source has been pulled to `temp/manuscript_assets/pbsd_example
 
 ## Rollout phases
 
-- **Phase 1 (low risk)**: fix the doc bugs in §1, write `examples/interactive.qmd` and link it, add the molab badge to the landing page. The pySLAMMER demo we built is the "interactive" notebook (kind 2). Configure Quarto's per-page `.ipynb` download for existing kind-1 examples so the "Download notebook" button works without manual maintenance.
-- **Phase 2**: build the three new focused kind-1 qmd notebooks above. PBSD draws from `temp/manuscript_assets/pbsd_example.ipynb` and §3 of the SoftwareX paper. Adopt the qmd-canonical, ipynb-derivative pattern from §3 of this plan. Wire up the precompute/cache pattern for `pbsd_segments` and any other heavyweight notebooks.
+- **Phase 1 (low risk)**: finish the remaining doc bugs in §1 (technical stubs, sample-motion suite). Configure Quarto's per-page `.ipynb` download for existing kind-1 examples so the "Download notebook" button works without manual maintenance.
+- **Phase 2**: build the three new focused kind-1 qmd notebooks above. PBSD draws from `temp/manuscript_assets/pbsd_example.ipynb` and §3 of the SoftwareX paper. Adopt the qmd-canonical, ipynb-derivative pattern from §2 of this plan. Wire up the precompute/cache pattern for `pbsd_segments` and any other heavyweight notebooks.
 - **Phase 3**: fill the actual stubs — `tech_manual.qmd` and `glossary.qmd` from §2 of the paper; `ground_motions.qmd` from `_static/gm_summary.csv` plus the response-spectra figure already used in `comp_SLAMMER_results.qmd`. Add the "Contributing an interactive notebook" subsection to `about/develop.qmd`.
 
 ## Spillover items captured during audit
 
-- Replace the manual `gm.accel * scale` PGA scaling in `notebooks/pyslammer_demo.py` with the built-in `target_pga=` kwarg on `RigidAnalysis`/`Decoupled`/`Coupled`.
 - Decide whether `comp_SLAMMER_perf.qmd` and `comp_analytical.qmd` (referenced but commented out in `verification.qmd`) should be finished, hidden, or removed.
 - `tests/verification_data/results/verification_report_v0.2.3.md` is referenced from the docs as a GitHub link — consider whether the verification report should also be rendered into the Quarto site for offline readers.
 - Resolve the paper's promise (line 270) of a downloadable parametric-study notebook before publication, or amend the manuscript text.

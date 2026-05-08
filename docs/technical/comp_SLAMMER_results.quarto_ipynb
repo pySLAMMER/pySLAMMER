@@ -10,7 +10,7 @@
         "sidebar: main\n",
         "---"
       ],
-      "id": "b9febfa9"
+      "id": "20386c17"
     },
     {
       "cell_type": "code",
@@ -34,7 +34,7 @@
         "current_dir = os.getcwd()\n",
         "project_root  = Path(current_dir).resolve().parents[1]"
       ],
-      "id": "6e0924e3",
+      "id": "642fc077",
       "execution_count": null,
       "outputs": []
     },
@@ -52,7 +52,7 @@
         "\n",
         "We used the motions from pySLAMMER's built-in sample ground motion suite at several scales to capture a reasonable breadth of the familiar key engineering ground motion characteristics (frequency, amplitude, and duration). The acceleration response spectra for the input motion suite are shown in @fig-resp. Additional details on the ground motions are provided on the [ground motion suite page](ground_motions.qmd)."
       ],
-      "id": "8e824698"
+      "id": "5c15cd94"
     },
     {
       "cell_type": "code",
@@ -151,7 +151,7 @@
         "\n",
         "@tbl-params shows the analysis options and ranges of input values used in the group of simulations used to compare pySLAMMER to"
       ],
-      "id": "6ee80c97"
+      "id": "d862b81b"
     },
     {
       "cell_type": "code",
@@ -223,7 +223,7 @@
         "\n",
         "The thresholds used to determine functional equivalence are based on linear regression of results between the two programs and absolute differences of individual analysis pairs. @tbl-equiv shows these criteria."
       ],
-      "id": "01ffce53"
+      "id": "f08724dc"
     },
     {
       "cell_type": "code",
@@ -292,7 +292,7 @@
         "\n",
         "The results of the simulations across the parametric space described in @tbl-params are shown on @fig-comp. The data are plotted on a log-log scale to make minor numerical differences visible near and below the \"equivalent zero\" displacement threshold. As indicated by the linear regression statistics, the differences between SLAMMER and pySLAMMER results are negligibly small relative to scales of engineering significance."
       ],
-      "id": "5d4a3573"
+      "id": "17ac7b4c"
     },
     {
       "cell_type": "code",
@@ -468,7 +468,7 @@
         "\n",
         "The results show that pySLAMMER is performing the same rigorous analysis methods as SLAMMER. Across a broad array of input parameters, the results are identical or nearly identical against the equivalence criteria in @tbl-equiv. Minor numerical differences between the output of the two programs are to be expected. However, the differences are so small as to be insignificant for engineering purposes, both in research and practice."
       ],
-      "id": "b3e1d6b5"
+      "id": "e9402f45"
     }
   ],
   "metadata": {
