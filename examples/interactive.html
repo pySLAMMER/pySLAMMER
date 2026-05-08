@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>index – pySLAMMER</title>
+<title>Interactive demo – pySLAMMER</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../examples/index.html" rel="next">
-<link href="../technical/comp_SLAMMER_results.html" rel="prev">
+<link href="../examples/rigid_flex.html" rel="next">
+<link href="../examples/index.html" rel="prev">
 <link href="../_static/pySLAMMER_logo_square.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../technical/tech_manual.html">Technical guide</a></li><li class="breadcrumb-item"><a href="../api/index.html">API Reference</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../examples/index.html">Examples</a></li><li class="breadcrumb-item"><a href="../examples/interactive.html">Interactive demo</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -168,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../api/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">API Reference</span></a>
   </div>
 </li>
@@ -185,7 +185,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/interactive.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/interactive.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Interactive demo</span></a>
   </div>
 </li>
@@ -242,59 +242,55 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#function-reference" id="toc-function-reference" class="nav-link active" data-scroll-target="#function-reference">Function reference</a>
-  <ul class="collapse">
-  <li><a href="#api-reference" id="toc-api-reference" class="nav-link" data-scroll-target="#api-reference">API Reference</a></li>
-  </ul></li>
+  <li><a href="#explore-further" id="toc-explore-further" class="nav-link active" data-scroll-target="#explore-further">Explore further</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../technical/tech_manual.html">Technical guide</a></li><li class="breadcrumb-item"><a href="../api/index.html">API Reference</a></li></ol></nav></header>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../examples/index.html">Examples</a></li><li class="breadcrumb-item"><a href="../examples/interactive.html">Interactive demo</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Interactive demo</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="function-reference" class="level1 doc doc-index">
-<h1 class="doc doc-index">Function reference</h1>
-<section id="api-reference" class="level2">
-<h2 class="anchored" data-anchor-id="api-reference">API Reference</h2>
-<p>API reference for pySLAMMER</p>
-<table class="caption-top table">
-<tbody>
-<tr class="odd">
-<td><a href="../api/SlidingBlockAnalysis.html#pyslammer.SlidingBlockAnalysis">SlidingBlockAnalysis</a></td>
-<td>Base class for all time-domain sliding block analyses. <code>SlidingBlockAnalysis</code> does not</td>
-</tr>
-<tr class="even">
-<td><a href="../api/RigidAnalysis.html#pyslammer.RigidAnalysis">RigidAnalysis</a></td>
-<td>Rigid Block Analysis.</td>
-</tr>
-<tr class="odd">
-<td><a href="../api/Decoupled.html#pyslammer.Decoupled">Decoupled</a></td>
-<td>Decoupled analysis for sliding block and ground motion interaction.</td>
-</tr>
-<tr class="even">
-<td><a href="../api/Coupled.html#pyslammer.Coupled">Coupled</a></td>
-<td>Coupled analysis for sliding block and ground motion interaction.</td>
-</tr>
-<tr class="odd">
-<td><a href="../api/GroundMotion.html#pyslammer.GroundMotion">GroundMotion</a></td>
-<td>Ground Motion Record.</td>
-</tr>
-<tr class="even">
-<td><a href="../api/sample_ground_motions.html#pyslammer.sample_ground_motions">sample_ground_motions</a></td>
-<td>Load sample ground motions from the <code>sample_ground_motions</code> folder.</td>
-</tr>
-<tr class="odd">
-<td><a href="../api/utilities.html#pyslammer.utilities">utilities</a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+    
+  
+    
+  </div>
+  
 
 
-</section>
+</header>
+
+
+<p>Run a demo version of pySLAMMER in your browser — no install required. The demo below uses <a href="https://marimo.io">marimo</a>’s WASM build to load pySLAMMER straight into a Pyodide kernel; pick a sample ground motion, scale it, choose an analysis method, and adjust the slope parameters to see how each affects sliding displacement.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Beyond the demo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>pySLAMMER’s real value emerges when used programmatically with Python. See the <a href="../examples/rigid_flex.html">analysis-methods comparison</a> and <a href="../examples/batch_simulations.html">batch simulations</a> examples for workflows that go beyond what widgets can show.</p>
+</div>
+</div>
+<div class="column-page-right">
+<iframe src="https://molab.marimo.io/github/pySLAMMER/pySLAMMER/blob/main/notebooks/pyslammer_demo.py/wasm?show-code=false" width="100%" height="900" style="border: 1px solid #ddd; border-radius: 8px;" loading="lazy" title="pySLAMMER demo (interactive)"></iframe>
+</div>
+<section id="explore-further" class="level2">
+<h2 class="anchored" data-anchor-id="explore-further">Explore further</h2>
+<p>If you want to explore the demo further, you can <strong>open in molab</strong>, create a fork and edit the notebook. Or you can <strong>download the notebook</strong> it and run it locally with <code>marimo edit pyslammer_demo.py</code>.</p>
+<p><a href="https://molab.marimo.io/github/pySLAMMER/pySLAMMER/blob/main/notebooks/pyslammer_demo.py/wasm?show-code=false" class="btn btn-primary" role="button">Open in molab (interactive)</a> <a href="https://github.com/pySLAMMER/pySLAMMER/blob/main/notebooks/pyslammer_demo.py" class="btn btn-outline-secondary" role="button">Download notebook (.py)</a></p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -699,13 +695,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../technical/comp_SLAMMER_results.html" class="pagination-link" aria-label="Verification with SLAMMER's results">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Verification with SLAMMER’s results</span>
+      <a href="../examples/index.html" class="pagination-link" aria-label="Examples">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Examples</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../examples/index.html" class="pagination-link" aria-label="Examples">
-        <span class="nav-page-text">Examples</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../examples/rigid_flex.html" class="pagination-link" aria-label="Rigid and Flexible Anlysis">
+        <span class="nav-page-text">Rigid and Flexible Anlysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

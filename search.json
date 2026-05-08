@@ -354,36 +354,87 @@
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "pySLAMMER",
+    "objectID": "examples/interactive.html",
+    "href": "examples/interactive.html",
+    "title": "Interactive demo",
     "section": "",
-    "text": "pySLAMMER (Python package for Seismic LAndslide Movement Modeled using Earthquake Records) is a tool for estimating the co-seismic displacements of landslides with rigid and flexible sliding-block analyses. The package name and code are based on the USGS tool SLAMMER by Jibson et al. (2013).\npySLAMMER includes the same sliding block analysis methods (rigid, decoupled, and coupled) as SLAMMER. See the verifications section for a comparison of results between pySLAMMER and the original SLAMMER.",
+    "text": "Run a demo version of pySLAMMER in your browser — no install required. The demo below uses marimo’s WASM build to load pySLAMMER straight into a Pyodide kernel; pick a sample ground motion, scale it, choose an analysis method, and adjust the slope parameters to see how each affects sliding displacement.",
     "crumbs": [
       "Quickstart guide",
-      "Welcome"
+      "Examples",
+      "Interactive demo"
     ]
   },
   {
-    "objectID": "index.html#site-contents",
-    "href": "index.html#site-contents",
-    "title": "pySLAMMER",
-    "section": "Site Contents",
-    "text": "Site Contents",
+    "objectID": "examples/interactive.html#explore-further",
+    "href": "examples/interactive.html#explore-further",
+    "title": "Interactive demo",
+    "section": "Explore further",
+    "text": "Explore further\nIf you want to explore the demo further, you can open in molab, create a fork and edit the notebook. Or you can download the notebook it and run it locally with marimo edit pyslammer_demo.py.\nOpen in molab (interactive) Download notebook (.py)",
     "crumbs": [
       "Quickstart guide",
-      "Welcome"
+      "Examples",
+      "Interactive demo"
     ]
   },
   {
-    "objectID": "index.html#how-to-cite",
-    "href": "index.html#how-to-cite",
-    "title": "pySLAMMER",
-    "section": "How to cite",
-    "text": "How to cite\nPlease include citations for both the pySLAMMER code and software paper if you use pySLAMMER.\nCode:\nArnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zenodo. https://doi.org/10.5281/zenodo.15385355\nSoftware paper:\nArnold, L., & Garcia-Rivas, D. (2026). pySLAMMER: a Python package for Seismic LAndslide Movement Modeled using Earthquake Records. SoftwareX, 34, 102599. https://doi.org/10.1016/j.softx.2026.102599",
+    "objectID": "about/develop.html",
+    "href": "about/develop.html",
+    "title": "Develop",
+    "section": "",
+    "text": "Thank you for your interest in contributing to pySLAMMER! We welcome contributions from the community to improve and expand the package.\n\n\n\nClone the Repository:\ngit clone https://github.com/pySLAMMER/pySLAMMER.git\ncd pySLAMMER\nSet Up a Development Environment: Ensure you have Python 3.12 or higher installed. Create a virtual environment to isolate your development setup:\npython -m venv venv\nsource venv/bin/activate  # On Windows, use `venv\\Scripts\\activate`\nInstall Dependencies: Install the package in editable mode with development dependencies:\npip install -e \".[dev]\"\n\n\n\n\n\nCreate a New Branch: Always create a new branch for your changes:\ngit checkout -b feature/your-feature-name\nFollow Coding Standards:\n\nWrite clean, readable, and well-documented code.\nFollow PEP 8 guidelines for Python code.\n\nAdd Tests: Ensure your changes are covered by tests. Add new tests in the tests/ directory if necessary.\n\n\n\n\n\n\n\nWarning\n\n\n\nThe base tests for pySLAMMER are still being developed.\n\n\n\n\n\nRun the test suite to ensure everything works as expected:\npytest tests/\n\n\n\n\nCommit Your Changes: Write clear and concise commit messages:\ngit add .\ngit commit -m \"Add a brief description of your changes\"\nPush Your Branch:\ngit push origin feature/your-feature-name\nCreate a Pull Request: Go to the GitHub repository and create a pull request. Provide a detailed description of your changes.\n\n\n\n\n\nBe respectful and collaborative.\nEnsure your code passes all tests and adheres to the coding standards.\nProvide clear documentation for any new features or changes.\n\nThank you for contributing to pySLAMMER!",
     "crumbs": [
       "Quickstart guide",
-      "Welcome"
+      "About",
+      "Develop"
+    ]
+  },
+  {
+    "objectID": "about/develop.html#contributing-to-pyslammer",
+    "href": "about/develop.html#contributing-to-pyslammer",
+    "title": "Develop",
+    "section": "",
+    "text": "Thank you for your interest in contributing to pySLAMMER! We welcome contributions from the community to improve and expand the package.\n\n\n\nClone the Repository:\ngit clone https://github.com/pySLAMMER/pySLAMMER.git\ncd pySLAMMER\nSet Up a Development Environment: Ensure you have Python 3.12 or higher installed. Create a virtual environment to isolate your development setup:\npython -m venv venv\nsource venv/bin/activate  # On Windows, use `venv\\Scripts\\activate`\nInstall Dependencies: Install the package in editable mode with development dependencies:\npip install -e \".[dev]\"\n\n\n\n\n\nCreate a New Branch: Always create a new branch for your changes:\ngit checkout -b feature/your-feature-name\nFollow Coding Standards:\n\nWrite clean, readable, and well-documented code.\nFollow PEP 8 guidelines for Python code.\n\nAdd Tests: Ensure your changes are covered by tests. Add new tests in the tests/ directory if necessary.\n\n\n\n\n\n\n\nWarning\n\n\n\nThe base tests for pySLAMMER are still being developed.\n\n\n\n\n\nRun the test suite to ensure everything works as expected:\npytest tests/\n\n\n\n\nCommit Your Changes: Write clear and concise commit messages:\ngit add .\ngit commit -m \"Add a brief description of your changes\"\nPush Your Branch:\ngit push origin feature/your-feature-name\nCreate a Pull Request: Go to the GitHub repository and create a pull request. Provide a detailed description of your changes.\n\n\n\n\n\nBe respectful and collaborative.\nEnsure your code passes all tests and adheres to the coding standards.\nProvide clear documentation for any new features or changes.\n\nThank you for contributing to pySLAMMER!",
+    "crumbs": [
+      "Quickstart guide",
+      "About",
+      "Develop"
+    ]
+  },
+  {
+    "objectID": "about/motivation.html",
+    "href": "about/motivation.html",
+    "title": "Motivation",
+    "section": "",
+    "text": "Sliding block analysis (SBA) is frequently used in assessing earthquake-induced landslides, some of the most common and damaging co-seismic hazards. Although the analysis produces a displacement value, this output should be understood as an index of slope movement rather than a literal field measurement. Because SBA results are index values, continuity with historical analyses is crucial.\nThe USGS tool SLAMMER standardized rigid, decoupled, and coupled sliding block analysis and enabled the engineering community to apply coupled SBA broadly and consistently. However, SLAMMER’s GUI is not well-suited for the high-volume, chained analysis approaches needed in modern natural hazards research and performance-based geotechnical engineering practice. This limitation motivated the development of pySLAMMER.",
+    "crumbs": [
+      "Quickstart guide",
+      "About",
+      "Motivation"
+    ]
+  },
+  {
+    "objectID": "about/motivation.html#why-pyslammer",
+    "href": "about/motivation.html#why-pyslammer",
+    "title": "Motivation",
+    "section": "",
+    "text": "Sliding block analysis (SBA) is frequently used in assessing earthquake-induced landslides, some of the most common and damaging co-seismic hazards. Although the analysis produces a displacement value, this output should be understood as an index of slope movement rather than a literal field measurement. Because SBA results are index values, continuity with historical analyses is crucial.\nThe USGS tool SLAMMER standardized rigid, decoupled, and coupled sliding block analysis and enabled the engineering community to apply coupled SBA broadly and consistently. However, SLAMMER’s GUI is not well-suited for the high-volume, chained analysis approaches needed in modern natural hazards research and performance-based geotechnical engineering practice. This limitation motivated the development of pySLAMMER.",
+    "crumbs": [
+      "Quickstart guide",
+      "About",
+      "Motivation"
+    ]
+  },
+  {
+    "objectID": "about/motivation.html#what-pyslammer-provides",
+    "href": "about/motivation.html#what-pyslammer-provides",
+    "title": "Motivation",
+    "section": "What pySLAMMER provides",
+    "text": "What pySLAMMER provides\n\nVerified functional equivalence to SLAMMER across a broad parametric space for rigid, decoupled, and coupled analyses, preserving historical continuity of index displacements.\nA scriptable Python interface that enables large-scale batch computation, integration into chained analysis pipelines, and inclusion in regional-scale virtual testbeds.\nTransparency and reproducibility through open-source code and automatic metadata storage.\nAn extensible platform for community contributions of new sliding block methods. The object-oriented architecture allows new analysis types to inherit input validation, metadata storage, and plotting from existing classes.",
+    "crumbs": [
+      "Quickstart guide",
+      "About",
+      "Motivation"
     ]
   },
   {
@@ -459,63 +510,36 @@
     ]
   },
   {
-    "objectID": "about/motivation.html",
-    "href": "about/motivation.html",
-    "title": "Motivation",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "pySLAMMER",
     "section": "",
-    "text": "Sliding block analysis (SBA) is frequently used in assessing earthquake-induced landslides, some of the most common and damaging co-seismic hazards. Although the analysis produces a displacement value, this output should be understood as an index of slope movement rather than a literal field measurement. Because SBA results are index values, continuity with historical analyses is crucial.\nThe USGS tool SLAMMER standardized rigid, decoupled, and coupled sliding block analysis and enabled the engineering community to apply coupled SBA broadly and consistently. However, SLAMMER’s GUI is not well-suited for the high-volume, chained analysis approaches needed in modern natural hazards research and performance-based geotechnical engineering practice. This limitation motivated the development of pySLAMMER.",
+    "text": "pySLAMMER (Python package for Seismic LAndslide Movement Modeled using Earthquake Records) is a tool for estimating the co-seismic displacements of landslides with rigid and flexible sliding-block analyses. The package name and code are based on the USGS tool SLAMMER by Jibson et al. (2013).\npySLAMMER includes the same sliding block analysis methods (rigid, decoupled, and coupled) as SLAMMER. See the verifications section for a comparison of results between pySLAMMER and the original SLAMMER.",
     "crumbs": [
       "Quickstart guide",
-      "About",
-      "Motivation"
+      "Welcome"
     ]
   },
   {
-    "objectID": "about/motivation.html#why-pyslammer",
-    "href": "about/motivation.html#why-pyslammer",
-    "title": "Motivation",
-    "section": "",
-    "text": "Sliding block analysis (SBA) is frequently used in assessing earthquake-induced landslides, some of the most common and damaging co-seismic hazards. Although the analysis produces a displacement value, this output should be understood as an index of slope movement rather than a literal field measurement. Because SBA results are index values, continuity with historical analyses is crucial.\nThe USGS tool SLAMMER standardized rigid, decoupled, and coupled sliding block analysis and enabled the engineering community to apply coupled SBA broadly and consistently. However, SLAMMER’s GUI is not well-suited for the high-volume, chained analysis approaches needed in modern natural hazards research and performance-based geotechnical engineering practice. This limitation motivated the development of pySLAMMER.",
+    "objectID": "index.html#site-contents",
+    "href": "index.html#site-contents",
+    "title": "pySLAMMER",
+    "section": "Site Contents",
+    "text": "Site Contents",
     "crumbs": [
       "Quickstart guide",
-      "About",
-      "Motivation"
+      "Welcome"
     ]
   },
   {
-    "objectID": "about/motivation.html#what-pyslammer-provides",
-    "href": "about/motivation.html#what-pyslammer-provides",
-    "title": "Motivation",
-    "section": "What pySLAMMER provides",
-    "text": "What pySLAMMER provides\n\nVerified functional equivalence to SLAMMER across a broad parametric space for rigid, decoupled, and coupled analyses, preserving historical continuity of index displacements.\nA scriptable Python interface that enables large-scale batch computation, integration into chained analysis pipelines, and inclusion in regional-scale virtual testbeds.\nTransparency and reproducibility through open-source code and automatic metadata storage.\nAn extensible platform for community contributions of new sliding block methods. The object-oriented architecture allows new analysis types to inherit input validation, metadata storage, and plotting from existing classes.",
+    "objectID": "index.html#how-to-cite",
+    "href": "index.html#how-to-cite",
+    "title": "pySLAMMER",
+    "section": "How to cite",
+    "text": "How to cite\nPlease include citations for both the pySLAMMER code and software paper if you use pySLAMMER.\nCode:\nArnold, L., & Garcia-Rivas, D. (2025). Pyslammer (Version v0.2.2) [Python]. Zenodo. https://doi.org/10.5281/zenodo.15385355\nSoftware paper:\nArnold, L., & Garcia-Rivas, D. (2026). pySLAMMER: a Python package for Seismic LAndslide Movement Modeled using Earthquake Records. SoftwareX, 34, 102599. https://doi.org/10.1016/j.softx.2026.102599",
     "crumbs": [
       "Quickstart guide",
-      "About",
-      "Motivation"
-    ]
-  },
-  {
-    "objectID": "about/develop.html",
-    "href": "about/develop.html",
-    "title": "Develop",
-    "section": "",
-    "text": "Thank you for your interest in contributing to pySLAMMER! We welcome contributions from the community to improve and expand the package.\n\n\n\nClone the Repository:\ngit clone https://github.com/pySLAMMER/pySLAMMER.git\ncd pySLAMMER\nSet Up a Development Environment: Ensure you have Python 3.12 or higher installed. Create a virtual environment to isolate your development setup:\npython -m venv venv\nsource venv/bin/activate  # On Windows, use `venv\\Scripts\\activate`\nInstall Dependencies: Install the package in editable mode with development dependencies:\npip install -e \".[dev]\"\n\n\n\n\n\nCreate a New Branch: Always create a new branch for your changes:\ngit checkout -b feature/your-feature-name\nFollow Coding Standards:\n\nWrite clean, readable, and well-documented code.\nFollow PEP 8 guidelines for Python code.\n\nAdd Tests: Ensure your changes are covered by tests. Add new tests in the tests/ directory if necessary.\n\n\n\n\n\n\n\nWarning\n\n\n\nThe base tests for pySLAMMER are still being developed.\n\n\n\n\n\nRun the test suite to ensure everything works as expected:\npytest tests/\n\n\n\n\nCommit Your Changes: Write clear and concise commit messages:\ngit add .\ngit commit -m \"Add a brief description of your changes\"\nPush Your Branch:\ngit push origin feature/your-feature-name\nCreate a Pull Request: Go to the GitHub repository and create a pull request. Provide a detailed description of your changes.\n\n\n\n\n\nBe respectful and collaborative.\nEnsure your code passes all tests and adheres to the coding standards.\nProvide clear documentation for any new features or changes.\n\nThank you for contributing to pySLAMMER!",
-    "crumbs": [
-      "Quickstart guide",
-      "About",
-      "Develop"
-    ]
-  },
-  {
-    "objectID": "about/develop.html#contributing-to-pyslammer",
-    "href": "about/develop.html#contributing-to-pyslammer",
-    "title": "Develop",
-    "section": "",
-    "text": "Thank you for your interest in contributing to pySLAMMER! We welcome contributions from the community to improve and expand the package.\n\n\n\nClone the Repository:\ngit clone https://github.com/pySLAMMER/pySLAMMER.git\ncd pySLAMMER\nSet Up a Development Environment: Ensure you have Python 3.12 or higher installed. Create a virtual environment to isolate your development setup:\npython -m venv venv\nsource venv/bin/activate  # On Windows, use `venv\\Scripts\\activate`\nInstall Dependencies: Install the package in editable mode with development dependencies:\npip install -e \".[dev]\"\n\n\n\n\n\nCreate a New Branch: Always create a new branch for your changes:\ngit checkout -b feature/your-feature-name\nFollow Coding Standards:\n\nWrite clean, readable, and well-documented code.\nFollow PEP 8 guidelines for Python code.\n\nAdd Tests: Ensure your changes are covered by tests. Add new tests in the tests/ directory if necessary.\n\n\n\n\n\n\n\nWarning\n\n\n\nThe base tests for pySLAMMER are still being developed.\n\n\n\n\n\nRun the test suite to ensure everything works as expected:\npytest tests/\n\n\n\n\nCommit Your Changes: Write clear and concise commit messages:\ngit add .\ngit commit -m \"Add a brief description of your changes\"\nPush Your Branch:\ngit push origin feature/your-feature-name\nCreate a Pull Request: Go to the GitHub repository and create a pull request. Provide a detailed description of your changes.\n\n\n\n\n\nBe respectful and collaborative.\nEnsure your code passes all tests and adheres to the coding standards.\nProvide clear documentation for any new features or changes.\n\nThank you for contributing to pySLAMMER!",
-    "crumbs": [
-      "Quickstart guide",
-      "About",
-      "Develop"
+      "Welcome"
     ]
   },
   {
@@ -523,7 +547,7 @@
     "href": "examples/index.html",
     "title": "Examples",
     "section": "",
-    "text": "Running Rigid, Decoupled, and Coupled analyses\nBatch simulations",
+    "text": "Interactive demo (in-browser, no install)\nRunning Rigid, Decoupled, and Coupled analyses\nBatch simulations",
     "crumbs": [
       "Quickstart guide",
       "Examples"
@@ -570,7 +594,7 @@
     "href": "examples/rigid_flex.html#comparison-of-analysis-methods",
     "title": "Rigid and Flexible Anlysis",
     "section": "Comparison of analysis methods",
-    "text": "Comparison of analysis methods\nA simple plot comparing the block displacements with time can be generated by accessing the .sliding_disp attribute of each analysis result.\n\n\nCode\n# Some extra stuff to make the p\n\n\n\nplt.figure(figsize=(10, 6))\n\ntime = np.arange(0, len(gm.accel) * gm.dt, gm.dt)\n\n# Plot block displacement vs time for each analysis method\nplt.plot(time, rigid_result.sliding_disp, label='Rigid Analysis')\nplt.plot(time, decoupled_result.sliding_disp, label='Decoupled Analysis')\nplt.plot(time, coupled_result.sliding_disp, label='Coupled Analysis')\n\nsummary_text = f\"ky: {rigid_result.ky / slam.G_EARTH:.2f}g | Motion: {rigid_result.motion_name} (PGA: {max(abs(rigid_result.a_in)):.2f}g)\"\nplt.suptitle(summary_text, fontsize=10, y=0.98)\n\n# Add labels and legend\nplt.xlabel('Time (s)')\nplt.ylabel('Block Displacement (m)')\n# plt.title(f'Block Displacement with Different Analysis Methods\\n for {record_name}')\nplt.legend()\nplt.grid(True)\n\n# Show the plot\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Block Displacement with Different Analysis Methods",
+    "text": "Comparison of analysis methods\nA simple plot comparing the block displacements with time can be generated by accessing the .sliding_disp attribute of each analysis result.\n\nplt.figure(figsize=(10, 6))\n\ntime = np.arange(0, len(gm.accel) * gm.dt, gm.dt)\n\n# Plot block displacement vs time for each analysis method\nplt.plot(time, rigid_result.sliding_disp, label='Rigid Analysis')\nplt.plot(time, decoupled_result.sliding_disp, label='Decoupled Analysis')\nplt.plot(time, coupled_result.sliding_disp, label='Coupled Analysis')\n\nsummary_text = f\"ky: {rigid_result.ky / slam.G_EARTH:.2f}g | Motion: {rigid_result.motion_name} (PGA: {max(abs(rigid_result.a_in)):.2f}g)\"\nplt.suptitle(summary_text, fontsize=10, y=0.98)\n\n# Add labels and legend\nplt.xlabel('Time (s)')\nplt.ylabel('Block Displacement (m)')\n# plt.title(f'Block Displacement with Different Analysis Methods\\n for {record_name}')\nplt.legend()\nplt.grid(True)\n\n# Show the plot\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Block Displacement with Different Analysis Methods",
     "crumbs": [
       "Quickstart guide",
       "Examples",
