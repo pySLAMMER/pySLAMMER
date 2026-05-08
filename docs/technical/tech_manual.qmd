@@ -1,7 +1,21 @@
 ---
-title: Technical guide 
+title: Technical guide
 bibliography: references.bib
+sidebar: main
+page-navigation: true
 ---
 
-* [Glossary](glossary.qmd)
-* [Verifications](verification.qmd)
+The technical guide collects the supporting material for using pySLAMMER with confidence: vocabulary, the bundled ground motion suite, and verification against the legacy SLAMMER program.
+
+## Sections
+
+* [Glossary](glossary.qmd) — terms and conventions used throughout the documentation.
+* [Sample ground motion suite](ground_motions.qmd) — the recorded motions bundled with pySLAMMER and their characteristics.
+* [Verification with SLAMMER's results](comp_SLAMMER_results.qmd) — comparison of pySLAMMER's rigid, decoupled, and coupled analyses against the legacy SLAMMER outputs across the bundled motion suite.
+* [API reference](../api/index.qmd) — auto-generated reference for every public class and function.
+
+::: {.callout-note}
+## Coming soon
+
+A full technical manual covering the analysis methods (rigid Newmark integration, the Rathje-Bray decoupled approach, the Coupled formulation with the Lee 2004 foundation-radiation damping correction), the equivalent-linear site response loop, and pySLAMMER's algorithmic choices is in preparation. Until then, the [SLAMMER verification page](comp_SLAMMER_results.qmd) and the [forthcoming SoftwareX paper](https://github.com/lornearnold/manuscript_pyslammer) are the most complete written references.
+:::

@@ -1,0 +1,51 @@
+---
+title: Sample ground motion suite
+bibliography: references.bib
+sidebar: main
+page-navigation: true
+---
+
+pySLAMMER ships with a small suite of recorded ground motions so that users can run analyses out of the box without sourcing acceleration records. The suite is intentionally compact — it spans a useful range of magnitude, duration, and frequency content for testing and demonstration, but it is **not** intended as a hazard-consistent record set for design.
+
+## Loading motions in code
+
+All bundled motions are exposed as a dictionary of `GroundMotion` objects:
+
+```{python}
+import pyslammer as slam
+
+motions = slam.sample_ground_motions()
+list(motions)
+```
+
+Each entry is keyed by `Earthquake_Year_Record` and can be passed directly to any analysis class:
+
+```{python}
+gm = motions["Imperial_Valley_1979_BCR-230"]
+print(f"{gm.name}: dt={gm.dt}s, npts={len(gm.accel)}, PGA={gm.pga:.3f}g")
+```
+
+For an example using one of these motions end-to-end, see the [rigid/flexible analysis example](../examples/rigid_flex.qmd). A `custom_ground_motion` example covering how to use your own record is planned.
+
+## Suite summary
+
+The table below summarizes the recorded characteristics of each motion. Values are taken from the original strong-motion records as digitized for the suite.
+
+```{python}
+#| code-fold: true
+#| label: tbl-gm-summary
+#| tbl-cap: "Bundled ground motions and their key engineering parameters."
+import pandas as pd
+from pathlib import Path
+
+summary = pd.read_csv(Path("..") / "_static" / "gm_summary.csv")
+summary
+```
+
+## Response spectra
+
+The 5%-damped acceleration response spectra for the suite are plotted on the [SLAMMER verification page](comp_SLAMMER_results.qmd#fig-resp), where the suite is used as the motion set for the verification study.
+
+## Bringing your own motion
+
+The sample suite is a convenience, not a constraint. Any 1-D acceleration array (in $g$) plus a timestep can be wrapped as a `slam.GroundMotion(accel, dt, name=...)` and used identically. A dedicated example is planned (`custom_ground_motion.qmd`).

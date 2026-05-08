@@ -2,6 +2,9 @@
 title: Verification with SLAMMER's results
 bibliography: references.bib
 sidebar: main
+format:
+  html: default
+  ipynb: default
 ---
 
 ```{python}

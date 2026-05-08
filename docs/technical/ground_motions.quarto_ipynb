@@ -1,0 +1,107 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Sample ground motion suite\n",
+        "bibliography: references.bib\n",
+        "sidebar: main\n",
+        "page-navigation: true\n",
+        "---\n",
+        "\n",
+        "pySLAMMER ships with a small suite of recorded ground motions so that users can run analyses out of the box without sourcing acceleration records. The suite is intentionally compact — it spans a useful range of magnitude, duration, and frequency content for testing and demonstration, but it is **not** intended as a hazard-consistent record set for design.\n",
+        "\n",
+        "## Loading motions in code\n",
+        "\n",
+        "All bundled motions are exposed as a dictionary of `GroundMotion` objects:"
+      ],
+      "id": "89eb0a42"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pyslammer as slam\n",
+        "\n",
+        "motions = slam.sample_ground_motions()\n",
+        "list(motions)"
+      ],
+      "id": "326a7255",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Each entry is keyed by `Earthquake_Year_Record` and can be passed directly to any analysis class:"
+      ],
+      "id": "905ff1b2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "gm = motions[\"Imperial_Valley_1979_BCR-230\"]\n",
+        "print(f\"{gm.name}: dt={gm.dt}s, npts={len(gm.accel)}, PGA={gm.pga:.3f}g\")"
+      ],
+      "id": "1e78e971",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "For an example using one of these motions end-to-end, see the [rigid/flexible analysis example](../examples/rigid_flex.qmd). A `custom_ground_motion` example covering how to use your own record is planned.\n",
+        "\n",
+        "## Suite summary\n",
+        "\n",
+        "The table below summarizes the recorded characteristics of each motion. Values are taken from the original strong-motion records as digitized for the suite."
+      ],
+      "id": "e0bdf26f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| code-fold: true\n",
+        "#| label: tbl-gm-summary\n",
+        "#| tbl-cap: Bundled ground motions and their key engineering parameters.\n",
+        "import pandas as pd\n",
+        "from pathlib import Path\n",
+        "\n",
+        "summary = pd.read_csv(Path(\"..\") / \"_static\" / \"gm_summary.csv\")\n",
+        "summary"
+      ],
+      "id": "tbl-gm-summary",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Response spectra\n",
+        "\n",
+        "The 5%-damped acceleration response spectra for the suite are plotted on the [SLAMMER verification page](comp_SLAMMER_results.qmd#fig-resp), where the suite is used as the motion set for the verification study.\n",
+        "\n",
+        "## Bringing your own motion\n",
+        "\n",
+        "The sample suite is a convenience, not a constraint. Any 1-D acceleration array (in $g$) plus a timestep can be wrapped as a `slam.GroundMotion(accel, dt, name=...)` and used identically. A dedicated example is planned (`custom_ground_motion.qmd`)."
+      ],
+      "id": "1584676e"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

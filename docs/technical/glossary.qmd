@@ -1,10 +1,14 @@
 ---
-title: Glossary 
+title: Glossary
 bibliography: references.bib
 sidebar: main
 page-navigation: true
 ---
 
 ::: {.callout-note}
-This page is a stub and will be updated soon.
+## Placeholder
+
+This page will collect the terms and conventions used throughout pySLAMMER's documentation and source — yield acceleration ($k_y$), peak ground acceleration ($k_{max}$), the Lee (2004) foundation-radiation damping formulation, decoupled vs. coupled sliding analysis, equivalent-linear vs. linear-elastic site response, and the SLAMMER conventions inherited from the legacy Java program.
+
+Until this page is complete, the [SLAMMER verification page](comp_SLAMMER_results.qmd) is the most thorough reference for terminology in context, and the [API reference](../api/index.qmd) documents every parameter exposed by the analysis classes.
 :::

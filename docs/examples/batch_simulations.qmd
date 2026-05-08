@@ -1,4 +1,9 @@
-# Batch Simulations
+---
+title: "Batch simulations"
+format:
+  html: default
+  ipynb: default
+---
 
 This notebook shows an example use case of pyslammer for running batch simulations.
 

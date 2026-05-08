@@ -41,6 +41,8 @@ website:
           href: technical/tech_manual.qmd
           contents:
             - technical/glossary.qmd
+            - technical/ground_motions.qmd
+            - technical/verification.qmd
             - technical/comp_SLAMMER_results.qmd
             - text: API Reference
               href: api/index.qmd
@@ -50,6 +52,7 @@ website:
             - examples/interactive.qmd
             - examples/rigid_flex.qmd
             - examples/batch_simulations.qmd
+            - examples/pbsd_segments.qmd
         - section: "About"
           contents:
             - about/motivation.qmd

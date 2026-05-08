@@ -1,4 +1,9 @@
-# Rigid and Flexible Anlysis
+---
+title: "Rigid and flexible analysis"
+format:
+  html: default
+  ipynb: default
+---
 
 This notebook shows an example use case of pyslammer for running rigid, decoupled, and coupled sliding block analyses.
 

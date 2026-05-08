@@ -1,5 +1,9 @@
 # pySLAMMER docs audit + interactive-notebook plan
 
+## Progress
+
+**Phase 1 complete** (2026-05-08) — stubs converted to real placeholders, `ground_motions.qmd` built from `_static/gm_summary.csv` and added to the sidebar, `verification.qmd` cleaned up, per-page `.ipynb` download links wired on `quickstart`, `rigid_flex`, `batch_simulations`, and `comp_SLAMMER_results`. Phases 2 and 3 are open.
+
 ## 1. Overall doc quality
 
 **Strong points**
@@ -9,11 +13,7 @@
 - `motivation.qmd` clearly stakes out the "why" (escape from GUI, batch/pipeline use).
 - API reference is auto-generated via quartodoc, so it'll stay current.
 
-**Specific issues to clean up**
-- **Stubs and empty pages**: `technical/glossary.qmd` says "stub", `technical/ground_motions.qmd` is 1 line / empty, `technical/tech_manual.qmd` only links to two children, `technical/verification.qmd` has commented-out links to `comp_SLAMMER_perf.qmd` and `comp_analytical.qmd` (which exist on disk but are unlinked). Either finish them, hide them from the sidebar, or replace with placeholders that say what they will become.
-- **Sample-motion suite is undocumented**: there are ~20 motions in `sample_ground_motions/` with response spectra rendered in `comp_SLAMMER_results.qmd`, but no flat list/table that says "here's what's bundled and why." `_static/gm_summary.csv` exists — render it as a table on the (currently empty) `ground_motions.qmd`.
-
-**Subjective gaps**
+**Subjective gaps still open**
 - Quickstart shows a rigid analysis only — nothing on the more interesting flexible methods that motivate using pySLAMMER over hand-rolled Newmark code.
 - `target_pga` and `scale_factor` (built-in PGA scaling on every analysis class) are not mentioned in quickstart or rigid_flex.
 
@@ -68,13 +68,13 @@ pySLAMMER's value parsed into five distinct strands:
 
 Note: there are no planned kind-3 (playground) notebooks. If demand emerges for one (e.g. someone wants to drag a slider through `ky_sensitivity`), build the playground at that point rather than speculatively. The interactive demo (`pyslammer_demo`) already covers the broad "play with parameters" use case.
 
-**Concrete new-notebook proposals (three to build first)**
+**Concrete new-notebook proposals**
 
-1. **`ky_sensitivity.qmd`** (kind 1) — one motion, scan k_y from 0.01 to k_max in 100 steps, plot displacement-vs-ky on log axes. ~30 lines. Sells the batch story without the cognitive load of the full motion suite.
+~~`ky_sensitivity.qmd`~~ — descoped 2026-05-08. Argument: `batch_simulations.qmd` already covers the k_y-sweep story over the motion suite; a single-motion focused version would be redundant.
 
-2. **`custom_ground_motion.qmd`** (kind 1) — load a user CSV (with a built-in fallback), build `slam.GroundMotion(accel, dt, name=...)`, run an analysis. Shows that the sample suite is a convenience, not a constraint. Single most-asked practitioner question.
+~~`custom_ground_motion.qmd`~~ — descoped 2026-05-08. The BYO-motion teaching moment can be folded into a callout in `rigid_flex.qmd` or `quickstart.qmd` rather than its own page.
 
-3. **`pbsd_segments.qmd`** (kind 1, heavyweight) — port of the SoftwareX paper's PBSD example (`temp/manuscript_assets/pbsd_example.ipynb`), made suitable for the docs. Two highway-bridge slope segments (A and B), Monte-Carlo Coupled SBA over log-normal `ky`/`Vs`, P[D > 25 cm] curves. Needs a precompute/cache strategy (see below).
+**`pbsd_segments.qmd`** ✅ built 2026-05-08 — port of the SoftwareX paper's PBSD example (`temp/manuscript_assets/pbsd_example.ipynb`). Two highway-bridge slope segments (A and B), Monte-Carlo Coupled SBA over log-normal `ky`/`Vs`, $P[D > 25\text{ cm}]$ curves. Cache-on-disk strategy (pickle.gz to `docs/_static/cache/pbsd_segments.pkl.gz`); first render runs the analysis, subsequent renders load.
 
 ### Lightweight vs heavyweight notebooks
 
@@ -105,12 +105,12 @@ The PBSD notebook source has been pulled to `temp/manuscript_assets/pbsd_example
 
 ## Rollout phases
 
-- **Phase 1 (low risk)**: finish the remaining doc bugs in §1 (technical stubs, sample-motion suite). Configure Quarto's per-page `.ipynb` download for existing kind-1 examples so the "Download notebook" button works without manual maintenance.
-- **Phase 2**: build the three new focused kind-1 qmd notebooks above. PBSD draws from `temp/manuscript_assets/pbsd_example.ipynb` and §3 of the SoftwareX paper. Adopt the qmd-canonical, ipynb-derivative pattern from §2 of this plan. Wire up the precompute/cache pattern for `pbsd_segments` and any other heavyweight notebooks.
-- **Phase 3**: fill the actual stubs — `tech_manual.qmd` and `glossary.qmd` from §2 of the paper; `ground_motions.qmd` from `_static/gm_summary.csv` plus the response-spectra figure already used in `comp_SLAMMER_results.qmd`. Add the "Contributing an interactive notebook" subsection to `about/develop.qmd`.
+- ~~**Phase 1 (low risk)**~~ — done 2026-05-08. Stubs → placeholders, `ground_motions.qmd` built, sidebar tidied, `.ipynb` downloads wired on the four kind-1 pages.
+- ~~**Phase 2**~~ — done 2026-05-08 with reduced scope. `pbsd_segments.qmd` built, wired into the sidebar, cache generated (`docs/_static/cache/pbsd_segments.pkl.gz`, 37 KB) and ready to commit. Result matches the paper qualitatively: $P(D_A > 25\,\text{cm}) = 6\%$, $P(D_B > 25\,\text{cm}) = 16\%$ vs. paper's 7% / 15%. `ky_sensitivity` and `custom_ground_motion` descoped.
+- **Phase 3**: fill the placeholders with real content — `tech_manual.qmd` and `glossary.qmd` from §2 of the paper; finish `comp_SLAMMER_perf.qmd` and `comp_analytical.qmd` (currently linked from `verification.qmd` as placeholders). Add the "Contributing an interactive notebook" subsection to `about/develop.qmd`.
 
-## Spillover items captured during audit
+## Spillover items
 
-- Decide whether `comp_SLAMMER_perf.qmd` and `comp_analytical.qmd` (referenced but commented out in `verification.qmd`) should be finished, hidden, or removed.
 - `tests/verification_data/results/verification_report_v0.2.3.md` is referenced from the docs as a GitHub link — consider whether the verification report should also be rendered into the Quarto site for offline readers.
 - Resolve the paper's promise (line 270) of a downloadable parametric-study notebook before publication, or amend the manuscript text.
+- Quarto renders that need fresh execution must use the project venv: prepend `QUARTO_PYTHON=.venv/bin/python` (project deps like `great_tables`, `pyslammer` aren't on the system Python). Discovered while wiring ipynb downloads.

@@ -6,3 +6,4 @@ bibliography: ../technical/references.bib
 * [Interactive demo (in-browser, no install)](interactive.qmd)
 * [Running Rigid, Decoupled, and Coupled analyses](rigid_flex.qmd)
 * [Batch simulations](batch_simulations.qmd)
+* [Performance-based seismic design for two highway segments](pbsd_segments.qmd) — Monte Carlo coupled SBA reproducing the SoftwareX paper's illustrative example.

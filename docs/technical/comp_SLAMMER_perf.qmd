@@ -1,17 +1,13 @@
 ---
+title: "Comparison with SLAMMER (speed)"
+bibliography: references.bib
 page-navigation: true
 ---
 
-# Comparison with SLAMMER (speed)
-
 ::: {.callout-note}
-This page is a stub and will be updated soon.
+## Placeholder
+
+This page will report runtime comparisons between pySLAMMER and the legacy SLAMMER program for the equivalent-linear coupled analysis — the case where SLAMMER's $O(n^2)$ inner loop is replaced by an $O(n)$ formulation in pySLAMMER. Headline result: a speedup of roughly two orders of magnitude on the bundled motion suite, with no loss of accuracy (see the [SLAMMER results comparison](comp_SLAMMER_results.qmd) for the equivalence study).
+
+Sections to come: rigid analysis comparison, flexible analysis (linear elastic), and flexible analysis (equivalent linear).
 :::
-
-## Rigid analysis comparison
-
-## Flexible analysis comparison
-
-### Linear elastic mode
-
-### Equivalent linear mode
